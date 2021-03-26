@@ -1,0 +1,96 @@
+.prose pre {
+  @apply bg-drac-bg m-0 p-0;
+  overflow: none;
+}
+
+/* pre::-webkit-scrollbar {
+  display: none;
+} */
+
+.token.bold {
+  @apply font-bold;
+}
+
+.language-javascript .token.constant,
+.token.italic {
+  @apply italic;
+}
+
+.language-css .token.selector,
+.token.atrule,
+.token.attr-name,
+.token.attr-value,
+.language-css .token.entity,
+.token.function {
+  @apply text-drac-green;
+}
+
+.token.builtin,
+.token.class-name,
+.language-css .token.function,
+.token.url,
+.token.operator,
+.language-css .token.property {
+  @apply text-drac-cyan;
+}
+
+.token.property,
+.language-css .token.punctuation,
+.language-javascript .token.constant,
+.token.symbol,
+.language-css .token.url {
+  @apply text-drac-orange;
+}
+
+.language-css .token.atrule,
+.token.boolean,
+.token.constant,
+.language-html .token.entity.named-entity,
+.token.number,
+.token.dom.variable,
+.language-css,
+.language-markup .token.entity.named-entity {
+  @apply text-drac-purple;
+}
+
+.language-html .token.entity:not(.named-entity),
+.language-markup .token.entity:not(.named-entity),
+.token.important,
+.token.entity,
+.token.selector,
+.token.tag,
+.token,
+.language-css .token,
+.token.char,
+.token.keyword {
+  @apply text-drac-pink;
+}
+
+.token.regex {
+  @apply text-drac-red;
+}
+
+.language-html .token.punctuation,
+.language-css .token.rule:not(.atrule),
+.language-markup .token.punctuation,
+.token.script,
+.token.punctuation,
+.token.prolog {
+  @apply text-drac-fg;
+}
+
+.language-html .token.attr-value,
+.token.string,
+.language-markup .token.attr-value {
+  @apply text-drac-yellow;
+}
+
+.token.comment,
+.token.variable {
+  @apply text-drac-comment;
+}
+
+.token.namespace,
+.token.deleted {
+  color: #e2777a;
+}

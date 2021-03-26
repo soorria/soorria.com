@@ -24,10 +24,24 @@ module.exports = {
       fontFamily: {
         display: ["'Poppins'", ...fontFamily.sans],
       },
+      screens: {},
+      typography: theme => ({
+        DEFAULT: {
+          css: {
+            color: theme('colors.drac.fg'),
+            a: {
+              color: theme('colors.drac.pink'),
+              '&:hover': {
+                color: theme('color.drac.purple'),
+              },
+            },
+          },
+        },
+      }),
     },
   },
   variants: {
     extend: {},
   },
-  plugins: [],
+  plugins: [require('@tailwindcss/typography')],
 }

@@ -1,13 +1,7 @@
-import SpinnyHomeLink from 'src/components/SpinnyHomeLink'
+import Container from '../components/Container'
 
 const IndexPage: React.FC = () => {
-  return (
-    <div className="container max-w-screen-lg px-4 mx-auto">
-      <header className="flex py-4">
-        <SpinnyHomeLink />
-      </header>
-    </div>
-  )
+  return <Container>hello</Container>
 }
 
 export default IndexPage
