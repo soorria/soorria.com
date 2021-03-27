@@ -16,8 +16,10 @@
   content: '';
 }
 
-.prose pre::-webkit-scrollbar-thumb {
-  background-color: theme('colors.drac.purple');
+@screen sm {
+  .prose pre::-webkit-scrollbar-thumb {
+    background-color: theme('colors.drac.purple');
+  }
 }
 
 .token.bold {

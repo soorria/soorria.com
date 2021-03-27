@@ -36,9 +36,9 @@ const CustomCodeBlock: React.FC<any> = ({ children, className, ...rest }) => {
       : languageFromClassName
 
   return (
-    <div className="relative p-2 sm:p-4 -mx-2 sm:-mx-4 rounded ring-2 ring-drac-purple my-[1.7em]">
-      <div className="flex justify-between mb-2 text-sm font-bold tracking-wide uppercase font-display ">
-        <div className="text-drac-purple">{language}</div>
+    <div className="relative p-2 sm:p-4 -mx-2 sm:-mx-4 rounded ring-1 sm:ring-2 ring-drac-purple my-[1.7em]">
+      <div className="flex items-center justify-between mb-2 text-sm font-bold tracking-wide uppercase font-display ">
+        <div className="text-xs sm:text-sm text-drac-purple">{language}</div>
         <button
           className="px-2 font-bold tracking-wider rounded text-drac-bg bg-drac-purple focus:ring-offset-current focus:ring-2 focus:ring-offset-2 focus:ring-drac-purple focus:outline-none"
           onClick={async event => {
