@@ -4,7 +4,6 @@ import PostLayout from '@/components/PostLayout'
 import { Snippet, SnippetFrontMatter } from '@/types/snippet'
 import gqlFetch from '@/utils/gqlFetch'
 import { hydrate } from '@/lib/mdx-hydrate'
-import { render } from '@/lib/mdx-render'
 import { getFile } from '@/lib/data'
 import { DataType } from '@/types/data'
 
