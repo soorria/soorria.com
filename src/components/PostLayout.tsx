@@ -4,13 +4,19 @@ interface PostLayoutProps {
   title: string
 }
 
+export const PostHeading: React.FC = ({ children }) => {
+  return (
+    <h1 className="mt-8 mb-10 text-4xl font-bold text-center sm:text-6xl font-display text-drac-pink">
+      {children}
+    </h1>
+  )
+}
+
 const PostLayout: React.FC<PostLayoutProps> = ({ title, children }) => {
   return (
     <Container>
       <article className="py-8">
-        <h1 className="mb-8 text-4xl font-bold text-center sm:text-5xl font-display text-drac-pink">
-          {title}
-        </h1>
+        <PostHeading>{title}</PostHeading>
         {children}
       </article>
     </Container>

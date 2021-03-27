@@ -31,7 +31,7 @@ export const getAllFilesFrontMatter = async <TFrontMatter>(
   )
 }
 
-export const getFile = async <TData extends BaseData>(
+export const getFileWithMdx = async <TData extends BaseData>(
   type: DataType,
   slug: string
 ): Promise<TData> => {

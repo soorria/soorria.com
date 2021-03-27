@@ -24,6 +24,11 @@ const LANGUAGE_NAME_MAP: Record<string, string> = {
 }
 const CustomCodeBlock: React.FC<any> = ({ children, className, ...rest }) => {
   const [copied, setCopied] = useState(false)
+
+  if (!className?.startsWith('language-')) {
+    return <pre className={className}>{children}</pre>
+  }
+
   const languageFromClassName: string = className.split('language-')[1]
   const language =
     languageFromClassName in LANGUAGE_NAME_MAP

@@ -4,7 +4,7 @@ import PostLayout from '@/components/PostLayout'
 import { Snippet, SnippetFrontMatter } from '@/types/snippet'
 import gqlFetch from '@/utils/gqlFetch'
 import { hydrate } from '@/lib/mdx-hydrate'
-import { getFile } from '@/lib/data'
+import { getFileWithMdx } from '@/lib/data'
 import { DataType } from '@/types/data'
 import editUrl from '@/utils/editUrl'
 
@@ -18,7 +18,7 @@ const SnippetPage: React.FC<SnippetPageProps> = ({ snippet, mdx }) => {
 
   return (
     <PostLayout title={snippet.title}>
-      <div className="mx-auto prose md:prose-lg">
+      <div className="mx-auto mt-6 prose md:prose-lg">
         {content}
         <div className="max-w-xs mx-auto my-12 text-sm text-center">
           Found a mistake, or want to suggest an improvement? Edit on GitHub{' '}
@@ -47,7 +47,7 @@ export const getStaticProps: GetStaticProps<SnippetPageProps, { slug: string }> 
   }
 
   const { slug } = params
-  const { mdxSource, ...snippet } = await getFile<Snippet>(DataType.snippets, slug)
+  const { mdxSource, ...snippet } = await getFileWithMdx<Snippet>(DataType.snippets, slug)
 
   return {
     props: { snippet, mdx: mdxSource },
@@ -67,6 +67,6 @@ export const getStaticPaths: GetStaticPaths = async () => {
 
   return {
     paths: snippets.map(({ slug }) => ({ params: { slug } })),
-    fallback: 'blocking',
+    fallback: false,
   }
 }
