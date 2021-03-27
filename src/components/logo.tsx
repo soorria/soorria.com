@@ -12,7 +12,7 @@ const Logo: React.FC<LogoProps> = ({ size = 'auto' }) => {
   return (
     <svg className={`${SIZES[size]}`} viewBox="0 0 24 24">
       <mask id="a" mask-type="alpha" width="24" height="24" x="0" y="0">
-        <rect width="24" height="24" fill="#bd93f9" rx="3" />
+        <rect width="24" height="24" fill="#fff" rx="3" />
       </mask>
       <g mask="url(#a)">
         <path className="fill-current text-drac-purple" d="M0 0h24v24H0z" />
