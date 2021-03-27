@@ -10,7 +10,7 @@ const Footer: React.FC<FooterProps> = () => {
         Made with{' '}
         <span className="relative inline-block w-5 h-5 align-middle">
           <HeartIcon className="absolute inset-0 fill-current text-drac-pink" />
-          <HeartIcon className="absolute inset-0 fill-current text-drac-pink hover:animate-ping" />
+          <HeartIcon className="absolute inset-0 fill-current text-drac-purple hover:animate-ping" />
         </span>{' '}
         by Soorria
       </footer>
