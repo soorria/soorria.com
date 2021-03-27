@@ -6,6 +6,7 @@ import gqlFetch from '@/utils/gqlFetch'
 import { hydrate } from '@/lib/mdx-hydrate'
 import { getFile } from '@/lib/data'
 import { DataType } from '@/types/data'
+import editUrl from '@/utils/editUrl'
 
 interface SnippetPageProps {
   snippet: SnippetFrontMatter
@@ -17,7 +18,19 @@ const SnippetPage: React.FC<SnippetPageProps> = ({ snippet, mdx }) => {
 
   return (
     <PostLayout title={snippet.title}>
-      <div className="mx-auto prose md:prose-lg">{content}</div>
+      <div className="mx-auto prose md:prose-lg">
+        {content}
+        <div className="max-w-xs mx-auto my-12 text-sm text-center">
+          Found a mistake, or want to suggest an improvement? Edit on GitHub{' '}
+          <a
+            href={editUrl(DataType.snippets, snippet.slug)}
+            rel="noopenner noreferrer"
+            target="_blank"
+          >
+            here
+          </a>
+        </div>
+      </div>
     </PostLayout>
   )
 }

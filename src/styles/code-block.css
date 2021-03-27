@@ -3,6 +3,19 @@
   overflow: none;
 }
 
+.prose code {
+  @apply text-drac-pink bg-drac-curr p-1 rounded leading-none;
+}
+
+.prose pre code {
+  @apply rounded-none text-drac-fg;
+}
+
+.prose code::before,
+.prose code::after {
+  content: '';
+}
+
 .prose pre::-webkit-scrollbar-thumb {
   background-color: theme('colors.drac.purple');
 }

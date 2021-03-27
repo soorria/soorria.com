@@ -11,10 +11,10 @@ const LINKS = [
     title: 'snippets',
     href: '/snippets',
   },
-  {
-    title: 'posts',
-    href: '/posts',
-  },
+  // {
+  //   title: 'posts',
+  //   href: '/posts',
+  // },
 ]
 
 const Header: React.FC = () => {
