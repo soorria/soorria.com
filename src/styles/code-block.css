@@ -1,5 +1,5 @@
 .prose pre {
-  @apply bg-drac-bg m-0 p-0;
+  @apply bg-drac-bg m-0 p-0 rounded-none;
   overflow: none;
 }
 
