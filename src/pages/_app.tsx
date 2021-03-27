@@ -10,7 +10,7 @@ const MyApp: React.FC<AppProps> = ({ Component, pageProps }) => {
     <>
       <Head>
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>mooth.tech</title>
+        <title>Soorria Saruva / mooth.tech</title>
       </Head>
       <Header />
       <main role="main" id="main-content" className="flex-grow">
