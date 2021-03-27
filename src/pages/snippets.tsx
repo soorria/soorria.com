@@ -1,11 +1,12 @@
 import { GetStaticProps } from 'next'
 import Link from 'next/link'
-import Container from 'src/components/Container'
-import { Snippet } from 'src/types/snippet'
-import gqlFetch from 'src/utils/gqlFetch'
+import Container from '@/components/Container'
+import { SnippetFrontMatter } from '@/types/snippet'
+import { getAllFilesFrontMatter } from '@/lib/data'
+import { DataType } from '@/types/data'
 
 interface SnippetsPageProps {
-  snippets: Omit<Snippet, 'mdSource'>[]
+  snippets: SnippetFrontMatter[]
 }
 
 const SnippetsPage: React.FC<SnippetsPageProps> = ({ snippets }) => {
@@ -13,11 +14,12 @@ const SnippetsPage: React.FC<SnippetsPageProps> = ({ snippets }) => {
     <Container>
       <h1 className="mt-8 text-5xl font-bold text-center font-display text-drac-pink">Snippets</h1>
       <p className="mt-6 text-center">Little bits of code that I find useful.</p>
-      <div className="flex flex-col items-center mt-4 space-y-4">
-        {snippets.map(({ slug, title }) => (
+      <div className="grid grid-cols-1 gap-4 mt-4 md:grid-cols-2">
+        {snippets.map(({ slug, title, short_description }) => (
           <Link href={`/snippets/${slug}`} passHref key={slug}>
-            <a className="relative flex w-full max-w-lg p-4 transition-shadow rounded bg-drac-curr hover:shadow-2xl">
-              <span className="text-drac-pink">{title}</span>
+            <a className="relative flex flex-col p-4 space-y-2 transition-shadow rounded bg-drac-curr hover:shadow-2xl">
+              <div className="text-xl font-bold text-drac-pink">{title}</div>
+              <div className="">{short_description}</div>
             </a>
           </Link>
         ))}
@@ -29,20 +31,9 @@ const SnippetsPage: React.FC<SnippetsPageProps> = ({ snippets }) => {
 export default SnippetsPage
 
 export const getStaticProps: GetStaticProps = async () => {
-  const data = await gqlFetch<{ snippets: SnippetsPageProps['snippets'] }>(
-    'http://snippetsapi.mooth.tech/api/v1/graphql',
-    `query {
-      snippets {
-        slug
-        title
-        short_description
-        types
-      }
-    }`,
-    {}
-  )
-
-  const snippets = data.snippets
+  const snippets = (
+    await getAllFilesFrontMatter<SnippetFrontMatter>(DataType.snippets)
+  ).sort((a, b) => (b.created_at > a.created_at ? 1 : b.created_at < a.created_at ? -1 : 0))
 
   return {
     props: { snippets },

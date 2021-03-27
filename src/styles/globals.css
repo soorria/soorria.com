@@ -55,6 +55,7 @@ html {
   background-color: theme('colors.drac.pink');
 }
 
+// Firefox
 * {
   scrollbarwidth: 'thin';
   scrollbarcolor: theme('colors.drac.pink') theme('colors.transparent');

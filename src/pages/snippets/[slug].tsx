@@ -1,13 +1,15 @@
 import { GetStaticPaths, GetStaticProps } from 'next'
 import { MdxRemote } from 'next-mdx-remote/types'
-import PostLayout from 'src/components/PostLayout'
-import { Snippet } from 'src/types/snippet'
-import gqlFetch from 'src/utils/gqlFetch'
-import { hydrate } from 'src/utils/mdx-hydrate'
-import { render } from 'src/utils/mdx-render'
+import PostLayout from '@/components/PostLayout'
+import { Snippet, SnippetFrontMatter } from '@/types/snippet'
+import gqlFetch from '@/utils/gqlFetch'
+import { hydrate } from '@/lib/mdx-hydrate'
+import { render } from '@/lib/mdx-render'
+import { getFile } from '@/lib/data'
+import { DataType } from '@/types/data'
 
 interface SnippetPageProps {
-  snippet: Omit<Snippet, 'mdSource'>
+  snippet: SnippetFrontMatter
   mdx: MdxRemote.Source
 }
 
@@ -33,28 +35,10 @@ export const getStaticProps: GetStaticProps<SnippetPageProps, { slug: string }> 
   }
 
   const { slug } = params
-
-  const data = await gqlFetch<{ snippet: Snippet }>(
-    'https://snippetsapi.mooth.tech/api/v1/graphql',
-    `query Snippet($slug: ID!) {
-      snippet(slug: $slug) {
-        slug
-        title
-        short_description
-        types
-        mdSource
-      }
-    }
-  `,
-    { slug }
-  )
-
-  const { snippet } = data
-
-  const mdx = await render(snippet.mdSource)
+  const { mdxSource, ...snippet } = await getFile<Snippet>(DataType.snippets, slug)
 
   return {
-    props: { snippet, mdx },
+    props: { snippet, mdx: mdxSource },
   }
 }
 

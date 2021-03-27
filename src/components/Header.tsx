@@ -3,10 +3,10 @@ import Container from './Container'
 import SpinnyHomeLink from './SpinnyHomeLink'
 
 const LINKS = [
-  {
-    title: 'home',
-    href: '/',
-  },
+  // {
+  //   title: 'home',
+  //   href: '/',
+  // },
   {
     title: 'snippets',
     href: '/snippets',

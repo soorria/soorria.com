@@ -1,7 +1,7 @@
 import Router from 'next/router'
 import Link from 'next/link'
 import { useEffect, useRef, useState } from 'react'
-import random from 'src/utils/random'
+import random from '@/utils/random'
 import Logo from './logo'
 
 const MIN_ROTATION = 0

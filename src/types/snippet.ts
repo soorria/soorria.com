@@ -1,7 +1,7 @@
-export interface Snippet {
-  slug: string
-  title: string
-  short_description: string
+import { BaseData, FrontMatter } from './data'
+
+export interface Snippet extends BaseData {
   types: string[]
-  mdSource: string
 }
+
+export type SnippetFrontMatter = FrontMatter<Snippet>

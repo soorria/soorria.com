@@ -1,4 +1,4 @@
-import Container from '../components/Container'
+import Container from '@/components/Container'
 
 const IndexPage: React.FC = () => {
   return <Container>hello</Container>

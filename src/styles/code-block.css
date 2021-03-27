@@ -3,9 +3,9 @@
   overflow: none;
 }
 
-/* pre::-webkit-scrollbar {
-  display: none;
-} */
+.prose pre::-webkit-scrollbar-thumb {
+  background-color: theme('colors.drac.purple');
+}
 
 .token.bold {
   @apply font-bold;
@@ -20,6 +20,7 @@
 .token.atrule,
 .token.attr-name,
 .token.attr-value,
+.token.maybe-class-name,
 .language-css .token.entity,
 .token.function {
   @apply text-drac-green;
