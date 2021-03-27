@@ -42,6 +42,7 @@ export const getFile = async <TData extends BaseData>(
 
   return {
     ...(data as FrontMatter<TData>),
+    slug,
     mdxSource,
   } as TData
 }
