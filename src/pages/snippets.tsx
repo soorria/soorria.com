@@ -35,7 +35,7 @@ const SnippetsPage: React.FC<SnippetsPageProps> = ({ snippets }) => {
                 <div className="text-xl font-bold text-drac-pink font-display group-hover:underline">
                   {title}
                 </div>
-                <div className="">{short_description}</div>
+                <div className="flex-1">{short_description}</div>
                 <div className="flex items-center space-x-2 text-sm">
                   <ClockIconSolid className="inline-block w-4 h-4" />
                   <span>{new Date(created_at).toLocaleDateString()}</span>
