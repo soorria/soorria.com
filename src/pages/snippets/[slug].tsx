@@ -17,16 +17,17 @@ interface SnippetPageProps {
 const SnippetPage: React.FC<SnippetPageProps> = ({ snippet, mdx }) => {
   const content = hydrate(mdx)
   const url = `https://mooth.tech/snippets/${snippet.slug}`
+  const title = `${snippet.title} snippet`
 
   return (
     <PostLayout title={snippet.title}>
       <NextSeo
-        title={snippet.title}
+        title={title}
         description={snippet.short_description}
         canonical={url}
         openGraph={{
           url,
-          title: snippet.title,
+          title,
           description: snippet.short_description,
           type: 'article',
           article: {
