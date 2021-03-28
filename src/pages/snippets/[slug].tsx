@@ -7,6 +7,7 @@ import { hydrate } from '@/lib/mdx-hydrate'
 import { getFileWithMdx } from '@/lib/data'
 import { DataType } from '@/types/data'
 import editUrl from '@/utils/editUrl'
+import { NextSeo } from 'next-seo'
 
 interface SnippetPageProps {
   snippet: SnippetFrontMatter
@@ -15,9 +16,28 @@ interface SnippetPageProps {
 
 const SnippetPage: React.FC<SnippetPageProps> = ({ snippet, mdx }) => {
   const content = hydrate(mdx)
+  const url = `https://mooth.tech/snippets/${snippet.slug}`
 
   return (
     <PostLayout title={snippet.title}>
+      <NextSeo
+        title={snippet.title}
+        description={snippet.short_description}
+        canonical={url}
+        openGraph={{
+          url,
+          title: snippet.title,
+          description: snippet.short_description,
+          type: 'article',
+          article: {
+            tags: snippet.types,
+            section: 'Snippets',
+            authors: ['Soorria Saruva'],
+            publishedTime: new Date(snippet.created_at).toISOString(),
+            modifiedTime: new Date(snippet.updated_at).toISOString(),
+          },
+        }}
+      />
       <div className="mx-auto mt-6 prose md:prose-lg">
         {content}
         <div className="max-w-xs mx-auto my-12 text-sm text-center">
