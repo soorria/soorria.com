@@ -6,17 +6,28 @@ import { getAllFilesFrontMatter } from '@/lib/data'
 import { DataType } from '@/types/data'
 import { ClockIconSolid } from '@/components/icons'
 import { PostHeading } from '@/components/PostLayout'
+import { NextSeo } from 'next-seo'
 
 interface SnippetsPageProps {
   snippets: SnippetFrontMatter[]
 }
 
+const description = 'Little bits of code that I find useful.'
+const title = 'Snippets'
+const url = 'https://mooth.tech/snippets'
+
 const SnippetsPage: React.FC<SnippetsPageProps> = ({ snippets }) => {
   return (
     <Container>
+      <NextSeo
+        title={title}
+        description={description}
+        canonical={url}
+        openGraph={{ title, description, type: 'website', url }}
+      />
       <div className="py-8">
         <PostHeading>Snippets</PostHeading>
-        <p className="mt-6 mb-12 text-lg text-center">Little bits of code that I find useful.</p>
+        <p className="mt-6 mb-12 text-lg text-center">{description}</p>
         <div className="grid grid-cols-1 gap-8 md:grid-cols-2">
           {snippets.map(({ slug, title, short_description, created_at }) => (
             <Link href={`/snippets/${slug}`} passHref key={slug}>
