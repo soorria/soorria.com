@@ -4,7 +4,7 @@ import PostLayout from '@/components/PostLayout'
 import { Snippet, SnippetFrontMatter } from '@/types/snippet'
 import gqlFetch from '@/utils/gqlFetch'
 import { hydrate } from '@/lib/mdx-hydrate'
-import { getFileWithMdx } from '@/lib/data'
+import { getAllFilesFrontMatter, getFileWithMdx } from '@/lib/data'
 import { DataType } from '@/types/data'
 import editUrl from '@/utils/editUrl'
 import { NextSeo } from 'next-seo'
@@ -76,15 +76,9 @@ export const getStaticProps: GetStaticProps<SnippetPageProps, { slug: string }> 
 }
 
 export const getStaticPaths: GetStaticPaths = async () => {
-  const { snippets } = await gqlFetch<{ snippets: { slug: string }[] }>(
-    'http://snippetsapi.mooth.tech/api/v1/graphql',
-    `query {
-      snippets {
-        slug
-      }
-    }`,
-    {}
-  )
+  const snippets = await getAllFilesFrontMatter<SnippetFrontMatter>(DataType.snippets)
+
+  console.log(snippets.map(({ slug }) => slug))
 
   return {
     paths: snippets.map(({ slug }) => ({ params: { slug } })),
