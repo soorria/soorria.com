@@ -23,7 +23,13 @@ const Hero: React.FC = () => {
             Hey, I&apos;m Soorria
           </p>
           <p className="opacity-0 select-none">Hey, I&apos;m Soorria</p>
-          <h1 className="absolute inset-0">Hey, I&apos;m Soorria</h1>
+          <h1
+            className={`absolute inset-0 ${
+              hovered ? 'transition-opacity delay-150 opacity-0' : ''
+            }`}
+          >
+            Hey, I&apos;m Soorria
+          </h1>
           <p
             className={`${CLASSNAMES.heroCommon} ${
               hovered ? '' : 'translate-x-4 translate-y-4 md:translate-x-8 md:translate-y-8'
