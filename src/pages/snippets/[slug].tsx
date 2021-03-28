@@ -78,8 +78,6 @@ export const getStaticProps: GetStaticProps<SnippetPageProps, { slug: string }> 
 export const getStaticPaths: GetStaticPaths = async () => {
   const snippets = await getAllFilesFrontMatter<SnippetFrontMatter>(DataType.snippets)
 
-  console.log(snippets.map(({ slug }) => slug))
-
   return {
     paths: snippets.map(({ slug }) => ({ params: { slug } })),
     fallback: false,
