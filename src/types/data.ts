@@ -12,6 +12,7 @@ export interface BaseData {
   updated_at: string
   short_description: string
   mdxSource: MdxRemote.Source
+  tags: string[]
 }
 
 export type FrontMatter<T extends BaseData> = Omit<T, 'mdxSource'>

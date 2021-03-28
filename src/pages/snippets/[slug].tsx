@@ -30,7 +30,7 @@ const SnippetPage: React.FC<SnippetPageProps> = ({ snippet, mdx }) => {
           description: snippet.short_description,
           type: 'article',
           article: {
-            tags: snippet.types,
+            tags: [snippet.category, ...snippet.tags],
             section: 'Snippets',
             authors: ['Soorria Saruva'],
             publishedTime: new Date(snippet.created_at).toISOString(),
