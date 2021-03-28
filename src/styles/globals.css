@@ -28,7 +28,7 @@
 
 html {
   scroll-behavior: smooth;
-  min-width: 375px;
+  min-width: 360px;
 }
 
 #__next {
