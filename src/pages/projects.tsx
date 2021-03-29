@@ -6,7 +6,9 @@ interface ProjectsPageProps {}
 const ProjectsPage: React.FC<ProjectsPageProps> = () => {
   return (
     <Container>
-      <PostHeading>Projects</PostHeading>
+      <div className="py-8">
+        <PostHeading>Projects</PostHeading>
+      </div>
     </Container>
   )
 }

@@ -25,7 +25,7 @@ const Hero: React.FC = () => {
           <p className="opacity-0 select-none">Hey, I&apos;m Soorria</p>
           <h1
             className={`absolute inset-0 ${
-              hovered ? 'transition-opacity delay-150 opacity-0' : ''
+              hovered ? 'transition-opacity delay-150 sm:opacity-0' : ''
             }`}
           >
             Hey, I&apos;m Soorria

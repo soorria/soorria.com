@@ -1,16 +1,16 @@
 import Container from '@/components/Container'
 import { PostHeading } from '@/components/PostLayout'
 
-interface PostsPageProps {}
+interface AboutPageProps {}
 
-const PostsPage: React.FC<PostsPageProps> = () => {
+const AboutPage: React.FC<AboutPageProps> = () => {
   return (
     <Container>
       <div className="py-8">
-        <PostHeading>Posts</PostHeading>
+        <PostHeading>About Me</PostHeading>
       </div>
     </Container>
   )
 }
 
-export default PostsPage
+export default AboutPage
