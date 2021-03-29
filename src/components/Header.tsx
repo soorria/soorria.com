@@ -3,14 +3,14 @@ import Container from './Container'
 import SpinnyHomeLink from './SpinnyHomeLink'
 
 const LINKS = [
-  {
-    title: 'home',
-    href: '/',
-  },
-  {
-    title: 'about',
-    href: '/about',
-  },
+  // {
+  //   title: 'home',
+  //   href: '/',
+  // },
+  // {
+  //   title: 'about',
+  //   href: '/about',
+  // },
   {
     title: 'projects',
     href: '/projects',
@@ -28,6 +28,12 @@ const LINKS = [
 const Header: React.FC = () => {
   return (
     <Container>
+      <a
+        href="#main-content"
+        className="font-bold sr-only focus:not-sr-only font-display text-drac-pink"
+      >
+        Skip to Main Content
+      </a>
       <header className="flex items-center justify-between py-4">
         <SpinnyHomeLink />
         <nav className="flex space-x-1 sm:space-x-3 sm:text-lg font-display">

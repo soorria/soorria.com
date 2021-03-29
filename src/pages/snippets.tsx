@@ -1,19 +1,20 @@
 import { GetStaticProps } from 'next'
 import Link from 'next/link'
-import { PostHeading } from '@/components/PostLayout'
 import { format } from 'date-fns'
+import { NextSeo } from 'next-seo'
+import { PostHeading } from '@/components/PostLayout'
 import Container from '@/components/Container'
 import { SnippetFrontMatter } from '@/types/snippet'
 import { getAllFilesFrontMatter } from '@/lib/data'
 import { DataType } from '@/types/data'
 import { ClockIconSolid, EditIcon } from '@/components/icons'
-import { NextSeo } from 'next-seo'
 
 interface SnippetsPageProps {
   snippets: SnippetFrontMatter[]
 }
 
-const description = 'Little bits of code that I find useful.'
+const description =
+  'Little bits of code that I find useful. Mostly written in TypeScript and often for React.'
 const title = 'Snippets'
 const url = 'https://mooth.tech/snippets'
 

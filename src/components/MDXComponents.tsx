@@ -1,18 +1,5 @@
-import Link from 'next/link'
 import { useState } from 'react'
-
-const CustomLink: React.FC<{ href: string } & Record<string, any>> = props => {
-  const isExternal = props.href.startsWith('http')
-  return isExternal ? (
-    <a href={props.href} rel="noopenner noreferrer" target="_blank">
-      {props.children}
-    </a>
-  ) : (
-    <Link href={props.href} passHref>
-      <a>{props.children}</a>
-    </Link>
-  )
-}
+import CustomLink from './CustomLink'
 
 const COPIED_CLICK_TIMEOUT = 2000
 const LANGUAGE_NAME_MAP: Record<string, string> = {
