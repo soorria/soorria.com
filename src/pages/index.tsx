@@ -15,9 +15,9 @@ const Hero: React.FC = () => {
     >
       <div className="relative">
         <p
-          className={`${CLASSNAMES.heroCommon} ${
+          className={`text-drac-pink ${CLASSNAMES.heroCommon} ${
             hovered ? '' : '-translate-x-4 -translate-y-4 md:-translate-x-8 md:-translate-y-8'
-          } text-drac-pink`}
+          }`}
         >
           Hey, I&apos;m Soorria
         </p>
@@ -30,9 +30,9 @@ const Hero: React.FC = () => {
           Hey, I&apos;m Soorria
         </h1>
         <p
-          className={`${CLASSNAMES.heroCommon} ${
+          className={`text-drac-purple ${CLASSNAMES.heroCommon} ${
             hovered ? '' : 'translate-x-4 translate-y-4 md:translate-x-8 md:translate-y-8'
-          } text-drac-purple`}
+          }`}
         >
           Hey, I&apos;m Soorria
         </p>
