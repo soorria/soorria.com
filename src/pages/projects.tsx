@@ -1,15 +1,13 @@
-import Container from '@/components/Container'
+import MainLayout from '@/components/MainLayout'
 import { PostHeading } from '@/components/PostLayout'
 
 interface ProjectsPageProps {}
 
 const ProjectsPage: React.FC<ProjectsPageProps> = () => {
   return (
-    <Container>
-      <div className="py-8">
-        <PostHeading>Projects</PostHeading>
-      </div>
-    </Container>
+    <MainLayout>
+      <PostHeading>Projects</PostHeading>
+    </MainLayout>
   )
 }
 
