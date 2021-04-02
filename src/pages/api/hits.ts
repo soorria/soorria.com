@@ -1,19 +1,16 @@
-import { getDetaDb } from '@/lib/deta'
+import { getHits, getHitsByCategory, trackHit } from '@/lib/hits'
 import { NextApiHandler } from 'next'
-
-const getHitsDb = () => getDetaDb(process.env.NODE_ENV === 'production' ? 'hits' : 'hits-dev')
 
 const handler: NextApiHandler = async (req, res) => {
   if (req.method === 'GET') {
     const { category, slug } = req.query
 
     if (typeof category !== 'string' || typeof slug !== 'string') {
-      res.status(406).end()
+      return res.status(406).end()
     }
+    await getHitsByCategory('test')
 
-    const db = getHitsDb()
-    const response: any = await db.get(`${category}/${slug}`)
-    const hits = response?.hits ?? 0
+    const hits = await getHits(category, slug)
 
     return res.json({ hits })
   }
@@ -22,16 +19,13 @@ const handler: NextApiHandler = async (req, res) => {
     const { category, slug } = req.body
 
     if (typeof category !== 'string' || typeof slug !== 'string') {
-      res.status(406).end()
+      return res.status(406).end()
     }
 
-    const db = getHitsDb()
-    const key = `${category}/${slug}`
-    try {
-      await db.update({ hits: db.util.increment(1) }, key)
-    } catch (err) {
-      await db.insert({ hits: 1, category, slug }, key)
+    if (!req.preview) {
+      await trackHit(category, slug)
     }
+
     return res.status(204).end()
   }
 

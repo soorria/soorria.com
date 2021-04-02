@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import { useRouter } from 'next/router'
 import Container from './Container'
 import { HeartIcon } from './icons'
 
@@ -33,9 +34,10 @@ const LINKS = [
 interface FooterProps {}
 
 const Footer: React.FC<FooterProps> = () => {
+  const router = useRouter()
   return (
     <Container>
-      <footer className="py-8 border-t border-drac-curr">
+      <footer className="flex flex-col py-8 space-y-8 border-t border-drac-curr">
         <div className="text-center">
           Made with{' '}
           <span className="relative inline-block w-5 h-5 align-middle group">
@@ -44,7 +46,7 @@ const Footer: React.FC<FooterProps> = () => {
           </span>{' '}
           by Soorria
         </div>
-        <div className="grid justify-between max-w-sm grid-cols-2 gap-4 mx-auto mt-8 text-center sm:grid-cols-3">
+        <div className="grid justify-between w-full max-w-sm grid-cols-2 gap-4 mx-auto text-center sm:grid-cols-3">
           {LINKS.map(({ title, href, isExternal }) =>
             isExternal ? (
               <a
@@ -65,6 +67,13 @@ const Footer: React.FC<FooterProps> = () => {
             )
           )}
         </div>
+        {router.isPreview && (
+          <div className="text-center">
+            <Link href="/stats">
+              <a className="transition-colors hover:text-drac-purple text-drac-comment">stats</a>
+            </Link>
+          </div>
+        )}
       </footer>
     </Container>
   )

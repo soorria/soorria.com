@@ -8,5 +8,6 @@ declare module 'mdx-prism' {
 declare namespace NodeJS {
   interface ProcessEnv {
     DETA_PROJECT_KEY: string
+    PREVIEW_PW: string
   }
 }
