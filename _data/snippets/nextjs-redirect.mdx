@@ -1,0 +1,31 @@
+---
+title: Next.js <Redirect />
+short_description: A <Redirect /> component like the one for react-router.
+category: React
+tags:
+  - typescript
+  - react
+created_at: '2021-04-02'
+updated_at: '2021-04-02'
+---
+
+A `<Redirect />` component like the one from [`react-router`](https://reactrouter.com/).
+
+```typescript
+import { useRouter } from 'next/router'
+
+interface RedirectProps {
+  to: string
+  replace?: boolean
+}
+
+const Redirect: React.FC<RedirectProps> = ({ to, replace }) => {
+  const router = useRouter()
+
+  useEffect(() => {
+    router[replace ? 'replace' : 'push'](to)
+  }, [to, replace])
+
+  return null
+}
+```
