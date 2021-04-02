@@ -1,5 +1,4 @@
 import Link from 'next/link'
-import { useRouter } from 'next/router'
 import Container from './Container'
 import { HeartIcon } from './icons'
 
@@ -34,7 +33,6 @@ const LINKS = [
 interface FooterProps {}
 
 const Footer: React.FC<FooterProps> = () => {
-  const router = useRouter()
   return (
     <Container>
       <footer className="flex flex-col py-8 space-y-8 border-t border-drac-curr">
@@ -67,13 +65,6 @@ const Footer: React.FC<FooterProps> = () => {
             )
           )}
         </div>
-        {router.isPreview && (
-          <div className="text-center">
-            <Link href="/stats">
-              <a className="transition-colors hover:text-drac-purple text-drac-comment">stats</a>
-            </Link>
-          </div>
-        )}
       </footer>
     </Container>
   )
