@@ -1149,6 +1149,11 @@
     lodash.merge "^4.6.2"
     lodash.uniq "^4.5.0"
 
+"@types/deta@^0.0.0":
+  version "0.0.0"
+  resolved "https://registry.yarnpkg.com/@types/deta/-/deta-0.0.0.tgz#3fafa9ae9036f9149ddaddda3b0bac3a668d0f3d"
+  integrity sha512-BFV9RX7Rlf609ew+aDp+upGKEKX8fpIcZwe7UChy7g9r7f2JKEZd/iE3fZG/Pt52rF3Cw1uLLlyji8pwLVEyyw==
+
 "@types/hast@^2.0.0":
   version "2.3.1"
   resolved "https://registry.yarnpkg.com/@types/hast/-/hast-2.3.1.tgz#b16872f2a6144c7025f296fb9636a667ebb79cd9"
@@ -2053,6 +2058,13 @@ des.js@^1.0.0:
   dependencies:
     inherits "^2.0.1"
     minimalistic-assert "^1.0.0"
+
+deta@^0.0.8:
+  version "0.0.8"
+  resolved "https://registry.yarnpkg.com/deta/-/deta-0.0.8.tgz#9195b13d34b92ba6492ffe35e3c1331d45434a19"
+  integrity sha512-yUABLzs340aKs8UYHAP+n3Ngo5w8TrnstQcwy5wSsxcr9pWy6vvmwP7d75hfkr6FLdeZPwVzA2tUZRyxWuLEVA==
+  dependencies:
+    node-fetch "^2.6.0"
 
 detab@2.0.4:
   version "2.0.4"
@@ -3419,7 +3431,7 @@ node-emoji@^1.8.1:
   dependencies:
     lodash.toarray "^4.4.0"
 
-node-fetch@2.6.1:
+node-fetch@2.6.1, node-fetch@^2.6.0:
   version "2.6.1"
   resolved "https://registry.yarnpkg.com/node-fetch/-/node-fetch-2.6.1.tgz#045bd323631f76ed2e2b55573394416b639a0052"
   integrity sha512-V4aYg89jEoVRxRb2fJdAg8FHvI7cEyYdVAh94HH0UIK8oJxUfkjlDQN9RbMx+bEjP7+ggMiFRprSti032Oipxw==

@@ -4,3 +4,9 @@
 declare module 'mdx-prism' {
   export default any
 }
+
+declare namespace NodeJS {
+  interface ProcessEnv {
+    DETA_PROJECT_KEY: string
+  }
+}

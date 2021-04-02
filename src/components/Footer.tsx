@@ -48,6 +48,7 @@ const Footer: React.FC<FooterProps> = () => {
           {LINKS.map(({ title, href, isExternal }) =>
             isExternal ? (
               <a
+                key={title}
                 className="transition-colors hover:text-drac-purple text-drac-comment"
                 href={href}
                 target="_blank"
