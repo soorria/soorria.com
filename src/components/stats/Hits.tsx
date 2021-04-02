@@ -1,5 +1,4 @@
 import { Hit } from '@/types/hits'
-import Link from 'next/link'
 import useSWR from 'swr'
 import { ExternalIcon } from '../icons'
 import Logo from '../logo'

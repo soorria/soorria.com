@@ -1,11 +1,9 @@
 import MainLayout from '@/components/MainLayout'
 import { PostHeading } from '@/components/PostLayout'
 import Hits from '@/components/stats/Hits'
-import { Hit } from '@/types/hits'
 import { GetServerSideProps } from 'next'
 import { useRouter } from 'next/router'
 import { FormEventHandler, useEffect, useRef, useState } from 'react'
-import useSWR from 'swr'
 
 interface StatsProps {
   isPreview: boolean
@@ -55,7 +53,6 @@ const Login: React.FC = () => {
 
 const Stats: React.FC = () => {
   const router = useRouter()
-  const { data } = useSWR<{ hits: Record<string, Hit[]> }>('/api/stats/hits')
 
   const handleLogout = async () => {
     await fetch('/api/stats/init', {
