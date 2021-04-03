@@ -24,6 +24,7 @@ const handler: NextApiHandler = async (req, res) => {
     process.cwd(),
     './node_modules/playwright-core/browsers.json'
   )
+  fileThatDoesntExistSometimes
 
   try {
     const browser = await playwright.launchChromium()
