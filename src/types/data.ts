@@ -3,16 +3,15 @@ import { MdxRemote } from 'next-mdx-remote/types'
 export enum DataType {
   snippets = 'snippets',
   posts = 'posts',
+  projects = 'projects',
+  misc = 'misc',
 }
 
 export interface BaseData {
   slug: string
   title: string
-  created_at: string
-  updated_at: string
   short_description: string
   mdxSource: MdxRemote.Source
-  tags: string[]
 }
 
 export type FrontMatter<T extends BaseData> = Omit<T, 'mdxSource'>

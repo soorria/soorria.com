@@ -1,7 +1,7 @@
 import { DefaultSeoProps } from 'next-seo'
 
-const title = 'Soorria Saruva - Full Stack Web Developer'
-const description = 'Full Stack Web Developer'
+const title = 'Soorria Saruva - Full Stack Software Engineer'
+const description = 'Full Stack Software Engineer'
 
 export const SEO: DefaultSeoProps = {
   // titleTemplate: '%s • Soorria Saruva',

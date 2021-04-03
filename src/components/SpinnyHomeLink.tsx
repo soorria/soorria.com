@@ -34,7 +34,7 @@ const SpinnyHomeLink: React.FC = () => {
 
   return (
     <Link href="/">
-      <a className="flex items-center group">
+      <a className="z-10 flex items-center group">
         <span
           className="w-6 h-6 transition-transform duration-700 ease-in-out sm:w-8 sm:h-8 md:w-10 md:h-10"
           style={{ transform: `rotate(${rotation}deg)` }}

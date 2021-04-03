@@ -1,52 +1,67 @@
 import Container from '@/components/Container'
-import { useState } from 'react'
+import FeaturedProjects from '@/components/landing/FeaturedProjects'
+import Hero from '@/components/landing/hero'
+import { getFileWithMdx } from '@/lib/data'
+import { hydrate } from '@/lib/mdx-hydrate'
+import { render } from '@/lib/mdx-render'
+import { DataType } from '@/types/data'
+import { Project, ProjectFrontMatter } from '@/types/project'
+import { GetStaticProps } from 'next'
+import { MdxRemote } from 'next-mdx-remote/types'
 
-const CLASSNAMES = {
-  heroCommon: 'hidden sm:block absolute inset-0 transform transition-transform select-none',
+interface IndexProps {
+  subtitleMdx: MdxRemote.Source
+  nowMdx: MdxRemote.Source
+  projects: ProjectFrontMatter[]
 }
 
-const Hero: React.FC = () => {
-  const [hovered, setHovered] = useState(false)
-  return (
-    <div
-      onMouseEnter={() => setHovered(true)}
-      onMouseLeave={() => setHovered(false)}
-      className="py-16 my-8 overflow-x-hidden text-5xl font-bold text-center outline-none cursor-default md:text-7xl lg:text-8xl font-display group"
-    >
-      <div className="relative">
-        <p
-          className={`text-drac-pink ${CLASSNAMES.heroCommon} ${
-            hovered ? '' : '-translate-x-4 -translate-y-4 md:-translate-x-8 md:-translate-y-8'
-          }`}
-        >
-          Hey, I&apos;m Soorria
-        </p>
-        <p className="opacity-0 select-none">Hey, I&apos;m Soorria</p>
-        <h1
-          className={`absolute inset-0 duration-0 ${
-            hovered ? 'transition-opacity delay-100 sm:opacity-0' : ''
-          }`}
-        >
-          Hey, I&apos;m Soorria
-        </h1>
-        <p
-          className={`text-drac-purple ${CLASSNAMES.heroCommon} ${
-            hovered ? '' : 'translate-x-4 translate-y-4 md:translate-x-8 md:translate-y-8'
-          }`}
-        >
-          Hey, I&apos;m Soorria
-        </p>
-      </div>
-    </div>
-  )
-}
+const featuredProjects = ['jupyter-js', 'clinically-relevant', 'not-messenger', 'mooth-tech']
 
-const IndexPage: React.FC = () => {
+const subtitleSource = `
+I'm a full stack software engineer and Computer Science student
+based in Sydney, Australia.
+`
+
+const nowSource = `
+Right now, I'm a freelance web developer helping small businesses
+enter the online space and in my free time I'm working on
+[jupyter.js](https://jjs.mooth.tech).
+`
+
+const IndexPage: React.FC<IndexProps> = ({ subtitleMdx, nowMdx, projects }) => {
+  const subtitle = hydrate(subtitleMdx)
+  const now = hydrate(nowMdx)
+
   return (
     <Container>
-      <Hero />
+      <Hero subtitle={subtitle} now={now} />
+      <FeaturedProjects projects={projects} />
+      <div className="pb-20" />
     </Container>
   )
 }
 
 export default IndexPage
+
+export const getStaticProps: GetStaticProps<IndexProps> = async () => {
+  const subtitleMdx = await render(subtitleSource)
+  const nowMdx = await render(nowSource)
+
+  const projects: ProjectFrontMatter[] = await Promise.all(
+    featuredProjects.map(async projectSlug => {
+      const project = await getFileWithMdx<Project>(DataType.projects, projectSlug)
+      return {
+        ...project,
+        mdxSource: null,
+      }
+    })
+  )
+
+  return {
+    props: {
+      subtitleMdx,
+      nowMdx,
+      projects,
+    },
+  }
+}
