@@ -14,5 +14,8 @@ export interface BaseData {
   mdxSource: MdxRemote.Source
 }
 
+export type ApiData<T extends BaseData> = Omit<T, 'mdxSource'> & { content: string }
+export type BaseApiData = ApiData<BaseData>
+
 export type FrontMatter<T extends BaseData> = Omit<T, 'mdxSource'>
 export type BaseFrontMatter = FrontMatter<BaseData>

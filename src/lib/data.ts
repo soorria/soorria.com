@@ -1,4 +1,4 @@
-import { BaseData, DataType, FrontMatter } from '@/types/data'
+import { BaseData, DataType, FrontMatter, BaseApiData } from '@/types/data'
 import { promises as fs } from 'fs'
 import matter from 'gray-matter'
 import path from 'path'
@@ -29,6 +29,20 @@ export const getAllFilesFrontMatter = async <TFrontMatter>(
       } as TFrontMatter
     })
   )
+}
+
+export const getFileWithoutMdx = async <TApiData extends BaseApiData>(
+  type: DataType,
+  slug: string
+): Promise<TApiData> => {
+  const source = await fs.readFile(getSlugPath(type, slug), 'utf-8')
+  const { data, content } = matter(source)
+
+  return {
+    ...(data as any),
+    slug,
+    content,
+  } as TApiData
 }
 
 export const getFileWithMdx = async <TData extends BaseData>(
