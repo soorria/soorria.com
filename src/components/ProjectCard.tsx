@@ -1,6 +1,5 @@
 import { ProjectFrontMatter } from '@/types/project'
-import Link from 'next/link'
-import { CodeIcon, ExternalIcon, InfoIcon } from './icons'
+import { CodeIcon, ExternalIcon } from './icons'
 
 interface ProjectCardProps {
   project: ProjectFrontMatter
