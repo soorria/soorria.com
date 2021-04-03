@@ -21,7 +21,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project }) => {
         </div>
       </div>
       <div className="flex space-x-4 text-sm">
-        <Link href={`/projects/${project.slug}`}>
+        {/* <Link href={`/projects/${project.slug}`}>
           <a
             aria-label={`See details for ${project.title}`}
             className="inline-flex items-center space-x-1 underline text-drac-pink hover:text-drac-purple"
@@ -29,16 +29,18 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project }) => {
             <InfoIcon className="inline-block w-4 h-4" />
             <span>Details</span>
           </a>
-        </Link>
+        </Link> */}
 
-        <a
-          href={project.live}
-          aria-label={`View the live site for ${project.title}`}
-          className="inline-flex items-center space-x-1 underline text-drac-pink hover:text-drac-purple"
-        >
-          <ExternalIcon className="inline-block w-4 h-4" />
-          <span>View Live</span>
-        </a>
+        {project.live && (
+          <a
+            href={project.live}
+            aria-label={`View the live site for ${project.title}`}
+            className="inline-flex items-center space-x-1 underline text-drac-pink hover:text-drac-purple"
+          >
+            <ExternalIcon className="inline-block w-4 h-4" />
+            <span>View Live</span>
+          </a>
+        )}
 
         {project.source && (
           <a
