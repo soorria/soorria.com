@@ -20,8 +20,10 @@ const handler: NextApiHandler = async (req, res) => {
   //
   // For some reason it works when I have this try/catch thing.
   // Maybe it's the path.join / fs.readdir stuff
-  const fileThatDoesntExistSometimes = 'node_modules/playwright-core/browsers.json'
-  fileThatDoesntExistSometimes
+  const fileThatDoesntExistSometimes = path.join(
+    process.cwd(),
+    './node_modules/playwright-core/browsers.json'
+  )
 
   try {
     const browser = await playwright.launchChromium()
