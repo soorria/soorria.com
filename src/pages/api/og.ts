@@ -1,4 +1,6 @@
 import * as playwright from 'playwright-aws-lambda'
+import fs from 'fs'
+import path from 'path'
 import { NextApiHandler } from 'next'
 
 const handler: NextApiHandler = async (req, res) => {
@@ -7,6 +9,10 @@ const handler: NextApiHandler = async (req, res) => {
   if (typeof category !== 'string' || typeof title !== 'string' || typeof base !== 'string') {
     return res.status(406).end()
   }
+
+  console.log({
+    files: fs.readdirSync(path.join(process.cwd(), './node_modules/playwright-core/')),
+  })
 
   const browser = await playwright.launchChromium()
   const page = await browser.newPage({
