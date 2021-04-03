@@ -25,7 +25,8 @@ based in Sydney, Australia.
 const nowSource = `
 Right now, I'm a freelance web developer helping small businesses
 enter the online space and in my free time I'm working on
-[jupyter.js](https://jjs.mooth.tech).
+[jupyter.js](https://jjs.mooth.tech). Sometimes I play around with
+[Go](https://golang.org).
 `
 
 const IndexPage: React.FC<IndexProps> = ({ subtitleMdx, nowMdx, projects }) => {
