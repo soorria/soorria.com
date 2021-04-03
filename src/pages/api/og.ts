@@ -17,6 +17,9 @@ const handler: NextApiHandler = async (req, res) => {
   // This doesn't work sometimes. Not sure why.
   // It says they node_modules/playwrite-core/browsers.json
   // does not exist?????
+  //
+  // For some reason it works when I have this try/catch thing.
+  // Maybe it's the path.join / fs.readdir stuff
 
   try {
     const browser = await playwright.launchChromium()
@@ -40,10 +43,9 @@ const handler: NextApiHandler = async (req, res) => {
 
     res.end(data)
   } catch (err) {
-    console.log(
-      fs.readdirSync(path.join(process.cwd(), './node_modules/playwright-core/browsers.json'))
-    )
-    res.end()
+    res.setHeader('Content-Type', 'image/png')
+    const data = fs.readFileSync(path.join(process.cwd(), './public/og.png'))
+    res.end(data)
   }
 }
 
