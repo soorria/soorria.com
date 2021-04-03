@@ -1,5 +1,7 @@
 import * as playwright from 'playwright-aws-lambda'
 import { NextApiHandler } from 'next'
+import fs from 'fs'
+import path from 'path'
 
 const handler: NextApiHandler = async (req, res) => {
   const { category, title, base } = req.query
@@ -16,26 +18,33 @@ const handler: NextApiHandler = async (req, res) => {
   // It says they node_modules/playwrite-core/browsers.json
   // does not exist?????
 
-  const browser = await playwright.launchChromium()
-  const page = await browser.newPage({
-    viewport: {
-      width: 1200,
-      height: 600,
-    },
-  })
+  try {
+    const browser = await playwright.launchChromium()
+    const page = await browser.newPage({
+      viewport: {
+        width: 1200,
+        height: 600,
+      },
+    })
 
-  const url = `${base}/og/${category}/${title ? encodeURIComponent(title) : ''}`
+    const url = `${base}/og/${category}/${title ? encodeURIComponent(title) : ''}`
 
-  await page.goto(url, { timeout: 15 * 1000 })
-  const data = await page.screenshot({
-    type: 'png',
-  })
-  await browser.close()
+    await page.goto(url, { timeout: 15 * 1000 })
+    const data = await page.screenshot({
+      type: 'png',
+    })
+    await browser.close()
 
-  res.setHeader('Cache-Control', 's-maxage=31536000, stale-while-revalidate')
-  res.setHeader('Content-Type', 'image/png')
+    res.setHeader('Cache-Control', 's-maxage=31536000, stale-while-revalidate')
+    res.setHeader('Content-Type', 'image/png')
 
-  res.end(data)
+    res.end(data)
+  } catch (err) {
+    console.log(
+      fs.readdirSync(path.join(process.cwd(), './node_modules/playwright-core/browsers.json'))
+    )
+    res.end()
+  }
 }
 
 export default handler
