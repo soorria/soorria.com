@@ -4,7 +4,11 @@ import { NextApiHandler } from 'next'
 const handler: NextApiHandler = async (req, res) => {
   const { category, title, base } = req.query
 
-  if (typeof category !== 'string' || typeof title !== 'string' || typeof base !== 'string') {
+  if (
+    typeof category !== 'string' ||
+    (title && typeof title !== 'string') ||
+    typeof base !== 'string'
+  ) {
     return res.status(406).end()
   }
 
@@ -20,7 +24,7 @@ const handler: NextApiHandler = async (req, res) => {
     },
   })
 
-  const url = `${base}/og/${category}/${encodeURIComponent(title)}`
+  const url = `${base}/og/${category}/${title ? encodeURIComponent(title) : ''}`
 
   await page.goto(url, { timeout: 15 * 1000 })
   const data = await page.screenshot({
