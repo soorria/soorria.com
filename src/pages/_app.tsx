@@ -8,6 +8,7 @@ import { DefaultSeo } from 'next-seo'
 import { SEO } from '@/next-seo.config'
 
 const MyApp: React.FC<AppProps> = ({ Component, pageProps }) => {
+  if (pageProps.noBoilerPlate) return <Component {...pageProps} />
   return (
     <>
       <Head>
