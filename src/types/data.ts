@@ -4,6 +4,7 @@ export enum DataType {
   snippets = 'snippets',
   posts = 'posts',
   projects = 'projects',
+  work = 'work',
   misc = 'misc',
 }
 

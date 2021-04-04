@@ -1,11 +1,14 @@
 import Container from '@/components/Container'
+import Education from '@/components/landing/Education'
 import FeaturedProjects from '@/components/landing/FeaturedProjects'
+import FeaturedWork from '@/components/landing/FeaturedWork'
 import Hero from '@/components/landing/hero'
 import { getFileWithMdx } from '@/lib/data'
 import { hydrate } from '@/lib/mdx-hydrate'
 import { render } from '@/lib/mdx-render'
 import { DataType } from '@/types/data'
 import { Project, ProjectFrontMatter } from '@/types/project'
+import { WorkFrontMatter } from '@/types/work'
 import { GetStaticProps } from 'next'
 import { MdxRemote } from 'next-mdx-remote/types'
 
@@ -14,6 +17,33 @@ interface IndexProps {
   nowMdx: MdxRemote.Source
   projects: ProjectFrontMatter[]
 }
+
+const work: WorkFrontMatter[] = [
+  {
+    slug: 'freelance-web-dev',
+    title: 'Freelance Web Developer',
+    company: 'Maclean Natural Health',
+    from: 'Nov 2020',
+    short_description: `
+      Built a mobile-friendly e-commerce website using React, Nextjs for the web
+      frontend and Stripe to handle secure payments. Consulted with client to 
+      create an intuitive live Admin dashboard to manage general site information,
+      products and order fulfillment. Used MongoDB to persist all required data and
+      Google OAuth for a simple login experience.
+    `,
+    location: 'Sydney, NSW',
+    tech_used: [],
+  },
+  {
+    slug: 'casual-academic-unsw',
+    title: 'Casual Academic',
+    company: 'University of New South Wales',
+    from: 'Jan 2021',
+    short_description: `Academic tutor and lab assistant for COMP6080 - Web Front-End Programming.`,
+    location: 'Sydney, NSW',
+    tech_used: [],
+  },
+]
 
 const featuredProjects = ['jupyter-js', 'clinically-relevant', 'not-messenger', 'mooth-tech']
 
@@ -37,6 +67,8 @@ const IndexPage: React.FC<IndexProps> = ({ subtitleMdx, nowMdx, projects }) => {
     <Container>
       <Hero subtitle={subtitle} now={now} />
       <FeaturedProjects projects={projects} />
+      <FeaturedWork work={work} />
+      <Education />
       <div className="pb-20" />
     </Container>
   )

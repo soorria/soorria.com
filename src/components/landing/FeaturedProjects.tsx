@@ -1,6 +1,7 @@
 import { ProjectFrontMatter } from '@/types/project'
 import Link from 'next/link'
 import ProjectCard from '../ProjectCard'
+import LandingSection from './LandingSection'
 
 interface FeaturedProjectsProps {
   projects: ProjectFrontMatter[]
@@ -8,8 +9,7 @@ interface FeaturedProjectsProps {
 
 const FeaturedProjects: React.FC<FeaturedProjectsProps> = ({ projects }) => {
   return (
-    <section className="my-8">
-      <h3 className="mb-8 text-4xl font-bold font-display">Projects</h3>
+    <LandingSection title="Projects">
       <div className="grid grid-cols-1 gap-12 mb-8 sm:grid-cols-2">
         {projects.map(project => (
           <ProjectCard key={project.slug} project={project} />
@@ -22,7 +22,7 @@ const FeaturedProjects: React.FC<FeaturedProjectsProps> = ({ projects }) => {
           </a>
         </Link>
       </div>
-    </section>
+    </LandingSection>
   )
 }
 
