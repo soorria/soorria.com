@@ -34,7 +34,6 @@ const LINKS = [
 const Contact: React.FC<ContactProps> = () => {
   return (
     <div className="relative py-8 sm:py-16" id="contact">
-      <div className="absolute top-0 w-screen h-full transform -translate-x-1/2 left-1/2 bg-drac-curr" />
       <div className="relative">
         <h3 className="mb-6 text-4xl font-bold font-display">Contact</h3>
         <div className="grid grid-cols-1 gap-8 text-xl sm:grid-cols-2">
