@@ -32,7 +32,15 @@ const work: WorkFrontMatter[] = [
       Google OAuth for a simple login experience.
     `,
     location: 'Sydney, NSW',
-    tech_used: [],
+    tech_used: [
+      'Next.js',
+      'React',
+      'MongoDB',
+      'Stripe',
+      'Google OAuth',
+      'Chakra UI',
+      'Firebase Auth',
+    ],
   },
   {
     slug: 'casual-academic-unsw',
@@ -41,7 +49,7 @@ const work: WorkFrontMatter[] = [
     from: 'Jan 2021',
     short_description: `Academic tutor and lab assistant for COMP6080 - Web Front-End Programming.`,
     location: 'Sydney, NSW',
-    tech_used: [],
+    tech_used: ['React', 'HTML', 'CSS', 'JavaScript', 'Jest', 'Enzyme', 'Storybook', 'Cypress'],
   },
 ]
 

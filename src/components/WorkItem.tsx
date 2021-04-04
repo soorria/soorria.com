@@ -12,6 +12,7 @@ const WorkItem: React.FC<WorkItemProps> = ({
   from,
   to,
   short_description,
+  tech_used,
 }) => (
   <div className="flex flex-col space-y-2">
     <div className="flex-grow text-xl font-bold text-drac-pink font-display">{title}</div>
@@ -24,6 +25,15 @@ const WorkItem: React.FC<WorkItemProps> = ({
       </div>
     </div>
     {short_description && <div>{short_description}</div>}
+    {tech_used?.length ? (
+      <div className="inline-flex flex-wrap -mt-1 -ml-2 text-xs text-opacity-80 text-drac-fg">
+        {tech_used.map(tech => (
+          <span key={tech} className="mt-1 ml-2">
+            {tech}
+          </span>
+        ))}
+      </div>
+    ) : null}
   </div>
 )
 
