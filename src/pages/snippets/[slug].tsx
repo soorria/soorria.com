@@ -8,6 +8,7 @@ import { DataType } from '@/types/data'
 import editUrl from '@/utils/editUrl'
 import { NextSeo } from 'next-seo'
 import useTrackHit from '@/hooks/useTrackHit'
+import { getOgImage } from '@/utils/og'
 
 interface SnippetPageProps {
   snippet: SnippetFrontMatter
@@ -39,6 +40,7 @@ const SnippetPage: React.FC<SnippetPageProps> = ({ snippet, mdx }) => {
             publishedTime: new Date(snippet.created_at).toISOString(),
             modifiedTime: new Date(snippet.updated_at).toISOString(),
           },
+          images: [getOgImage(DataType.snippets, title)],
         }}
       />
       <div className="mx-auto mt-6 prose md:prose-lg">

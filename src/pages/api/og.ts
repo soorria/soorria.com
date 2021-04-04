@@ -30,7 +30,7 @@ const handler: NextApiHandler = async (req, res) => {
     const page = await browser.newPage({
       viewport: {
         width: 1200,
-        height: 600,
+        height: 630,
       },
     })
 

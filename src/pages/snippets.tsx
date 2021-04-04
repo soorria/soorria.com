@@ -6,7 +6,7 @@ import { getAllFilesFrontMatter } from '@/lib/data'
 import { DataType } from '@/types/data'
 import SnippetCard from '@/components/SnippetCard'
 import MainLayout from '@/components/MainLayout'
-import getOgUrl from '@/utils/getOgUrl'
+import { getOgImage } from '@/utils/og'
 
 interface SnippetsPageProps {
   snippets: SnippetFrontMatter[]
@@ -29,7 +29,7 @@ const SnippetsPage: React.FC<SnippetsPageProps> = ({ snippets }) => {
           description,
           type: 'website',
           url,
-          images: [{ url: getOgUrl('snippets'), width: 1200, height: 630 }],
+          images: [getOgImage(DataType.snippets)],
         }}
       />
       <PostHeading>Snippets</PostHeading>

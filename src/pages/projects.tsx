@@ -4,6 +4,7 @@ import ProjectCard from '@/components/ProjectCard'
 import { getAllFilesFrontMatter } from '@/lib/data'
 import { DataType } from '@/types/data'
 import { ProjectFrontMatter } from '@/types/project'
+import { getOgImage } from '@/utils/og'
 import { GetStaticProps } from 'next'
 import { NextSeo } from 'next-seo'
 
@@ -22,7 +23,13 @@ const ProjectsPage: React.FC<ProjectsPageProps> = ({ projects }) => {
         description={description}
         title={title}
         canonical={url}
-        openGraph={{ title, description, type: 'website', url }}
+        openGraph={{
+          title,
+          description,
+          type: 'website',
+          url,
+          images: [getOgImage(DataType.projects)],
+        }}
       />
       <PostHeading>Projects</PostHeading>
       <p className="mt-6 mb-12 text-lg text-center">{description}</p>
