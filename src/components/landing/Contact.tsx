@@ -37,7 +37,7 @@ const Contact: React.FC<ContactProps> = () => {
       <h3 className="mb-6 text-4xl font-bold font-display">Contact</h3>
       <div className="grid grid-cols-1 gap-8 text-xl sm:grid-cols-2">
         <div className="">
-          The best way to get in touch is probably to email me or shoot me a message on FaceBook
+          The best way to get in touch is probably to email me or shoot me a message on Facebook
           Messenger.
         </div>
         <div className="flex flex-col space-y-4">
