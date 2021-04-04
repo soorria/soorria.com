@@ -9,7 +9,7 @@ const Education: React.FC = () => {
         company="University of New South Wales"
         location="Sydney, NSW"
         from="Feb 2018"
-        to="Dec2021"
+        to="Dec 2021"
       />
     </LandingSection>
   )
