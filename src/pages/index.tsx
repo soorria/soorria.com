@@ -1,4 +1,5 @@
 import Container from '@/components/Container'
+import Contact from '@/components/landing/Contact'
 import Education from '@/components/landing/Education'
 import FeaturedProjects from '@/components/landing/FeaturedProjects'
 import FeaturedWork from '@/components/landing/FeaturedWork'
@@ -87,6 +88,7 @@ const IndexPage: React.FC<IndexProps> = ({ subtitleMdx, nowMdx, projects }) => {
       <FeaturedProjects projects={projects} />
       <FeaturedWork work={work} />
       <Education />
+      <Contact />
       <div className="pb-20" />
     </Container>
   )

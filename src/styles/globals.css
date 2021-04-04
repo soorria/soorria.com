@@ -23,7 +23,7 @@
 
 /* Global Styles */
 ::selection {
-  @apply bg-drac-pink bg-opacity-100 text-drac-bg;
+  @apply bg-drac-pink bg-opacity-80 text-drac-bg;
 }
 
 html {

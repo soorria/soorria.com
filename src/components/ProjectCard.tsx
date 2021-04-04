@@ -35,6 +35,8 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project }) => {
             href={project.live}
             aria-label={`View the live site for ${project.title}`}
             className="inline-flex items-center space-x-1 underline text-drac-pink hover:text-drac-purple"
+            target="_blank"
+            rel="noopener noreferrer"
           >
             <ExternalIcon className="inline-block w-4 h-4" />
             <span>View Live</span>
@@ -46,6 +48,8 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project }) => {
             href={project.source}
             aria-label={`View the source code for ${project.title}`}
             className="inline-flex items-center space-x-1 underline text-drac-pink hover:text-drac-purple"
+            target="_blank"
+            rel="noopener noreferrer"
           >
             <CodeIcon className="inline-block w-4 h-4" />
             <span>Source</span>
