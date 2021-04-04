@@ -18,7 +18,7 @@ interface SnippetPageProps {
 const SnippetPage: React.FC<SnippetPageProps> = ({ snippet, mdx }) => {
   const content = hydrate(mdx)
   const url = `https://mooth.tech/snippets/${snippet.slug}`
-  const title = `${snippet.title} snippet`
+  const title = `${snippet.title} | Snippets`
 
   useTrackHit('snippets', snippet.slug)
 
@@ -40,7 +40,7 @@ const SnippetPage: React.FC<SnippetPageProps> = ({ snippet, mdx }) => {
             publishedTime: new Date(snippet.created_at).toISOString(),
             modifiedTime: new Date(snippet.updated_at).toISOString(),
           },
-          images: [getOgImage(DataType.snippets, title)],
+          images: [getOgImage(DataType.snippets, snippet.title)],
         }}
       />
       <div className="mx-auto mt-6 prose md:prose-lg">
