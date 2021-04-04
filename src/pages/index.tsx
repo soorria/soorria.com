@@ -38,6 +38,7 @@ const work: WorkFrontMatter[] = [
       'React',
       'MongoDB',
       'Stripe',
+      'TypeScript',
       'Google OAuth',
       'Chakra UI',
       'Firebase Auth',
