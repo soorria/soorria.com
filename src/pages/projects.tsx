@@ -33,7 +33,7 @@ const ProjectsPage: React.FC<ProjectsPageProps> = ({ projects }) => {
       />
       <PostHeading>Projects</PostHeading>
       <p className="mt-6 mb-12 text-lg text-center">{description}</p>
-      <div className="grid grid-cols-1 gap-12 md:grid-cols-2 auto-cols-min">
+      <div className="grid grid-cols-1 gap-12 sm:grid-cols-2 auto-cols-min">
         {projects.map(project => (
           <ProjectCard key={project.slug} project={project} />
         ))}

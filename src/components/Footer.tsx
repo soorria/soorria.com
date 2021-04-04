@@ -88,7 +88,7 @@ const Footer: React.FC<FooterProps> = () => {
           </span>{' '}
           by Soorria
         </div>
-        <div className="grid justify-center w-full max-w-sm grid-cols-1 gap-4 text-center lowercase sm:grid-cols-3">
+        <div className="grid justify-center max-w-sm grid-cols-1 gap-4 mx-auto text-center lowercase sm:grid-cols-3">
           {LINKS.map((col, i) => (
             <div key={i} className="flex flex-col w-32 mx-auto space-y-4">
               {col.map(({ title, href, key }) =>
