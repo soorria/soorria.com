@@ -49,7 +49,17 @@ const work: WorkFrontMatter[] = [
     from: 'Jan 2021',
     short_description: `Academic tutor and lab assistant for COMP6080 - Web Front-End Programming.`,
     location: 'Sydney, NSW',
-    tech_used: ['React', 'HTML', 'CSS', 'JavaScript', 'Jest', 'Enzyme', 'Storybook', 'Cypress'],
+    tech_used: [
+      'React',
+      'HTML',
+      'CSS',
+      'JavaScript',
+      'Jest',
+      'Enzyme',
+      'Storybook',
+      'Cypress',
+      'Material UI',
+    ],
   },
 ]
 
