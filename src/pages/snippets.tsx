@@ -6,6 +6,7 @@ import { getAllFilesFrontMatter } from '@/lib/data'
 import { DataType } from '@/types/data'
 import SnippetCard from '@/components/SnippetCard'
 import MainLayout from '@/components/MainLayout'
+import getOgUrl from '@/utils/getOgUrl'
 
 interface SnippetsPageProps {
   snippets: SnippetFrontMatter[]
@@ -23,7 +24,13 @@ const SnippetsPage: React.FC<SnippetsPageProps> = ({ snippets }) => {
         title={title}
         description={description}
         canonical={url}
-        openGraph={{ title, description, type: 'website', url }}
+        openGraph={{
+          title,
+          description,
+          type: 'website',
+          url,
+          images: [{ url: getOgUrl('snippets'), width: 1200, height: 630 }],
+        }}
       />
       <PostHeading>Snippets</PostHeading>
       <p className="mt-6 mb-12 text-lg text-center">{description}</p>

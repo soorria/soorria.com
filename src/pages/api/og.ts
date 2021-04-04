@@ -5,13 +5,10 @@ import path from 'path'
 
 const handler: NextApiHandler = async (req, res) => {
   try {
-    const { category, title, base } = req.query
+    const { category, title, base: _base } = req.query
+    const base = typeof _base === 'string' && _base ? _base : 'https://mooth.tech'
 
-    if (
-      typeof category !== 'string' ||
-      (title && typeof title !== 'string') ||
-      typeof base !== 'string'
-    ) {
+    if (typeof category !== 'string' || (title && typeof title !== 'string')) {
       throw 1
     }
 
@@ -53,6 +50,7 @@ const handler: NextApiHandler = async (req, res) => {
     res.setHeader('Content-Type', 'image/png')
     const data = fs.readFileSync(path.join(process.cwd(), './public/og.png'))
     res.end(data)
+    console.log(err)
   }
 }
 
