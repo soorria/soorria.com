@@ -3,7 +3,7 @@ import LandingSection from './LandingSection'
 
 const Education: React.FC = () => {
   return (
-    <LandingSection title="Education">
+    <LandingSection id="education" title="Education">
       <WorkItem
         title="Bachelor of Science: Computer Science"
         company="University of New South Wales"

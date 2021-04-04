@@ -25,7 +25,7 @@ const work: WorkFrontMatter[] = [
     company: 'Maclean Natural Health',
     from: 'Nov 2020',
     short_description: `
-      Built a mobile-friendly e-commerce website using React, Nextjs for the web
+      Built a mobile-friendly e-commerce website using React, Next.js for the web
       frontend and Stripe to handle secure payments. Consulted with client to 
       create an intuitive live Admin dashboard to manage general site information,
       products and order fulfillment. Used MongoDB to persist all required data and
@@ -56,7 +56,7 @@ const nowSource = `
 Right now, I'm a freelance web developer helping small businesses
 enter the online space and in my free time I'm working on
 [jupyter.js](https://jjs.mooth.tech). Sometimes I play around with
-[Go](https://golang.org).
+Go and Python.
 `
 
 const IndexPage: React.FC<IndexProps> = ({ subtitleMdx, nowMdx, projects }) => {

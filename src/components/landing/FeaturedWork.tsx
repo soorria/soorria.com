@@ -8,7 +8,7 @@ interface FeaturedWorkProps {
 
 const FeaturedWork: React.FC<FeaturedWorkProps> = ({ work }) => {
   return (
-    <LandingSection title="Work Experience">
+    <LandingSection id="work" title="Work Experience">
       <div className="flex flex-col space-y-8">
         {work.map(({ slug, ...rest }) => (
           <WorkItem key={slug} {...rest} />
