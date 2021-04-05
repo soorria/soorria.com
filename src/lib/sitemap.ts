@@ -17,18 +17,12 @@ export const generateSitemap = async (): Promise<string> => {
     // Ignore dynamic route files
     .filter(page => !page.includes('['))
 
-  const sitemap = `
-    <?xml version="1.0" encoding="UTF-8"?>
-    <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-      ${pages
-        .map(
-          page => `
-      <url><loc>https://mooth.tech${page}</loc></url>
-      `
-        )
-        .join('')}
-    </urlset>
-  `.trim()
+  const urls = pages
+    .map(page => `<url><loc>https://mooth.tech${page}</loc></url>`)
+    .join('')
+    .replace(/\s*/g, '')
+
+  const sitemap = `<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">${urls}</urlset>`
 
   return sitemap
 }
