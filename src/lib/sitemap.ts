@@ -1,18 +1,19 @@
 import globby from 'globby'
 
+const PAGES_DIR = 'src/pages'
 const DATA_DIR = '_data'
 
 export const generateSitemap = async (): Promise<string> => {
   const pageFiles = await globby([
-    'src/pages/**/*.tsx',
+    `${PAGES_DIR}/**/*.tsx`,
     `${DATA_DIR}/**/*.mdx`,
-    '!src/pages/_*.tsx',
+    `!${PAGES_DIR}/_*.tsx`,
     `!${DATA_DIR}/misc/*.mdx`,
   ])
 
   const pages = pageFiles
     .map(pageFile =>
-      pageFile.replace('src/pages', '').replace('_data', '').replace('.tsx', '').replace('.mdx', '')
+      pageFile.replace(PAGES_DIR, '').replace(DATA_DIR, '').replace('.tsx', '').replace('.mdx', '')
     )
     // Ignore dynamic route files
     .filter(page => !page.includes('['))
