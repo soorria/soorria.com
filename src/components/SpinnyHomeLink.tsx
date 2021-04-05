@@ -42,8 +42,8 @@ const SpinnyHomeLink: React.FC = () => {
           <Logo />
         </span>
         <span className="ml-1.5 text-2xl font-bold lowercase sm:ml-3 sm:text-3xl font-display">
-          <span className="hidden sm:inline">Soorria</span>
-          <span className="hidden md:inline"> Saruva</span>
+          <span className="sr-only sm:not-sr-only">Soorria</span>
+          <span className="sr-only md:not-sr-only"> Saruva</span>
         </span>
       </a>
     </Link>
