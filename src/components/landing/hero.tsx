@@ -42,9 +42,9 @@ const Hero: React.FC<{ subtitle: ReactNode; now: ReactNode }> = ({ subtitle, now
           </p>
         </div>
       </div>
-      <div className="mb-8 text-xl font-bold sm:text-2xl md:text-3xl sm:my-8 font-display">
+      <h2 className="mb-8 text-xl font-bold sm:text-2xl md:text-3xl sm:my-8 font-display">
         {subtitle}
-      </div>
+      </h2>
       <div className="text-lg">{now}</div>
     </div>
   )
