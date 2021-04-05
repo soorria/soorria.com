@@ -2,7 +2,7 @@ import { contact } from '@/contact-links'
 import Link from 'next/link'
 import { ReactNode } from 'react'
 import Container from './Container'
-import { EmailIcon, GithubIcon, HeartIcon, LinkedinIcon } from './icons'
+import { EmailIcon, GithubIconSolid, HeartIcon, LinkedinIconSolid } from './icons'
 
 type LinkType = {
   href: string
@@ -44,7 +44,7 @@ const LINKS: LinkType[][] = [
     {
       title: (
         <span className="inline-flex items-center space-x-1">
-          <GithubIcon className="w-3 h-3" />
+          <GithubIconSolid className="w-3 h-3" />
           <span>mo0th</span>
         </span>
       ),
@@ -64,7 +64,7 @@ const LINKS: LinkType[][] = [
     {
       title: (
         <span className="inline-flex items-center space-x-1">
-          <LinkedinIcon className="w-3 h-3" />
+          <LinkedinIconSolid className="w-3 h-3" />
           <span>soorria</span>
         </span>
       ),

@@ -108,13 +108,13 @@ export const InfoIcon: IconComponent = ({ className }) => (
   </svg>
 )
 
-export const GithubIcon: IconComponent = ({ className }) => (
+export const GithubIconSolid: IconComponent = ({ className }) => (
   <svg
     className={className}
     viewBox="0 0 24 24"
     stroke="currentColor"
     strokeWidth="2"
-    fill="none"
+    fill="currentColor"
     strokeLinecap="round"
     strokeLinejoin="round"
   >
@@ -133,7 +133,7 @@ export const EmailIcon: IconComponent = ({ className }) => (
   </svg>
 )
 
-export const LinkedinIcon: IconComponent = ({ className }) => (
+export const LinkedinIconSolid: IconComponent = ({ className }) => (
   <svg
     viewBox="0 0 24 24"
     className={className}
@@ -149,7 +149,7 @@ export const LinkedinIcon: IconComponent = ({ className }) => (
   </svg>
 )
 
-export const TwitterIcon: IconComponent = ({ className }) => (
+export const TwitterIconSolid: IconComponent = ({ className }) => (
   <svg
     className={className}
     viewBox="0 0 24 24"
@@ -157,7 +157,7 @@ export const TwitterIcon: IconComponent = ({ className }) => (
     height="24"
     stroke="currentColor"
     strokeWidth="2"
-    fill="none"
+    fill="currentColor"
     strokeLinecap="round"
     strokeLinejoin="round"
   >
@@ -165,7 +165,7 @@ export const TwitterIcon: IconComponent = ({ className }) => (
   </svg>
 )
 
-export const FacebookIcon: IconComponent = ({ className }) => (
+export const FacebookIconSolid: IconComponent = ({ className }) => (
   <svg
     className={className}
     viewBox="0 0 24 24"
