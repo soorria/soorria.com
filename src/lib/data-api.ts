@@ -1,23 +1,27 @@
 import { DataType } from '@/types/data'
 import { NextApiHandler } from 'next'
+import { addCorsHeaders } from './cors'
 import { getAllFilesFrontMatter, getFileWithoutMdx } from './data'
 
-export const createGetAllHandler = (type: DataType, end = true): NextApiHandler => async (
+export const createGetAllHandler = (type: DataType, { end = true } = {}): NextApiHandler => async (
   req,
   res
 ) => {
   if (req.method === 'GET') {
+    addCorsHeaders(res)
     res.json({ [type]: await getAllFilesFrontMatter(type) })
   }
 
   if (end) res.end()
 }
 
-export const createGetBySlugHandler = (type: DataType, end = true): NextApiHandler => async (
-  req,
-  res
-) => {
+export const createGetBySlugHandler = (
+  type: DataType,
+  { end = true } = {}
+): NextApiHandler => async (req, res) => {
   if (req.method === 'GET') {
+    addCorsHeaders(res)
+
     const slug = req.query.slug
 
     if (typeof slug !== 'string') {
