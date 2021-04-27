@@ -9,7 +9,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project }) => {
   return (
     <article className="flex flex-col space-y-3">
       <div className="text-xl font-bold text-drac-pink font-display">{project.title}</div>
-      <div className="flex-1">{project.short_description}</div>
+      <div className="flex-1">{project.shortDescription}</div>
       <div>
         <div className="flex flex-wrap -mt-1 -ml-2 text-xs text-opacity-80 text-drac-fg">
           {project.stack.map(tech => (

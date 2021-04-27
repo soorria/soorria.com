@@ -11,8 +11,9 @@ export enum DataType {
 export interface BaseData {
   slug: string
   title: string
-  short_description: string
+  shortDescription: string
   mdxSource: MdxRemote.Source
+  readingTime?: string
 }
 
 export type ApiData<T extends BaseData> = Omit<T, 'mdxSource'> & { content: string }

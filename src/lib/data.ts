@@ -1,5 +1,6 @@
 import { BaseData, DataType, FrontMatter, BaseApiData } from '@/types/data'
 import { promises as fs } from 'fs'
+import readingTime from 'reading-time'
 import matter from 'gray-matter'
 import path from 'path'
 import { render } from './mdx-render'
@@ -21,11 +22,12 @@ export const getAllFilesFrontMatter = async <TFrontMatter>(
   return Promise.all(
     files.map(async file => {
       const source = await fs.readFile(getFilePath(type, file))
-      const { data } = matter(source)
+      const { data, content } = matter(source)
 
       return {
         ...(data as TFrontMatter),
         slug: fileToSlug(file),
+        readingTime: readingTime(content).text,
       } as TFrontMatter
     })
   )
@@ -42,6 +44,7 @@ export const getFileWithoutMdx = async <TApiData extends BaseApiData>(
     ...(data as any),
     slug,
     content,
+    readingTime: readingTime(content).text,
   } as TApiData
 }
 
@@ -58,5 +61,6 @@ export const getFileWithMdx = async <TData extends BaseData>(
     ...(data as FrontMatter<TData>),
     slug,
     mdxSource,
+    readingTime: readingTime(content).text,
   } as TData
 }

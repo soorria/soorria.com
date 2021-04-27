@@ -1,6 +1,5 @@
 .prose pre {
   @apply bg-drac-bg m-0 p-0 rounded-none;
-  overflow: none;
 }
 
 .prose code {
@@ -14,6 +13,10 @@
 .prose code::before,
 .prose code::after {
   content: '';
+}
+
+.mdx-marker {
+  @apply bg-drac-curr;
 }
 
 @screen sm {
@@ -51,7 +54,6 @@
 }
 
 .token.property,
-.language-css .token.punctuation,
 .language-javascript .token.constant,
 .token.symbol,
 .language-css .token.url {

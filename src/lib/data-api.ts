@@ -1,23 +1,39 @@
-import { DataType } from '@/types/data'
+import { BaseFrontMatter, DataType } from '@/types/data'
 import { NextApiHandler } from 'next'
 import { addCorsHeaders } from './cors'
 import { getAllFilesFrontMatter, getFileWithoutMdx } from './data'
 
-export const createGetAllHandler = (type: DataType, { end = true } = {}): NextApiHandler => async (
-  req,
-  res
-) => {
+interface GetAllOptions<T> {
+  end?: boolean
+  sort?: (a: T, b: T) => number
+}
+
+export const createGetAllHandler = <T extends BaseFrontMatter>(
+  type: DataType,
+  { end = true, sort }: GetAllOptions<T> = {}
+): NextApiHandler => async (req, res) => {
   if (req.method === 'GET') {
     addCorsHeaders(res)
-    res.json({ [type]: await getAllFilesFrontMatter(type) })
+
+    const frontMatters = await getAllFilesFrontMatter<T>(type)
+
+    if (sort) {
+      frontMatters.sort(sort)
+    }
+
+    res.json({ [type]: frontMatters })
   }
 
   if (end) res.end()
 }
 
+interface GetBySlugOptions {
+  end?: boolean
+}
+
 export const createGetBySlugHandler = (
   type: DataType,
-  { end = true } = {}
+  { end = true }: GetBySlugOptions = {}
 ): NextApiHandler => async (req, res) => {
   if (req.method === 'GET') {
     addCorsHeaders(res)

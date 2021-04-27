@@ -26,19 +26,19 @@ const SnippetPage: React.FC<SnippetPageProps> = ({ snippet, mdx }) => {
     <PostLayout title={snippet.title}>
       <NextSeo
         title={title}
-        description={snippet.short_description}
+        description={snippet.shortDescription}
         canonical={url}
         openGraph={{
           url,
           title,
-          description: snippet.short_description,
+          description: snippet.shortDescription,
           type: 'article',
           article: {
             tags: [snippet.category, ...snippet.tags],
             section: 'Snippets',
             authors: ['Soorria Saruva'],
-            publishedTime: new Date(snippet.created_at).toISOString(),
-            modifiedTime: new Date(snippet.updated_at).toISOString(),
+            publishedTime: new Date(snippet.createdAt).toISOString(),
+            modifiedTime: new Date(snippet.updatedAt).toISOString(),
           },
           images: [getOgImage(DataType.snippets, snippet.title)],
         }}

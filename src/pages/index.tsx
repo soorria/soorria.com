@@ -25,7 +25,7 @@ const work: WorkFrontMatter[] = [
     title: 'Freelance Web Developer',
     company: 'Maclean Natural Health',
     from: 'Nov 2020',
-    short_description: `
+    shortDescription: `
       Built a mobile-friendly e-commerce website using React, Next.js for the web
       frontend and Stripe to handle secure payments. Consulted with client to 
       create an intuitive live Admin dashboard to manage general site information,
@@ -49,7 +49,7 @@ const work: WorkFrontMatter[] = [
     title: 'Casual Academic',
     company: 'University of New South Wales',
     from: 'Jan 2021',
-    short_description: `Academic tutor and lab assistant for COMP6080 - Web Front-End Programming.`,
+    shortDescription: `Academic tutor and lab assistant for COMP6080 - Web Front-End Programming.`,
     location: 'Sydney, NSW',
     tech_used: [
       'React',
