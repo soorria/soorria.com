@@ -5,6 +5,7 @@ const Education: React.FC = () => {
   return (
     <LandingSection id="education" title="Education">
       <WorkItem
+        shortDescription=""
         title="Bachelor of Science: Computer Science"
         company="University of New South Wales"
         location="Sydney, NSW"
