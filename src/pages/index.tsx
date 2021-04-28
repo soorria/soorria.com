@@ -33,7 +33,7 @@ const work: WorkFrontMatter[] = [
       Google OAuth for a simple login experience.
     `,
     location: 'Sydney, NSW',
-    tech_used: [
+    techUsed: [
       'Next.js',
       'React',
       'MongoDB',
@@ -51,7 +51,7 @@ const work: WorkFrontMatter[] = [
     from: 'Jan 2021',
     shortDescription: `Academic tutor and lab assistant for COMP6080 - Web Front-End Programming.`,
     location: 'Sydney, NSW',
-    tech_used: [
+    techUsed: [
       'React',
       'HTML',
       'CSS',
