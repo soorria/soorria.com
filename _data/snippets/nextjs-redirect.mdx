@@ -6,7 +6,7 @@ tags:
   - typescript
   - react
 createdAt: '2021-04-02'
-updatedAt: '2021-04-02'
+updatedAt: '2021-05-02'
 ---
 
 A `<Redirect />` component like the one from [`react-router`](https://reactrouter.com/).
@@ -27,5 +27,18 @@ const Redirect: React.FC<RedirectProps> = ({ to, replace }) => {
   }, [to, replace])
 
   return null
+}
+```
+
+## Usage
+
+```tsx
+const Example = () => {
+  // Get authentication state from somewhere
+  const { loggedIn } = useAuth()
+
+  if (!loggedIn) return <Redirect to="/login" />
+
+  return <ProtectedContent />
 }
 ```

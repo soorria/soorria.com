@@ -6,7 +6,7 @@ tags:
   - typescript
   - react
 createdAt: '2021-04-02'
-updatedAt: '2021-04-02'
+updatedAt: '2021-05-02'
 ---
 
 Returns whether the current component is mounted. Useful for SSR stuff (e.g. with Next.js).
@@ -26,5 +26,20 @@ const useMounted = (): boolean => {
   }, [])
 
   return mounted
+}
+```
+
+## Usage
+
+```tsx
+const Example = () => {
+  const mounted = useMounted()
+
+  return (
+    <>
+      <ServerSideRenderableStuff />
+      {mounted ? <ComponentThatReliesOnWindow /> : null}
+    </>
+  )
 }
 ```

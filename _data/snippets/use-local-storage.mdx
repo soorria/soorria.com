@@ -6,7 +6,7 @@ tags:
   - typescript
   - react
 createdAt: '2021-03-26'
-updatedAt: '2021-03-26'
+updatedAt: '2021-05-02'
 ---
 
 Save to `localStorage` whenever state changes.
@@ -36,5 +36,19 @@ const useLocalStorage = <T>(key: string, initialValue: T): [T, Dispatch<T>, () =
   }
 
   return [state, setState, clearState]
+}
+```
+
+## Usage
+
+```tsx
+const Example = () => {
+  const [input, setInput] = useState('example:input', '')
+
+  return (
+    <>
+      <input value={input} onChange={e => setInput(e.target.value)} />
+    </>
+  )
 }
 ```
