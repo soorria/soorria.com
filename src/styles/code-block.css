@@ -91,6 +91,8 @@
 .language-html .token.punctuation,
 .language-css .token.rule:not(.atrule),
 .language-markup .token.punctuation,
+.language-jsx .token.plain-text,
+.language-tsx .token.plain-text,
 .token.script,
 .token.punctuation,
 .token.prolog {
