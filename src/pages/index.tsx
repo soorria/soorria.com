@@ -68,18 +68,6 @@ const work: WorkFrontMatter[] = [
 
 const featuredProjects = ['jupyter-js', 'clinically-relevant', 'not-messenger', 'mooth-tech']
 
-const subtitleSource = `
-I'm a full stack software engineer and Actuarial Studies & Computer Science
-student based in Sydney, Australia.
-`
-
-const nowSource = `
-Right now, I'm a freelance software engineer helping small businesses
-enter the online space and in my free time I'm working on
-[jupyter.js](https://jjs.mooth.tech). Sometimes I play around with
-Go and Python.
-`
-
 const IndexPage: React.FC<IndexProps> = ({ subtitleMdx, nowMdx, projects }) => {
   const subtitle = hydrate(subtitleMdx)
   const now = hydrate(nowMdx)
@@ -99,8 +87,14 @@ const IndexPage: React.FC<IndexProps> = ({ subtitleMdx, nowMdx, projects }) => {
 export default IndexPage
 
 export const getStaticProps: GetStaticProps<IndexProps> = async () => {
-  const subtitleMdx = await render(subtitleSource)
-  const nowMdx = await render(nowSource)
+  const subtitleMdx = await render(`
+I'm a full stack software engineer and Actuarial Studies & Computer Science
+student based in Sydney, Australia.`)
+  const nowMdx = await render(`
+Right now, I'm a freelance software engineer helping small businesses
+enter the online space and in my free time I'm working on
+[jupyter.js](https://jjs.mooth.tech). Sometimes I play around with
+Go and Python.`)
 
   const projects: ProjectFrontMatter[] = await Promise.all(
     featuredProjects.map(async projectSlug => {
