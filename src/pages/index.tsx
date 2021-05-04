@@ -1,3 +1,6 @@
+import { GetStaticProps } from 'next'
+import { MdxRemote } from 'next-mdx-remote/types'
+
 import Container from '@/components/Container'
 import Contact from '@/components/landing/Contact'
 import Education from '@/components/landing/Education'
@@ -10,8 +13,6 @@ import { render } from '@/lib/mdx-render'
 import { DataType } from '@/types/data'
 import { Project, ProjectFrontMatter } from '@/types/project'
 import { WorkFrontMatter } from '@/types/work'
-import { GetStaticProps } from 'next'
-import { MdxRemote } from 'next-mdx-remote/types'
 
 interface IndexProps {
   subtitleMdx: MdxRemote.Source
@@ -21,8 +22,8 @@ interface IndexProps {
 
 const work: WorkFrontMatter[] = [
   {
-    slug: 'freelance-web-dev',
-    title: 'Freelance Web Developer',
+    slug: 'freelance-swe',
+    title: 'Freelance Software Engineer',
     company: 'Maclean Natural Health',
     from: 'Nov 2020',
     shortDescription: `
@@ -32,7 +33,7 @@ const work: WorkFrontMatter[] = [
       products and order fulfillment. Used MongoDB to persist all required data and
       Google OAuth for a simple login experience.
     `,
-    location: 'Sydney, NSW',
+    location: 'Sydney, NSW / Maclean, NSW',
     techUsed: [
       'Next.js',
       'React',
@@ -68,12 +69,12 @@ const work: WorkFrontMatter[] = [
 const featuredProjects = ['jupyter-js', 'clinically-relevant', 'not-messenger', 'mooth-tech']
 
 const subtitleSource = `
-I'm a full stack software engineer and Computer Science student
-based in Sydney, Australia.
+I'm a full stack software engineer and Actuarial Studies & Computer Science
+student based in Sydney, Australia.
 `
 
 const nowSource = `
-Right now, I'm a freelance web developer helping small businesses
+Right now, I'm a freelance software engineer helping small businesses
 enter the online space and in my free time I'm working on
 [jupyter.js](https://jjs.mooth.tech). Sometimes I play around with
 Go and Python.
