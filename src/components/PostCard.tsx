@@ -16,12 +16,14 @@ const SnippetCard: React.FC<{ post: PostFrontMatter }> = ({
         <div className="flex items-center space-x-8 text-sm">
           <div className="flex items-center space-x-2">
             <ClockIconSolid className="inline-block w-4 h-4" />
-            <span>{format(new Date(createdAt), 'dd/MM/yy')}</span>
+            <span>{createdAt ? format(new Date(createdAt), 'dd/MM/yy') : 'UNPUBLISHED'}</span>
           </div>
-          <div className="flex items-center space-x-2">
-            <EditIcon className="inline-block w-4 h-4" />
-            <span>{format(new Date(updatedAt), 'dd/MM/yy')}</span>
-          </div>
+          {updatedAt ? (
+            <div className="flex items-center space-x-2">
+              <EditIcon className="inline-block w-4 h-4" />
+              <span>{format(new Date(updatedAt), 'dd/MM/yy')}</span>
+            </div>
+          ) : null}
         </div>
       </div>
     </a>

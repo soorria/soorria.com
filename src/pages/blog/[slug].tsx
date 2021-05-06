@@ -8,6 +8,7 @@ import { DataType } from '@/types/data'
 import editUrl from '@/utils/editUrl'
 import { NextSeo } from 'next-seo'
 import { getOgImage } from '@/utils/og'
+import { filterUnpublished } from '@/utils/content'
 
 interface PostPageProps {
   post: PostFrontMatter
@@ -34,8 +35,8 @@ const PostPage: React.FC<PostPageProps> = ({ post, mdx }) => {
             tags: [post.category, ...post.tags],
             section: 'Blog',
             authors: ['Soorria Saruva'],
-            publishedTime: new Date(post.createdAt).toISOString(),
-            modifiedTime: new Date(post.updatedAt).toISOString(),
+            publishedTime: post.createdAt ? new Date(post.createdAt).toISOString() : 'N/A',
+            modifiedTime: post.updatedAt ? new Date(post.updatedAt).toISOString() : 'N/A',
           },
           images: [getOgImage(DataType.blog, post.title)],
         }}
@@ -73,9 +74,7 @@ export const getStaticProps: GetStaticProps<PostPageProps, { slug: string }> = a
 }
 
 export const getStaticPaths: GetStaticPaths = async () => {
-  const snippets = await (await getAllFilesFrontMatter<PostFrontMatter>(DataType.blog)).filter(
-    p => !!p.createdAt
-  )
+  const snippets = filterUnpublished(await getAllFilesFrontMatter<PostFrontMatter>(DataType.blog))
 
   return {
     paths: snippets.map(({ slug }) => ({ params: { slug } })),

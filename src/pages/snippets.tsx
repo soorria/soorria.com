@@ -7,7 +7,7 @@ import { DataType } from '@/types/data'
 import SnippetCard from '@/components/SnippetCard'
 import MainLayout from '@/components/MainLayout'
 import { getOgImage } from '@/utils/og'
-import sortByCreatedAtField from '@/utils/sort-by-created-at-field'
+import { sortByCreatedAtField } from '@/utils/content'
 
 interface SnippetsPageProps {
   snippets: SnippetFrontMatter[]
@@ -48,8 +48,8 @@ const SnippetsPage: React.FC<SnippetsPageProps> = ({ snippets }) => {
 export default SnippetsPage
 
 export const getStaticProps: GetStaticProps = async () => {
-  const snippets = (await getAllFilesFrontMatter<SnippetFrontMatter>(DataType.snippets)).sort(
-    sortByCreatedAtField
+  const snippets = sortByCreatedAtField(
+    await getAllFilesFrontMatter<SnippetFrontMatter>(DataType.snippets)
   )
 
   return {

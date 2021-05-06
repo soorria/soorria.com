@@ -1,11 +1,20 @@
 import { ProjectFrontMatter } from '@/types/project'
-import { CodeIcon, ExternalIcon } from './icons'
+import { CodeIcon, ExternalIcon } from '../icons'
 
 interface ProjectCardProps {
   project: ProjectFrontMatter
 }
 
-const ProjectCard: React.FC<ProjectCardProps> = ({ project }) => {
+export type ProjectCardComponent = React.FC<ProjectCardProps>
+
+const projectCardMap: Record<string, ProjectCardComponent> = {}
+
+const ProjectCard: ProjectCardComponent = ({ project }) => {
+  if (project.slug in projectCardMap) {
+    const Comp = projectCardMap[project.slug]
+    return <Comp project={project} />
+  }
+
   return (
     <article className="flex flex-col space-y-3">
       <div className="text-xl font-bold text-drac-pink font-display">{project.title}</div>

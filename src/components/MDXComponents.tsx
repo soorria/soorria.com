@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import Bleed from './Bleed'
 import CustomLink from './CustomLink'
 
 const COPIED_CLICK_TIMEOUT = 2000
@@ -51,4 +52,5 @@ const CustomCodeBlock: React.FC<any> = ({ children, className, ...rest }) => {
 export const components: Record<string, React.ComponentType<any>> = {
   a: CustomLink,
   pre: CustomCodeBlock,
+  Bleed,
 }

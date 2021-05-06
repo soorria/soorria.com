@@ -1,6 +1,7 @@
 import MainLayout from '@/components/MainLayout'
 import { PostHeading } from '@/components/PostLayout'
-import ProjectCard from '@/components/ProjectCard'
+import ProjectCard from '@/components/projects/ProjectCard'
+import ProjectsGrid from '@/components/projects/ProjectsGrid'
 import { getAllFilesFrontMatter } from '@/lib/data'
 import { DataType } from '@/types/data'
 import { ProjectFrontMatter } from '@/types/project'
@@ -33,11 +34,11 @@ const ProjectsPage: React.FC<ProjectsPageProps> = ({ projects }) => {
       />
       <PostHeading>Projects</PostHeading>
       <p className="mt-6 mb-12 text-lg text-center">{description}</p>
-      <div className="grid grid-cols-1 gap-12 sm:grid-cols-2 auto-cols-min">
+      <ProjectsGrid>
         {projects.map(project => (
           <ProjectCard key={project.slug} project={project} />
         ))}
-      </div>
+      </ProjectsGrid>
     </MainLayout>
   )
 }
