@@ -1,5 +1,7 @@
 import { ProjectFrontMatter } from '@/types/project'
-import { CodeIcon, ExternalIcon } from '../icons'
+import Link from 'next/link'
+import { CodeIcon, ExternalIcon, InfoIcon } from '../icons'
+import JupyterJsCard from './jupyter-js/JupyterJsCard'
 
 interface ProjectCardProps {
   project: ProjectFrontMatter
@@ -7,7 +9,9 @@ interface ProjectCardProps {
 
 export type ProjectCardComponent = React.FC<ProjectCardProps>
 
-const projectCardMap: Record<string, ProjectCardComponent> = {}
+const projectCardMap: Record<string, ProjectCardComponent> = {
+  'jupyter-js': JupyterJsCard,
+}
 
 const ProjectCard: ProjectCardComponent = ({ project }) => {
   if (project.slug in projectCardMap) {
@@ -29,7 +33,7 @@ const ProjectCard: ProjectCardComponent = ({ project }) => {
         </div>
       </div>
       <div className="flex space-x-4 text-sm">
-        {/* <Link href={`/projects/${project.slug}`}>
+        <Link href={`/projects/${project.slug}`}>
           <a
             aria-label={`See details for ${project.title}`}
             className="inline-flex items-center space-x-1 underline text-drac-pink hover:text-drac-purple"
@@ -37,7 +41,7 @@ const ProjectCard: ProjectCardComponent = ({ project }) => {
             <InfoIcon className="inline-block w-4 h-4" />
             <span>Details</span>
           </a>
-        </Link> */}
+        </Link>
 
         {project.live && (
           <a
