@@ -23,21 +23,21 @@ const CardLink: React.FC<{ href?: string }> = ({ children, href }) => (
 
 const JupyterJsCard: React.FC<JupyterJsCardProps> = ({ project }) => {
   return (
-    <article className="relative -mx-4 overflow-hidden transition transform bg-purple-500 hover:scale-105 sm:col-span-2 rounded-xl hover:shadow-xl">
+    <article className="relative -mx-4 overflow-hidden transition transform bg-purple-500 md:hover:scale-105 sm:col-span-2 rounded-xl hover:shadow-xl">
       <div className="absolute inset-y-0 right-0 items-center hidden sm:flex">
-        <Image src="/assets/projects/jupyter-js/jupyter-js-card.png" height="388" width="542" />
+        <Image src="/assets/projects/jupyter-js/jupyter-js-card.png" height="392" width="546" />
       </div>
       <div className="absolute inset-0 hidden sm:block bg-gradient-to-r from-purple-500 via-purple-500 to-transparent" />
       <div className="relative z-10 flex flex-col h-full p-8 space-y-4">
-        <header className="text-2xl font-bold font-display">jupyter.js</header>
+        <header className="text-3xl font-bold font-display">jupyter.js</header>
         <div className="flex-1 max-w-[25rem] prose">
           <ul className="mb-0">
             <li>
-              A SaaS notebook app from frontend JavaScript inspired by python&apos;s jupyter
+              A SaaS notebook app for frontend JavaScript inspired by python&apos;s jupyter
               notebooks.
             </li>
             <li>
-              Use any client-side NPM package with an ESM <code>import</code>
+              Use any client-side NPM package or CSS library with an ESM <code>import</code>
             </li>
             <li>Lightning fast bundling &amp; JSX transpilation out of the box with esbuild.</li>
           </ul>
