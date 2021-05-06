@@ -23,9 +23,9 @@ const CardLink: React.FC<{ href?: string }> = ({ children, href }) => (
 
 const JupyterJsCard: React.FC<JupyterJsCardProps> = ({ project }) => {
   return (
-    <article className="relative mt-0 -m-4 overflow-hidden transition-shadow bg-purple-500 sm:col-span-2 rounded-xl hover:shadow-xl">
+    <article className="relative -mx-4 overflow-hidden transition transform bg-purple-500 hover:scale-105 sm:col-span-2 rounded-xl hover:shadow-xl">
       <div className="absolute inset-y-0 right-0 items-center hidden sm:flex">
-        <Image src="/assets/projects/jupyter-js/jupyter-js-card.png" height="320" width="480" />
+        <Image src="/assets/projects/jupyter-js/jupyter-js-card.png" height="388" width="542" />
       </div>
       <div className="absolute inset-0 hidden sm:block bg-gradient-to-r from-purple-500 via-purple-500 to-transparent" />
       <div className="relative z-10 flex flex-col h-full p-8 space-y-4">
