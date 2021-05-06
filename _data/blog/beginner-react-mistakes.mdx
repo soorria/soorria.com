@@ -1,0 +1,95 @@
+---
+title: Beginner React Mistakes
+category: React
+tags:
+  - react
+  - javascript
+# createdAt: '2021-05-05'
+# updatedAt: '2021-05-05'
+---
+
+I spent a term tutoring, lab assisting and help session-ing the Web Front
+Programming course at my university, and I've noticed a bunch of mistakes
+that many students made with React. Here are the 4 most common issues I saw
+(and a bonus Promise mistake):
+
+## State doesn't update immediately
+
+```jsx
+const Example = () => {
+  const [count, setCount] = useState(0)
+
+  const handleClick = () => {
+    setCount(count + 1)
+    // What gets printed here?
+    console.log('count:', count)
+  }
+
+  return (
+    <>
+      <button onClick={() => handleClick()}>Increment {count}</button>
+    </>
+  )
+}
+```
+
+## Infinite Fetches!
+
+This is how I see many people make API requests at first:
+
+```jsx
+const BadExample = () => {
+  const [post, setPost] = useState(null)
+
+  fetch('http://jsonplaceholder.typicode.com/posts/1')
+    .then(response => response.json())
+    .then(data => setPost(data))
+
+  return (
+    <div>
+      <h1>{post.title}</h1>
+      <p>{post.description}</p>
+    </div>
+  )
+}
+```
+
+For more experienced React developers, the issue here is obvious, but for
+beginners it can be unclear when fetch runs, and why the components re-renders
+infinitely.
+
+Let's walk through what happens step by step:
+
+1. React renders your component for the first time & the function component runs.
+   The `fetch` is called, and the returned jsx renders.
+1. The `fetch` resolves, the response body is converted to an object and `setPost`
+   is called. Here's where the infinite loops starts. Calling a "state-setting"
+   function (like `setPost`) tells React to update the piece of state with the new
+   value, and if the value is different, React will re-render your component.
+
+```jsx
+const Example = () => {
+  const [post, setPost] = useState(null)
+
+  useEffect(() => {
+    fetch('http://jsonplaceholder.typicode.com/posts/1')
+      .then(response => response.json())
+      .then(data => setPost(data))
+  }, [])
+
+  return (
+    <div>
+      <h1>{post.title}</h1>
+      <p>{post.description}</p>
+    </div>
+  )
+}
+```
+
+<img src="/og.png" alt="OG image" className="full-bleed" />
+
+## `useEffect` isn't rerunning
+
+## `useEffect` code running after the component unmounts
+
+## (Bonus!) Promises using `.then`

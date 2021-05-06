@@ -1,5 +1,7 @@
+import { GITHUB_URL } from './contants'
+
 export const contact = {
-  github: 'https://github.com/mo0th',
+  github: GITHUB_URL,
   githubUsername: 'mo0th',
   email: 'soorria.ss@gmail.com',
   linkedin: 'https://www.linkedin.com/in/soorria/',

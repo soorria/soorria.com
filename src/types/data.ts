@@ -2,7 +2,7 @@ import { MdxRemote } from 'next-mdx-remote/types'
 
 export enum DataType {
   snippets = 'snippets',
-  posts = 'posts',
+  blog = 'blog',
   projects = 'projects',
   work = 'work',
   misc = 'misc',

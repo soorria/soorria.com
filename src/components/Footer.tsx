@@ -80,13 +80,13 @@ const Footer: React.FC<FooterProps> = () => {
   return (
     <Container>
       <footer className="flex flex-col py-8 space-y-8 border-t border-drac-curr">
-        <div className="text-center">
+        <div className="text-center group">
           Made with{' '}
-          <span className="relative inline-block w-5 h-5 align-middle group">
+          <span className="relative inline-block w-5 h-5 align-middle">
             <HeartIcon className="absolute inset-0 fill-current text-drac-pink" />
             <HeartIcon className="absolute inset-0 fill-current text-drac-purple group-hover:animate-ping" />
           </span>{' '}
-          by Soorria
+          by Soorria using Next.js
         </div>
         <div className="grid justify-center max-w-sm grid-cols-1 gap-4 mx-auto text-center lowercase sm:grid-cols-3">
           {LINKS.map((col, i) => (

@@ -63,7 +63,7 @@ html {
 @tailwind components;
 @tailwind utilities;
 
-@layer components {
+@layer utilities {
   .circuit-bg {
     background-color: #282a36;
     background-image: linear-gradient(

@@ -1,8 +1,8 @@
 import { WorkFrontMatter } from '@/types/work'
 import { ReactNode } from 'react'
 
-type WorkItemProps = Omit<WorkFrontMatter, 'slug' | 'short_description'> & {
-  short_description?: ReactNode
+type WorkItemProps = Omit<WorkFrontMatter, 'slug' | 'shortDescription'> & {
+  shortDescription?: ReactNode
 }
 
 const WorkItem: React.FC<WorkItemProps> = ({
@@ -11,7 +11,7 @@ const WorkItem: React.FC<WorkItemProps> = ({
   location,
   from,
   to,
-  short_description,
+  shortDescription,
   techUsed,
 }) => (
   <div className="flex flex-col space-y-2">
@@ -24,7 +24,7 @@ const WorkItem: React.FC<WorkItemProps> = ({
         {from} &mdash; {to ?? 'Present'}
       </div>
     </div>
-    {short_description && <div>{short_description}</div>}
+    {shortDescription && <div>{shortDescription}</div>}
     {techUsed?.length ? (
       <div className="inline-flex flex-wrap -mt-1 -ml-2 text-xs text-opacity-80 text-drac-fg">
         {techUsed.map(tech => (

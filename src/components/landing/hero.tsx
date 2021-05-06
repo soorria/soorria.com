@@ -5,7 +5,7 @@ const CLASSNAMES = {
 }
 
 const Hero: React.FC<{ subtitle: ReactNode; now: ReactNode }> = ({ subtitle, now }) => {
-  const [hovered, setHovered] = useState(false)
+  const [hovered, setHovered] = useState(true)
   return (
     <div className="px-4 pb-12 -mx-4 circuit-bg -mt-36 pt-36 lg:mx-[-4.5rem] lg:px-[4.5rem] xl:-mx-32 xl:px-32">
       <div

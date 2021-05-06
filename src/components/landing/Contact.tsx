@@ -12,9 +12,9 @@ interface ContactProps {}
 
 const LINKS = [
   {
-    href: contact.github,
-    title: contact.githubUsername,
-    Icon: GithubIconSolid,
+    href: contact.facebook,
+    title: contact.facebookUsername,
+    Icon: FacebookIconSolid,
   },
   {
     href: `mailto:${contact.email}`,
@@ -32,9 +32,9 @@ const LINKS = [
     Icon: TwitterIconSolid,
   },
   {
-    href: contact.facebook,
-    title: contact.facebookUsername,
-    Icon: FacebookIconSolid,
+    href: contact.github,
+    title: contact.githubUsername,
+    Icon: GithubIconSolid,
   },
 ]
 
