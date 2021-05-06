@@ -7,7 +7,6 @@ import { getAllFilesFrontMatter, getFileWithMdx } from '@/lib/data'
 import { DataType } from '@/types/data'
 import editUrl from '@/utils/editUrl'
 import { NextSeo } from 'next-seo'
-import useTrackHit from '@/hooks/useTrackHit'
 import { getOgImage } from '@/utils/og'
 
 interface SnippetPageProps {
@@ -19,8 +18,6 @@ const SnippetPage: React.FC<SnippetPageProps> = ({ snippet, mdx }) => {
   const content = hydrate(mdx)
   const url = `https://mooth.tech/snippets/${snippet.slug}`
   const title = `${snippet.title} | Snippets`
-
-  useTrackHit('snippets', snippet.slug)
 
   return (
     <PostLayout title={snippet.title}>

@@ -2110,13 +2110,6 @@ des.js@^1.0.0:
     inherits "^2.0.1"
     minimalistic-assert "^1.0.0"
 
-deta@^0.0.8:
-  version "0.0.8"
-  resolved "https://registry.yarnpkg.com/deta/-/deta-0.0.8.tgz#9195b13d34b92ba6492ffe35e3c1331d45434a19"
-  integrity sha512-yUABLzs340aKs8UYHAP+n3Ngo5w8TrnstQcwy5wSsxcr9pWy6vvmwP7d75hfkr6FLdeZPwVzA2tUZRyxWuLEVA==
-  dependencies:
-    node-fetch "^2.6.0"
-
 detab@2.0.4:
   version "2.0.4"
   resolved "https://registry.yarnpkg.com/detab/-/detab-2.0.4.tgz#b927892069aff405fbb9a186fe97a44a92a94b43"
@@ -3559,7 +3552,7 @@ node-emoji@^1.8.1:
   dependencies:
     lodash.toarray "^4.4.0"
 
-node-fetch@2.6.1, node-fetch@^2.6.0:
+node-fetch@2.6.1:
   version "2.6.1"
   resolved "https://registry.yarnpkg.com/node-fetch/-/node-fetch-2.6.1.tgz#045bd323631f76ed2e2b55573394416b639a0052"
   integrity sha512-V4aYg89jEoVRxRb2fJdAg8FHvI7cEyYdVAh94HH0UIK8oJxUfkjlDQN9RbMx+bEjP7+ggMiFRprSti032Oipxw==
