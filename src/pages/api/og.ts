@@ -1,10 +1,11 @@
-import * as playwright from 'playwright-aws-lambda'
 import { NextApiHandler } from 'next'
 import fs from 'fs'
 import path from 'path'
 
 const handler: NextApiHandler = async (req, res) => {
   try {
+    // eslint-disable-next-line @typescript-eslint/no-var-requires
+    const playwright = require('playwright-aws-lambda')
     const { category, title, base: _base } = req.query
     const base = typeof _base === 'string' && _base ? _base : 'https://mooth.tech'
 
