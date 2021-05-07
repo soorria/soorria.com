@@ -26,7 +26,7 @@ const Education: React.FC = () => {
         title="Bachelor of Actuarial Studies / Bachelor of Computer Science"
         company="University of New South Wales"
         location="Sydney, NSW"
-        from="Feb 2018"
+        from="Feb 2019"
         to="Dec 2022"
       />
     </LandingSection>
