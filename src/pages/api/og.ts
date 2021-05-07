@@ -19,12 +19,12 @@ const handler: NextApiHandler = async (req, res) => {
     // For some reason it works when I have this try/catch thing.
     // Maybe it's the path.join / fs.readdir stuff
 
-    // For some reason this fixes it. What the fuck
-    const fileThatDoesntExistSometimes = path.join(
-      process.cwd(),
-      './node_modules/playwright-core/browsers.json'
-    )
-    fs.readFileSync(fileThatDoesntExistSometimes)
+    // // For some reason this fixes it. What the fuck
+    // const fileThatDoesntExistSometimes = path.join(
+    //   process.cwd(),
+    //   './node_modules/playwright-core/browsers.json'
+    // )
+    // fs.readFileSync(fileThatDoesntExistSometimes)
 
     const browser = await playwright.launchChromium()
     const page = await browser.newPage({
