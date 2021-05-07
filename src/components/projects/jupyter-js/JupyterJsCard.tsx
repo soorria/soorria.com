@@ -2,6 +2,7 @@ import NextLink from 'next/link'
 import Image from 'next/image'
 import { CodeIcon, ExternalIcon, InfoIcon } from '@/components/icons'
 import { ProjectFrontMatter } from '@/types/project'
+import { forwardRef, ReactNode } from 'react'
 
 interface JupyterJsCardProps {
   project: ProjectFrontMatter
@@ -9,17 +10,6 @@ interface JupyterJsCardProps {
 
 const cardLinkClassName =
   'inline-flex items-center px-6 py-2 ml-4 mt-4 space-x-2 font-semibold transition-colors border-2 border-current border-white rounded hover:text-purple-500 hover:bg-white'
-
-const CardLink: React.FC<{ href?: string }> = ({ children, href }) => (
-  <a
-    href={href}
-    className={cardLinkClassName}
-    target={href?.startsWith('http') ? '_blank' : undefined}
-    rel="noopener noreferrer"
-  >
-    {children}
-  </a>
-)
 
 const JupyterJsCard: React.FC<JupyterJsCardProps> = ({ project }) => {
   return (
@@ -44,19 +34,29 @@ const JupyterJsCard: React.FC<JupyterJsCardProps> = ({ project }) => {
         </div>
         <div className="mb-0 -m-4">
           <NextLink href={`/projects/${project.slug}`} passHref>
-            <CardLink>
+            <a className={cardLinkClassName}>
               <InfoIcon className="inline-block w-4 h-4" />
               <span>Details</span>
-            </CardLink>
+            </a>
           </NextLink>
-          <CardLink href={project.live}>
+          <a
+            className={cardLinkClassName}
+            target="_blank"
+            rel="noopener noreferrer"
+            href={project.live}
+          >
             <ExternalIcon className="inline-block w-4 h-4" />
             <span>See Live</span>
-          </CardLink>
-          <CardLink href={project.source}>
+          </a>
+          <a
+            className={cardLinkClassName}
+            target="_blank"
+            rel="noopener noreferrer"
+            href={project.source}
+          >
             <CodeIcon className="inline-block w-4 h-4" />
             <span>Source</span>
-          </CardLink>
+          </a>
         </div>
       </div>
     </article>
