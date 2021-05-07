@@ -48,14 +48,14 @@ const handler: NextApiHandler = async (req, res) => {
 
     res.end(data)
   } catch (err) {
-    console.log(err)
+    console.log('og image -', err)
     res.setHeader('Content-Type', 'image/png')
     let data
     try {
       data = fs.readFileSync(path.join(process.cwd(), './public/og.png'))
-      console.log('READING OG IMAGE FROM DISK')
+      console.log('og image - READING OG IMAGE FROM DISK')
     } catch (err) {
-      console.log('FETCHING OG IMAGE')
+      console.log('og image - FETCHING OG IMAGE')
       const response = await fetch('https://mooth.tech/og.png')
       data = await (response as any).buffer()
     }
