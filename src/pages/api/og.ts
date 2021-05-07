@@ -24,7 +24,7 @@ const handler: NextApiHandler = async (req, res) => {
       process.cwd(),
       './node_modules/playwright-core/browsers.json'
     )
-    fileThatDoesntExistSometimes
+    fs.readFileSync(fileThatDoesntExistSometimes)
 
     const browser = await playwright.launchChromium()
     const page = await browser.newPage({
