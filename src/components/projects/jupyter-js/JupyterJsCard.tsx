@@ -2,6 +2,7 @@ import NextLink from 'next/link'
 import Image from 'next/image'
 import { CodeIcon, ExternalIcon, InfoIcon } from '@/components/icons'
 import { ProjectFrontMatter } from '@/types/project'
+import { forwardRef, ReactNode } from 'react'
 
 interface JupyterJsCardProps {
   project: ProjectFrontMatter
