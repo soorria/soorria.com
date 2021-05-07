@@ -15,7 +15,7 @@ pass the `setState` function no arguments to toggle the boolean.
 ```typescript
 import { Dispatch, useReducer } from 'react'
 
-export const useBoolean = (initialValue = false): [boolean, Dispatch<boolean | undefined>] => {
+export const useBoolean = (initialValue = false): [boolean, (nextValue?: boolean) => void] => {
   return useReducer((currentValue: boolean, nextValue?: boolean) => {
     return typeof nextValue !== 'undefined' ? nextValue : !currentValue
   }, initialValue)

@@ -1,11 +1,11 @@
 import renderToString from 'next-mdx-remote/render-to-string'
 import { MdxRemote } from 'next-mdx-remote/types'
 import mdxPrism from 'mdx-prism'
-import { components } from '@/components/MDXComponents'
+import { baseComponents } from '@/components/mdx/base'
 
 export const render = async (source: string): Promise<MdxRemote.Source> => {
   return renderToString(source, {
-    components,
+    components: baseComponents,
     mdxOptions: {
       rehypePlugins: [mdxPrism],
     },
