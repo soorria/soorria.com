@@ -10,6 +10,7 @@
     "prepare": "husky install"
   },
   "dependencies": {
+    "@next/bundle-analyzer": "^10.2.0",
     "@tailwindcss/typography": "^0.4.0",
     "date-fns": "^2.19.0",
     "globby": "^11.0.3",
