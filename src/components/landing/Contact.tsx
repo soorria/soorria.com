@@ -66,7 +66,7 @@ const Contact: React.FC<ContactProps> = () => {
     const data = Object.fromEntries(new FormData(form) as any)
     delete data._next
     try {
-      await fetch(FORM_ENDPOINT, {
+      const response = await fetch(FORM_ENDPOINT, {
         method: 'POST',
         body: JSON.stringify(data),
         headers: {
@@ -74,8 +74,12 @@ const Contact: React.FC<ContactProps> = () => {
           Accept: 'application/json',
         },
       })
-      setStatus(FormStatus.SUBMITTED)
-      form.reset()
+      if (response.ok) {
+        setStatus(FormStatus.SUBMITTED)
+        form.reset()
+      } else {
+        setStatus(FormStatus.ERROR)
+      }
     } catch (err) {
       setStatus(FormStatus.ERROR)
     }
