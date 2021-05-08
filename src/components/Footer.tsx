@@ -86,7 +86,7 @@ const Footer: React.FC<FooterProps> = () => {
             <HeartIcon className="absolute inset-0 fill-current text-drac-pink" />
             <HeartIcon className="absolute inset-0 fill-current text-drac-purple group-hover:animate-ping" />
           </span>{' '}
-          by Soorria using Next.js
+          by Soorria
         </div>
         <div className="grid justify-center max-w-sm grid-cols-1 gap-4 mx-auto text-center lowercase sm:grid-cols-3">
           {LINKS.map((col, i) => (

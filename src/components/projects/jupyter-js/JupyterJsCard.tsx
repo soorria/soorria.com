@@ -12,7 +12,7 @@ const cardLinkClassName =
 
 const JupyterJsCard: React.FC<JupyterJsCardProps> = ({ project }) => {
   return (
-    <article className="relative -mx-4 overflow-hidden transition transform bg-purple-500 md:hover:scale-105 sm:col-span-2 rounded-xl hover:shadow-xl">
+    <article className="relative overflow-hidden transition transform bg-purple-500 md:hover:scale-105 sm:col-span-2 rounded-xl hover:shadow-xl">
       <div className="absolute inset-y-0 right-0 items-center hidden sm:flex">
         <Image
           src="/assets/projects/jupyter-js/jupyter-js-card.png"
@@ -24,8 +24,8 @@ const JupyterJsCard: React.FC<JupyterJsCardProps> = ({ project }) => {
       <div className="absolute inset-0 hidden sm:block bg-gradient-to-r from-purple-500 via-purple-500 to-transparent" />
       <div className="relative z-10 flex flex-col h-full p-8 space-y-4">
         <header className="text-3xl font-bold font-display">jupyter.js</header>
-        <div className="flex-1 max-w-[25rem] prose">
-          <ul className="mb-0">
+        <div className="flex-1 max-w-[25rem]">
+          <ul className="pl-6 space-y-4 list-disc">
             <li>
               A SaaS notebook app for frontend JavaScript inspired by python&apos;s jupyter
               notebooks.

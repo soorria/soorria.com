@@ -2,6 +2,7 @@ import MainLayout from '@/components/MainLayout'
 import { PostHeading } from '@/components/PostLayout'
 import ProjectCard from '@/components/projects/ProjectCard'
 import ProjectsGrid from '@/components/projects/ProjectsGrid'
+import { featuredProjects } from '@/contants'
 import { getAllFilesFrontMatter } from '@/lib/data'
 import { DataType } from '@/types/data'
 import { ProjectFrontMatter } from '@/types/project'
@@ -35,7 +36,13 @@ const ProjectsPage: React.FC<ProjectsPageProps> = ({ projects }) => {
       <PostHeading>Projects</PostHeading>
       <p className="mt-6 mb-12 text-lg text-center">{description}</p>
       <ProjectsGrid>
-        {projects.map(project => (
+        {projects.slice(0, featuredProjects.length).map(project => (
+          <ProjectCard key={project.slug} project={project} />
+        ))}
+      </ProjectsGrid>
+      <h2 className="mt-12 mb-8 text-4xl font-bold font-display">Other Projects</h2>
+      <ProjectsGrid>
+        {projects.slice(featuredProjects.length).map(project => (
           <ProjectCard key={project.slug} project={project} />
         ))}
       </ProjectsGrid>
@@ -45,7 +52,7 @@ const ProjectsPage: React.FC<ProjectsPageProps> = ({ projects }) => {
 
 export default ProjectsPage
 
-const projectOrder = ['jupyter-js', 'not-messenger', 'clinically-relevant', 'mooth-tech']
+const projectOrder = [...featuredProjects]
 const getProjectIndex = (slug: string): number => {
   const idx = projectOrder.indexOf(slug)
   return idx >= 0 ? idx : projectOrder.length + 10
