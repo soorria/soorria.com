@@ -89,7 +89,7 @@ const Contact: React.FC<ContactProps> = () => {
     <LandingSection title="Contact" id="contact">
       <div className="grid grid-flow-row-dense grid-cols-1 gap-y-8 gap-x-16 sm:grid-cols-2">
         <div className="space-y-4 row-start sm:row-start-1">
-          <p>
+          <p className="text-lg">
             The best way to get in touch is probably to email me, shoot me a message on Facebook
             Messenger{' '}
             <button
