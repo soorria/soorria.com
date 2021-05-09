@@ -4,8 +4,8 @@ const title = 'Soorria Saruva - Full Stack Software Engineer'
 const description = 'Full Stack Software Engineer'
 
 export const SEO: DefaultSeoProps = {
-  // titleTemplate: '%s • Soorria Saruva',
-  titleTemplate: '%s | Soorria Saruva',
+  titleTemplate: '%s • Soorria Saruva',
+  // titleTemplate: '%s | Soorria Saruva',
   // titleTemplate: '%s - Soorria Saruva',
   // titleTemplate: '%s / Soorria Saruva',
   defaultTitle: title,

@@ -10,7 +10,7 @@ interface FeaturedProjectsProps {
 
 const FeaturedProjects: React.FC<FeaturedProjectsProps> = ({ projects }) => {
   return (
-    <LandingSection id="projects" title="Projects">
+    <LandingSection id="projects" title="What I've Built">
       <ProjectsGrid>
         {projects.map(project => (
           <ProjectCard key={project.slug} project={project} />

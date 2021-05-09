@@ -86,19 +86,18 @@ const Contact: React.FC<ContactProps> = () => {
   }
 
   return (
-    <LandingSection title="Contact" id="contact">
+    <LandingSection title="Get in Touch" id="contact">
       <div className="grid grid-flow-row-dense grid-cols-1 gap-y-8 gap-x-16 sm:grid-cols-2">
         <div className="space-y-4 row-start sm:row-start-1">
           <p className="text-lg">
-            The best way to get in touch is probably to email me, shoot me a message on Facebook
-            Messenger{' '}
+            Want to work with me, or just want to chat? Shoot me an email or a message on Messenger
             <button
               tabIndex={-1}
               onClick={() => setShowForm(p => !p)}
               aria-hidden
               className="break-words text-drac-bg hover:text-drac-purple focus:outline-none"
             >
-              or with this <span className={showForm ? 'line-through' : ''}>secret</span> form
+              or use this <span className={showForm ? 'line-through' : ''}>secret</span> form
             </button>
           </p>
           {status === FormStatus.SUBMITTED && (
@@ -156,6 +155,7 @@ const Contact: React.FC<ContactProps> = () => {
                   name="message"
                   autoComplete="off"
                   className={classes.input}
+                  rows={5}
                 />
               </div>
 

@@ -11,6 +11,7 @@ import { render } from '@/lib/mdx-render'
 import { DataType } from '@/types/data'
 import { Project, ProjectFrontMatter } from '@/types/project'
 import { featuredProjects } from '@/contants'
+import Skills from '@/components/landing/Skills'
 // import Skills from '@/components/landing/Skills'
 
 interface IndexProps {
@@ -28,7 +29,7 @@ const IndexPage: React.FC<IndexProps> = ({ subtitleMdx, nowMdx, projects }) => {
       <Hero subtitle={subtitle} now={now} />
       <FeaturedProjects projects={projects} />
       {/* <FeaturedWork work={work} /> */}
-      {/* <Skills /> */}
+      <Skills />
       {/* <Education /> */}
       <Contact />
       <div className="pb-20" />
