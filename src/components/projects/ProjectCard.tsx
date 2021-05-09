@@ -1,7 +1,9 @@
 import { ProjectFrontMatter } from '@/types/project'
 import Link from 'next/link'
 import { CodeIcon, ExternalIcon, InfoIcon } from '../icons'
+import ClinicallyRelevantCard from './clinically-relevant/ClinicallyRelevantCard'
 import JupyterJsCard from './jupyter-js/JupyterJsCard'
+import NotMessengerCard from './not-messenger/NotMessengerCard'
 
 interface ProjectCardProps {
   project: ProjectFrontMatter
@@ -11,6 +13,8 @@ export type ProjectCardComponent = React.FC<ProjectCardProps>
 
 const projectCardMap: Record<string, ProjectCardComponent> = {
   'jupyter-js': JupyterJsCard,
+  'clinically-relevant': ClinicallyRelevantCard,
+  'not-messenger': NotMessengerCard,
 }
 
 const ProjectCard: ProjectCardComponent = ({ project }) => {

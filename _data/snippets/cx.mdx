@@ -1,0 +1,28 @@
+---
+title: cx
+shortDescription: A tiny helper function to conditionally join classnames.
+category: TypeScript
+tags:
+  - typescript
+createdAt: '2021-05-09'
+updatedAt: '2021-05-09'
+---
+
+A tiny helper function to conditionally join classnames. Simplified version
+of JedWatson's [classnames](https://github.com/JedWatson/classnames) and
+lukeed's [clsx](https://github.com/lukeed/clsx).
+
+```typescript
+const cx = (...classes: (string | boolean | null | undefined)[]) =>
+  classes.filter(cls => typeof cls === 'string').join(' ')
+```
+
+## Usage
+
+```tsx
+const Button: React.FC<{ disabled?: boolean }> = ({ disabled, children }) => (
+  <button className={cx('button', disabled && 'button--disabled')} disabled={disabled}>
+    {children}
+  </button>
+)
+```

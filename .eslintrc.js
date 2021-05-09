@@ -42,5 +42,11 @@ module.exports = {
         aspects: ['invalidHref', 'preferButton'],
       },
     ],
+    'jsx-a11y/alt-text': [
+      'error',
+      {
+        img: ['Image'],
+      },
+    ],
   },
 }
