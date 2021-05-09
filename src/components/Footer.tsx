@@ -1,4 +1,4 @@
-import { contact } from '@/contact-links'
+import { contact, resumeUrl } from '@/links'
 import Link from 'next/link'
 import { ReactNode } from 'react'
 import Container from './Container'
@@ -23,7 +23,7 @@ const LINKS: LinkType[][] = [
     {
       title: 'resume',
       key: 'resume',
-      href: 'https://www.dropbox.com/s/77r0zful4vw2alk/resume.pdf',
+      href: resumeUrl,
     },
   ],
   [

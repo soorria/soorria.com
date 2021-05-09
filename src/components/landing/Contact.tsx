@@ -1,4 +1,4 @@
-import { contact } from '@/contact-links'
+import { contact } from '@/links'
 import { FormEventHandler, useState } from 'react'
 import {
   EmailIcon,

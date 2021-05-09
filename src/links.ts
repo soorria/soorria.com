@@ -11,3 +11,5 @@ export const contact = {
   facebook: 'https://www.facebook.com/soorriously/',
   facebookUsername: 'soorriously',
 }
+
+export const resumeUrl = 'https://www.dropbox.com/s/77r0zful4vw2alk/resume.pdf'
