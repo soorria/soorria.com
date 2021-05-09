@@ -1,4 +1,4 @@
-import { contact, resumeUrl } from '@/links'
+import { contact } from '@/links'
 import Link from 'next/link'
 import { ReactNode } from 'react'
 import Container from './Container'
@@ -13,7 +13,6 @@ const LINKS: LinkType[][] = [
   [
     {
       title: 'home',
-      key: 'home',
       href: '/',
     },
     {
@@ -22,8 +21,7 @@ const LINKS: LinkType[][] = [
     },
     {
       title: 'resume',
-      key: 'resume',
-      href: resumeUrl,
+      href: '/resume',
     },
   ],
   [
