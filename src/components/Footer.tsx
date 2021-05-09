@@ -23,7 +23,7 @@ const LINKS: LinkType[][] = [
     {
       title: 'resume',
       key: 'resume',
-      href: '/',
+      href: 'https://www.dropbox.com/s/77r0zful4vw2alk/resume.pdf',
     },
   ],
   [
