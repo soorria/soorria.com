@@ -1,4 +1,4 @@
-import { contact } from '@/contact-links'
+import { contact } from '@/links'
 import { FormEventHandler, useState } from 'react'
 import {
   EmailIcon,
@@ -95,7 +95,9 @@ const Contact: React.FC<ContactProps> = () => {
               tabIndex={-1}
               onClick={() => setShowForm(p => !p)}
               aria-hidden
-              className="break-words text-drac-bg hover:text-drac-purple focus:outline-none"
+              className={`break-words no-js-text focus:outline-none ${
+                showForm ? 'text-drac-purple' : 'text-drac-bg hover:text-drac-purple'
+              } `}
             >
               or use this <span className={showForm ? 'line-through' : ''}>secret</span> form
             </button>
@@ -111,82 +113,80 @@ const Contact: React.FC<ContactProps> = () => {
               again later, or shoot me an email.
             </div>
           )}
-          {showForm && (
-            <form
-              onSubmit={handleSubmit}
-              method="POST"
-              action={FORM_ENDPOINT}
-              className="space-y-4"
+          <form
+            onSubmit={handleSubmit}
+            method="POST"
+            action={FORM_ENDPOINT}
+            className={`space-y-4 no-js-block ${showForm ? '' : 'hidden'}`}
+          >
+            <div className={classes.formGroup}>
+              <label htmlFor="name" className={classes.label}>
+                Your Name
+              </label>
+              <input
+                id="name"
+                type="text"
+                name="name"
+                autoComplete="name"
+                required
+                className={classes.input}
+              />
+            </div>
+
+            <div className={classes.formGroup}>
+              <label htmlFor="email" className={classes.label}>
+                Your Email
+              </label>
+              <input
+                id="email"
+                type="email"
+                name="email"
+                autoComplete="email"
+                required
+                className={classes.input}
+              />
+            </div>
+
+            <div className={classes.formGroup}>
+              <label htmlFor="message" className={classes.label}>
+                Message
+              </label>
+              <textarea
+                id="message"
+                name="message"
+                autoComplete="off"
+                className={classes.input}
+                rows={5}
+              />
+            </div>
+
+            <input type="text" name="_honey" className="hidden" />
+            <input readOnly type="text" name="_captcha" value="false" className="hidden" />
+            <input
+              readOnly
+              type="text"
+              name="_next"
+              value="https://mooth.tech/contact-success"
+              className="hidden"
+            />
+            <input
+              readOnly
+              type="text"
+              name="_subject"
+              value="mooth.tech Form Submission"
+              className="hidden"
+            />
+
+            <button
+              type="submit"
+              className={`block px-4 py-2 mx-auto font-semibold transition-colors rounded bg-drac-pink ${
+                status === FormStatus.SUBMITTING ? 'opacity-70' : 'hover:bg-drac-purple'
+              }`}
+              disabled={status === FormStatus.SUBMITTING}
             >
-              <div className={classes.formGroup}>
-                <label htmlFor="name" className={classes.label}>
-                  Your Name
-                </label>
-                <input
-                  id="name"
-                  type="text"
-                  name="name"
-                  autoComplete="name"
-                  required
-                  className={classes.input}
-                />
-              </div>
-
-              <div className={classes.formGroup}>
-                <label htmlFor="email" className={classes.label}>
-                  Your Email
-                </label>
-                <input
-                  id="email"
-                  type="email"
-                  name="email"
-                  autoComplete="email"
-                  required
-                  className={classes.input}
-                />
-              </div>
-
-              <div className={classes.formGroup}>
-                <label htmlFor="message" className={classes.label}>
-                  Message
-                </label>
-                <textarea
-                  id="message"
-                  name="message"
-                  autoComplete="off"
-                  className={classes.input}
-                  rows={5}
-                />
-              </div>
-
-              <input type="text" name="_honey" className="hidden" />
-              <input readOnly type="text" name="_captcha" value="false" className="hidden" />
-              <input
-                readOnly
-                type="text"
-                name="_next"
-                value="https://mooth.tech/contact-success"
-                className="hidden"
-              />
-              <input
-                readOnly
-                type="text"
-                name="_subject"
-                value="mooth.tech Form Submission"
-                className="hidden"
-              />
-
-              <button
-                type="submit"
-                className={`block px-4 py-2 mx-auto font-semibold transition-colors rounded bg-drac-pink ${
-                  status === FormStatus.SUBMITTING ? 'opacity-70' : 'hover:bg-drac-purple'
-                }`}
-                disabled={status === FormStatus.SUBMITTING}
-              >
-                {status === FormStatus.SUBMITTING ? 'Submitting' : 'Submit'}
-              </button>
-            </form>
-          )}
+              {status === FormStatus.SUBMITTING ? 'Submitting' : 'Submit'}
+            </button>
+          </form>
         </div>
         <div className="flex flex-col space-y-4 text-lg">
           {LINKS.map(({ href, title, Icon }) => (
@@ -203,6 +203,13 @@ const Contact: React.FC<ContactProps> = () => {
           ))}
         </div>
       </div>
+      <noscript>
+        <style
+          dangerouslySetInnerHTML={{
+            __html: `.no-js-block{display:block !important}.no-js-text{color:#f8f8f2}`,
+          }}
+        />
+      </noscript>
     </LandingSection>
   )
 }

@@ -14,5 +14,14 @@ module.exports = withPreact(
         },
       ]
     },
+    async redirects() {
+      return [
+        {
+          source: '/resume',
+          destination: 'https://www.dropbox.com/s/77r0zful4vw2alk/resume.pdf',
+          permanent: false,
+        },
+      ]
+    },
   })
 )
