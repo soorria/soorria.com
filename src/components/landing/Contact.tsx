@@ -95,7 +95,7 @@ const Contact: React.FC<ContactProps> = () => {
               tabIndex={-1}
               onClick={() => setShowForm(p => !p)}
               aria-hidden
-              className={`break-words no-js focus:outline-none ${
+              className={`break-words no-js-text focus:outline-none ${
                 showForm ? 'text-drac-purple' : 'text-drac-bg hover:text-drac-purple'
               } `}
             >
