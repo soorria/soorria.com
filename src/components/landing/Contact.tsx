@@ -95,8 +95,8 @@ const Contact: React.FC<ContactProps> = () => {
               tabIndex={-1}
               onClick={() => setShowForm(p => !p)}
               aria-hidden
-              className={`break-words no-js-show focus:outline-none ${
-                showForm ? 'text-drac-purple' : 'hidden hover:text-drac-purple'
+              className={`break-words no-js focus:outline-none ${
+                showForm ? 'text-drac-purple' : 'text-drac-bg hover:text-drac-purple'
               } `}
             >
               or use this <span className={showForm ? 'line-through' : ''}>secret</span> form
@@ -117,7 +117,7 @@ const Contact: React.FC<ContactProps> = () => {
             onSubmit={handleSubmit}
             method="POST"
             action={FORM_ENDPOINT}
-            className={`space-y-4 no-js-show ${showForm ? '' : 'hidden'}`}
+            className={`space-y-4 no-js-block ${showForm ? '' : 'hidden'}`}
           >
             <div className={classes.formGroup}>
               <label htmlFor="name" className={classes.label}>
@@ -204,7 +204,11 @@ const Contact: React.FC<ContactProps> = () => {
         </div>
       </div>
       <noscript>
-        <style dangerouslySetInnerHTML={{ __html: `.no-js-show { display: block !important }` }} />
+        <style
+          dangerouslySetInnerHTML={{
+            __html: `.no-js-block{display:block !important}.no-js-text{color:#f8f8f2}`,
+          }}
+        />
       </noscript>
     </LandingSection>
   )
