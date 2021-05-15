@@ -34,7 +34,7 @@ const ClinicallyRelevantCard: ProjectCardComponent = ({ project }) => {
   const [theme, toggle] = useReducer((t: Theme) => (t === 'light' ? 'dark' : 'light'), 'light')
 
   return (
-    <article
+    <div
       className={`relative overflow-hidden transition transform md:hover:scale-105 rounded-xl hover:shadow-xl ${themeClasses[theme]}`}
     >
       <div className="flex flex-col h-full p-8 space-y-4">
@@ -75,7 +75,7 @@ const ClinicallyRelevantCard: ProjectCardComponent = ({ project }) => {
           </a>
         </div>
       </div>
-    </article>
+    </div>
   )
 }
 

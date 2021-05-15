@@ -24,7 +24,7 @@ const ProjectCard: ProjectCardComponent = ({ project }) => {
   }
 
   return (
-    <article className="flex flex-col space-y-3">
+    <div className="flex flex-col space-y-3">
       <div className="text-xl font-bold text-drac-pink font-display">{project.title}</div>
       <div className="flex-1">{project.shortDescription}</div>
       <div>
@@ -73,7 +73,7 @@ const ProjectCard: ProjectCardComponent = ({ project }) => {
           </a>
         )}
       </div>
-    </article>
+    </div>
   )
 }
 
