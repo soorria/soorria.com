@@ -3,7 +3,8 @@ const withBundleAnalyzer = require('@next/bundle-analyzer')({
   enabled: process.env.ANALYZE === 'true',
 })
 
-module.exports = withBundleAnalyzer({
+/** @type {import('next/dist/next-server/server/config-shared').NextConfig} */
+const config = {
   async headers() {
     return [
       {
@@ -21,4 +22,7 @@ module.exports = withBundleAnalyzer({
       },
     ]
   },
-})
+  reactStrictMode: true,
+}
+
+module.exports = withBundleAnalyzer(config)
