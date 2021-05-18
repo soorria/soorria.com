@@ -12,7 +12,7 @@ const cardLinkClassName =
 
 const JupyterJsCard: React.FC<JupyterJsCardProps> = ({ project }) => {
   return (
-    <article className="relative overflow-hidden transition transform bg-purple-500 md:hover:scale-105 sm:col-span-2 rounded-xl hover:shadow-xl">
+    <div className="relative overflow-hidden transition transform bg-purple-500 md:hover:scale-105 sm:col-span-2 rounded-xl hover:shadow-xl">
       <div className="absolute inset-y-0 right-0 items-center hidden sm:flex">
         <Image
           src="/assets/projects/jupyter-js/jupyter-js-card.png"
@@ -63,7 +63,7 @@ const JupyterJsCard: React.FC<JupyterJsCardProps> = ({ project }) => {
           </a>
         </div>
       </div>
-    </article>
+    </div>
   )
 }
 

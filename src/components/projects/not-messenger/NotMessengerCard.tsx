@@ -7,7 +7,7 @@ const cardLinkClassName =
 
 const NotMessengerCard: ProjectCardComponent = ({ project }) => {
   return (
-    <article className="relative overflow-hidden transition transform bg-gray-700 md:hover:scale-105 rounded-xl hover:shadow-xl">
+    <div className="relative overflow-hidden transition transform bg-gray-700 md:hover:scale-105 rounded-xl hover:shadow-xl">
       <div className="flex flex-col h-full p-8 space-y-4">
         <header className="flex items-center text-3xl font-bold text-green-400 font-display">
           Not Messenger
@@ -45,7 +45,7 @@ const NotMessengerCard: ProjectCardComponent = ({ project }) => {
           </a>
         </div>
       </div>
-    </article>
+    </div>
   )
 }
 
