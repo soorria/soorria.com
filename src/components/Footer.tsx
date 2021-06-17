@@ -88,12 +88,12 @@ const Footer: React.FC<FooterProps> = () => {
         </div>
         <div className="grid justify-center max-w-sm grid-cols-1 gap-4 mx-auto text-center lowercase sm:grid-cols-3">
           {LINKS.map((col, i) => (
-            <div key={i} className="flex flex-col w-32 mx-auto space-y-4">
+            <div key={i} className="flex flex-col w-32 mx-auto space-y-4 text-drac-purple">
               {col.map(({ title, href, key }) =>
                 href.match(/^(mailto|http)/i) ? (
                   <a
                     key={key ?? (title as string)}
-                    className="transition-colors hover:text-drac-purple text-drac-comment"
+                    className="transition-colors"
                     href={href}
                     target="_blank"
                     rel="noopener noreferrer"
@@ -102,9 +102,7 @@ const Footer: React.FC<FooterProps> = () => {
                   </a>
                 ) : (
                   <Link href={href} key={key ?? (title as string)}>
-                    <a className="transition-colors hover:text-drac-purple text-drac-comment">
-                      {title}
-                    </a>
+                    <a className="transition-colors">{title}</a>
                   </Link>
                 )
               )}
