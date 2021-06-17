@@ -12,6 +12,7 @@
   "dependencies": {
     "@next/bundle-analyzer": "^10.2.0",
     "@tailwindcss/typography": "^0.4.0",
+    "chrome-aws-lambda": "^10.0.0",
     "date-fns": "^2.19.0",
     "globby": "^11.0.3",
     "gray-matter": "^4.0.2",
@@ -21,8 +22,7 @@
     "next-plausible": "^1.6.1",
     "next-plugin-preact": "^3.0.4",
     "next-seo": "^4.23.0",
-    "playwright-aws-lambda": "^0.6.0",
-    "playwright-core": "^1.10.0",
+    "puppeteer-core": "^10.0.0",
     "preact": "^10.5.13",
     "preact-render-to-string": "^5.1.19",
     "react": "npm:@preact/compat",

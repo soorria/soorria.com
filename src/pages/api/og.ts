@@ -1,38 +1,28 @@
 import { NextApiHandler } from 'next'
+import core from 'puppeteer-core'
+import chrome from 'chrome-aws-lambda'
 import fs from 'fs'
 import path from 'path'
 
 const handler: NextApiHandler = async (req, res) => {
+  const { category, title, base: _base } = req.query
+  const base = typeof _base === 'string' && _base ? _base : 'https://mooth.tech'
   try {
-    // eslint-disable-next-line @typescript-eslint/no-var-requires
-    const playwright = require('playwright-aws-lambda')
-    const { category, title, base: _base } = req.query
-    const base = typeof _base === 'string' && _base ? _base : 'https://mooth.tech'
-
     if (typeof category !== 'string' || (title && typeof title !== 'string')) {
-      throw 1
+      throw new Error('Invalid query')
     }
 
-    // This doesn't work sometimes. Not sure why.
-    // It says they node_modules/playwrite-core/browsers.json
-    // does not exist?????
-    //
-    // For some reason it works when I have this try/catch thing.
-    // Maybe it's the path.join / fs.readdir stuff
+    const browser = await core.launch({
+      args: chrome.args,
+      executablePath: await chrome.executablePath,
+      headless: chrome.headless,
+    })
 
-    // // For some reason this fixes it. What the fuck
-    // const fileThatDoesntExistSometimes = path.join(
-    //   process.cwd(),
-    //   './node_modules/playwright-core/browsers.json'
-    // )
-    // fs.readFileSync(fileThatDoesntExistSometimes)
+    const page = await browser.newPage()
 
-    const browser = await playwright.launchChromium()
-    const page = await browser.newPage({
-      viewport: {
-        width: 1200,
-        height: 630,
-      },
+    page.setViewport({
+      width: 1200,
+      height: 630,
     })
 
     const url = `${base}/og/${category}/${title ? encodeURIComponent(title) : ''}`
@@ -53,9 +43,7 @@ const handler: NextApiHandler = async (req, res) => {
     let data
     try {
       data = fs.readFileSync(path.join(process.cwd(), './public/og.png'))
-      console.log('og image - READING OG IMAGE FROM DISK')
     } catch (err) {
-      console.log('og image - FETCHING OG IMAGE')
       const response = await fetch('https://mooth.tech/og.png')
       data = await (response as any).buffer()
     }
