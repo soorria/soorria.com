@@ -24,9 +24,6 @@ const config = {
     ]
   },
   reactStrictMode: true,
-  future: {
-    webpack5: true,
-  },
 }
 
 module.exports = withPreact(withBundleAnalyzer(config))
