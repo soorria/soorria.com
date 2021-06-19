@@ -62,6 +62,7 @@ const ClinicallyRelevantCard: ProjectCardComponent = ({ project }) => {
             <a className={cardLinkClassName(theme)}>
               <InfoIcon className="inline-block w-4 h-4" />
               <span>Details</span>
+              <span className="sr-only"> for {project.title}</span>
             </a>
           </NextLink>
           <a
@@ -71,7 +72,9 @@ const ClinicallyRelevantCard: ProjectCardComponent = ({ project }) => {
             href={project.live}
           >
             <ExternalIcon className="inline-block w-4 h-4" />
-            <span>See Live</span>
+            <span>
+              See <span className="sr-only">{project.title}</span> Live
+            </span>
           </a>
         </div>
       </div>

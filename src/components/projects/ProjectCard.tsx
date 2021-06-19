@@ -44,6 +44,7 @@ const ProjectCard: ProjectCardComponent = ({ project }) => {
           >
             <InfoIcon className="inline-block w-4 h-4" />
             <span>Details</span>
+            <span className="sr-only"> for {project.title}</span>
           </a>
         </Link>
 
@@ -56,7 +57,9 @@ const ProjectCard: ProjectCardComponent = ({ project }) => {
             rel="noopener noreferrer"
           >
             <ExternalIcon className="inline-block w-4 h-4" />
-            <span>View Live</span>
+            <span>
+              See <span className="sr-only">{project.title}</span> Live
+            </span>
           </a>
         )}
 
@@ -70,6 +73,7 @@ const ProjectCard: ProjectCardComponent = ({ project }) => {
           >
             <CodeIcon className="inline-block w-4 h-4" />
             <span>Source</span>
+            <span className="sr-only"> for {project.title}</span>
           </a>
         )}
       </div>

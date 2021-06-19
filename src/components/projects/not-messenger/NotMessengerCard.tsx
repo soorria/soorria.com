@@ -23,6 +23,7 @@ const NotMessengerCard: ProjectCardComponent = ({ project }) => {
             <a className={cardLinkClassName}>
               <InfoIcon className="inline-block w-4 h-4" />
               <span>Details</span>
+              <span className="sr-only"> for {project.title}</span>
             </a>
           </NextLink>
           <a
@@ -32,7 +33,9 @@ const NotMessengerCard: ProjectCardComponent = ({ project }) => {
             href={project.live}
           >
             <ExternalIcon className="inline-block w-4 h-4" />
-            <span>See Live</span>
+            <span>
+              See <span className="sr-only">{project.title}</span> Live
+            </span>
           </a>
           <a
             className={cardLinkClassName}
@@ -42,6 +45,7 @@ const NotMessengerCard: ProjectCardComponent = ({ project }) => {
           >
             <CodeIcon className="inline-block w-4 h-4" />
             <span>Source</span>
+            <span className="sr-only"> for {project.title}</span>
           </a>
         </div>
       </div>
