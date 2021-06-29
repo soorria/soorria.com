@@ -6,15 +6,15 @@ tags:
   - typescript
   - react
 createdAt: '2021-03-26'
-updatedAt: '2021-05-02'
+updatedAt: '2021-06-29'
 ---
 
 Save to `localStorage` whenever state changes.
 
 ```typescript
-import { Dispatch, useEffect, useState } from 'react'
+import { Dispatch, SetStateAction, useEffect, useState } from 'react'
 
-const useLocalStorage = <T>(key: string, initialValue: T): [T, Dispatch<T>, () => void] => {
+const useLocalStorage = <T>(key: string, initialValue: T): [T, Dispatch<SetStateAction<T>>, () => void] => {
   const [state, setState] = useState<T>(() => {
     const cached = localStorage.getItem(key)
 
