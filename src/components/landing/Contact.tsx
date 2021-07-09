@@ -64,6 +64,7 @@ const Contact: React.FC<ContactProps> = () => {
     event.preventDefault()
     const form = event.target as HTMLFormElement
     const data = Object.fromEntries(new FormData(form) as any)
+    data._captcha = 'false'
     delete data._next
     try {
       const response = await fetch(FORM_ENDPOINT, {
@@ -161,7 +162,6 @@ const Contact: React.FC<ContactProps> = () => {
             </div>
 
             <input type="text" name="_honey" className="hidden" />
-            <input readOnly type="text" name="_captcha" value="false" className="hidden" />
             <input
               readOnly
               type="text"
