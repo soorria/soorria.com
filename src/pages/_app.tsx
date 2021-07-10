@@ -13,7 +13,12 @@ import '../styles/code-block.css'
 const MyApp: React.FC<AppProps> = ({ Component, pageProps }) => {
   if (pageProps.noBoilerPlate) return <Component {...pageProps} />
   return (
-    <PlausibleProvider domain="mooth.tech" customDomain="https://plausible.mooth.tech" selfHosted>
+    <PlausibleProvider
+      domain="mooth.tech"
+      customDomain="https://plausible.mooth.tech"
+      selfHosted
+      trackOutboundLinks
+    >
       <Head>
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       </Head>
