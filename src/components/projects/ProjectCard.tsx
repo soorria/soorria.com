@@ -27,7 +27,7 @@ const ProjectCard: ProjectCardComponent = ({ project }) => {
     <div className="flex flex-col space-y-3">
       <div className="text-xl font-bold text-drac-pink font-display">
         {project.title}
-        {project.wip && <span className="ml-2 text-sm italic opacity-70">(WIP)</span>}
+        {project.wip && <span className="ml-2 font-sans text-sm italic font-normal">(WIP)</span>}
       </div>
       <div className="flex-1">{project.shortDescription}</div>
       <div>
