@@ -25,7 +25,10 @@ const ProjectCard: ProjectCardComponent = ({ project }) => {
 
   return (
     <div className="flex flex-col space-y-3">
-      <div className="text-xl font-bold text-drac-pink font-display">{project.title}</div>
+      <div className="text-xl font-bold text-drac-pink font-display">
+        {project.title}
+        {project.wip && <span className="ml-2 text-sm italic opacity-70">(WIP)</span>}
+      </div>
       <div className="flex-1">{project.shortDescription}</div>
       <div>
         <div className="flex flex-wrap -mt-1 -ml-2 text-xs text-opacity-80 text-drac-fg">
@@ -37,16 +40,18 @@ const ProjectCard: ProjectCardComponent = ({ project }) => {
         </div>
       </div>
       <div className="flex space-x-4 text-sm">
-        <Link href={`/projects/${project.slug}`}>
-          <a
-            aria-label={`See details for ${project.title}`}
-            className="inline-flex items-center space-x-1 underline text-drac-pink hover:text-drac-purple"
-          >
-            <InfoIcon className="inline-block w-4 h-4" />
-            <span>Details</span>
-            <span className="sr-only"> for {project.title}</span>
-          </a>
-        </Link>
+        {project.hasContent && (
+          <Link href={`/projects/${project.slug}`}>
+            <a
+              aria-label={`See details for ${project.title}`}
+              className="inline-flex items-center space-x-1 underline text-drac-pink hover:text-drac-purple"
+            >
+              <InfoIcon className="inline-block w-4 h-4" />
+              <span>Details</span>
+              <span className="sr-only"> for {project.title}</span>
+            </a>
+          </Link>
+        )}
 
         {project.live && (
           <a

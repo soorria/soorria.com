@@ -58,13 +58,15 @@ const ClinicallyRelevantCard: ProjectCardComponent = ({ project }) => {
           </ul>
         </div>
         <div className="mb-0 -m-2">
-          <NextLink href={`/projects/${project.slug}`} passHref>
-            <a className={cardLinkClassName(theme)}>
-              <InfoIcon className="inline-block w-4 h-4" />
-              <span>Details</span>
-              <span className="sr-only"> for {project.title}</span>
-            </a>
-          </NextLink>
+          {project.hasContent && (
+            <NextLink href={`/projects/${project.slug}`} passHref>
+              <a className={cardLinkClassName(theme)}>
+                <InfoIcon className="inline-block w-4 h-4" />
+                <span>Details</span>
+                <span className="sr-only"> for {project.title}</span>
+              </a>
+            </NextLink>
+          )}
           <a
             className={cardLinkClassName(theme)}
             target="_blank"
