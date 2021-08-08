@@ -1,4 +1,4 @@
-import { GITHUB_URL } from './contants'
+import { GITHUB_URL } from './constants'
 
 export const contact = {
   github: GITHUB_URL,

@@ -10,7 +10,7 @@ import { hydrate } from '@/lib/mdx-hydrate'
 import { render } from '@/lib/mdx-render'
 import { DataType } from '@/types/data'
 import { Project, ProjectFrontMatter } from '@/types/project'
-import { featuredProjects } from '@/contants'
+import { featuredProjects } from '@/constants'
 import Skills from '@/components/landing/Skills'
 // import Skills from '@/components/landing/Skills'
 

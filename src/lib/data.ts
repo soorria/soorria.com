@@ -28,6 +28,7 @@ export const getAllFilesFrontMatter = async <TFrontMatter>(
         ...(data as TFrontMatter),
         slug: fileToSlug(file),
         readingTime: readingTime(content).text,
+        hasContent: content.trim().length !== 0,
       } as TFrontMatter
     })
   )

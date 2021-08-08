@@ -1,4 +1,4 @@
-import { PUBLIC_URL } from '@/contants'
+import { PUBLIC_URL } from '@/constants'
 import { DataType } from '@/types/data'
 import { OpenGraphImages } from 'next-seo/lib/types'
 

@@ -14,6 +14,7 @@ export interface BaseData {
   shortDescription: string
   mdxSource: MdxRemote.Source
   readingTime?: string
+  hasContent: boolean
 }
 
 export type ApiData<T extends BaseData> = Omit<T, 'mdxSource'> & { content: string }

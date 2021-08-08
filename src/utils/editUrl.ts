@@ -1,4 +1,4 @@
-import { GITHUB_URL } from '@/contants'
+import { GITHUB_URL } from '@/constants'
 import { DataType } from '@/types/data'
 
 const editUrl = (type: DataType, slug: string): string =>
