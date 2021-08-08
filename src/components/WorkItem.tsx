@@ -1,7 +1,7 @@
 import { WorkFrontMatter } from '@/types/work'
 import { ReactNode } from 'react'
 
-type WorkItemProps = Omit<WorkFrontMatter, 'slug' | 'shortDescription'> & {
+type WorkItemProps = Omit<WorkFrontMatter, 'slug' | 'shortDescription' | 'hasContent'> & {
   shortDescription?: ReactNode
 }
 
