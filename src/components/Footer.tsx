@@ -19,10 +19,10 @@ const LINKS: LinkType[][] = [
       title: 'about',
       href: '/about',
     },
-    {
-      title: 'resume',
-      href: '/resume',
-    },
+    // {
+    //   title: 'resume',
+    //   href: '/resume',
+    // },
   ],
   [
     {
