@@ -45,12 +45,11 @@ html {
   }
 
   ::-webkit-scrollbar-track {
-    background-color: theme('colors.drac.curr');
+    @apply bg-drac-curr;
   }
 
   ::-webkit-scrollbar-thumb {
-    border-radius: 100px;
-    background-color: theme('colors.drac.pink');
+    @apply bg-drac-pink rounded-full;
   }
 
   // Firefox

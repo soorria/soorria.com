@@ -1,0 +1,24 @@
+---
+title: PartiallyRequired
+shortDescription: A TypeScript type to make part of another type not optional.
+category: TypeScript
+tags:
+  - typescript
+createdAt: '2021-10-28'
+updatedAt: '2021-10-28'
+---
+
+```typescript
+type PartiallyRequired<T, K extends keyof T> = Omit<T, K> & Required<Pick<T, K>>
+```
+
+## Usage
+
+```tsx
+type User = {
+  name: string
+  email?: string
+}
+
+type UserWithEmailRequired = PartiallyRequired<User, 'email'>
+```
