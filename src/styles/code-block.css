@@ -23,17 +23,24 @@
   .prose pre {
     @apply pb-2;
   }
+
   .prose pre::-webkit-scrollbar {
     width: 8px;
     height: 8px;
   }
+
   .prose pre::-webkit-scrollbar-track {
     @apply bg-transparent;
   }
+
   .prose pre::-webkit-scrollbar-thumb {
-    /* border-radius: 100px;
-    background-color: theme('colors.drac.purple'); */
     @apply bg-drac-purple;
+  }
+
+  // Firefox
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: theme('colors.drac.purple') theme('colors.transparent');
   }
 }
 

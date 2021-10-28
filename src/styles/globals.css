@@ -54,8 +54,8 @@ html {
 
   // Firefox
   * {
-    scrollbarwidth: 'thin';
-    scrollbarcolor: theme('colors.drac.pink') theme('colors.transparent');
+    scrollbar-width: 'thin';
+    scrollbar-color: theme('colors.drac.pink') theme('colors.transparent');
   }
 }
 
