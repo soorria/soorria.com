@@ -9,10 +9,7 @@ const description = 'Shhh... 🤫🤐'
 const url = 'https://mooth.tech/secrets'
 
 const Settings: React.FC = () => {
-  const [allowAnalytics, setAllowAnalytics] = useLocalStorage<boolean | ''>(
-    'plausible_ignore',
-    true
-  )
+  const [allowAnalytics, setAllowAnalytics] = useLocalStorage<'' | '1'>('plausible_ignore', '')
 
   return (
     <div className="max-w-xs mx-auto space-y-6">
@@ -23,7 +20,7 @@ const Settings: React.FC = () => {
           name="allow-analytics"
           className="block w-4 h-4"
           checked={Boolean(allowAnalytics)}
-          onChange={e => setAllowAnalytics(e.target.checked ? true : '')}
+          onChange={e => setAllowAnalytics(e.target.checked ? '' : '1')}
         />
         <label htmlFor="allow-analytics" className="block">
           Allow analytics with plausible?
