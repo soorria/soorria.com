@@ -4,6 +4,7 @@ import readingTime from 'reading-time'
 import matter from 'gray-matter'
 import path from 'path'
 import { render } from './mdx-render'
+import { addRefToUrl } from '../utils/content'
 
 const DATA_ROOT = path.join(process.cwd(), '_data')
 
@@ -57,6 +58,10 @@ export const getFileWithMdx = async <TData extends BaseData>(
   const { data, content } = matter(source)
 
   const mdxSource = await render(content)
+
+  if (data.live) {
+    data.live = addRefToUrl(data.live)
+  }
 
   return {
     ...(data as FrontMatter<TData>),
