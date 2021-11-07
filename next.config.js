@@ -6,7 +6,7 @@ const withBundleAnalyzer = require('@next/bundle-analyzer')({
 const { withPlausibleProxy } = require('next-plausible')
 
 const withPlausibleConfig = withPlausibleProxy({
-  scriptName: 'plausible',
+  scriptName: 'potato',
   customDomain: 'https://plausible.mooth.tech',
 })
 
