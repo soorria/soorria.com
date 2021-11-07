@@ -16,7 +16,20 @@ const config = {
     return [
       {
         source: '/fonts/(.*)',
-        headers: [{ key: 'Cache-Control', value: 'public, max-age=31536000, immutable' }],
+        headers: [
+          {
+            key: 'Cache-Control',
+            value: 'public, max-age=31536000, s-max-age=31536000, immutable',
+          },
+        ],
+      },
+    ]
+  },
+  async rewrites() {
+    return [
+      {
+        source: '/stats',
+        destination: 'https://plausible.mooth.tech/mooth.tech',
       },
     ]
   },
