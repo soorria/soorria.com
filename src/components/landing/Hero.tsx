@@ -22,7 +22,7 @@ const Hero: React.FC<{ subtitle: ReactNode; now: ReactNode }> = ({ subtitle, now
           <p aria-hidden className="opacity-0 select-none">
             Hey, I&apos;m Soorria
           </p>
-          <h1 className="absolute inset-0 transition-opacity duration-0 bg-clip-text bg-gradient-to-tr from-drac-pink to-drac-purple sm:text-drac-fg group-hover:delay-100 sm:group-hover:opacity-0">
+          <h1 className="absolute inset-0 text-transparent transition-opacity duration-0 bg-clip-text bg-gradient-to-tr from-drac-pink to-drac-purple sm:text-drac-fg group-hover:delay-100 sm:group-hover:opacity-0">
             Hey, I&apos;m Soorria
           </h1>
           <p

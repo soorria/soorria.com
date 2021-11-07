@@ -1,3 +1,4 @@
+import { useTrackFirstEvent } from '@/lib/analytics'
 import { contact } from '@/links'
 import { FormEventHandler, useState } from 'react'
 import {
@@ -13,9 +14,9 @@ interface ContactProps {}
 
 const LINKS = [
   {
-    href: contact.facebook,
-    title: contact.facebookUsername,
-    Icon: FacebookIconSolid,
+    href: contact.github,
+    title: contact.githubUsername,
+    Icon: GithubIconSolid,
   },
   {
     href: `mailto:${contact.email}`,
@@ -28,14 +29,14 @@ const LINKS = [
     Icon: LinkedinIconSolid,
   },
   {
+    href: contact.facebook,
+    title: contact.facebookUsername,
+    Icon: FacebookIconSolid,
+  },
+  {
     href: contact.twitter,
     title: `@${contact.twitterUsername}`,
     Icon: TwitterIconSolid,
-  },
-  {
-    href: contact.github,
-    title: contact.githubUsername,
-    Icon: GithubIconSolid,
   },
 ]
 
@@ -58,6 +59,7 @@ const FORM_ENDPOINT = 'https://formsubmit.co/5d2ddd98ec02b30e98e75354af576d8c'
 const Contact: React.FC<ContactProps> = () => {
   const [showForm, setShowForm] = useState(false)
   const [status, setStatus] = useState(FormStatus.NONE)
+  const track = useTrackFirstEvent()
 
   const handleSubmit: FormEventHandler<HTMLFormElement> = async event => {
     setStatus(FormStatus.SUBMITTING)
@@ -94,8 +96,10 @@ const Contact: React.FC<ContactProps> = () => {
             Want to work with me, or just want to chat? Shoot me an email or a message on Messenger
             <button
               tabIndex={-1}
-              onClick={() => setShowForm(p => !p)}
-              aria-hidden
+              onClick={() => {
+                track('Easter Egg', { props: { which: 'Contact Form' } })
+                setShowForm(p => !p)
+              }}
               className={`break-words no-js-text focus:outline-none ${
                 showForm ? 'text-drac-purple' : 'text-drac-bg hover:text-drac-purple'
               } `}

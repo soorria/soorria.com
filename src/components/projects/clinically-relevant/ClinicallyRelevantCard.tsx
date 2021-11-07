@@ -2,6 +2,7 @@ import NextLink from 'next/link'
 import { ExternalIcon, InfoIcon } from '@/components/icons'
 import { useReducer } from 'react'
 import { ProjectCardComponent } from '../ProjectCard'
+import { useTrackFirstEvent } from '@/lib/analytics'
 
 const ClinicallyRelevantLogo: React.FC<{ className?: string }> = ({ className }) => (
   <svg
@@ -31,7 +32,14 @@ const cardLinkClassName = (theme: Theme) =>
     : 'hover:bg-gray-100 hover:text-gray-800 hover:border-gray-100')
 
 const ClinicallyRelevantCard: ProjectCardComponent = ({ project }) => {
-  const [theme, toggle] = useReducer((t: Theme) => (t === 'light' ? 'dark' : 'light'), 'light')
+  const track = useTrackFirstEvent()
+  const [theme, toggle] = useReducer(
+    (t: Theme) => (
+      track('Easter Egg', { props: { which: 'ClinicallyRelevant dark mode' } }),
+      t === 'light' ? 'dark' : 'light'
+    ),
+    'light'
+  )
 
   return (
     <div

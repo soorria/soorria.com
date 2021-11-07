@@ -3,6 +3,13 @@ const withBundleAnalyzer = require('@next/bundle-analyzer')({
   enabled: process.env.ANALYZE === 'true',
 })
 
+const { withPlausibleProxy } = require('next-plausible')
+
+const withPlausibleConfig = withPlausibleProxy({
+  scriptName: 'plausible',
+  customDomain: 'https://plausible.mooth.tech',
+})
+
 /** @type {import('next/dist/next-server/server/config-shared').NextConfig} */
 const config = {
   async headers() {
@@ -13,19 +20,10 @@ const config = {
       },
     ]
   },
-  async redirects() {
-    return [
-      {
-        source: '/resume',
-        destination: 'https://www.dropbox.com/s/77r0zful4vw2alk/resume.pdf',
-        permanent: false,
-      },
-    ]
-  },
   reactStrictMode: true,
   future: {
     webpack5: true,
   },
 }
 
-module.exports = withBundleAnalyzer(config)
+module.exports = withPlausibleConfig(withBundleAnalyzer(config))
