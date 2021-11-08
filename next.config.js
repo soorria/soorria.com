@@ -30,6 +30,7 @@ const config = {
       {
         source: '/stats',
         destination: 'https://plausible.mooth.tech/mooth.tech',
+        permanent: false,
       },
     ]
   },
