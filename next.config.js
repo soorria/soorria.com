@@ -25,7 +25,7 @@ const config = {
       },
     ]
   },
-  async rewrites() {
+  async redirects() {
     return [
       {
         source: '/stats',
