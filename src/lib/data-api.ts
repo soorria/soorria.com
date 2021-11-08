@@ -5,13 +5,13 @@ import { getAllFilesFrontMatter, getFileWithoutMdx } from './data'
 
 interface GetAllOptions<T> {
   end?: boolean
-  sort?: (a: T, b: T) => number
+  compareForSort?: (a: T, b: T) => number
 }
 
 export const createGetAllHandler =
   <T extends BaseFrontMatter>(
     type: DataType,
-    { end = true, sort }: GetAllOptions<T> = {}
+    { end = true, compareForSort }: GetAllOptions<T> = {}
   ): NextApiHandler =>
   async (req, res) => {
     if (req.method === 'GET') {
@@ -19,9 +19,11 @@ export const createGetAllHandler =
 
       const frontMatters = await getAllFilesFrontMatter<T>(type)
 
-      if (sort) {
-        frontMatters.sort(sort)
+      if (compareForSort) {
+        frontMatters.sort(compareForSort)
       }
+
+      res.setHeader('Cache-Control', 'public, s-max-age=31536000')
 
       res.json({ [type]: frontMatters })
     }
@@ -45,8 +47,15 @@ export const createGetBySlugHandler =
         return res.status(404).end()
       }
 
+      res.setHeader('Cache-Control', 'public, s-max-age=31536000')
+
       try {
-        res.json({ [type.substr(0, type.length - 1)]: await getFileWithoutMdx(type, slug) })
+        res.json({
+          [type.endsWith('s') ? type.substr(0, type.length - 1) : type]: await getFileWithoutMdx(
+            type,
+            slug
+          ),
+        })
       } catch (err) {
         return res.status(404).end()
       }

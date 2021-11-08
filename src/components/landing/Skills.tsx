@@ -12,9 +12,11 @@ const SKILLS = [
   'Jest & Cypress',
 ]
 
-const Skills: React.FC = () => {
+const titles = ["What I've Learned", 'Technical Skills']
+
+const Skills: React.FC<{ random?: number }> = ({ random = 0 }) => {
   return (
-    <LandingSection id="skills" title="What I've Learned">
+    <LandingSection id="skills" title={titles[random % titles.length]}>
       <p className="mb-8 text-lg">
         Here are some of the technicals skills I&apos;ve developed in and outside of my degree.
       </p>

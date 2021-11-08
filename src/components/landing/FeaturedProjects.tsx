@@ -6,11 +6,14 @@ import ProjectsGrid from '../projects/ProjectsGrid'
 
 interface FeaturedProjectsProps {
   projects: ProjectFrontMatter[]
+  random?: number
 }
 
-const FeaturedProjects: React.FC<FeaturedProjectsProps> = ({ projects }) => {
+const titles = ["What I've Built", "Stuff I've Made", 'Projects']
+
+const FeaturedProjects: React.FC<FeaturedProjectsProps> = ({ projects, random = 0 }) => {
   return (
-    <LandingSection id="projects" title="What I've Built">
+    <LandingSection id="projects" title={titles[random % titles.length]}>
       <ProjectsGrid>
         {projects.map(project => (
           <ProjectCard key={project.slug} project={project} />

@@ -1,5 +1,4 @@
-import MainLayout from '@/components/MainLayout'
-import { PostHeading } from '@/components/PostLayout'
+import PostLayout from '@/components/PostLayout'
 import ProjectCard from '@/components/projects/ProjectCard'
 import ProjectsGrid from '@/components/projects/ProjectsGrid'
 import { featuredProjects } from '@/constants'
@@ -20,7 +19,7 @@ const url = 'https://mooth.tech/projects'
 
 const ProjectsPage: React.FC<ProjectsPageProps> = ({ projects }) => {
   return (
-    <MainLayout>
+    <PostLayout title="Projects">
       <NextSeo
         description={description}
         title={title}
@@ -33,7 +32,6 @@ const ProjectsPage: React.FC<ProjectsPageProps> = ({ projects }) => {
           images: [getOgImage(DataType.projects)],
         }}
       />
-      <PostHeading>Projects</PostHeading>
       <p className="mt-6 mb-12 text-lg text-center">{description}</p>
       <ProjectsGrid>
         {projects.slice(0, featuredProjects.length).map(project => (
@@ -46,7 +44,7 @@ const ProjectsPage: React.FC<ProjectsPageProps> = ({ projects }) => {
           <ProjectCard key={project.slug} project={project} />
         ))}
       </ProjectsGrid>
-    </MainLayout>
+    </PostLayout>
   )
 }
 

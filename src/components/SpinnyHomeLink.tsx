@@ -1,7 +1,7 @@
 import Router from 'next/router'
 import Link from 'next/link'
 import { useEffect, useRef, useState } from 'react'
-import random from '@/utils/random'
+import { random } from '@/utils/random'
 import Logo from './logo'
 
 const MIN_ROTATION = 0
@@ -41,7 +41,7 @@ const SpinnyHomeLink: React.FC = () => {
         >
           <Logo />
         </span>
-        <span className="ml-1.5 text-2xl font-bold lowercase sm:ml-3 sm:text-3xl font-display">
+        <span className="ml-1.5 text-2xl font-bold lowercase sm:ml-4 sm:text-3xl font-display">
           <span className="sr-only sm:not-sr-only">Soorria</span>
           <span className="sr-only md:not-sr-only"> Saruva</span>
         </span>

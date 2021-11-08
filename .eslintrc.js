@@ -47,5 +47,12 @@ module.exports = {
         img: ['Image'],
       },
     ],
+    '@typescript-eslint/no-unused-vars': [
+      1,
+      {
+        argsIgnorePattern: '^_',
+        varsIgnorePattern: '^_',
+      },
+    ],
   },
 }

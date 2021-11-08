@@ -14,7 +14,10 @@ Save to `localStorage` whenever state changes.
 ```typescript
 import { Dispatch, SetStateAction, useEffect, useState } from 'react'
 
-const useLocalStorage = <T>(key: string, initialValue: T): [T, Dispatch<SetStateAction<T>>, () => void] => {
+const useLocalStorage = <T>(
+  key: string,
+  initialValue: T
+): [T, Dispatch<SetStateAction<T>>, () => void] => {
   const [state, setState] = useState<T>(() => {
     const cached = localStorage.getItem(key)
 
@@ -43,7 +46,7 @@ const useLocalStorage = <T>(key: string, initialValue: T): [T, Dispatch<SetState
 
 ```tsx
 const Example = () => {
-  const [input, setInput] = useState('example:input', '')
+  const [input, setInput] = useLocalStorage('example:input', '')
 
   return (
     <>

@@ -10,7 +10,9 @@ import {
 } from '../icons'
 import LandingSection from './LandingSection'
 
-interface ContactProps {}
+interface ContactProps {
+  random?: number
+}
 
 const LINKS = [
   {
@@ -56,7 +58,9 @@ enum FormStatus {
 
 const FORM_ENDPOINT = 'https://formsubmit.co/5d2ddd98ec02b30e98e75354af576d8c'
 
-const Contact: React.FC<ContactProps> = () => {
+const titles = ['Get in Touch', 'Talk to me!', 'Contact']
+
+const Contact: React.FC<ContactProps> = ({ random = 0 }) => {
   const [showForm, setShowForm] = useState(false)
   const [status, setStatus] = useState(FormStatus.NONE)
   const track = useTrackFirstEvent()
@@ -89,7 +93,7 @@ const Contact: React.FC<ContactProps> = () => {
   }
 
   return (
-    <LandingSection title="Get in Touch" id="contact">
+    <LandingSection title={titles[random % titles.length]} id="contact">
       <div className="grid grid-flow-row-dense grid-cols-1 gap-y-8 gap-x-16 sm:grid-cols-2">
         <div className="space-y-4 row-start sm:row-start-1">
           <p className="text-lg">

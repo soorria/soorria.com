@@ -33,7 +33,7 @@ const handler: NextApiHandler = async (req, res) => {
     })
     await browser.close()
 
-    res.setHeader('Cache-Control', 's-maxage=31536000, stale-while-revalidate')
+    res.setHeader('Cache-Control', 's-maxage=31536000')
     res.setHeader('Content-Type', 'image/png')
 
     res.end(data)

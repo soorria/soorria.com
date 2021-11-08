@@ -15,7 +15,7 @@ export const PostHeading: React.FC = ({ children }) => {
 const PostLayout: React.FC<PostLayoutProps> = ({ title, children }) => {
   return (
     <Container>
-      <article className="py-8">
+      <article className="pt-8 pb-16">
         <PostHeading>{title}</PostHeading>
         {children}
       </article>

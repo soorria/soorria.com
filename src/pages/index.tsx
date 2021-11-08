@@ -12,26 +12,24 @@ import { DataType } from '@/types/data'
 import { Project, ProjectFrontMatter } from '@/types/project'
 import { featuredProjects } from '@/constants'
 import Skills from '@/components/landing/Skills'
-// import Skills from '@/components/landing/Skills'
+import { randomArray } from '@/utils/random'
 
 interface IndexProps {
-  subtitleMdx: MdxRemote.Source
+  subtitle: string
   nowMdx: MdxRemote.Source
   projects: ProjectFrontMatter[]
+  randoms: number[]
 }
 
-const IndexPage: React.FC<IndexProps> = ({ subtitleMdx, nowMdx, projects }) => {
-  const subtitle = hydrate(subtitleMdx)
+const IndexPage: React.FC<IndexProps> = ({ subtitle, nowMdx, projects, randoms }) => {
   const now = hydrate(nowMdx)
 
   return (
     <Container>
       <Hero subtitle={subtitle} now={now} />
-      <FeaturedProjects projects={projects} />
-      {/* <FeaturedWork work={work} /> */}
-      <Skills />
-      {/* <Education /> */}
-      <Contact />
+      <FeaturedProjects random={randoms[0]} projects={projects} />
+      <Skills random={randoms[1]} />
+      <Contact random={randoms[2]} />
       <div className="pb-20" />
     </Container>
   )
@@ -40,9 +38,14 @@ const IndexPage: React.FC<IndexProps> = ({ subtitleMdx, nowMdx, projects }) => {
 export default IndexPage
 
 export const getStaticProps: GetStaticProps<IndexProps> = async () => {
-  const subtitleMdx = await render(`
-I'm a full stack software engineer and Actuarial Studies & Computer Science
-student based in Sydney, Australia.`)
+  const subtitle = `
+  I'm a full stack software engineer and Actuarial Studies & Computer Science
+  student based in Sydney, Australia.
+  `
+    .split('\n')
+    .map(line => line.trim())
+    .join(' ')
+
   const nowMdx = await render(`
 Right now, I'm a freelance software engineer helping small businesses
 enter the online space and in my free time I'm working on
@@ -51,19 +54,23 @@ Go and Python.`)
 
   const projects: ProjectFrontMatter[] = await Promise.all(
     featuredProjects.map(async projectSlug => {
-      const project = await getFileWithMdx<Project>(DataType.projects, projectSlug)
-      return {
-        ...project,
-        mdxSource: null,
-      }
+      const {
+        mdxSource: _,
+        readingTime: __,
+        ...rest
+      } = await getFileWithMdx<Project>(DataType.projects, projectSlug)
+      return rest
     })
   )
 
+  const randoms = randomArray(0, 100, 5)
+
   return {
     props: {
-      subtitleMdx,
+      subtitle,
       nowMdx,
       projects,
+      randoms,
     },
   }
 }
