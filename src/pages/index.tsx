@@ -72,5 +72,6 @@ Go and Python.`)
       projects,
       randoms,
     },
+    revalidate: 1,
   }
 }
