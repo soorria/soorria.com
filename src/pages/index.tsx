@@ -19,9 +19,10 @@ interface IndexProps {
   nowMdx: MdxRemote.Source
   projects: ProjectFrontMatter[]
   randoms: number[]
+  renderedAt: string
 }
 
-const IndexPage: React.FC<IndexProps> = ({ subtitle, nowMdx, projects, randoms }) => {
+const IndexPage: React.FC<IndexProps> = ({ subtitle, nowMdx, projects, randoms, renderedAt }) => {
   const now = hydrate(nowMdx)
 
   return (
@@ -30,7 +31,9 @@ const IndexPage: React.FC<IndexProps> = ({ subtitle, nowMdx, projects, randoms }
       <FeaturedProjects random={randoms[0]} projects={projects} />
       <Skills random={randoms[1]} />
       <Contact random={randoms[2]} />
-      <div className="pb-20" />
+      <div className="py-10 text-sm text-center text-drac-curr" aria-hidden>
+        Rendered at {new Date(renderedAt).toLocaleString()}
+      </div>
     </Container>
   )
 }
@@ -71,6 +74,7 @@ Go and Python.`)
       nowMdx,
       projects,
       randoms,
+      renderedAt: new Date().toISOString(),
     },
     revalidate: 1,
   }
