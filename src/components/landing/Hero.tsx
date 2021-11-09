@@ -5,7 +5,7 @@ const CLASSNAMES = {
     'hidden sm:block absolute inset-0 transform group-hover:translate-x-0 group-hover:translate-y-0 transition-transform select-none',
 }
 
-const Hero: React.FC<{ subtitle: ReactNode; now: ReactNode }> = ({ subtitle, now }) => {
+const Hero: React.FC<{ subtitle?: ReactNode; now?: ReactNode }> = ({ subtitle, now }) => {
   return (
     <div
       id="hero"
@@ -33,10 +33,12 @@ const Hero: React.FC<{ subtitle: ReactNode; now: ReactNode }> = ({ subtitle, now
           </p>
         </div>
       </div>
-      <h2 className="mb-8 text-xl font-bold sm:text-2xl md:text-3xl sm:my-8 font-display">
-        {subtitle}
-      </h2>
-      <div className="text-lg">{now}</div>
+      {subtitle ? (
+        <h2 className="mb-8 text-xl font-bold sm:text-2xl md:text-3xl sm:my-8 font-display">
+          {subtitle}
+        </h2>
+      ) : null}
+      {now ? <div className="text-lg">{now}</div> : now}
     </div>
   )
 }

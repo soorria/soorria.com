@@ -58,7 +58,7 @@ enum FormStatus {
 
 const FORM_ENDPOINT = 'https://formsubmit.co/5d2ddd98ec02b30e98e75354af576d8c'
 
-const titles = ['Get in Touch', 'Talk to me!', 'Contact']
+const titles = ['Get in Touch', 'Talk to me!', 'Contact', 'Reach Out']
 
 const Contact: React.FC<ContactProps> = ({ random = 0 }) => {
   const [showForm, setShowForm] = useState(false)

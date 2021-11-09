@@ -12,7 +12,7 @@ const SKILLS = [
   'Jest & Cypress',
 ]
 
-const titles = ["What I've Learned", 'Technical Skills']
+const titles = ["What I've Learned", 'Technical Skills', 'Tools I Use']
 
 const Skills: React.FC<{ random?: number }> = ({ random = 0 }) => {
   return (
