@@ -23,7 +23,7 @@ interface IndexProps {
   renderedAt: string
 }
 
-const IndexPage: React.FC<IndexProps> = ({ subtitle, nowMdx, projects, randoms, renderedAt }) => {
+const IndexPage: React.FC<IndexProps> = ({ subtitle, nowMdx, projects, randoms }) => {
   const now = hydrate(nowMdx)
 
   return (

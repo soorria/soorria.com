@@ -11,6 +11,8 @@ import '../styles/globals.css'
 import '../styles/code-block.css'
 
 const MyApp: React.FC<AppProps> = ({ Component, pageProps }) => {
+  const renderedAt = pageProps.renderedAt ? new Date(pageProps.renderedAt) : null
+
   return (
     <PlausibleProvider domain="mooth.tech" customDomain="https://mooth.tech" selfHosted>
       <Head>
@@ -22,13 +24,12 @@ const MyApp: React.FC<AppProps> = ({ Component, pageProps }) => {
         <Component {...pageProps} />
       </main>
       <Footer />
-      {pageProps.renderedAt ? (
+      {renderedAt ? (
         <div
           className="text-[.5rem] text-center text-drac-purple relative bottom-2 w-full"
           aria-hidden
         >
-          Rendered at {new Date(pageProps.renderedAt).toLocaleTimeString()},{' '}
-          {new Date(pageProps.renderedAt).toLocaleDateString()}
+          Rendered at {renderedAt.toLocaleTimeString()}, {renderedAt.toLocaleDateString()}
         </div>
       ) : null}
     </PlausibleProvider>
