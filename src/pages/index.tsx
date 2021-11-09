@@ -13,7 +13,7 @@ import { Project, ProjectFrontMatter } from '@/types/project'
 import { featuredProjects } from '@/constants'
 import Skills from '@/components/landing/Skills'
 import { randomArray } from '@/utils/random'
-import { getSingleton, getSingletonText } from '@/lib/supabase'
+import { getSingletonText } from '@/lib/supabase'
 
 interface IndexProps {
   subtitle: string
