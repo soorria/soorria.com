@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "@next/bundle-analyzer": "^10.2.0",
+    "@supabase/supabase-js": "^1.27.0",
     "@tailwindcss/typography": "^0.4.0",
     "chrome-aws-lambda": "^10.0.0",
     "date-fns": "^2.19.0",

@@ -13,6 +13,7 @@ import { Project, ProjectFrontMatter } from '@/types/project'
 import { featuredProjects } from '@/constants'
 import Skills from '@/components/landing/Skills'
 import { randomArray } from '@/utils/random'
+import { getSingleton, getSingletonText } from '@/lib/supabase'
 
 interface IndexProps {
   subtitle: string
@@ -41,19 +42,10 @@ const IndexPage: React.FC<IndexProps> = ({ subtitle, nowMdx, projects, randoms, 
 export default IndexPage
 
 export const getStaticProps: GetStaticProps<IndexProps> = async () => {
-  const subtitle = `
-  I'm a full stack software engineer and Actuarial Studies & Computer Science
-  student based in Sydney, Australia.
-  `
-    .split('\n')
-    .map(line => line.trim())
-    .join(' ')
+  const subtitle = await getSingletonText('subtitle')
 
-  const nowMdx = await render(`
-Right now, I'm a freelance software engineer helping small businesses
-enter the online space and in my free time I'm working on
-[jupyter.js](https://jjs.mooth.tech). Sometimes I play around with
-Go and Python.`)
+  const nowText = await getSingletonText('now')
+  const nowMdx = await render(nowText)
 
   const projects: ProjectFrontMatter[] = await Promise.all(
     featuredProjects.map(async projectSlug => {
