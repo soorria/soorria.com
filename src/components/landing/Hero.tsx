@@ -2,7 +2,7 @@ import { ReactNode } from 'react'
 
 const CLASSNAMES = {
   heroCommon:
-    'hidden sm:block absolute inset-0 transform group-hover:translate-x-0 group-hover:translate-y-0 transition-transform select-none',
+    'hidden sm:block absolute inset-0 transform motion-safe:group-hover:translate-x-0 motion-safe:group-hover:translate-y-0 transition-transform select-none',
 }
 
 const Hero: React.FC<{ subtitle?: ReactNode; now?: ReactNode }> = ({ subtitle, now }) => {
@@ -22,7 +22,7 @@ const Hero: React.FC<{ subtitle?: ReactNode; now?: ReactNode }> = ({ subtitle, n
           <p aria-hidden className="opacity-0 select-none">
             Hey, I&apos;m Soorria
           </p>
-          <h1 className="absolute inset-0 text-transparent transition-opacity duration-0 bg-clip-text bg-gradient-to-tr from-drac-pink to-drac-purple sm:text-drac-fg group-hover:delay-100 sm:group-hover:opacity-0">
+          <h1 className="absolute inset-0 text-transparent transition-opacity duration-0 bg-clip-text bg-gradient-to-tr from-drac-pink to-drac-purple sm:text-drac-fg group-hover:delay-100 sm:motion-safe:group-hover:opacity-0">
             Hey, I&apos;m Soorria
           </h1>
           <p

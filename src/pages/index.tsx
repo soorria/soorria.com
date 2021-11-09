@@ -32,12 +32,7 @@ const IndexPage: React.FC<IndexProps> = ({ subtitle, nowMdx, projects, randoms, 
       <FeaturedProjects random={randoms[0]} projects={projects} />
       <Skills random={randoms[1]} />
       <Contact random={randoms[2]} />
-      <div
-        className="py-10 text-sm text-center transition-colors text-drac-curr hover:text-drac-fg"
-        aria-hidden
-      >
-        Rendered at {new Date(renderedAt).toLocaleString()}
-      </div>
+      <div className="py-10" />
     </Container>
   )
 }

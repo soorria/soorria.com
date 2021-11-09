@@ -22,6 +22,15 @@ const MyApp: React.FC<AppProps> = ({ Component, pageProps }) => {
         <Component {...pageProps} />
       </main>
       <Footer />
+      {pageProps.renderedAt ? (
+        <div
+          className="text-[.5rem] text-center text-drac-purple relative bottom-2 w-full"
+          aria-hidden
+        >
+          Rendered at {new Date(pageProps.renderedAt).toLocaleTimeString()},{' '}
+          {new Date(pageProps.renderedAt).toLocaleDateString()}
+        </div>
+      ) : null}
     </PlausibleProvider>
   )
 }

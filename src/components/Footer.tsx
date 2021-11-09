@@ -69,7 +69,7 @@ interface FooterProps {}
 const Footer: React.FC<FooterProps> = () => {
   return (
     <Container>
-      <footer className="flex flex-col py-8 space-y-8 border-t border-drac-curr">
+      <footer className="flex flex-col pt-8 pb-10 space-y-8 border-t border-drac-curr">
         <div className="text-center group">
           Made with{' '}
           <span className="relative inline-block w-5 h-5 align-middle">
