@@ -5,7 +5,10 @@ const CLASSNAMES = {
     'hidden sm:block absolute inset-0 transform motion-safe:group-hover:translate-x-0 motion-safe:group-hover:translate-y-0 transition-transform select-none',
 }
 
-const Hero: React.FC<{ subtitle?: ReactNode; now?: ReactNode }> = ({ subtitle, now }) => {
+const Hero: React.FC<{ subtitle?: ReactNode | null; now?: ReactNode | null }> = ({
+  subtitle,
+  now,
+}) => {
   return (
     <div
       id="hero"

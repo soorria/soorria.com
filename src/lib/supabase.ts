@@ -31,3 +31,12 @@ export const getSingletonText = async (slug: string): Promise<string> => {
   const singleton = await getSingleton(slug)
   return singleton.content
 }
+
+export const getSingletonTextSafe = async (slug: string): Promise<string | null> => {
+  try {
+    const singleton = await getSingleton(slug)
+    return singleton.content
+  } catch (err) {
+    return null
+  }
+}

@@ -13,18 +13,18 @@ import { Project, ProjectFrontMatter } from '@/types/project'
 import { featuredProjects } from '@/constants'
 import Skills from '@/components/landing/Skills'
 import { randomArray } from '@/utils/random'
-import { getSingletonText } from '@/lib/supabase'
+import { getSingletonTextSafe } from '@/lib/supabase'
 
 interface IndexProps {
-  subtitle: string
-  nowMdx: MdxRemote.Source
+  subtitle: string | null
+  nowMdx: MdxRemote.Source | null
   projects: ProjectFrontMatter[]
   randoms: number[]
   renderedAt: string
 }
 
 const IndexPage: React.FC<IndexProps> = ({ subtitle, nowMdx, projects, randoms }) => {
-  const now = hydrate(nowMdx)
+  const now = nowMdx ? hydrate(nowMdx) : null
 
   return (
     <Container>
@@ -40,10 +40,10 @@ const IndexPage: React.FC<IndexProps> = ({ subtitle, nowMdx, projects, randoms }
 export default IndexPage
 
 export const getStaticProps: GetStaticProps<IndexProps> = async () => {
-  const subtitle = await getSingletonText('subtitle')
+  const subtitle = await getSingletonTextSafe('subtitle')
 
-  const nowText = await getSingletonText('now')
-  const nowMdx = await render(nowText)
+  const nowText = await getSingletonTextSafe('now')
+  const nowMdx = nowText ? await render(nowText) : null
 
   const projects: ProjectFrontMatter[] = await Promise.all(
     featuredProjects.map(async projectSlug => {
