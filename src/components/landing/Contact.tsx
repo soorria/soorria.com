@@ -187,7 +187,7 @@ const Contact: React.FC<ContactProps> = ({ random = 0 }) => {
 
             <button
               type="submit"
-              className={`block px-4 py-2 mx-auto font-semibold transition-colors rounded bg-drac-pink ${
+              className={`block px-4 py-2 mx-auto text-drac-bg font-semibold transition-colors rounded bg-drac-pink ${
                 status === FormStatus.SUBMITTING ? 'opacity-70' : 'hover:bg-drac-purple'
               }`}
               disabled={status === FormStatus.SUBMITTING}
