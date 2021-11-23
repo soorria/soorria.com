@@ -37,9 +37,7 @@ const Hero: React.FC<{ subtitle?: ReactNode | null; now?: ReactNode | null }> = 
         </div>
       </div>
       {subtitle ? (
-        <h2 className="mb-8 text-xl font-bold sm:text-2xl md:text-3xl sm:my-8 font-display">
-          {subtitle}
-        </h2>
+        <h2 className="mb-8 text-xl font-bold sm:text-2xl md:text-3xl sm:my-8">{subtitle}</h2>
       ) : null}
       {now ? <div className="text-lg">{now}</div> : now}
     </div>

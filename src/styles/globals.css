@@ -35,6 +35,15 @@ html {
   @apply h-full flex flex-col min-h-screen;
 }
 
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  @apply font-display;
+}
+
 /* Scrollbar */
 
 @screen sm {
@@ -77,4 +86,8 @@ html {
 
 input {
   accent-color: theme('colors.drac.pink');
+}
+
+.prose ul > li::before {
+  @apply bg-drac-pink/75;
 }

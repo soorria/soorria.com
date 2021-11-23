@@ -17,7 +17,9 @@ export interface BaseData {
   hasContent: boolean
 }
 
-export type ApiData<T extends BaseData> = Omit<T, 'mdxSource'> & { content: string }
+export type ApiData<T extends BaseData> = Omit<T, 'mdxSource'> & {
+  content: string
+}
 export type BaseApiData = ApiData<BaseData>
 
 export type FrontMatter<T extends BaseData> = Omit<T, 'mdxSource'>

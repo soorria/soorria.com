@@ -19,6 +19,10 @@ const LINKS: LinkType[][] = [
       title: 'about',
       href: '/about',
     },
+    {
+      title: '/uses',
+      href: '/uses',
+    },
   ],
   [
     {

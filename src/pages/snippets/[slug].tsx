@@ -1,6 +1,6 @@
 import { GetStaticPaths, GetStaticProps } from 'next'
 import { MdxRemote } from 'next-mdx-remote/types'
-import PostLayout from '@/components/PostLayout'
+import PostLayout, { PostBottomSection } from '@/components/PostLayout'
 import { Snippet, SnippetFrontMatter } from '@/types/snippet'
 import { hydrate } from '@/lib/mdx-hydrate'
 import { getAllFilesFrontMatter, getFileWithMdx } from '@/lib/data'
@@ -42,7 +42,7 @@ const SnippetPage: React.FC<SnippetPageProps> = ({ snippet, mdx }) => {
       />
       <div className="mx-auto mt-6 prose md:prose-lg">
         {content}
-        <div className="max-w-xs mx-auto my-12 text-sm text-center">
+        <PostBottomSection>
           Found a mistake, or want to suggest an improvement? Edit on GitHub{' '}
           <a
             href={editUrl(DataType.snippets, snippet.slug)}
@@ -51,7 +51,7 @@ const SnippetPage: React.FC<SnippetPageProps> = ({ snippet, mdx }) => {
           >
             here
           </a>
-        </div>
+        </PostBottomSection>
       </div>
     </PostLayout>
   )
