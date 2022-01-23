@@ -8,7 +8,8 @@
     "lint": "eslint --fix src",
     "format": "prettier -w src ./*.js && prettier --parser mdx -w _data/**/*",
     "type-check": "tsc --noEmit",
-    "prepare": "husky install"
+    "husky:install": "husky install",
+    "prepare": "is-ci-cli \"\" \"husky:install\""
   },
   "dependencies": {
     "@next/bundle-analyzer": "^10.2.0",
@@ -44,6 +45,7 @@
     "eslint-plugin-react": "^7.23.0",
     "eslint-plugin-react-hooks": "^4.2.0",
     "husky": "^6.0.0",
+    "is-ci-cli": "^2.2.0",
     "lint-staged": "^10.5.4",
     "postcss": "^8.2.8",
     "prettier": "^2.2.1",
