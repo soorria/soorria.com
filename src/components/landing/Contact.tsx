@@ -1,11 +1,13 @@
 import { useTrackFirstEvent } from '@/lib/analytics'
 import { contact } from '@/links'
+import cx from '@/utils/cx'
 import { FormEventHandler, useState } from 'react'
 import {
   EmailIcon,
   FacebookIconSolid,
   GithubIconSolid,
   LinkedinIconSolid,
+  MALIconSolid,
   TwitterIconSolid,
 } from '../icons'
 import LandingSection from './LandingSection'
@@ -39,6 +41,11 @@ const LINKS = [
     href: contact.twitter,
     title: `@${contact.twitterUsername}`,
     Icon: TwitterIconSolid,
+  },
+  {
+    href: contact.mal,
+    title: contact.malUsername,
+    Icon: MALIconSolid,
   },
 ]
 
@@ -104,9 +111,10 @@ const Contact: React.FC<ContactProps> = ({ random = 0 }) => {
                 track('Easter Egg', { props: { which: 'Contact Form' } })
                 setShowForm(p => !p)
               }}
-              className={`break-words no-js-text focus:outline-none ${
+              className={cx(
+                'break-words no-js-text focus:outline-none',
                 showForm ? 'text-drac-purple' : 'text-drac-bg hover:text-drac-purple'
-              } `}
+              )}
             >
               or use this <span className={showForm ? 'line-through' : ''}>secret</span> form
             </button>
@@ -126,7 +134,7 @@ const Contact: React.FC<ContactProps> = ({ random = 0 }) => {
             onSubmit={handleSubmit}
             method="POST"
             action={FORM_ENDPOINT}
-            className={`space-y-4 no-js-block ${showForm ? '' : 'hidden'}`}
+            className={cx('space-y-4 no-js-block', !showForm && 'hidden')}
           >
             <div className={classes.formGroup}>
               <label htmlFor="name" className={classes.label}>
@@ -187,9 +195,10 @@ const Contact: React.FC<ContactProps> = ({ random = 0 }) => {
 
             <button
               type="submit"
-              className={`block px-4 py-2 mx-auto text-drac-bg font-semibold transition-colors rounded bg-drac-pink ${
+              className={cx(
+                'block w-full px-4 py-2 text-drac-bg font-semibold transition-colors rounded bg-drac-pink',
                 status === FormStatus.SUBMITTING ? 'opacity-70' : 'hover:bg-drac-purple'
-              }`}
+              )}
               disabled={status === FormStatus.SUBMITTING}
             >
               {status === FormStatus.SUBMITTING ? 'Submitting' : 'Submit'}
@@ -199,13 +208,13 @@ const Contact: React.FC<ContactProps> = ({ random = 0 }) => {
         <div className="flex flex-col space-y-4 text-lg">
           {LINKS.map(({ href, title, Icon }) => (
             <a
-              key={title}
+              key={href}
               href={href}
               target="_blank"
               rel="noopener noreferrer"
               className="flex items-center text-drac-pink hover:text-drac-purple group"
             >
-              <Icon className="w-5 h-5 mr-2 transition-transform transform group-hover:-rotate-12" />
+              <Icon className="w-5 h-5 mr-3 transition-transform transform group-hover:-rotate-12" />
               <span>{title}</span>
             </a>
           ))}

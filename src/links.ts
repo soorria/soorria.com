@@ -10,4 +10,6 @@ export const contact = {
   twitterUsername: 'soorriously',
   facebook: 'https://www.facebook.com/soorriously/',
   facebookUsername: 'soorriously',
-}
+  mal: 'https://myanimelist.net/profile/soorriously',
+  malUsername: 'soorriously',
+} as const

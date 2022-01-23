@@ -23,7 +23,7 @@ const Skills: React.FC<{ random?: number }> = ({ random = 0 }) => {
       <ul className="grid grid-cols-2 gap-8 mb-8 sm:grid-cols-3 md:grid-cols-4">
         {SKILLS.map(skill => (
           <li key={skill} className="flex items-center space-x-2 group">
-            <span className="w-2 h-2 transition transform border-2 rounded-full border-drac-fg group-hover:scale-150 group-hover:border-drac-pink" />
+            <span className="w-2 h-2 transition transform border-2 rounded-full border-drac-fg group-hover:border-drac-pink" />
             <span>{skill}</span>
           </li>
         ))}
