@@ -2,7 +2,7 @@ import { ReactNode } from 'react'
 
 const CLASSNAMES = {
   heroCommon:
-    'hidden sm:block absolute inset-0 transform motion-safe:group-hover:translate-x-0 motion-safe:group-hover:translate-y-0 transition-transform select-none',
+    'hidden sm:block absolute inset-0 motion-safe:group-hover:translate-x-0 motion-safe:group-hover:translate-y-0 transition-transform select-none',
 }
 
 const Hero: React.FC<{ subtitle?: ReactNode | null; now?: ReactNode | null }> = ({
@@ -14,7 +14,7 @@ const Hero: React.FC<{ subtitle?: ReactNode | null; now?: ReactNode | null }> = 
       id="hero"
       className="circuit-bg -mx-4 -mt-36 px-4 pb-12 pt-36 lg:mx-[-4.5rem] lg:px-[4.5rem] xl:-mx-32 xl:px-32"
     >
-      <div className="outline-none group mx-auto mt-8 mb-4 cursor-default overflow-x-hidden py-16 text-center font-display text-5xl font-bold sm:my-8 sm:text-6xl md:text-7xl lg:text-8xl">
+      <div className="group mx-auto mt-8 mb-4 cursor-default overflow-x-hidden py-16 text-center font-display text-5xl font-bold outline-none sm:my-8 sm:text-6xl md:text-7xl lg:text-8xl">
         <div className="relative">
           <p
             aria-hidden

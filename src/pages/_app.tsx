@@ -20,7 +20,7 @@ const MyApp: React.FC<AppProps> = ({ Component, pageProps }) => {
       </Head>
       <DefaultSeo {...SEO} />
       <Header />
-      <main role="main" id="main-content" className="flex-grow">
+      <main role="main" id="main-content" className="grow">
         <Component {...pageProps} />
       </main>
       <Footer />

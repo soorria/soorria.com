@@ -16,12 +16,12 @@ const drac = {
 }
 
 module.exports = {
-  mode: 'jit',
-  purge: ['./src/**/*.tsx'],
+  content: ['./src/**/*.tsx'],
   theme: {
     extend: {
       colors: {
         drac,
+        current: 'currentColor',
       },
       fontFamily: {
         display: ["'Poppins'", ...fontFamily.sans],
@@ -76,9 +76,6 @@ module.exports = {
         }
       },
     },
-  },
-  variants: {
-    extend: {},
   },
   plugins: [require('@tailwindcss/typography')],
 }

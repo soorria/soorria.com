@@ -43,7 +43,7 @@ const ClinicallyRelevantCard: ProjectCardComponent = ({ project }) => {
 
   return (
     <div
-      className={`relative transform overflow-hidden rounded-xl transition hover:shadow-xl md:hover:scale-105 ${themeClasses[theme]}`}
+      className={`relative overflow-hidden rounded-xl transition hover:shadow-xl md:hover:scale-105 ${themeClasses[theme]}`}
     >
       <div className="flex h-full flex-col space-y-4 p-8">
         <header className="flex items-center font-display text-3xl font-bold">

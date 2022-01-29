@@ -24,6 +24,7 @@
     @apply pb-2;
   }
 
+  /* Chrome */
   .prose pre::-webkit-scrollbar {
     width: 8px;
     height: 8px;
@@ -37,7 +38,7 @@
     @apply bg-drac-purple;
   }
 
-  // Firefox
+  /* Firefox */
   * {
     scrollbar-width: thin;
     scrollbar-color: theme('colors.drac.purple') theme('colors.transparent');
@@ -50,7 +51,7 @@
 
 .language-javascript .token.constant,
 .token.italic {
-  @apply italic;
+  font-style: italic;
 }
 
 .language-css .token.selector,

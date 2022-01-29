@@ -15,7 +15,7 @@ const WorkItem: React.FC<WorkItemProps> = ({
   techUsed,
 }) => (
   <div className="flex flex-col space-y-2">
-    <div className="flex-grow font-display text-xl font-bold text-drac-pink">{title}</div>
+    <div className="grow font-display text-xl font-bold text-drac-pink">{title}</div>
     <div className="flex flex-col justify-between space-y-2 text-sm sm:col-span-2 sm:flex-row sm:space-y-0">
       <div>
         {company} &mdash; {location}

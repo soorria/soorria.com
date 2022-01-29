@@ -112,7 +112,7 @@ const Contact: React.FC<ContactProps> = ({ random = 0 }) => {
                 setShowForm(p => !p)
               }}
               className={cx(
-                'no-js-text focus:outline-none break-words',
+                'no-js-text break-words focus:outline-none',
                 showForm ? 'text-drac-purple' : 'text-drac-bg hover:text-drac-purple'
               )}
             >
@@ -214,7 +214,7 @@ const Contact: React.FC<ContactProps> = ({ random = 0 }) => {
               rel="noopener noreferrer"
               className="group flex items-center text-drac-pink hover:text-drac-purple"
             >
-              <Icon className="mr-3 h-5 w-5 transform transition-transform group-hover:-rotate-12" />
+              <Icon className="mr-3 h-5 w-5 transition-transform group-hover:-rotate-12" />
               <span>{title}</span>
             </a>
           ))}
