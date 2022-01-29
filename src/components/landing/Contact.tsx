@@ -102,7 +102,7 @@ const Contact: React.FC<ContactProps> = ({ random = 0 }) => {
   return (
     <LandingSection title={titles[random % titles.length]} id="contact">
       <div className="grid grid-flow-row-dense grid-cols-1 gap-y-8 gap-x-16 sm:grid-cols-2">
-        <div className="space-y-4 row-start sm:row-start-1">
+        <div className="row-start space-y-4 sm:row-start-1">
           <p className="text-lg">
             Want to work with me, or just want to chat? Shoot me an email or a message on Messenger
             <button
@@ -112,7 +112,7 @@ const Contact: React.FC<ContactProps> = ({ random = 0 }) => {
                 setShowForm(p => !p)
               }}
               className={cx(
-                'break-words no-js-text focus:outline-none',
+                'no-js-text focus:outline-none break-words',
                 showForm ? 'text-drac-purple' : 'text-drac-bg hover:text-drac-purple'
               )}
             >
@@ -120,12 +120,12 @@ const Contact: React.FC<ContactProps> = ({ random = 0 }) => {
             </button>
           </p>
           {status === FormStatus.SUBMITTED && (
-            <div className="p-2 border-2 rounded bg-opacity-30 border-drac-green bg-drac-green">
+            <div className="rounded border-2 border-drac-green bg-drac-green bg-opacity-30 p-2">
               Thanks for contacting me! I&apos;ll get back to you via email in 24 hours.
             </div>
           )}
           {status === FormStatus.ERROR && (
-            <div className="p-2 border-2 rounded bg-opacity-30 border-drac-red bg-drac-red">
+            <div className="rounded border-2 border-drac-red bg-drac-red bg-opacity-30 p-2">
               Looks like something went wrong with my form, or you&apos;re offline ☹. You can try
               again later, or shoot me an email.
             </div>
@@ -134,7 +134,7 @@ const Contact: React.FC<ContactProps> = ({ random = 0 }) => {
             onSubmit={handleSubmit}
             method="POST"
             action={FORM_ENDPOINT}
-            className={cx('space-y-4 no-js-block', !showForm && 'hidden')}
+            className={cx('no-js-block space-y-4', !showForm && 'hidden')}
           >
             <div className={classes.formGroup}>
               <label htmlFor="name" className={classes.label}>
@@ -196,7 +196,7 @@ const Contact: React.FC<ContactProps> = ({ random = 0 }) => {
             <button
               type="submit"
               className={cx(
-                'block w-full px-4 py-2 text-drac-bg font-semibold transition-colors rounded bg-drac-pink',
+                'block w-full rounded bg-drac-pink px-4 py-2 font-semibold text-drac-bg transition-colors',
                 status === FormStatus.SUBMITTING ? 'opacity-70' : 'hover:bg-drac-purple'
               )}
               disabled={status === FormStatus.SUBMITTING}
@@ -212,9 +212,9 @@ const Contact: React.FC<ContactProps> = ({ random = 0 }) => {
               href={href}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center text-drac-pink hover:text-drac-purple group"
+              className="group flex items-center text-drac-pink hover:text-drac-purple"
             >
-              <Icon className="w-5 h-5 mr-3 transition-transform transform group-hover:-rotate-12" />
+              <Icon className="mr-3 h-5 w-5 transform transition-transform group-hover:-rotate-12" />
               <span>{title}</span>
             </a>
           ))}

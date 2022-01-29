@@ -39,7 +39,7 @@ const AboutPage: React.FC<AboutPageProps> = ({ mdx, updatedAt }) => {
           images: [getOgImage('About Me')],
         }}
       />
-      <div className="mx-auto mt-6 prose md:mt-16 md:prose-lg">{content}</div>
+      <div className="prose mx-auto mt-6 md:prose-lg md:mt-16">{content}</div>
     </PostLayout>
   )
 }

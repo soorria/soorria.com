@@ -32,7 +32,7 @@ html {
 }
 
 #__next {
-  @apply h-full flex flex-col min-h-screen;
+  @apply flex h-full min-h-screen flex-col;
 }
 
 h1,
@@ -58,7 +58,7 @@ h6 {
   }
 
   ::-webkit-scrollbar-thumb {
-    @apply bg-drac-pink rounded-full;
+    @apply rounded-full bg-drac-pink;
   }
 
   // Firefox

@@ -31,7 +31,7 @@ const getStyle = (bleedAmount: string | number): CSSProperties => {
 }
 
 const ProseContainer: React.FC = ({ children }) => (
-  <div className="max-w-[65ch] mx-auto">{children}</div>
+  <div className="mx-auto max-w-[65ch]">{children}</div>
 )
 
 const Bleed: React.FC<BleedProps> = ({ amount = 'full', children, style, contained, ...rest }) => {

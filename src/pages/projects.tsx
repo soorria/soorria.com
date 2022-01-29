@@ -32,7 +32,7 @@ const ProjectsPage: React.FC<ProjectsPageProps> = ({ projects }) => {
           images: [getOgImage(DataType.projects)],
         }}
       />
-      <p className="mt-6 mb-12 text-lg text-center">{description}</p>
+      <p className="mt-6 mb-12 text-center text-lg">{description}</p>
       <ProjectsGrid>
         {projects.slice(0, featuredProjects.length).map(project => (
           <ProjectCard key={project.slug} project={project} />

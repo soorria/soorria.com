@@ -18,8 +18,8 @@ const ErrorPage: React.FC<ErrorPageProps> = ({ statusCode, statusText }) => {
         {statusText || 'An error occurred :('}
       </PostHeading>
       <Link href="/" passHref>
-        <a className="block max-w-xs mx-auto my-8 text-center group">
-          Click <span className="group-hover:underline text-drac-pink">here</span> to go home.
+        <a className="group mx-auto my-8 block max-w-xs text-center">
+          Click <span className="text-drac-pink group-hover:underline">here</span> to go home.
         </a>
       </Link>
     </MainLayout>

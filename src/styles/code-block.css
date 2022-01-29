@@ -1,9 +1,9 @@
 .prose pre {
-  @apply bg-drac-bg m-0 p-0 rounded-none;
+  @apply m-0 rounded-none bg-drac-bg p-0;
 }
 
 .prose code {
-  @apply text-drac-pink bg-drac-curr p-1 rounded leading-none;
+  @apply rounded bg-drac-curr p-1 leading-none text-drac-pink;
 }
 
 .prose pre code {

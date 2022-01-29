@@ -22,11 +22,11 @@ const CustomCodeBlock: React.FC<any> = ({ children, className, ...rest }) => {
       : languageFromClassName
 
   return (
-    <div className="relative p-2 sm:p-4 -mx-2 sm:-mx-4 rounded ring-1 sm:ring-2 ring-drac-purple my-[1.7em]">
-      <div className="flex items-center justify-between mb-2 text-sm font-bold tracking-wide uppercase font-display ">
-        <div className="text-xs sm:text-sm text-drac-purple">{language}</div>
+    <div className="relative -mx-2 my-[1.7em] rounded p-2 ring-1 ring-drac-purple sm:-mx-4 sm:p-4 sm:ring-2">
+      <div className="mb-2 flex items-center justify-between font-display text-sm font-bold uppercase tracking-wide ">
+        <div className="text-xs text-drac-purple sm:text-sm">{language}</div>
         <button
-          className="px-2 font-bold tracking-wider rounded text-drac-bg bg-drac-purple focus:ring-offset-current focus:ring-2 focus:ring-offset-2 focus:ring-drac-purple focus:outline-none"
+          className="focus:outline-none rounded bg-drac-purple px-2 font-bold tracking-wider text-drac-bg focus:ring-2 focus:ring-drac-purple focus:ring-offset-2 focus:ring-offset-current"
           onClick={async event => {
             const textToCopy = (event as any).target.parentElement?.parentElement?.childNodes[1]
               .innerText

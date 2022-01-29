@@ -21,7 +21,7 @@ const FeaturedProjects: React.FC<FeaturedProjectsProps> = ({ projects, random = 
       </ProjectsGrid>
       <div className="mt-8 text-center">
         <Link href="/projects" passHref>
-          <a className="px-3 py-2 transition-colors rounded text-drac-pink hover:text-drac-purple hover:bg-drac-curr">
+          <a className="rounded px-3 py-2 text-drac-pink transition-colors hover:bg-drac-curr hover:text-drac-purple">
             <span>See All Projects</span>
           </a>
         </Link>

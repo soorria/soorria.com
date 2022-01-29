@@ -43,15 +43,15 @@ const ClinicallyRelevantCard: ProjectCardComponent = ({ project }) => {
 
   return (
     <div
-      className={`relative overflow-hidden transition transform md:hover:scale-105 rounded-xl hover:shadow-xl ${themeClasses[theme]}`}
+      className={`relative transform overflow-hidden rounded-xl transition hover:shadow-xl md:hover:scale-105 ${themeClasses[theme]}`}
     >
-      <div className="flex flex-col h-full p-8 space-y-4">
-        <header className="flex items-center text-3xl font-bold font-display">
-          <ClinicallyRelevantLogo className="inline-block w-6 h-6 mr-2" />
+      <div className="flex h-full flex-col space-y-4 p-8">
+        <header className="flex items-center font-display text-3xl font-bold">
+          <ClinicallyRelevantLogo className="mr-2 inline-block h-6 w-6" />
           Clinically Relevant
         </header>
         <div className="flex-1">
-          <ul className="pl-6 space-y-2 list-disc">
+          <ul className="list-disc space-y-2 pl-6">
             <li>PWA to allow users to install the website &amp; access it offline.</li>
             <li>Automatically redeploys when MDX content is updated</li>
             <li>
@@ -65,11 +65,11 @@ const ClinicallyRelevantCard: ProjectCardComponent = ({ project }) => {
             </li>
           </ul>
         </div>
-        <div className="mb-0 -m-2">
+        <div className="-m-2 mb-0">
           {project.hasContent && (
             <NextLink href={`/projects/${project.slug}`} passHref>
               <a className={cardLinkClassName(theme)}>
-                <InfoIcon className="inline-block w-4 h-4" />
+                <InfoIcon className="inline-block h-4 w-4" />
                 <span>Details</span>
                 <span className="sr-only"> for {project.title}</span>
               </a>
@@ -81,7 +81,7 @@ const ClinicallyRelevantCard: ProjectCardComponent = ({ project }) => {
             rel="noopener noreferrer"
             href={project.live}
           >
-            <ExternalIcon className="inline-block w-4 h-4" />
+            <ExternalIcon className="inline-block h-4 w-4" />
             <span>
               See <span className="sr-only">{project.title}</span> Live
             </span>

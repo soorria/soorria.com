@@ -32,7 +32,7 @@ const PostPage: React.FC<ProjectPageProps> = ({ project, mdx }) => {
           images: [getOgImage(DataType.blog, project.title)],
         }}
       />
-      <div className="mx-auto mt-6 prose md:mt-16 md:prose-lg">
+      <div className="prose mx-auto mt-6 md:prose-lg md:mt-16">
         {mdx.renderedOutput ? (
           content
         ) : (

@@ -40,7 +40,7 @@ const SnippetPage: React.FC<SnippetPageProps> = ({ snippet, mdx }) => {
           images: [getOgImage(DataType.snippets, snippet.title)],
         }}
       />
-      <div className="mx-auto mt-6 prose md:prose-lg">
+      <div className="prose mx-auto mt-6 md:prose-lg">
         {content}
         <PostBottomSection>
           Found a mistake, or want to suggest an improvement? Edit on GitHub{' '}

@@ -26,7 +26,7 @@ const MyApp: React.FC<AppProps> = ({ Component, pageProps }) => {
       <Footer />
       {renderedAt ? (
         <div
-          className="text-[.5rem] text-center text-drac-purple relative bottom-2 w-full select-none"
+          className="relative bottom-2 w-full select-none text-center text-[.5rem] text-drac-purple"
           aria-hidden
         >
           Rendered at {renderedAt.toLocaleTimeString()}, {renderedAt.toLocaleDateString()}

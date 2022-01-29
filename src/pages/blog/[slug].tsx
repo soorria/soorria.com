@@ -41,9 +41,9 @@ const PostPage: React.FC<PostPageProps> = ({ post, mdx }) => {
           images: [getOgImage(DataType.blog, post.title)],
         }}
       />
-      <div className="mx-auto mt-6 prose md:mt-16 md:prose-lg">
+      <div className="prose mx-auto mt-6 md:prose-lg md:mt-16">
         {content}
-        <div className="max-w-xs py-12 mx-auto text-sm text-center">
+        <div className="mx-auto max-w-xs py-12 text-center text-sm">
           Found a mistake, or want to suggest an improvement? Edit on GitHub{' '}
           <a href={editUrl(DataType.blog, post.slug)} rel="noopenner noreferrer" target="_blank">
             here

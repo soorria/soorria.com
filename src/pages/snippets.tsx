@@ -32,8 +32,8 @@ const SnippetsPage: React.FC<SnippetsPageProps> = ({ snippets }) => {
           images: [getOgImage(DataType.snippets)],
         }}
       />
-      <p className="mt-6 mb-12 text-lg text-center">{description}</p>
-      <div className="grid grid-cols-1 gap-8 md:grid-cols-2 auto-cols-min">
+      <p className="mt-6 mb-12 text-center text-lg">{description}</p>
+      <div className="grid auto-cols-min grid-cols-1 gap-8 md:grid-cols-2">
         {snippets.map(snippet => (
           <SnippetCard key={snippet.slug} snippet={snippet} />
         ))}
