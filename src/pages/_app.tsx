@@ -9,9 +9,23 @@ import { SEO } from '@/next-seo.config'
 
 import '../styles/globals.css'
 import '../styles/code-block.css'
+import { ReactNode } from 'react'
+
+const defaultWrapper = (node: ReactNode) => (
+  <>
+    <Header />
+    <main role="main" id="main-content" className="grow">
+      {node}
+    </main>
+    <Footer />
+  </>
+)
+
+const noopWrapper = (node: ReactNode) => node
 
 const MyApp: React.FC<AppProps> = ({ Component, pageProps }) => {
   const renderedAt = pageProps.renderedAt ? new Date(pageProps.renderedAt) : null
+  const wrapper = pageProps.layout === 'nah' ? noopWrapper : defaultWrapper
 
   return (
     <PlausibleProvider domain="mooth.tech" customDomain="https://mooth.tech" selfHosted>
@@ -19,11 +33,7 @@ const MyApp: React.FC<AppProps> = ({ Component, pageProps }) => {
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       </Head>
       <DefaultSeo {...SEO} />
-      <Header />
-      <main role="main" id="main-content" className="grow">
-        <Component {...pageProps} />
-      </main>
-      <Footer />
+      {wrapper(<Component {...pageProps} />)}
       {renderedAt ? (
         <div
           className="relative bottom-2 w-full select-none text-center text-[.5rem] text-drac-purple"

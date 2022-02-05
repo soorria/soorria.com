@@ -1,4 +1,4 @@
-import { contact } from '@/links'
+import { links } from '@/links'
 import Link from 'next/link'
 import { ReactNode } from 'react'
 import Container from './Container'
@@ -43,7 +43,7 @@ const LINKS: LinkType[][] = [
         </span>
       ),
       key: 'github',
-      href: contact.github,
+      href: links.github.href,
     },
     {
       title: (
@@ -53,7 +53,7 @@ const LINKS: LinkType[][] = [
         </span>
       ),
       key: 'email',
-      href: `mailto:${contact.email}`,
+      href: links.email.href,
     },
     {
       title: (
@@ -63,7 +63,7 @@ const LINKS: LinkType[][] = [
         </span>
       ),
       key: 'linkedin',
-      href: contact.linkedin,
+      href: links.linkedin.href,
     },
   ],
 ]

@@ -12,6 +12,7 @@ const ClinicallyRelevantLogo: React.FC<{ className?: string }> = ({ className })
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
     className={className}
+    role="presentation"
   >
     <circle cx="126" cy="126" r="110" stroke="currentColor" strokeWidth="24" />
     <circle cx="126" cy="66" r="50" stroke="currentColor" strokeWidth="24" />

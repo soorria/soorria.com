@@ -28,7 +28,7 @@ const IndexPage: React.FC<IndexProps> = ({ subtitle, nowMdx, projects, randoms }
 
   return (
     <Container>
-      <Hero subtitle={subtitle} now={now} />
+      <Hero subtitle={subtitle} now={now} title="Hey, I'm Soorria" />
       <FeaturedProjects random={randoms[0]} projects={projects} />
       <Skills random={randoms[1]} />
       <Contact random={randoms[2]} />

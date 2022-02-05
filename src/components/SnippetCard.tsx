@@ -51,7 +51,7 @@ const SnippetCard: React.FC<{ snippet: SnippetFrontMatter }> = ({
   <Link href={`/snippets/${slug}`} passHref>
     <a className="group relative overflow-hidden rounded-xl bg-drac-curr px-4 py-3 ring-drac-pink transition-shadow hover:shadow-2xl focus:ring-2 md:py-6 md:px-8">
       <div className="absolute inset-0 flex items-center text-drac-comment text-opacity-20">
-        <div className="h-48 w-48 -translate-x-6 scale-110 transform transition-transform group-hover:-rotate-12 group-focus:-rotate-12">
+        <div className="h-48 w-48 -translate-x-6 scale-110 transition-transform group-hover:-rotate-12 group-focus:-rotate-12">
           {categoryToIcon[category.toLowerCase()]}
         </div>
       </div>

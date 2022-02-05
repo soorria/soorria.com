@@ -10,7 +10,7 @@ const START_ROTATION = MAX_ROTATION / 2
 
 const RESET_TIMEOUT = 10000 // 10 seconds
 
-const SpinnyHomeLink: React.FC = () => {
+const SpinnyHomeLink: React.FC<{ href?: string }> = ({ href = '/' }) => {
   const [rotation, setRotation] = useState(START_ROTATION)
   const resetTimout = useRef<ReturnType<typeof setTimeout> | null>(null)
 
@@ -33,7 +33,7 @@ const SpinnyHomeLink: React.FC = () => {
   }, [])
 
   return (
-    <Link href="/">
+    <Link href={href}>
       <a className="group z-10 flex items-center">
         <span
           className="h-6 w-6 transition-transform duration-700 ease-in-out sm:h-8 sm:w-8 md:h-10 md:w-10"

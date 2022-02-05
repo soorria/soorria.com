@@ -1,14 +1,37 @@
-import { ReactNode } from 'react'
+import { ReactNode, useMemo } from 'react'
 
-const CLASSNAMES = {
-  heroCommon:
-    'hidden sm:block absolute inset-0 motion-safe:group-hover:translate-x-0 motion-safe:group-hover:translate-y-0 transition-transform select-none',
+interface HeroClassnames {
+  common: string
+  mainText: string
 }
 
-const Hero: React.FC<{ subtitle?: ReactNode | null; now?: ReactNode | null }> = ({
-  subtitle,
-  now,
-}) => {
+const useHeroClassnames = (isStatic: boolean): HeroClassnames => {
+  return useMemo(() => {
+    const classnames = {
+      common: 'hidden sm:block absolute inset-0 select-none',
+      mainText:
+        'absolute inset-0 bg-gradient-to-tr from-drac-pink to-drac-purple bg-clip-text text-transparent sm:text-drac-fg ',
+    }
+
+    if (!isStatic) {
+      classnames.common +=
+        ' motion-safe:group-hover:translate-x-0 motion-safe:group-hover:translate-y-0 transition-transform '
+      classnames.mainText +=
+        ' duration-0 transition-opacity group-hover:delay-100 sm:motion-safe:group-hover:opacity-0'
+    }
+
+    return classnames
+  }, [isStatic])
+}
+
+const Hero: React.FC<{
+  subtitle?: ReactNode | null
+  now?: ReactNode | null
+  title: ReactNode
+  isStatic?: boolean
+}> = ({ subtitle, now, title, isStatic = false }) => {
+  const classnames = useHeroClassnames(isStatic)
+
   return (
     <div
       id="hero"
@@ -18,28 +41,26 @@ const Hero: React.FC<{ subtitle?: ReactNode | null; now?: ReactNode | null }> = 
         <div className="relative">
           <p
             aria-hidden
-            className={`text-drac-pink ${CLASSNAMES.heroCommon} -translate-x-4 -translate-y-4 md:-translate-x-8 md:-translate-y-8`}
+            className={`text-drac-pink ${classnames.common} -translate-x-4 -translate-y-4 md:-translate-x-8 md:-translate-y-8`}
           >
-            Hey, I&apos;m Soorria
+            {title}
           </p>
           <p aria-hidden className="select-none opacity-0">
-            Hey, I&apos;m Soorria
+            {title}
           </p>
-          <h1 className="duration-0 absolute inset-0 bg-gradient-to-tr from-drac-pink to-drac-purple bg-clip-text text-transparent transition-opacity group-hover:delay-100 sm:text-drac-fg sm:motion-safe:group-hover:opacity-0">
-            Hey, I&apos;m Soorria
-          </h1>
+          <h1 className={classnames.mainText}>{title}</h1>
           <p
             aria-hidden
-            className={`text-drac-purple ${CLASSNAMES.heroCommon} translate-x-4 translate-y-4 md:translate-x-8 md:translate-y-8`}
+            className={`text-drac-purple ${classnames.common} translate-x-4 translate-y-4 md:translate-x-8 md:translate-y-8`}
           >
-            Hey, I&apos;m Soorria
+            {title}
           </p>
         </div>
       </div>
       {subtitle ? (
         <h2 className="mb-8 text-xl font-bold sm:my-8 sm:text-2xl md:text-3xl">{subtitle}</h2>
       ) : null}
-      {now ? <div className="text-lg">{now}</div> : now}
+      {now ? <div className="text-lg">{now}</div> : null}
     </div>
   )
 }

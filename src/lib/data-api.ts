@@ -44,20 +44,21 @@ export const createGetBySlugHandler =
       const slug = req.query.slug
 
       if (typeof slug !== 'string') {
-        return res.status(404).end()
+        res.status(404).end()
+        return
       }
 
       res.setHeader('Cache-Control', 'public, s-max-age=31536000')
 
       try {
         res.json({
-          [type.endsWith('s') ? type.substr(0, type.length - 1) : type]: await getFileWithoutMdx(
+          [type.endsWith('s') ? type.slice(0, type.length - 1) : type]: await getFileWithoutMdx(
             type,
             slug
           ),
         })
       } catch (err) {
-        return res.status(404).end()
+        res.status(404).end()
       }
     }
 

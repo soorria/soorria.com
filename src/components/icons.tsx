@@ -1,16 +1,20 @@
+import { SVGProps } from 'react'
+
 type IconProps = {
   className?: string
-}
+} & SVGProps<SVGSVGElement>
 
 export type IconComponent = React.FC<IconProps>
 
-export const HeartIcon: IconComponent = ({ className }) => (
+export const HeartIcon: IconComponent = ({ className, ...props }) => (
   <svg
     className={className}
+    role="presentation"
     xmlns="http://www.w3.org/2000/svg"
     fill="none"
     viewBox="0 0 24 24"
     stroke="currentColor"
+    {...props}
   >
     <path
       strokeLinecap="round"
@@ -21,12 +25,14 @@ export const HeartIcon: IconComponent = ({ className }) => (
   </svg>
 )
 
-export const ClockIconSolid: IconComponent = ({ className }) => (
+export const ClockIconSolid: IconComponent = ({ className, ...props }) => (
   <svg
     className={className}
+    role="presentation"
     xmlns="http://www.w3.org/2000/svg"
     viewBox="0 0 20 20"
     fill="currentColor"
+    {...props}
   >
     <path
       fillRule="evenodd"
@@ -36,9 +42,10 @@ export const ClockIconSolid: IconComponent = ({ className }) => (
   </svg>
 )
 
-export const TriangleIcon: IconComponent = ({ className }) => (
+export const TriangleIcon: IconComponent = ({ className, ...props }) => (
   <svg
     className={className}
+    role="presentation"
     viewBox="0 0 24 24"
     width="24"
     height="24"
@@ -47,18 +54,21 @@ export const TriangleIcon: IconComponent = ({ className }) => (
     fill="none"
     strokeLinecap="round"
     strokeLinejoin="round"
+    {...props}
   >
     <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path>
   </svg>
 )
 
-export const EditIcon: IconComponent = ({ className }) => (
+export const EditIcon: IconComponent = ({ className, ...props }) => (
   <svg
     className={className}
+    role="presentation"
     xmlns="http://www.w3.org/2000/svg"
     fill="none"
     viewBox="0 0 24 24"
     stroke="currentColor"
+    {...props}
   >
     <path
       strokeLinecap="round"
@@ -69,13 +79,15 @@ export const EditIcon: IconComponent = ({ className }) => (
   </svg>
 )
 
-export const CodeIcon: IconComponent = ({ className }) => (
+export const CodeIcon: IconComponent = ({ className, ...props }) => (
   <svg
     className={className}
+    role="presentation"
     xmlns="http://www.w3.org/2000/svg"
     fill="none"
     viewBox="0 0 24 24"
     stroke="currentColor"
+    {...props}
   >
     <path
       strokeLinecap="round"
@@ -86,8 +98,15 @@ export const CodeIcon: IconComponent = ({ className }) => (
   </svg>
 )
 
-export const ExternalIcon: IconComponent = ({ className }) => (
-  <svg className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor">
+export const ExternalIcon: IconComponent = ({ className, ...props }) => (
+  <svg
+    role="presentation"
+    className={className}
+    fill="none"
+    viewBox="0 0 24 24"
+    stroke="currentColor"
+    {...props}
+  >
     <path
       strokeLinecap="round"
       strokeLinejoin="round"
@@ -97,8 +116,15 @@ export const ExternalIcon: IconComponent = ({ className }) => (
   </svg>
 )
 
-export const InfoIcon: IconComponent = ({ className }) => (
-  <svg className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor">
+export const InfoIcon: IconComponent = ({ className, ...props }) => (
+  <svg
+    aria-label="presentation"
+    className={className}
+    fill="none"
+    viewBox="0 0 24 24"
+    stroke="currentColor"
+    {...props}
+  >
     <path
       strokeLinecap="round"
       strokeLinejoin="round"
@@ -108,22 +134,31 @@ export const InfoIcon: IconComponent = ({ className }) => (
   </svg>
 )
 
-export const GithubIconSolid: IconComponent = ({ className }) => (
+export const GithubIconSolid: IconComponent = ({ className, ...props }) => (
   <svg
     className={className}
+    aria-label="github"
     viewBox="0 0 24 24"
     stroke="currentColor"
     strokeWidth="2"
     fill="currentColor"
     strokeLinecap="round"
     strokeLinejoin="round"
+    {...props}
   >
     <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
   </svg>
 )
 
-export const EmailIcon: IconComponent = ({ className }) => (
-  <svg className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor">
+export const EmailIcon: IconComponent = ({ className, ...props }) => (
+  <svg
+    className={className}
+    aria-label="email"
+    fill="none"
+    viewBox="0 0 24 24"
+    stroke="currentColor"
+    {...props}
+  >
     <path
       strokeLinecap="round"
       strokeLinejoin="round"
@@ -133,15 +168,17 @@ export const EmailIcon: IconComponent = ({ className }) => (
   </svg>
 )
 
-export const LinkedinIconSolid: IconComponent = ({ className }) => (
+export const LinkedinIconSolid: IconComponent = ({ className, ...props }) => (
   <svg
     viewBox="0 0 24 24"
     className={className}
+    aria-label="twitter"
     stroke="currentColor"
     strokeWidth="2"
     fill="currentColor"
     strokeLinecap="round"
     strokeLinejoin="round"
+    {...props}
   >
     <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path>
     <rect x="2" y="9" width="4" height="12"></rect>
@@ -149,9 +186,10 @@ export const LinkedinIconSolid: IconComponent = ({ className }) => (
   </svg>
 )
 
-export const TwitterIconSolid: IconComponent = ({ className }) => (
+export const TwitterIconSolid: IconComponent = ({ className, ...props }) => (
   <svg
     className={className}
+    aria-label="twitter"
     viewBox="0 0 24 24"
     width="24"
     height="24"
@@ -160,36 +198,51 @@ export const TwitterIconSolid: IconComponent = ({ className }) => (
     fill="currentColor"
     strokeLinecap="round"
     strokeLinejoin="round"
+    {...props}
   >
     <path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"></path>
   </svg>
 )
 
-export const FacebookIconSolid: IconComponent = ({ className }) => (
+export const FacebookIconSolid: IconComponent = ({ className, ...props }) => (
   <svg
     className={className}
+    aria-label="Facebook"
     viewBox="0 0 24 24"
     stroke="currentColor"
     strokeWidth="2"
     fill="currentColor"
     strokeLinecap="round"
     strokeLinejoin="round"
+    {...props}
   >
     <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path>
   </svg>
 )
 
-export const MALIconSolid: IconComponent = ({ className }) => (
+export const MALIconSolid: IconComponent = ({ className, ...props }) => (
   <svg
     className={className}
+    aria-label="My Anime List"
     stroke="currentColor"
     strokeWidth="0"
     fill="currentColor"
     viewBox="0 0 24 24"
     height="1em"
     width="1em"
+    {...props}
   >
-    <title></title>
     <path d="M8.273 7.247v8.423l-2.103-.003v-5.216l-2.03 2.404-1.989-2.458-.02 5.285H.001L0 7.247h2.203l1.865 2.545 2.015-2.546 2.19.001zm8.628 2.069l.025 6.335h-2.365l-.008-2.871h-2.8c.07.499.21 1.266.417 1.779.155.381.298.751.583 1.128l-1.705 1.125c-.349-.636-.622-1.337-.878-2.082a9.296 9.296 0 0 1-.507-2.179c-.085-.75-.097-1.471.107-2.212a3.908 3.908 0 0 1 1.161-1.866c.313-.293.749-.5 1.1-.687.351-.187.743-.264 1.107-.359a7.405 7.405 0 0 1 1.191-.183c.398-.034 1.107-.066 2.39-.028l.545 1.749H14.51c-.593.008-.878.001-1.341.209a2.236 2.236 0 0 0-1.278 1.92l2.663.033.038-1.81h2.309zm3.992-2.099v6.627l3.107.032-.43 1.775h-4.807V7.187l2.13.03z"></path>
+  </svg>
+)
+
+export const GlobeIconOutline: IconComponent = ({ className, ...props }) => (
+  <svg className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor" {...props}>
+    <path
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      strokeWidth={2}
+      d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9"
+    />
   </svg>
 )
