@@ -103,7 +103,7 @@ input {
     );
     background-size: 600% 100%;
     background-position: left;
-    @apply transition-all;
+    transition: background;
     transition-duration: 2500ms;
   }
 
