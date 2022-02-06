@@ -1,5 +1,3 @@
-import { MdxRemote } from 'next-mdx-remote/types'
-
 export enum DataType {
   snippets = 'snippets',
   blog = 'blog',
@@ -12,15 +10,15 @@ export interface BaseData {
   slug: string
   title: string
   shortDescription: string
-  mdxSource: MdxRemote.Source
+  code: string
   readingTime?: string
   hasContent: boolean
 }
 
-export type ApiData<T extends BaseData> = Omit<T, 'mdxSource'> & {
+export type ApiData<T extends BaseData> = FrontMatter<T> & {
   content: string
 }
 export type BaseApiData = ApiData<BaseData>
 
-export type FrontMatter<T extends BaseData> = Omit<T, 'mdxSource'>
+export type FrontMatter<T extends BaseData> = Omit<T, 'code'>
 export type BaseFrontMatter = FrontMatter<BaseData>

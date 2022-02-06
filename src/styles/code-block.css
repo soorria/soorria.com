@@ -7,12 +7,17 @@
 }
 
 .prose pre code {
-  @apply rounded-none text-drac-fg;
+  @apply rounded-none bg-transparent p-0 text-drac-fg;
 }
 
 .prose code::before,
 .prose code::after {
   content: '';
+}
+
+.prose pre code::before,
+.prose pre code::after {
+  content: none;
 }
 
 .mdx-marker {

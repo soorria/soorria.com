@@ -1,7 +1,7 @@
 import { BaseFrontMatter, DataType } from '@/types/data'
 import { NextApiHandler } from 'next'
 import { addCorsHeaders } from './cors'
-import { getAllFilesFrontMatter, getFileWithoutMdx } from './data'
+import { getAllFilesFrontMatter, getFileWithContent } from './data'
 
 interface GetAllOptions<T> {
   end?: boolean
@@ -52,7 +52,7 @@ export const createGetBySlugHandler =
 
       try {
         res.json({
-          [type.endsWith('s') ? type.slice(0, type.length - 1) : type]: await getFileWithoutMdx(
+          [type.endsWith('s') ? type.slice(0, type.length - 1) : type]: await getFileWithContent(
             type,
             slug
           ),

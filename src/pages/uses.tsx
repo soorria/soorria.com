@@ -1,15 +1,14 @@
 import CustomLink from '@/components/CustomLink'
 import PostLayout, { PostBottomSection } from '@/components/PostLayout'
 import { getFileWithMdx } from '@/lib/data'
-import { hydrate } from '@/lib/mdx-hydrate'
+import { useMdxComponent } from '@/lib/mdx'
 import { BaseData, DataType } from '@/types/data'
 import { getOgImage } from '@/utils/og'
 import { GetStaticProps } from 'next'
-import { MdxRemote } from 'next-mdx-remote/types'
 import { NextSeo } from 'next-seo'
 
 interface UsesPageProps {
-  mdx: MdxRemote.Source
+  mdx: string
   updatedAt: string
 }
 
@@ -18,7 +17,7 @@ const url = 'https://mooth.tech/uses'
 const shortDescription = 'Stuff I use'
 
 const UsesPage: React.FC<UsesPageProps> = ({ mdx, updatedAt }) => {
-  const content = hydrate(mdx)
+  const Content = useMdxComponent(mdx)
 
   return (
     <PostLayout title={title}>
@@ -41,7 +40,7 @@ const UsesPage: React.FC<UsesPageProps> = ({ mdx, updatedAt }) => {
         }}
       />
       <div className="prose mx-auto mt-6 md:prose-lg md:mt-16">
-        {content}
+        <Content />
         <PostBottomSection>
           Check out other <code>uses</code> pages{' '}
           <CustomLink href="https://uses.tech">here</CustomLink>
@@ -54,11 +53,11 @@ const UsesPage: React.FC<UsesPageProps> = ({ mdx, updatedAt }) => {
 export default UsesPage
 
 export const getStaticProps: GetStaticProps<UsesPageProps> = async () => {
-  const { mdxSource, updatedAt } = await getFileWithMdx<BaseData & { updatedAt: string }>(
+  const { code, updatedAt } = await getFileWithMdx<BaseData & { updatedAt: string }>(
     DataType.misc,
     'uses'
   )
   return {
-    props: { mdx: mdxSource, updatedAt },
+    props: { mdx: code, updatedAt },
   }
 }
