@@ -40,3 +40,14 @@ export const getSingletonTextSafe = async (slug: string): Promise<string | null>
     return null
   }
 }
+
+export const getSingletonJsonSafe = async (slug: string): Promise<Record<string, unknown>> => {
+  try {
+    const singleton = await getSingleton(slug)
+    const str = singleton.content
+    const parsed = JSON.parse(str)
+    return typeof parsed === 'object' ? parsed : {}
+  } catch (err) {
+    return {}
+  }
+}

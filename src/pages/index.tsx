@@ -13,7 +13,7 @@ import { Project, ProjectFrontMatter } from '@/types/project'
 import { featuredProjects } from '@/constants'
 import Skills from '@/components/landing/Skills'
 import { randomArray } from '@/utils/random'
-import { getSingletonTextSafe } from '@/lib/supabase'
+import { getSingletonJsonSafe, getSingletonTextSafe } from '@/lib/supabase'
 
 interface IndexProps {
   subtitle: string | null
@@ -21,14 +21,15 @@ interface IndexProps {
   projects: ProjectFrontMatter[]
   randoms: number[]
   renderedAt: string
+  isHeroStatic?: boolean
 }
 
-const IndexPage: React.FC<IndexProps> = ({ subtitle, nowMdx, projects, randoms }) => {
+const IndexPage: React.FC<IndexProps> = ({ subtitle, nowMdx, projects, randoms, isHeroStatic }) => {
   const now = nowMdx ? hydrate(nowMdx) : null
 
   return (
     <Container>
-      <Hero subtitle={subtitle} now={now} title="Hey, I'm Soorria" />
+      <Hero subtitle={subtitle} now={now} title="Hey, I'm Soorria" isStatic={isHeroStatic} />
       <FeaturedProjects random={randoms[0]} projects={projects} />
       <Skills random={randoms[1]} />
       <Contact random={randoms[2]} />
@@ -44,6 +45,8 @@ export const getStaticProps: GetStaticProps<IndexProps> = async () => {
 
   const nowText = await getSingletonTextSafe('now')
   const nowMdx = nowText ? await render(nowText) : null
+
+  const { isHeroStatic } = await getSingletonJsonSafe('index-options')
 
   const projects: ProjectFrontMatter[] = await Promise.all(
     featuredProjects.map(async projectSlug => {
@@ -65,6 +68,7 @@ export const getStaticProps: GetStaticProps<IndexProps> = async () => {
       projects,
       randoms,
       renderedAt: new Date().toISOString(),
+      isHeroStatic: Boolean(isHeroStatic),
     },
     revalidate: 1,
   }
