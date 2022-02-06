@@ -9,7 +9,7 @@ import {
 } from '@/components/icons'
 import Hero from '@/components/landing/Hero'
 import MadeBy from '@/components/MadeBy'
-import { allLinks, links } from '@/links'
+import { links } from '@/links'
 import cx from '@/utils/cx'
 import { GetStaticProps } from 'next'
 import { useEffect } from 'react'
@@ -51,6 +51,15 @@ const useCSSVarScrollRotate = (varName = 'scroll-rotate') => {
   }, [varName])
 }
 
+const orderedLinks = [
+  links.twitter,
+  links.github,
+  links.email,
+  links.mal,
+  links.facebook,
+  links.linkedin,
+]
+
 const LinksPage: React.FC = () => {
   useCSSVarScrollRotate()
 
@@ -77,7 +86,7 @@ const LinksPage: React.FC = () => {
         <div className="relative">
           <Hero title="Hey, I'm Soorria" isStatic={true}>
             <main className="relative mx-auto mt-8 max-w-md space-y-8 text-lg sm:mt-24 sm:text-xl">
-              {allLinks.map(({ title, href, icon: Icon }) => (
+              {orderedLinks.map(({ title, href, icon: Icon }) => (
                 <a
                   key={href}
                   href={href}
@@ -97,7 +106,7 @@ const LinksPage: React.FC = () => {
             </main>
           </Hero>
         </div>
-        <footer className="pt-8 pb-10">
+        <footer className="pt-8 pb-10 text-lg">
           <MadeBy />
         </footer>
       </Container>
