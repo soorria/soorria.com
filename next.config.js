@@ -35,7 +35,12 @@ const config = {
     ]
   },
   async rewrites() {
-    return [{ source: '/api/og', destination: 'https://og-gen-mooth.vercel.app/api/og' }]
+    return [
+      {
+        source: '/api/og',
+        destination: 'https://og-gen-mooth.vercel.app/api/og',
+      },
+    ]
   },
   reactStrictMode: true,
   future: {
