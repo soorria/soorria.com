@@ -68,6 +68,8 @@ const LINKS: LinkType[][] = [
   ],
 ]
 
+const linkClass = 'transition-colors text-drac-purple hover:text-drac-pink'
+
 interface FooterProps {}
 
 const Footer: React.FC<FooterProps> = () => {
@@ -84,12 +86,12 @@ const Footer: React.FC<FooterProps> = () => {
         </div>
         <div className="mx-auto grid max-w-sm grid-cols-1 justify-center gap-4 text-center lowercase sm:grid-cols-3">
           {LINKS.map((col, i) => (
-            <div key={i} className="mx-auto flex w-32 flex-col space-y-4 text-drac-purple">
+            <div key={i} className="mx-auto flex w-32 flex-col space-y-4">
               {col.map(({ title, href, key }) =>
                 href.match(/^(mailto|http)/i) ? (
                   <a
                     key={key ?? (title as string)}
-                    className="transition-colors"
+                    className={linkClass}
                     href={href}
                     target="_blank"
                     rel="noopener noreferrer"
@@ -98,7 +100,7 @@ const Footer: React.FC<FooterProps> = () => {
                   </a>
                 ) : (
                   <Link href={href} key={key ?? (title as string)}>
-                    <a className="transition-colors">{title}</a>
+                    <a className={linkClass}>{title}</a>
                   </Link>
                 )
               )}

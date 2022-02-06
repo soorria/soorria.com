@@ -3,6 +3,7 @@ import Link from 'next/link'
 import { useEffect, useRef, useState } from 'react'
 import { random } from '@/utils/random'
 import Logo from './logo'
+import cx from '@/utils/cx'
 
 const MIN_ROTATION = 0
 const MAX_ROTATION = 360 * 4
@@ -36,12 +37,16 @@ const SpinnyHomeLink: React.FC<{ href?: string }> = ({ href = '/' }) => {
     <Link href={href}>
       <a className="group z-10 flex items-center">
         <span
-          className="h-6 w-6 transition-transform duration-700 ease-in-out sm:h-8 sm:w-8 md:h-10 md:w-10"
-          style={{ transform: `rotate(${rotation}deg)` }}
+          className="h-6 w-6 transform transition-transform duration-700 ease-in-out sm:h-8 sm:w-8 md:h-10 md:w-10"
+          style={{ '--tw-rotate': `${rotation}deg` } as any}
         >
           <Logo />
         </span>
-        <span className="ml-1.5 font-display text-2xl font-bold lowercase sm:ml-4 sm:text-3xl">
+        <span
+          className={cx(
+            'spinny-home-link ml-1.5 bg-clip-text font-display text-2xl font-bold lowercase text-transparent sm:ml-4 sm:text-3xl'
+          )}
+        >
           <span className="sr-only sm:not-sr-only">Soorria</span>
           <span className="sr-only md:not-sr-only"> Saruva</span>
         </span>

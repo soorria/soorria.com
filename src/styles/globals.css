@@ -58,13 +58,13 @@ h6 {
   }
 
   ::-webkit-scrollbar-thumb {
-    @apply rounded-full bg-drac-pink;
+    @apply rounded-full bg-drac-purple transition-colors hover:bg-drac-pink;
   }
 
   /* Firefox */
   * {
     scrollbar-width: 'thin';
-    scrollbar-color: theme('colors.drac.pink') theme('colors.transparent');
+    scrollbar-color: theme('colors.drac.purple') theme('colors.transparent');
   }
 }
 
@@ -88,4 +88,26 @@ input {
 
 .prose ul > li::before {
   @apply bg-drac-pink/75;
+}
+
+@layer components {
+  .spinny-home-link {
+    background-image: linear-gradient(
+      to right,
+      theme('colors.white'),
+      theme('colors.white'),
+      theme('colors.drac.pink'),
+      theme('colors.drac.pink'),
+      theme('colors.drac.purple'),
+      theme('colors.drac.purple')
+    );
+    background-size: 600% 100%;
+    background-position: left;
+    @apply transition-all;
+    transition-duration: 2500ms;
+  }
+
+  .spinny-home-link:hover {
+    background-position: right;
+  }
 }
