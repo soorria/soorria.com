@@ -2,7 +2,8 @@ import { links } from '@/links'
 import Link from 'next/link'
 import { ReactNode } from 'react'
 import Container from './Container'
-import { EmailIcon, GithubIconSolid, HeartIcon, LinkedinIconSolid } from './icons'
+import { EmailIcon, GithubIconSolid, LinkedinIconSolid } from './icons'
+import MadeBy from './MadeBy'
 
 type LinkType = {
   href: string
@@ -76,14 +77,7 @@ const Footer: React.FC<FooterProps> = () => {
   return (
     <Container>
       <footer className="flex flex-col space-y-8 border-t border-drac-curr pt-8 pb-10">
-        <div className="group text-center">
-          Made with{' '}
-          <span className="relative inline-block h-5 w-5 align-middle">
-            <HeartIcon className="absolute inset-0 fill-current text-drac-pink" />
-            <HeartIcon className="absolute inset-0 fill-current text-drac-purple group-hover:animate-ping" />
-          </span>{' '}
-          by Soorria
-        </div>
+        <MadeBy />
         <div className="mx-auto grid max-w-sm grid-cols-1 justify-center gap-4 text-center lowercase sm:grid-cols-3">
           {LINKS.map((col, i) => (
             <div key={i} className="mx-auto flex w-32 flex-col space-y-4">

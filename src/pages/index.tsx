@@ -28,7 +28,11 @@ const IndexPage: React.FC<IndexProps> = ({ subtitle, nowMdx, projects, randoms, 
 
   return (
     <Container>
-      <Hero subtitle={subtitle} now={<Now />} title="Hey, I'm Soorria" isStatic={isHeroStatic} />
+      <Hero subtitle={subtitle} title="Hey, I'm Soorria" isStatic={isHeroStatic}>
+        <div className="text-lg">
+          <Now />
+        </div>
+      </Hero>
       <FeaturedProjects random={randoms[0]} projects={projects} />
       <Skills random={randoms[1]} />
       <Contact random={randoms[2]} />

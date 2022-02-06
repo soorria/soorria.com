@@ -26,10 +26,9 @@ const useHeroClassnames = (isStatic: boolean): HeroClassnames => {
 
 const Hero: React.FC<{
   subtitle?: ReactNode | null
-  now?: ReactNode | null
   title: ReactNode
   isStatic?: boolean
-}> = ({ subtitle, now, title, isStatic = false }) => {
+}> = ({ subtitle, title, isStatic = false, children }) => {
   const classnames = useHeroClassnames(isStatic)
 
   return (
@@ -60,7 +59,7 @@ const Hero: React.FC<{
       {subtitle ? (
         <h2 className="mb-8 text-xl font-bold sm:my-8 sm:text-2xl md:text-3xl">{subtitle}</h2>
       ) : null}
-      {now ? <div className="text-lg">{now}</div> : null}
+      {children}
     </div>
   )
 }

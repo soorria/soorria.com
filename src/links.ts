@@ -3,12 +3,12 @@ import {
   EmailIcon,
   FacebookIconSolid,
   GithubIconSolid,
-  GlobeIconOutline,
   IconComponent,
   LinkedinIconSolid,
   MALIconSolid,
   TwitterIconSolid,
 } from './components/icons'
+import Logo from './components/logo'
 import { GITHUB_URL } from './constants'
 
 interface Link {
@@ -56,8 +56,8 @@ const malLink: Link = {
 
 const siteLink: Link = {
   href: 'https://mooth.tech',
-  title: 'the rest of my website',
-  icon: GlobeIconOutline,
+  title: 'website',
+  icon: Logo,
   newTab: false,
 }
 
@@ -73,4 +73,4 @@ export const links = {
 
 export const contactLinks: Link[] = [githubLink, emailLink, linkedinLink, facebookLink, twitterLink]
 
-export const allLinks: Link[] = [...contactLinks, malLink, siteLink]
+export const allLinks: Link[] = [...contactLinks, malLink]
