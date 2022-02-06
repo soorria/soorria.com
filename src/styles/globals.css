@@ -103,12 +103,15 @@ input {
     );
     background-size: 600% 100%;
     background-position: left;
-    transition: background;
+    transition: background-position;
     transition-duration: 2500ms;
+
+    transition-delay: 0ms;
     @apply bg-clip-text text-transparent;
   }
 
   .spinny-home-link:hover {
     background-position: right;
+    transition-delay: 1000ms;
   }
 }
