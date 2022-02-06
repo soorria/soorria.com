@@ -89,7 +89,7 @@ const LinksPage: React.FC = () => {
                   <span>{title}</span>
                 </a>
               ))}
-              <a href={links.site.href} className={classes.anchor}>
+              <a href={links.site.href + '?ref=links'} className={classes.anchor}>
                 <links.site.icon className="mr-3 h-7 w-7 transition-transform duration-300 group-hocus:-rotate-[360deg]" />
                 <span>the rest of my website</span>
               </a>
