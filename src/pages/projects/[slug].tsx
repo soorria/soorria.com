@@ -1,22 +1,21 @@
 import { GetStaticPaths, GetStaticProps } from 'next'
-import { MdxRemote } from 'next-mdx-remote/types'
 import PostLayout from '@/components/PostLayout'
 import { Project, ProjectFrontMatter } from '@/types/project'
-import { hydrate } from '@/lib/mdx-hydrate'
 import { getAllFilesFrontMatter, getFileWithMdx } from '@/lib/data'
 import { DataType } from '@/types/data'
 import { NextSeo } from 'next-seo'
 import { getOgImage } from '@/utils/og'
+import { useMdxComponent } from '@/lib/mdx'
 
 interface ProjectPageProps {
   project: ProjectFrontMatter
-  mdx: MdxRemote.Source
+  mdx: string
 }
 
 const PostPage: React.FC<ProjectPageProps> = ({ project, mdx }) => {
-  const content = hydrate(mdx)
   const url = `https://mooth.tech/posts/${project.slug}`
   const title = `${project.title} | Blog`
+  const Content = useMdxComponent(mdx)
 
   return (
     <PostLayout title={project.title}>
@@ -33,11 +32,7 @@ const PostPage: React.FC<ProjectPageProps> = ({ project, mdx }) => {
         }}
       />
       <div className="prose mx-auto mt-6 md:prose-lg md:mt-16">
-        {mdx.renderedOutput ? (
-          content
-        ) : (
-          <h2>Unfortunately, I&apos;m not done with this page yet ☹</h2>
-        )}
+        {mdx ? <Content /> : <h2>Unfortunately, I&apos;m not done with this page yet ☹</h2>}
       </div>
     </PostLayout>
   )
@@ -55,10 +50,10 @@ export const getStaticProps: GetStaticProps<ProjectPageProps, { slug: string }> 
   }
 
   const { slug } = params
-  const { mdxSource, ...snippet } = await getFileWithMdx<Project>(DataType.projects, slug)
+  const { code, ...snippet } = await getFileWithMdx<Project>(DataType.projects, slug)
 
   return {
-    props: { project: snippet, mdx: mdxSource },
+    props: { project: snippet, mdx: code },
   }
 }
 

@@ -11,7 +11,7 @@ const LANGUAGE_NAME_MAP: Record<string, string> = {
 const CustomCodeBlock: React.FC<any> = ({ children, className, ...rest }) => {
   const [copied, setCopied] = useState(false)
 
-  if (!className?.startsWith('language-')) {
+  if (className && className.includes('not-custom')) {
     return <pre className={className}>{children}</pre>
   }
 
@@ -26,7 +26,7 @@ const CustomCodeBlock: React.FC<any> = ({ children, className, ...rest }) => {
       <div className="mb-2 flex items-center justify-between font-display text-sm font-bold uppercase tracking-wide ">
         <div className="text-xs text-drac-purple sm:text-sm">{language}</div>
         <button
-          className="focus:outline-none rounded bg-drac-purple px-2 font-bold tracking-wider text-drac-bg focus:ring-2 focus:ring-drac-purple focus:ring-offset-2 focus:ring-offset-current"
+          className="rounded bg-drac-purple px-2 font-bold tracking-wider text-drac-bg focus:outline-none focus:ring-2 focus:ring-drac-purple focus:ring-offset-2 focus:ring-offset-current"
           onClick={async event => {
             const textToCopy = (event as any).target.parentElement?.parentElement?.childNodes[1]
               .innerText

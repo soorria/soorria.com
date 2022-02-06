@@ -1,24 +1,23 @@
 import { GetStaticPaths, GetStaticProps } from 'next'
-import { MdxRemote } from 'next-mdx-remote/types'
 import PostLayout from '@/components/PostLayout'
 import { Post, PostFrontMatter } from '@/types/post'
-import { hydrate } from '@/lib/mdx-hydrate'
 import { getAllFilesFrontMatter, getFileWithMdx } from '@/lib/data'
 import { DataType } from '@/types/data'
 import editUrl from '@/utils/editUrl'
 import { NextSeo } from 'next-seo'
 import { getOgImage } from '@/utils/og'
 import { filterUnpublished } from '@/utils/content'
+import { useMdxComponent } from '@/lib/mdx'
 
 interface PostPageProps {
   post: PostFrontMatter
-  mdx: MdxRemote.Source
+  mdx: string
 }
 
 const PostPage: React.FC<PostPageProps> = ({ post, mdx }) => {
-  const content = hydrate(mdx)
   const url = `https://mooth.tech/posts/${post.slug}`
   const title = `${post.title} | Blog`
+  const Content = useMdxComponent(mdx)
 
   return (
     <PostLayout title={post.title}>
@@ -42,7 +41,7 @@ const PostPage: React.FC<PostPageProps> = ({ post, mdx }) => {
         }}
       />
       <div className="prose mx-auto mt-6 md:prose-lg md:mt-16">
-        {content}
+        <Content />
         <div className="mx-auto max-w-xs py-12 text-center text-sm">
           Found a mistake, or want to suggest an improvement? Edit on GitHub{' '}
           <a href={editUrl(DataType.blog, post.slug)} rel="noopenner noreferrer" target="_blank">
@@ -66,10 +65,10 @@ export const getStaticProps: GetStaticProps<PostPageProps, { slug: string }> = a
   }
 
   const { slug } = params
-  const { mdxSource, ...snippet } = await getFileWithMdx<Post>(DataType.blog, slug)
+  const { code, ...snippet } = await getFileWithMdx<Post>(DataType.blog, slug)
 
   return {
-    props: { post: snippet, mdx: mdxSource },
+    props: { post: snippet, mdx: code },
   }
 }
 
