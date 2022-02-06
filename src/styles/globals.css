@@ -72,9 +72,9 @@ h6 {
 @tailwind utilities;
 
 .circuit-bg {
-  background-color: #282a36;
   background-image: linear-gradient(
       to bottom,
+      theme('colors.transparent'),
       theme('colors.transparent'),
       theme('colors.transparent'),
       theme('colors.drac.bg')
