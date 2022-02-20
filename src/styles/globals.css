@@ -86,6 +86,9 @@ input {
   accent-color: theme('colors.drac.pink');
 }
 
+.prose {
+  @apply max-w-none;
+}
 .prose ul > li::before {
   @apply bg-drac-pink/75;
 }

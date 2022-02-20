@@ -13,7 +13,7 @@ export const PostHeading: React.FC = ({ children }) => {
 }
 
 export const PostBottomSection: React.FC = ({ children }) => {
-  return <div className="mx-auto my-12 max-w-xs text-center text-sm">{children}</div>
+  return <div className="mx-auto my-24 max-w-xs text-center text-sm">{children}</div>
 }
 
 const PostLayout: React.FC<PostLayoutProps> = ({ title, children }) => {

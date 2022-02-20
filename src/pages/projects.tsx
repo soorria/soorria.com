@@ -11,13 +11,14 @@ import { NextSeo } from 'next-seo'
 
 interface ProjectsPageProps {
   projects: ProjectFrontMatter[]
+  numMainProjects: number
 }
 
 const description = "Things I've made. Some are more useful and cooler than others."
 const title = 'Projects'
 const url = 'https://mooth.tech/projects'
 
-const ProjectsPage: React.FC<ProjectsPageProps> = ({ projects }) => {
+const ProjectsPage: React.FC<ProjectsPageProps> = ({ projects, numMainProjects }) => {
   return (
     <PostLayout title="Projects">
       <NextSeo
@@ -34,13 +35,13 @@ const ProjectsPage: React.FC<ProjectsPageProps> = ({ projects }) => {
       />
       <p className="mt-6 mb-12 text-center text-lg">{description}</p>
       <ProjectsGrid>
-        {projects.slice(0, featuredProjects.length).map(project => (
+        {projects.slice(0, numMainProjects).map(project => (
           <ProjectCard key={project.slug} project={project} />
         ))}
       </ProjectsGrid>
-      <h2 className="mt-12 mb-8 text-4xl font-bold">Other Projects</h2>
+      <h2 className="mt-16 mb-8 text-4xl font-bold">Other Projects</h2>
       <ProjectsGrid>
-        {projects.slice(featuredProjects.length).map(project => (
+        {projects.slice(numMainProjects).map(project => (
           <ProjectCard key={project.slug} project={project} />
         ))}
       </ProjectsGrid>
@@ -50,7 +51,7 @@ const ProjectsPage: React.FC<ProjectsPageProps> = ({ projects }) => {
 
 export default ProjectsPage
 
-const projectOrder = [...featuredProjects]
+const projectOrder = [...featuredProjects, 'aqrm', 'sizes']
 const getProjectIndex = (slug: string): number => {
   const idx = projectOrder.indexOf(slug)
   return idx >= 0 ? idx : projectOrder.length + 10
@@ -62,6 +63,6 @@ export const getStaticProps: GetStaticProps<ProjectsPageProps> = async () => {
   )
 
   return {
-    props: { projects },
+    props: { projects, numMainProjects: featuredProjects.length },
   }
 }
