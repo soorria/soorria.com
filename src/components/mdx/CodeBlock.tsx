@@ -22,7 +22,7 @@ const CustomCodeBlock: React.FC<any> = ({ children, className, ...rest }) => {
       : languageFromClassName
 
   return (
-    <div className="relative -mx-2 my-[1.7em] rounded p-2 ring-1 ring-drac-purple sm:-mx-4 sm:p-4 sm:ring-2">
+    <div className="relative -mx-2 my-[1.7em] rounded p-2 ring-2 ring-drac-purple lg:-mx-4 lg:p-4">
       <div className="mb-2 flex items-center justify-between font-display text-sm font-bold uppercase tracking-wide ">
         <div className="text-xs text-drac-purple sm:text-sm">{language}</div>
         <button
