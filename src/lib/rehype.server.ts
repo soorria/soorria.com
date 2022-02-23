@@ -1,4 +1,4 @@
-import type { Node, Parent } from 'unist'
+import type { Node as UnistNode, Parent } from 'unist'
 import { visit } from 'unist-util-visit'
 
 /**
@@ -27,9 +27,9 @@ import { visit } from 'unist-util-visit'
 
 // eslint-disable-next-line
 export function rehypeCodeTitles() {
-  return (tree: Node) => visit(tree, 'element', visitor)
+  return (tree: UnistNode) => visit(tree, 'element', visitor)
 
-  function visitor(node: Node, index: number | null, parent: Parent | null): void {
+  function visitor(node: UnistNode, index: number | null, parent: Parent | null): void {
     if (!parent || node.tagName !== 'pre') {
       return
     }
