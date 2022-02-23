@@ -1,5 +1,9 @@
 import { bundleMDX } from 'mdx-bundler'
 import mdxPrism from 'mdx-prism'
+import rehypeSlug from 'rehype-slug'
+import rehypeAutolinkHeadings from 'rehype-autolink-headings'
+import { rehypeAccessibleEmojis } from 'rehype-accessible-emojis'
+import { rehypeCodeTitles } from './rehype.server'
 import { BaseFrontMatter } from '@/types/data'
 
 export type BundleResult<T extends BaseFrontMatter> = Omit<
@@ -15,7 +19,21 @@ export const render = async <T extends BaseFrontMatter>(
   return bundleMDX<T>({
     source,
     xdmOptions(options) {
-      options.rehypePlugins = [...(options.rehypePlugins ?? []), mdxPrism]
+      options.rehypePlugins = [
+        ...(options.rehypePlugins ?? []),
+        rehypeSlug,
+        rehypeCodeTitles,
+        mdxPrism,
+        [
+          rehypeAutolinkHeadings,
+          {
+            behaviour: 'append',
+            properties: { className: 'heading-anchor', ariaHidden: true, tabIndex: -1 },
+            content: [],
+          },
+        ],
+        rehypeAccessibleEmojis,
+      ]
       return options
     },
   })

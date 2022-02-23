@@ -39,7 +39,7 @@ const ProjectsPage: React.FC<ProjectsPageProps> = ({ projects, numMainProjects }
           <ProjectCard key={project.slug} project={project} />
         ))}
       </ProjectsGrid>
-      <h2 className="mt-16 mb-8 text-4xl font-bold">Other Projects</h2>
+      <h2 className="mt-16 mb-8 text-4xl">Other Projects</h2>
       <ProjectsGrid>
         {projects.slice(numMainProjects).map(project => (
           <ProjectCard key={project.slug} project={project} />

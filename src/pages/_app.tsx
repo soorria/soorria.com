@@ -8,7 +8,7 @@ import Footer from '@/components/Footer'
 import { SEO } from '@/next-seo.config'
 
 import '../styles/globals.css'
-import '../styles/code-block.css'
+import '../styles/prose.css'
 import { ReactNode } from 'react'
 
 const defaultWrapper = (node: ReactNode) => (

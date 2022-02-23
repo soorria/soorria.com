@@ -1,3 +1,62 @@
+.prose {
+  @apply max-w-none;
+}
+
+/*
+ * List bullets
+ */
+.prose ul > li::before {
+  @apply bg-drac-pink/75;
+}
+
+.prose ol > li::before {
+  @apply bg-drac-pink/75;
+}
+
+/*
+ * Code title
+ */
+.prose .code-title {
+  /* Value comes from CodeBlock component */
+  margin-bottom: -1.7em;
+  @apply rounded rounded-b-none font-mono font-bold text-drac-bg;
+}
+
+.prose .code-title span {
+  @apply inline-block rounded rounded-b-none bg-drac-purple px-2 py-0.5;
+}
+
+/*
+ * Heading anchors
+ */
+.prose .heading-anchor {
+  @apply invisible absolute no-underline;
+
+  margin-left: 0.5em;
+  padding-right: -1em;
+  cursor: pointer;
+}
+
+.heading-anchor:hover {
+  @apply visible;
+}
+
+.prose .heading-anchor:after {
+  @apply text-drac-comment transition-colors duration-100;
+  content: '#';
+}
+
+.prose *:hover > .heading-anchor {
+  @apply visible;
+}
+
+.prose *:hover > .heading-anchor:hover:after {
+  @apply text-drac-pink;
+}
+
+/*
+ * Code Snippets
+ */
 .prose pre {
   @apply m-0 rounded-none bg-drac-bg p-0;
 }
@@ -18,10 +77,6 @@
 .prose pre code::before,
 .prose pre code::after {
   content: none;
-}
-
-.mdx-marker {
-  @apply bg-drac-curr;
 }
 
 @screen sm {

@@ -47,13 +47,7 @@ module.exports = {
                 color: fg,
               },
               blockquote: {
-                borderLeftColor: fg,
-              },
-              'ol li::before': {
-                color: fg,
-              },
-              'ul > li::before': {
-                backgroundColor: fg,
+                borderLeftColor: purple,
               },
               hr: {
                 borderTopColor: comment,

@@ -41,7 +41,11 @@ h3,
 h4,
 h5,
 h6 {
-  @apply font-display;
+  @apply scroll-mt-24 font-display font-bold;
+}
+
+h1 {
+  @apply text-drac-pink;
 }
 
 /* Scrollbar */
@@ -84,13 +88,6 @@ h6 {
 
 input {
   accent-color: theme('colors.drac.pink');
-}
-
-.prose {
-  @apply max-w-none;
-}
-.prose ul > li::before {
-  @apply bg-drac-pink/75;
 }
 
 @layer components {
