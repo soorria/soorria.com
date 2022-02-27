@@ -1,10 +1,12 @@
 import { ReactNode } from 'react'
 import {
+  DiscordIcon,
   EmailIcon,
   FacebookIconSolid,
   GithubIconSolid,
   IconComponent,
   LinkedinIconSolid,
+  LinkIcon,
   MALIconSolid,
   TwitterIconSolid,
 } from './components/icons'
@@ -61,6 +63,18 @@ const siteLink: Link = {
   newTab: false,
 }
 
+const discordLink: Link = {
+  href: 'https://discordapp.com/users/405653727383388162',
+  title: 'mooth#2369',
+  icon: DiscordIcon,
+}
+
+const cardLink: Link = {
+  href: 'https://links.mooth.tech',
+  title: 'all links',
+  icon: LinkIcon,
+}
+
 export const links = {
   email: emailLink,
   github: githubLink,
@@ -69,8 +83,17 @@ export const links = {
   facebook: facebookLink,
   mal: malLink,
   site: siteLink,
+  discord: discordLink,
+  card: cardLink,
 } as const
 
-export const contactLinks: Link[] = [githubLink, emailLink, linkedinLink, facebookLink, twitterLink]
+export const contactLinks: Link[] = [
+  githubLink,
+  emailLink,
+  linkedinLink,
+  facebookLink,
+  twitterLink,
+  cardLink,
+]
 
-export const allLinks: Link[] = [...contactLinks, malLink]
+export const allLinks: Link[] = [...contactLinks, discordLink, malLink, cardLink]
