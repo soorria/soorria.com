@@ -11,7 +11,7 @@ const withPlausibleConfig = withPlausibleProxy({
   customDomain: 'https://plausible.mooth.tech',
 })
 
-/** @type {import('next/dist/next-server/server/config-shared').NextConfig} */
+/** @type {import('next').NextConfig} */
 const config = {
   async headers() {
     return [
@@ -44,6 +44,12 @@ const config = {
     ]
   },
   reactStrictMode: true,
+  webpack(config, { dev, isServer }) {
+    Object.assign(config.resolve.alias, {
+      'react/jsx-runtime.js': 'preact/compat/jsx-runtime',
+    })
+    return config
+  },
 }
 
 module.exports = withPreact(withPlausibleConfig(withBundleAnalyzer(config)))
