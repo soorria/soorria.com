@@ -34,5 +34,6 @@ yarn-error.log*
 .vercel
 
 *Zone.Identifier
+*.tsbuildinfo
 
 .eslintcache

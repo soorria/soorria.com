@@ -12,8 +12,8 @@ const cardLinkClassName =
 
 const JupyterJsCard: React.FC<JupyterJsCardProps> = ({ project }) => {
   return (
-    <div className="relative overflow-hidden transition transform bg-purple-500 md:hover:scale-105 sm:col-span-2 rounded-xl hover:shadow-xl">
-      <div className="absolute inset-y-0 right-0 items-center hidden sm:flex">
+    <div className="relative transform overflow-hidden rounded-xl bg-purple-600 transition hover:shadow-xl sm:col-span-2 md:hover:scale-105">
+      <div className="absolute inset-y-0 right-0 hidden items-center sm:flex">
         <Image
           src="/assets/projects/jupyter-js/jupyter-js-card.png"
           height="392"
@@ -21,11 +21,11 @@ const JupyterJsCard: React.FC<JupyterJsCardProps> = ({ project }) => {
           alt="jupyter.js preview"
         />
       </div>
-      <div className="absolute inset-0 hidden sm:block bg-gradient-to-r from-purple-500 via-purple-500 to-transparent" />
-      <div className="relative z-10 flex flex-col h-full p-8 space-y-4">
-        <header className="text-3xl font-bold font-display">jupyter.js</header>
-        <div className="flex-1 max-w-[25rem]">
-          <ul className="pl-6 space-y-4 list-disc">
+      <div className="absolute inset-0 hidden bg-gradient-to-r from-purple-600 via-purple-600 to-transparent sm:block" />
+      <div className="relative z-10 flex h-full flex-col space-y-4 p-8">
+        <header className="font-display text-3xl font-bold">jupyter.js</header>
+        <div className="max-w-[25rem] flex-1">
+          <ul className="list-disc space-y-4 pl-6">
             <li>
               A SaaS notebook app for frontend JavaScript inspired by python&apos;s jupyter
               notebooks.
@@ -36,21 +36,26 @@ const JupyterJsCard: React.FC<JupyterJsCardProps> = ({ project }) => {
             <li>Lightning fast bundling &amp; JSX transpilation out of the box with esbuild.</li>
           </ul>
         </div>
-        <div className="mb-0 -m-4">
-          <NextLink href={`/projects/${project.slug}`} passHref>
-            <a className={cardLinkClassName}>
-              <InfoIcon className="inline-block w-4 h-4" />
-              <span>Details</span>
-            </a>
-          </NextLink>
+        <div className="-m-4 mb-0">
+          {project.hasContent && (
+            <NextLink href={`/projects/${project.slug}`} passHref>
+              <a className={cardLinkClassName}>
+                <InfoIcon className="inline-block h-4 w-4" />
+                <span>Details</span>
+                <span className="sr-only"> for {project.title}</span>
+              </a>
+            </NextLink>
+          )}
           <a
             className={cardLinkClassName}
             target="_blank"
             rel="noopener noreferrer"
             href={project.live}
           >
-            <ExternalIcon className="inline-block w-4 h-4" />
-            <span>See Live</span>
+            <ExternalIcon className="inline-block h-4 w-4" />
+            <span>
+              See <span className="sr-only">{project.title}</span> Live
+            </span>
           </a>
           <a
             className={cardLinkClassName}
@@ -58,8 +63,9 @@ const JupyterJsCard: React.FC<JupyterJsCardProps> = ({ project }) => {
             rel="noopener noreferrer"
             href={project.source}
           >
-            <CodeIcon className="inline-block w-4 h-4" />
+            <CodeIcon className="inline-block h-4 w-4" />
             <span>Source</span>
+            <span className="sr-only"> for {project.title}</span>
           </a>
         </div>
       </div>

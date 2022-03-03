@@ -10,16 +10,18 @@ interface ErrorPageProps {
   statusText?: string
 }
 
+const DEFAULT_MESSAGE = 'I messed up :('
+
 const ErrorPage: React.FC<ErrorPageProps> = ({ statusCode, statusText }) => {
   return (
     <MainLayout>
       <PostHeading>
         {statusCode ? <span>{statusCode} - </span> : null}
-        {statusText || 'An error occurred :('}
+        {statusText || DEFAULT_MESSAGE}
       </PostHeading>
       <Link href="/" passHref>
-        <a className="block max-w-xs mx-auto my-8 text-center group">
-          Click <span className="group-hover:underline text-drac-pink">here</span> to go home.
+        <a className="group mx-auto my-8 block max-w-xs text-center">
+          Click <span className="text-drac-pink group-hover:underline">here</span> to go home.
         </a>
       </Link>
     </MainLayout>
@@ -34,7 +36,7 @@ export const getServerSideProps: GetServerSideProps<ErrorPageProps> = async ({ r
 
   const props = {
     statusCode,
-    statusText: STATUS_CODES[statusCode] || 'An error occurred',
+    statusText: STATUS_CODES[statusCode] || DEFAULT_MESSAGE,
   }
 
   return {

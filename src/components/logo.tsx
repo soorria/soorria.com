@@ -1,16 +1,19 @@
+import cx from '@/utils/cx'
+import { SVGProps } from 'react'
+
 const SIZES = {
   sm: 'w-8 h-8',
   md: 'w-10 h-10',
   auto: '',
 }
 
-interface LogoProps {
+interface LogoProps extends SVGProps<SVGSVGElement> {
   size?: keyof typeof SIZES
 }
 
-const Logo: React.FC<LogoProps> = ({ size = 'auto' }) => {
+const Logo: React.FC<LogoProps> = ({ size = 'auto', className, ...rest }) => {
   return (
-    <svg className={`${SIZES[size]}`} viewBox="0 0 24 24">
+    <svg {...rest} className={cx(SIZES[size], className)} viewBox="0 0 24 24">
       <mask id="a" mask-type="alpha" width="24" height="24" x="0" y="0">
         <rect width="24" height="24" fill="#fff" rx="3" />
       </mask>

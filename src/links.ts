@@ -1,13 +1,99 @@
-import { GITHUB_URL } from './contants'
+import { ReactNode } from 'react'
+import {
+  DiscordIcon,
+  EmailIcon,
+  FacebookIconSolid,
+  GithubIconSolid,
+  IconComponent,
+  LinkedinIconSolid,
+  LinkIcon,
+  MALIconSolid,
+  TwitterIconSolid,
+} from './components/icons'
+import Logo from './components/logo'
+import { GITHUB_URL } from './constants'
 
-export const contact = {
-  github: GITHUB_URL,
-  githubUsername: 'mo0th',
-  email: 'soorria.ss@gmail.com',
-  linkedin: 'https://www.linkedin.com/in/soorria/',
-  linkedinUsername: 'soorria',
-  twitter: 'https://twitter.com/soorriously',
-  twitterUsername: 'soorriously',
-  facebook: 'https://www.facebook.com/soorriously/',
-  facebookUsername: 'soorriously',
+interface Link {
+  title: ReactNode
+  href: string
+  icon: IconComponent
+  newTab?: boolean
 }
+
+const githubLink: Link = {
+  title: 'mo0th',
+  href: GITHUB_URL,
+  icon: GithubIconSolid,
+}
+
+const emailLink: Link = {
+  title: 'soorria.ss@gmail.com',
+  href: 'mailto:soorria.ss@gmail.com',
+  icon: EmailIcon,
+}
+
+const linkedinLink: Link = {
+  title: 'soorria',
+  href: 'https://www.linkedin.com/in/soorria/',
+  icon: LinkedinIconSolid,
+}
+
+const twitterLink: Link = {
+  title: '@soorriously',
+  href: 'https://twitter.com/soorriously',
+  icon: TwitterIconSolid,
+}
+
+const facebookLink: Link = {
+  href: 'https://www.facebook.com/soorriously/',
+  title: 'soorriously',
+  icon: FacebookIconSolid,
+}
+
+const malLink: Link = {
+  href: 'https://myanimelist.net/profile/soorriously',
+  title: 'soorriously',
+  icon: MALIconSolid,
+}
+
+const siteLink: Link = {
+  href: 'https://mooth.tech',
+  title: 'website',
+  icon: Logo,
+  newTab: false,
+}
+
+const discordLink: Link = {
+  href: 'https://discordapp.com/users/405653727383388162',
+  title: 'mooth#2369',
+  icon: DiscordIcon,
+}
+
+const cardLink: Link = {
+  href: 'https://links.mooth.tech',
+  title: 'all links',
+  icon: LinkIcon,
+}
+
+export const links = {
+  email: emailLink,
+  github: githubLink,
+  linkedin: linkedinLink,
+  twitter: twitterLink,
+  facebook: facebookLink,
+  mal: malLink,
+  site: siteLink,
+  discord: discordLink,
+  card: cardLink,
+} as const
+
+export const contactLinks: Link[] = [
+  githubLink,
+  emailLink,
+  linkedinLink,
+  facebookLink,
+  twitterLink,
+  cardLink,
+]
+
+export const allLinks: Link[] = [...contactLinks, discordLink, malLink, cardLink]

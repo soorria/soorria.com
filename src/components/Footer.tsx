@@ -1,8 +1,9 @@
-import { contact } from '@/links'
+import { links } from '@/links'
 import Link from 'next/link'
 import { ReactNode } from 'react'
 import Container from './Container'
-import { EmailIcon, GithubIconSolid, HeartIcon, LinkedinIconSolid } from './icons'
+import { EmailIcon, GithubIconSolid, LinkedinIconSolid } from './icons'
+import MadeBy from './MadeBy'
 
 type LinkType = {
   href: string
@@ -20,8 +21,8 @@ const LINKS: LinkType[][] = [
       href: '/about',
     },
     {
-      title: 'resume',
-      href: '/resume',
+      title: '/uses',
+      href: '/uses',
     },
   ],
   [
@@ -33,67 +34,58 @@ const LINKS: LinkType[][] = [
       title: 'snippets',
       href: '/snippets',
     },
-    {
-      title: 'posts',
-      href: '/posts',
-    },
   ],
   [
     {
       title: (
         <span className="inline-flex items-center space-x-1">
-          <GithubIconSolid className="w-3 h-3" />
+          <GithubIconSolid className="h-3 w-3" />
           <span>mo0th</span>
         </span>
       ),
       key: 'github',
-      href: contact.github,
+      href: links.github.href,
     },
     {
       title: (
         <span className="inline-flex items-center space-x-1">
-          <EmailIcon className="w-3 h-3" />
+          <EmailIcon className="h-3 w-3" />
           <span>email</span>
         </span>
       ),
       key: 'email',
-      href: `mailto:${contact.email}`,
+      href: links.email.href,
     },
     {
       title: (
         <span className="inline-flex items-center space-x-1">
-          <LinkedinIconSolid className="w-3 h-3" />
+          <LinkedinIconSolid className="h-3 w-3" />
           <span>soorria</span>
         </span>
       ),
       key: 'linkedin',
-      href: contact.linkedin,
+      href: links.linkedin.href,
     },
   ],
 ]
+
+const linkClass = 'transition-colors text-drac-purple hover:text-drac-pink'
 
 interface FooterProps {}
 
 const Footer: React.FC<FooterProps> = () => {
   return (
     <Container>
-      <footer className="flex flex-col py-8 space-y-8 border-t border-drac-curr">
-        <div className="text-center group">
-          Made with{' '}
-          <span className="relative inline-block w-5 h-5 align-middle">
-            <HeartIcon className="absolute inset-0 fill-current text-drac-pink" />
-            <HeartIcon className="absolute inset-0 fill-current text-drac-purple group-hover:animate-ping" />
-          </span>{' '}
-          by Soorria
-        </div>
-        <div className="grid justify-center max-w-sm grid-cols-1 gap-4 mx-auto text-center lowercase sm:grid-cols-3">
+      <footer className="flex flex-col space-y-8 border-t border-drac-curr pt-8 pb-10">
+        <MadeBy />
+        <div className="mx-auto grid max-w-sm grid-cols-1 justify-center gap-4 text-center lowercase sm:grid-cols-3">
           {LINKS.map((col, i) => (
-            <div key={i} className="flex flex-col w-32 mx-auto space-y-4 text-drac-purple">
+            <div key={i} className="mx-auto flex w-32 flex-col space-y-4">
               {col.map(({ title, href, key }) =>
                 href.match(/^(mailto|http)/i) ? (
                   <a
                     key={key ?? (title as string)}
-                    className="transition-colors"
+                    className={linkClass}
                     href={href}
                     target="_blank"
                     rel="noopener noreferrer"
@@ -102,7 +94,7 @@ const Footer: React.FC<FooterProps> = () => {
                   </a>
                 ) : (
                   <Link href={href} key={key ?? (title as string)}>
-                    <a className="transition-colors">{title}</a>
+                    <a className={linkClass}>{title}</a>
                   </Link>
                 )
               )}

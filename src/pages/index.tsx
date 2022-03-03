@@ -1,38 +1,42 @@
 import { GetStaticProps } from 'next'
-import { MdxRemote } from 'next-mdx-remote/types'
 
 import Container from '@/components/Container'
 import Contact from '@/components/landing/Contact'
 import FeaturedProjects from '@/components/landing/FeaturedProjects'
 import Hero from '@/components/landing/Hero'
-import { getFileWithMdx } from '@/lib/data'
-import { hydrate } from '@/lib/mdx-hydrate'
-import { render } from '@/lib/mdx-render'
+import { getFileFrontMatter } from '@/lib/data'
 import { DataType } from '@/types/data'
-import { Project, ProjectFrontMatter } from '@/types/project'
-import { featuredProjects } from '@/contants'
+import { ProjectFrontMatter } from '@/types/project'
+import { featuredProjects } from '@/constants'
 import Skills from '@/components/landing/Skills'
-// import Skills from '@/components/landing/Skills'
+import { randomArray } from '@/utils/random'
+import { getSingletonJsonSafe, getSingletonTextSafe } from '@/lib/supabase'
+import { useMdxComponent } from '@/lib/mdx'
+import { render } from '@/lib/mdx.server'
 
 interface IndexProps {
-  subtitleMdx: MdxRemote.Source
-  nowMdx: MdxRemote.Source
+  subtitle: string | null
+  nowMdx: string | null
   projects: ProjectFrontMatter[]
+  randoms: number[]
+  renderedAt: string
+  isHeroStatic?: boolean
 }
 
-const IndexPage: React.FC<IndexProps> = ({ subtitleMdx, nowMdx, projects }) => {
-  const subtitle = hydrate(subtitleMdx)
-  const now = hydrate(nowMdx)
+const IndexPage: React.FC<IndexProps> = ({ subtitle, nowMdx, projects, randoms, isHeroStatic }) => {
+  const Now = useMdxComponent(nowMdx)
 
   return (
     <Container>
-      <Hero subtitle={subtitle} now={now} />
-      <FeaturedProjects projects={projects} />
-      {/* <FeaturedWork work={work} /> */}
-      <Skills />
-      {/* <Education /> */}
-      <Contact />
-      <div className="pb-20" />
+      <Hero subtitle={subtitle} title="Hey, I'm Soorria" isStatic={isHeroStatic}>
+        <div className="text-lg">
+          <Now />
+        </div>
+      </Hero>
+      <FeaturedProjects random={randoms[0]} projects={projects} />
+      <Skills random={randoms[1]} />
+      <Contact random={randoms[2]} />
+      <div className="py-10" />
     </Container>
   )
 }
@@ -40,30 +44,35 @@ const IndexPage: React.FC<IndexProps> = ({ subtitleMdx, nowMdx, projects }) => {
 export default IndexPage
 
 export const getStaticProps: GetStaticProps<IndexProps> = async () => {
-  const subtitleMdx = await render(`
-I'm a full stack software engineer and Actuarial Studies & Computer Science
-student based in Sydney, Australia.`)
-  const nowMdx = await render(`
-Right now, I'm a freelance software engineer helping small businesses
-enter the online space and in my free time I'm working on
-[jupyter.js](https://jjs.mooth.tech). Sometimes I play around with
-Go and Python.`)
+  const subtitle = await getSingletonTextSafe('subtitle')
+
+  const nowText = await getSingletonTextSafe('now')
+  const nowMdx = nowText ? (await render(nowText)).code : null
+
+  const { isHeroStatic } = await getSingletonJsonSafe('index-options')
 
   const projects: ProjectFrontMatter[] = await Promise.all(
     featuredProjects.map(async projectSlug => {
-      const project = await getFileWithMdx<Project>(DataType.projects, projectSlug)
-      return {
-        ...project,
-        mdxSource: null,
-      }
+      const frontmatter = await getFileFrontMatter<ProjectFrontMatter>(
+        DataType.projects,
+        projectSlug
+      )
+      delete frontmatter.readingTime
+      return frontmatter
     })
   )
 
+  const randoms = randomArray(0, 100, 5)
+
   return {
     props: {
-      subtitleMdx,
+      subtitle,
       nowMdx,
       projects,
+      randoms,
+      renderedAt: new Date().toISOString(),
+      isHeroStatic: Boolean(isHeroStatic),
     },
+    revalidate: 1,
   }
 }

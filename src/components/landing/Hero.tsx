@@ -1,42 +1,65 @@
-import { ReactNode } from 'react'
+import { ReactNode, useMemo } from 'react'
 
-const CLASSNAMES = {
-  heroCommon:
-    'hidden sm:block absolute inset-0 transform group-hover:translate-x-0 group-hover:translate-y-0 transition-transform select-none',
+interface HeroClassnames {
+  common: string
+  mainText: string
 }
 
-const Hero: React.FC<{ subtitle: ReactNode; now: ReactNode }> = ({ subtitle, now }) => {
+const useHeroClassnames = (isStatic: boolean): HeroClassnames => {
+  return useMemo(() => {
+    const classnames = {
+      common: 'hidden sm:block absolute inset-0 select-none',
+      mainText:
+        'absolute inset-0 bg-gradient-to-tr from-drac-pink to-drac-purple bg-clip-text text-transparent sm:text-drac-fg ',
+    }
+
+    if (!isStatic) {
+      classnames.common +=
+        ' motion-safe:group-hover:translate-x-0 motion-safe:group-hover:translate-y-0 transition-transform '
+      classnames.mainText +=
+        ' duration-0 transition-opacity group-hover:delay-100 sm:motion-safe:group-hover:opacity-0'
+    }
+
+    return classnames
+  }, [isStatic])
+}
+
+const Hero: React.FC<{
+  subtitle?: ReactNode | null
+  title: ReactNode
+  isStatic?: boolean
+}> = ({ subtitle, title, isStatic = false, children }) => {
+  const classnames = useHeroClassnames(isStatic)
+
   return (
     <div
       id="hero"
-      className="px-4 pb-12 -mx-4 circuit-bg -mt-36 pt-36 lg:mx-[-4.5rem] lg:px-[4.5rem] xl:-mx-32 xl:px-32"
+      className="circuit-bg -mx-4 -mt-36 px-4 pb-12 pt-36 lg:mx-[-4.5rem] lg:px-[4.5rem] xl:-mx-32 xl:px-32"
     >
-      <div className="py-16 mx-auto mt-8 mb-4 overflow-x-hidden text-5xl font-bold text-center outline-none cursor-default group sm:text-6xl sm:my-8 md:text-7xl lg:text-8xl font-display">
+      <div className="group mx-auto mt-8 mb-4 cursor-default overflow-x-hidden py-16 text-center font-display text-5xl font-bold outline-none sm:my-8 sm:text-6xl md:text-7xl lg:text-8xl">
         <div className="relative">
           <p
             aria-hidden
-            className={`text-drac-pink ${CLASSNAMES.heroCommon} -translate-x-4 -translate-y-4 md:-translate-x-8 md:-translate-y-8`}
+            className={`text-drac-pink ${classnames.common} -translate-x-4 -translate-y-4 md:-translate-x-8 md:-translate-y-8`}
           >
-            Hey, I&apos;m Soorria
+            {title}
           </p>
-          <p aria-hidden className="opacity-0 select-none">
-            Hey, I&apos;m Soorria
+          <p aria-hidden className="select-none opacity-0">
+            {title}
           </p>
-          <h1 className="absolute inset-0 transition-opacity duration-0 bg-clip-text bg-gradient-to-tr from-drac-pink to-drac-purple sm:text-drac-fg group-hover:delay-100 sm:group-hover:opacity-0">
-            Hey, I&apos;m Soorria
-          </h1>
+          <h1 className={classnames.mainText}>{title}</h1>
           <p
             aria-hidden
-            className={`text-drac-purple ${CLASSNAMES.heroCommon} translate-x-4 translate-y-4 md:translate-x-8 md:translate-y-8`}
+            className={`text-drac-purple ${classnames.common} translate-x-4 translate-y-4 md:translate-x-8 md:translate-y-8`}
           >
-            Hey, I&apos;m Soorria
+            {title}
           </p>
         </div>
       </div>
-      <h2 className="mb-8 text-xl font-bold sm:text-2xl md:text-3xl sm:my-8 font-display">
-        {subtitle}
-      </h2>
-      <div className="text-lg">{now}</div>
+      {subtitle ? (
+        <h2 className="mb-8 text-xl sm:my-8 sm:text-2xl md:text-3xl">{subtitle}</h2>
+      ) : null}
+      {children}
     </div>
   )
 }

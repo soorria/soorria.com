@@ -25,10 +25,13 @@ const ProjectCard: ProjectCardComponent = ({ project }) => {
 
   return (
     <div className="flex flex-col space-y-3">
-      <div className="text-xl font-bold text-drac-pink font-display">{project.title}</div>
+      <div className="font-display text-xl font-bold text-drac-pink">
+        {project.title}
+        {project.wip && <span className="ml-2 font-sans text-sm font-normal italic">(WIP)</span>}
+      </div>
       <div className="flex-1">{project.shortDescription}</div>
       <div>
-        <div className="flex flex-wrap -mt-1 -ml-2 text-xs text-opacity-80 text-drac-fg">
+        <div className="-mt-1 -ml-2 flex flex-wrap text-xs text-drac-fg text-opacity-80">
           {project.stack.map(tech => (
             <span key={tech} className="mt-1 ml-2">
               {tech}
@@ -37,26 +40,31 @@ const ProjectCard: ProjectCardComponent = ({ project }) => {
         </div>
       </div>
       <div className="flex space-x-4 text-sm">
-        <Link href={`/projects/${project.slug}`}>
-          <a
-            aria-label={`See details for ${project.title}`}
-            className="inline-flex items-center space-x-1 underline text-drac-pink hover:text-drac-purple"
-          >
-            <InfoIcon className="inline-block w-4 h-4" />
-            <span>Details</span>
-          </a>
-        </Link>
+        {project.hasContent && (
+          <Link href={`/projects/${project.slug}`}>
+            <a
+              aria-label={`See details for ${project.title}`}
+              className="inline-flex items-center space-x-1 text-drac-pink underline hover:text-drac-purple"
+            >
+              <InfoIcon className="inline-block h-4 w-4" />
+              <span>Details</span>
+              <span className="sr-only"> for {project.title}</span>
+            </a>
+          </Link>
+        )}
 
         {project.live && (
           <a
             href={project.live}
             aria-label={`View the live site for ${project.title}`}
-            className="inline-flex items-center space-x-1 underline text-drac-pink hover:text-drac-purple"
+            className="inline-flex items-center space-x-1 text-drac-pink underline hover:text-drac-purple"
             target="_blank"
             rel="noopener noreferrer"
           >
-            <ExternalIcon className="inline-block w-4 h-4" />
-            <span>View Live</span>
+            <ExternalIcon className="inline-block h-4 w-4" />
+            <span>
+              See <span className="sr-only">{project.title}</span> Live
+            </span>
           </a>
         )}
 
@@ -64,12 +72,13 @@ const ProjectCard: ProjectCardComponent = ({ project }) => {
           <a
             href={project.source}
             aria-label={`View the source code for ${project.title}`}
-            className="inline-flex items-center space-x-1 underline text-drac-pink hover:text-drac-purple"
+            className="inline-flex items-center space-x-1 text-drac-pink underline hover:text-drac-purple"
             target="_blank"
             rel="noopener noreferrer"
           >
-            <CodeIcon className="inline-block w-4 h-4" />
+            <CodeIcon className="inline-block h-4 w-4" />
             <span>Source</span>
+            <span className="sr-only"> for {project.title}</span>
           </a>
         )}
       </div>

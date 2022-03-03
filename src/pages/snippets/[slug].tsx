@@ -1,23 +1,22 @@
 import { GetStaticPaths, GetStaticProps } from 'next'
-import { MdxRemote } from 'next-mdx-remote/types'
-import PostLayout from '@/components/PostLayout'
+import PostLayout, { PostBottomSection } from '@/components/PostLayout'
 import { Snippet, SnippetFrontMatter } from '@/types/snippet'
-import { hydrate } from '@/lib/mdx-hydrate'
 import { getAllFilesFrontMatter, getFileWithMdx } from '@/lib/data'
 import { DataType } from '@/types/data'
 import editUrl from '@/utils/editUrl'
 import { NextSeo } from 'next-seo'
 import { getOgImage } from '@/utils/og'
+import { useMdxComponent } from '@/lib/mdx'
 
 interface SnippetPageProps {
   snippet: SnippetFrontMatter
-  mdx: MdxRemote.Source
+  mdx: string
 }
 
 const SnippetPage: React.FC<SnippetPageProps> = ({ snippet, mdx }) => {
-  const content = hydrate(mdx)
   const url = `https://mooth.tech/snippets/${snippet.slug}`
   const title = `${snippet.title} | Snippets`
+  const Content = useMdxComponent(mdx)
 
   return (
     <PostLayout title={snippet.title}>
@@ -40,9 +39,9 @@ const SnippetPage: React.FC<SnippetPageProps> = ({ snippet, mdx }) => {
           images: [getOgImage(DataType.snippets, snippet.title)],
         }}
       />
-      <div className="mx-auto mt-6 prose md:prose-lg">
-        {content}
-        <div className="max-w-xs mx-auto my-12 text-sm text-center">
+      <div className="prose mx-auto mt-6 md:prose-lg">
+        <Content />
+        <PostBottomSection>
           Found a mistake, or want to suggest an improvement? Edit on GitHub{' '}
           <a
             href={editUrl(DataType.snippets, snippet.slug)}
@@ -51,7 +50,7 @@ const SnippetPage: React.FC<SnippetPageProps> = ({ snippet, mdx }) => {
           >
             here
           </a>
-        </div>
+        </PostBottomSection>
       </div>
     </PostLayout>
   )
@@ -69,10 +68,10 @@ export const getStaticProps: GetStaticProps<SnippetPageProps, { slug: string }> 
   }
 
   const { slug } = params
-  const { mdxSource, ...snippet } = await getFileWithMdx<Snippet>(DataType.snippets, slug)
+  const { code, ...snippet } = await getFileWithMdx<Snippet>(DataType.snippets, slug)
 
   return {
-    props: { snippet, mdx: mdxSource },
+    props: { snippet, mdx: code },
   }
 }
 

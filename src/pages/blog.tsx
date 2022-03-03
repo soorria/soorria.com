@@ -33,7 +33,7 @@ const PostsPage: React.FC<PostsPageProps> = ({ posts }) => {
         }}
       />
       <PostHeading>Blog</PostHeading>
-      <p className="mt-6 mb-12 text-lg text-center">{description}</p>
+      <p className="mt-6 mb-12 text-center text-lg">{description}</p>
       <div className="grid grid-cols-1 gap-8">
         {posts.map(post => (
           <PostCard key={post.slug} post={post} />

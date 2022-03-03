@@ -12,21 +12,23 @@ const SKILLS = [
   'Jest & Cypress',
 ]
 
-const Skills: React.FC = () => {
+const titles = ["What I've Learned", 'Technical Skills', 'Tools I Use']
+
+const Skills: React.FC<{ random?: number }> = ({ random = 0 }) => {
   return (
-    <LandingSection id="skills" title="What I've Learned">
+    <LandingSection id="skills" title={titles[random % titles.length]}>
       <p className="mb-8 text-lg">
         Here are some of the technicals skills I&apos;ve developed in and outside of my degree.
       </p>
-      <ul className="grid grid-cols-2 gap-8 mb-8 sm:grid-cols-3 md:grid-cols-4">
+      <ul className="mb-8 grid grid-cols-2 gap-8 sm:grid-cols-3 md:grid-cols-4">
         {SKILLS.map(skill => (
-          <li key={skill} className="flex items-center space-x-2 group">
-            <span className="w-2 h-2 transition transform border-2 rounded-full border-drac-fg group-hover:scale-150 group-hover:border-drac-pink" />
+          <li key={skill} className="group flex items-center space-x-2">
+            <span className="h-2 w-2 transform rounded-full border-2 border-drac-fg transition group-hover:border-drac-pink" />
             <span>{skill}</span>
           </li>
         ))}
       </ul>
-      <p className="text-sm text-center">
+      <p className="text-center text-sm">
         Want to see a pointless list of languages I&apos;ve used? Check out my{' '}
         <CustomLink href="/snippets/hello-world" className="font-mono">
           hello-world

@@ -1,8 +1,9 @@
 import Router from 'next/router'
 import Link from 'next/link'
 import { useEffect, useRef, useState } from 'react'
-import random from '@/utils/random'
+import { random } from '@/utils/random'
 import Logo from './logo'
+import cx from '@/utils/cx'
 
 const MIN_ROTATION = 0
 const MAX_ROTATION = 360 * 4
@@ -10,7 +11,7 @@ const START_ROTATION = MAX_ROTATION / 2
 
 const RESET_TIMEOUT = 10000 // 10 seconds
 
-const SpinnyHomeLink: React.FC = () => {
+const SpinnyHomeLink: React.FC<{ href?: string }> = ({ href = '/' }) => {
   const [rotation, setRotation] = useState(START_ROTATION)
   const resetTimout = useRef<ReturnType<typeof setTimeout> | null>(null)
 
@@ -33,15 +34,19 @@ const SpinnyHomeLink: React.FC = () => {
   }, [])
 
   return (
-    <Link href="/">
-      <a className="z-10 flex items-center group">
+    <Link href={href}>
+      <a className="group z-10 flex items-center">
         <span
-          className="w-6 h-6 transition-transform duration-700 ease-in-out sm:w-8 sm:h-8 md:w-10 md:h-10"
-          style={{ transform: `rotate(${rotation}deg)` }}
+          className="h-6 w-6 transform transition-transform duration-700 ease-in-out sm:h-8 sm:w-8 md:h-10 md:w-10"
+          style={{ '--tw-rotate': `${rotation}deg` } as any}
         >
           <Logo />
         </span>
-        <span className="ml-1.5 text-2xl font-bold lowercase sm:ml-3 sm:text-3xl font-display">
+        <span
+          className={cx(
+            'spinny-home-link ml-1.5 font-display text-2xl font-bold lowercase sm:ml-4 sm:text-3xl'
+          )}
+        >
           <span className="sr-only sm:not-sr-only">Soorria</span>
           <span className="sr-only md:not-sr-only"> Saruva</span>
         </span>

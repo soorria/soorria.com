@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 const { fontFamily } = require('tailwindcss/defaultTheme')
+const plugin = require('tailwindcss/plugin')
 
 const drac = {
   bg: '#282a36',
@@ -16,13 +17,12 @@ const drac = {
 }
 
 module.exports = {
-  mode: 'jit',
-  purge: ['./src/**/*.tsx'],
-  darkMode: false, // or 'media' or 'class'
+  content: ['./src/**/*.tsx'],
   theme: {
     extend: {
       colors: {
         drac,
+        current: 'currentColor',
       },
       fontFamily: {
         display: ["'Poppins'", ...fontFamily.sans],
@@ -47,13 +47,7 @@ module.exports = {
                 color: fg,
               },
               blockquote: {
-                borderLeftColor: fg,
-              },
-              'ol li::before': {
-                color: fg,
-              },
-              'ul > li::before': {
-                backgroundColor: fg,
+                borderLeftColor: purple,
               },
               hr: {
                 borderTopColor: comment,
@@ -78,8 +72,11 @@ module.exports = {
       },
     },
   },
-  variants: {
-    extend: {},
-  },
-  plugins: [require('@tailwindcss/typography')],
+  plugins: [
+    require('@tailwindcss/typography'),
+    plugin(({ addVariant }) => {
+      addVariant('hocus', ['&:hover', '&:focus'])
+      addVariant('group-hocus', [':merge(.group):hover &', ':merge(.group):focus &'])
+    }),
+  ],
 }

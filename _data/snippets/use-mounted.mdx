@@ -19,10 +19,6 @@ const useMounted = (): boolean => {
 
   useEffect(() => {
     setMounted(true)
-
-    return () => {
-      setMounted(false)
-    }
   }, [])
 
   return mounted

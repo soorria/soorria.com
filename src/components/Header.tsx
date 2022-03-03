@@ -22,16 +22,16 @@ const Header: React.FC = () => {
     <Container>
       <a
         href="#main-content"
-        className="font-bold sr-only focus:not-sr-only font-display text-drac-pink"
+        className="fixed left-1/2 mx-auto block -translate-y-full -translate-x-1/2 transform bg-drac-bg px-4 py-2 font-display font-bold text-drac-pink transition-transform focus:translate-y-2"
       >
         Skip to Main Content
       </a>
       <header className="flex items-center justify-between py-8">
         <SpinnyHomeLink />
-        <nav className="flex space-x-1 sm:space-x-3 sm:text-lg font-display">
+        <nav className="flex space-x-1 font-display sm:space-x-3 sm:text-lg">
           {LINKS.map(({ title, href }) => (
             <Link key={href} href={href} passHref>
-              <a className="relative px-1 py-0.5 sm:py-1 overflow-hidden leading-none transition-colors rounded sm:px-2 border-drac-fg hover:bg-drac-curr hover:text-drac-pink">
+              <a className="relative overflow-hidden rounded border-drac-fg px-1 py-0.5 leading-none transition-colors hover:bg-drac-curr hover:text-drac-pink sm:py-1 sm:px-2">
                 {title}
               </a>
             </Link>

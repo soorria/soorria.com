@@ -6,5 +6,8 @@ declare module 'mdx-prism' {
 }
 
 declare namespace NodeJS {
-  interface ProcessEnv {}
+  interface ProcessEnv {
+    SUPABASE_ANON_KEY: string
+    SUPABASE_URL: string
+  }
 }

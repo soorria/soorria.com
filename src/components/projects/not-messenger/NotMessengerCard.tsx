@@ -7,32 +7,37 @@ const cardLinkClassName =
 
 const NotMessengerCard: ProjectCardComponent = ({ project }) => {
   return (
-    <div className="relative overflow-hidden transition transform bg-gray-700 md:hover:scale-105 rounded-xl hover:shadow-xl">
-      <div className="flex flex-col h-full p-8 space-y-4">
-        <header className="flex items-center text-3xl font-bold text-green-400 font-display">
+    <div className="relative overflow-hidden rounded-xl bg-gray-700 transition hover:shadow-xl md:hover:scale-105">
+      <div className="flex h-full flex-col space-y-4 p-8">
+        <header className="flex items-center font-display text-3xl font-bold text-green-400">
           Not Messenger
         </header>
         <div className="flex-1">
-          <ul className="pl-6 space-y-2 list-disc">
+          <ul className="list-disc space-y-2 pl-6">
             <li>Realtime chat application with socket.io, Express.js and MongoDB</li>
             <li>Strangely similar to Facebook Messenger</li>
           </ul>
         </div>
-        <div className="mb-0 -m-2">
-          <NextLink href={`/projects/${project.slug}`} passHref>
-            <a className={cardLinkClassName}>
-              <InfoIcon className="inline-block w-4 h-4" />
-              <span>Details</span>
-            </a>
-          </NextLink>
+        <div className="-m-2 mb-0">
+          {project.hasContent && (
+            <NextLink href={`/projects/${project.slug}`} passHref>
+              <a className={cardLinkClassName}>
+                <InfoIcon className="inline-block h-4 w-4" />
+                <span>Details</span>
+                <span className="sr-only"> for {project.title}</span>
+              </a>
+            </NextLink>
+          )}
           <a
             className={cardLinkClassName}
             target="_blank"
             rel="noopener noreferrer"
             href={project.live}
           >
-            <ExternalIcon className="inline-block w-4 h-4" />
-            <span>See Live</span>
+            <ExternalIcon className="inline-block h-4 w-4" />
+            <span>
+              See <span className="sr-only">{project.title}</span> Live
+            </span>
           </a>
           <a
             className={cardLinkClassName}
@@ -40,8 +45,9 @@ const NotMessengerCard: ProjectCardComponent = ({ project }) => {
             rel="noopener noreferrer"
             href={project.source}
           >
-            <CodeIcon className="inline-block w-4 h-4" />
+            <CodeIcon className="inline-block h-4 w-4" />
             <span>Source</span>
+            <span className="sr-only"> for {project.title}</span>
           </a>
         </div>
       </div>

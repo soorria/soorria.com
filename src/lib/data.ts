@@ -3,7 +3,8 @@ import { promises as fs } from 'fs'
 import readingTime from 'reading-time'
 import matter from 'gray-matter'
 import path from 'path'
-import { render } from './mdx-render'
+import { render } from './mdx.server'
+import { addRefToUrl } from '../utils/content'
 
 const DATA_ROOT = path.join(process.cwd(), '_data')
 
@@ -28,12 +29,28 @@ export const getAllFilesFrontMatter = async <TFrontMatter>(
         ...(data as TFrontMatter),
         slug: fileToSlug(file),
         readingTime: readingTime(content).text,
+        hasContent: content.trim().length !== 0,
       } as TFrontMatter
     })
   )
 }
 
-export const getFileWithoutMdx = async <TApiData extends BaseApiData>(
+export const getFileFrontMatter = async <TFrontMatter>(
+  type: DataType,
+  slug: string
+): Promise<TFrontMatter> => {
+  const source = await fs.readFile(getSlugPath(type, slug), 'utf-8')
+  const { data, content } = matter(source)
+
+  return {
+    ...(data as TFrontMatter),
+    slug,
+    readingTime: readingTime(content).text,
+    hasContent: content.trim().length !== 0,
+  } as TFrontMatter
+}
+
+export const getFileWithContent = async <TApiData extends BaseApiData>(
   type: DataType,
   slug: string
 ): Promise<TApiData> => {
@@ -48,19 +65,28 @@ export const getFileWithoutMdx = async <TApiData extends BaseApiData>(
   } as TApiData
 }
 
+const hasLiveUrlProperty = (obj: any): obj is { live: string } => typeof obj.live === 'string'
+
 export const getFileWithMdx = async <TData extends BaseData>(
   type: DataType,
   slug: string
 ): Promise<TData> => {
   const source = await fs.readFile(getSlugPath(type, slug), 'utf-8')
-  const { data, content } = matter(source)
 
-  const mdxSource = await render(content)
+  const {
+    code,
+    frontmatter: data,
+    matter: { content },
+  } = await render<FrontMatter<TData>>(source)
+
+  if (hasLiveUrlProperty(data)) {
+    data.live = addRefToUrl(data.live)
+  }
 
   return {
     ...(data as FrontMatter<TData>),
     slug,
-    mdxSource,
+    code,
     readingTime: readingTime(content).text,
   } as TData
 }
