@@ -1,3 +1,4 @@
+import cx from '@/utils/cx'
 import { ReactNode, useMemo } from 'react'
 
 interface HeroClassnames {
@@ -34,23 +35,31 @@ const Hero: React.FC<{
   return (
     <div
       id="hero"
-      className="circuit-bg -mx-4 -mt-36 px-4 pb-12 pt-36 lg:mx-[-4.5rem] lg:px-[4.5rem] xl:-mx-32 xl:px-32"
+      className="circuit-bg -mx-4 -mt-36 px-4 pb-12 pt-36 md:-mx-8 lg:mx-[-4.5rem] lg:px-[4.5rem] xl:-mx-32 xl:px-32"
     >
-      <div className="group mx-auto mt-8 mb-4 cursor-default overflow-x-hidden py-16 text-center font-display text-5xl font-bold outline-none sm:my-8 sm:text-6xl md:text-7xl lg:text-8xl">
+      <div className="group mx-auto mt-8 mb-8 cursor-default overflow-x-hidden py-16 text-center font-display text-5xl font-bold leading-tight outline-none sm:my-8 sm:text-6xl md:text-7xl lg:text-8xl">
         <div className="relative">
           <p
             aria-hidden
-            className={`text-drac-pink ${classnames.common} -translate-x-4 -translate-y-4 md:-translate-x-8 md:-translate-y-8`}
+            role="presentation"
+            className={cx(
+              `-translate-x-4 -translate-y-4 text-drac-pink md:-translate-x-8 md:-translate-y-8`,
+              classnames.common
+            )}
           >
             {title}
           </p>
-          <p aria-hidden className="select-none opacity-0">
+          <p role="presentation" aria-hidden className="select-none opacity-0">
             {title}
           </p>
           <h1 className={classnames.mainText}>{title}</h1>
           <p
             aria-hidden
-            className={`text-drac-purple ${classnames.common} translate-x-4 translate-y-4 md:translate-x-8 md:translate-y-8`}
+            role="presentation"
+            className={cx(
+              `translate-x-4 translate-y-4 text-drac-purple md:translate-x-8 md:translate-y-8`,
+              classnames.common
+            )}
           >
             {title}
           </p>

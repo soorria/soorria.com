@@ -17,6 +17,7 @@ export interface BaseData {
 
 export type ApiData<T extends BaseData> = FrontMatter<T> & {
   content: string
+  components: string
 }
 export type BaseApiData = ApiData<BaseData>
 

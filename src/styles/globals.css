@@ -26,6 +26,20 @@
   @apply bg-drac-pink  text-drac-bg;
 }
 
+:root {
+  --bg: theme('colors.drac.bg');
+  --curr: theme('colors.drac.curr');
+  --fg: theme('colors.drac.fg');
+  --comment: theme('colors.drac.comment');
+  --cyan: theme('colors.drac.cyan');
+  --green: theme('colors.drac.green');
+  --orange: theme('colors.drac.orange');
+  --pink: theme('colors.drac.pink');
+  --purple: theme('colors.drac.purple');
+  --red: theme('colors.drac.red');
+  --yellow: theme('colors.drac.yellow');
+}
+
 html {
   scroll-behavior: smooth;
   min-width: 360px;

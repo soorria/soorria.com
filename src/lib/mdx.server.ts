@@ -15,10 +15,14 @@ export type BundleResult<T extends BaseFrontMatter> = Omit<
 }
 
 export const render = async <T extends BaseFrontMatter>(
-  source: string
+  source: string,
+  components = ''
 ): Promise<BundleResult<T>> => {
   return bundleMDX<T>({
     source,
+    files: {
+      './components': components,
+    },
     xdmOptions(options) {
       options.rehypePlugins = [
         ...(options.rehypePlugins ?? []),

@@ -2,17 +2,19 @@ import NextLink from 'next/link'
 import Image from 'next/image'
 import { CodeIcon, ExternalIcon, InfoIcon } from '@/components/icons'
 import { ProjectFrontMatter } from '@/types/project'
+import cx from '@/utils/cx'
+import { COMMON_CLASSNAMES } from '../utils'
 
 interface JupyterJsCardProps {
   project: ProjectFrontMatter
 }
 
 const cardLinkClassName =
-  'inline-flex items-center px-6 py-2 ml-4 mt-4 space-x-2 font-semibold transition-colors border-2 border-current border-white rounded hover:text-purple-500 hover:bg-white'
+  'inline-flex items-center px-6 py-2 ml-4 mt-4 space-x-2 font-semibold transition-colors border-2 border-current border-white rounded hocus:text-purple-500 hocus:bg-white'
 
 const JupyterJsCard: React.FC<JupyterJsCardProps> = ({ project }) => {
   return (
-    <div className="relative transform overflow-hidden rounded-xl bg-purple-600 transition hover:shadow-xl sm:col-span-2 md:hover:scale-105">
+    <div className={cx('bg-purple-600 sm:col-span-2', COMMON_CLASSNAMES.specialCardRoot)}>
       <div className="absolute inset-y-0 right-0 hidden items-center sm:flex">
         <Image
           src="/assets/projects/jupyter-js/jupyter-js-card.png"

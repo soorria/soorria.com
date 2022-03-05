@@ -173,6 +173,7 @@ const Contact: React.FC<ContactProps> = ({ random = 0 }) => {
           <p className="text-lg">
             Want to work with me, or just want to chat? Shoot me an email or a message on Messenger
             <button
+              type="button"
               tabIndex={-1}
               onClick={() => {
                 track('Easter Egg', { props: { which: 'Contact Form' } })
@@ -195,10 +196,10 @@ const Contact: React.FC<ContactProps> = ({ random = 0 }) => {
             <a
               key={href}
               href={href}
-              className="group flex items-center text-drac-pink hover:text-drac-purple"
+              className="group flex items-center text-drac-pink hocus:text-drac-purple"
               {...(newTab ? { target: '_blank', rel: 'noopener noreferrer' } : null)}
             >
-              <Icon className="mr-3 h-5 w-5 transition-transform group-hover:-rotate-12" />
+              <Icon className="mr-3 h-5 w-5 transition-transform group-hocus:-rotate-12" />
               <span>{title}</span>
             </a>
           ))}

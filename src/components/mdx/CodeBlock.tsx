@@ -1,4 +1,6 @@
+import cx from '@/utils/cx'
 import { useState } from 'react'
+import { COMMON_CLASSNAMES } from './utils'
 
 const COPIED_CLICK_TIMEOUT = 2000
 const LANGUAGE_NAME_MAP: Record<string, string> = {
@@ -22,10 +24,11 @@ const CustomCodeBlock: React.FC<any> = ({ children, className, ...rest }) => {
       : languageFromClassName
 
   return (
-    <div className="relative -mx-2 my-[1.7em] rounded p-2 ring-2 ring-drac-purple lg:-mx-4 lg:p-4">
+    <div className={cx('my-[1.7em]', COMMON_CLASSNAMES.codeAndDemoRoot)}>
       <div className="mb-2 flex items-center justify-between font-display text-sm font-bold uppercase tracking-wide ">
         <div className="text-xs text-drac-purple sm:text-sm">{language}</div>
         <button
+          type="button"
           className="rounded bg-drac-purple px-2 font-bold tracking-wider text-drac-bg focus:outline-none focus:ring-2 focus:ring-drac-purple focus:ring-offset-2 focus:ring-offset-current"
           onClick={async event => {
             const textToCopy = (event as any).target.parentElement?.parentElement?.childNodes[1]

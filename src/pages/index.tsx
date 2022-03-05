@@ -13,6 +13,7 @@ import { randomArray } from '@/utils/random'
 import { getSingletonJsonSafe, getSingletonTextSafe } from '@/lib/supabase'
 import { useMdxComponent } from '@/lib/mdx'
 import { render } from '@/lib/mdx.server'
+import { getRandomSkillIndexes } from '@/lib/skills'
 
 interface IndexProps {
   subtitle: string | null
@@ -21,9 +22,17 @@ interface IndexProps {
   randoms: number[]
   renderedAt: string
   isHeroStatic?: boolean
+  skillIndexes: number[]
 }
 
-const IndexPage: React.FC<IndexProps> = ({ subtitle, nowMdx, projects, randoms, isHeroStatic }) => {
+const IndexPage: React.FC<IndexProps> = ({
+  subtitle,
+  nowMdx,
+  projects,
+  randoms,
+  isHeroStatic,
+  skillIndexes,
+}) => {
   const Now = useMdxComponent(nowMdx)
 
   return (
@@ -34,7 +43,7 @@ const IndexPage: React.FC<IndexProps> = ({ subtitle, nowMdx, projects, randoms, 
         </div>
       </Hero>
       <FeaturedProjects random={randoms[0]} projects={projects} />
-      <Skills random={randoms[1]} />
+      <Skills random={randoms[1]} skillIndexes={skillIndexes} />
       <Contact random={randoms[2]} />
       <div className="py-10" />
     </Container>
@@ -49,7 +58,7 @@ export const getStaticProps: GetStaticProps<IndexProps> = async () => {
   const nowText = await getSingletonTextSafe('now')
   const nowMdx = nowText ? (await render(nowText)).code : null
 
-  const { isHeroStatic } = await getSingletonJsonSafe('index-options')
+  const { isHeroStatic, nSkills = 8 } = await getSingletonJsonSafe('index-options')
 
   const projects: ProjectFrontMatter[] = await Promise.all(
     featuredProjects.map(async projectSlug => {
@@ -64,6 +73,10 @@ export const getStaticProps: GetStaticProps<IndexProps> = async () => {
 
   const randoms = randomArray(0, 100, 5)
 
+  const skillIndexes = getRandomSkillIndexes(
+    typeof nSkills === 'number' && nSkills > 0 ? nSkills : 8
+  )
+
   return {
     props: {
       subtitle,
@@ -72,6 +85,7 @@ export const getStaticProps: GetStaticProps<IndexProps> = async () => {
       randoms,
       renderedAt: new Date().toISOString(),
       isHeroStatic: Boolean(isHeroStatic),
+      skillIndexes,
     },
     revalidate: 1,
   }

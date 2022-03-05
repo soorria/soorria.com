@@ -36,7 +36,8 @@ const MyApp: React.FC<AppProps> = ({ Component, pageProps }) => {
       {wrapper(<Component {...pageProps} />)}
       {renderedAt ? (
         <div
-          className="relative bottom-2 w-full select-none text-center text-[.5rem] text-drac-purple"
+          className="relative bottom-2 w-full select-none text-center text-[.5rem] text-drac-pink"
+          suppressHydrationWarning
           aria-hidden
         >
           Rendered at {renderedAt.toLocaleTimeString()}, {renderedAt.toLocaleDateString()}

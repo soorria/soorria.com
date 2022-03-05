@@ -2,7 +2,7 @@ import cx from '@/utils/cx'
 import Link from 'next/link'
 import { AnchorHTMLAttributes } from 'react'
 
-const defaultClassName = 'text-drac-pink underline hover:text-drac-purple'
+const defaultClassName = 'text-drac-pink underline hocus:text-drac-purple'
 
 const CustomLink: React.FC<{ href: string } & AnchorHTMLAttributes<HTMLAnchorElement>> = ({
   href,

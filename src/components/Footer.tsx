@@ -69,7 +69,7 @@ const LINKS: LinkType[][] = [
   ],
 ]
 
-const linkClass = 'transition-colors text-drac-purple hover:text-drac-pink'
+const linkClass = 'transition-colors text-drac-pink hocus:text-drac-purple'
 
 interface FooterProps {}
 

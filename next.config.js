@@ -10,7 +10,7 @@ const withPlausibleConfig = withPlausibleProxy({
   customDomain: 'https://plausible.mooth.tech',
 })
 
-/** @type {import('next/dist/next-server/server/config-shared').NextConfig} */
+/** @type {import('next').NextConfig} */
 const config = {
   async headers() {
     return [

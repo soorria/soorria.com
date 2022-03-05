@@ -22,7 +22,7 @@ const Header: React.FC = () => {
     <Container>
       <a
         href="#main-content"
-        className="fixed left-1/2 mx-auto block -translate-y-full -translate-x-1/2 transform bg-drac-bg px-4 py-2 font-display font-bold text-drac-pink transition-transform focus:translate-y-2"
+        className="fixed left-1/2 z-50 mx-auto block -translate-y-full -translate-x-1/2 transform bg-drac-bg px-4 py-2 font-display font-bold text-drac-pink shadow-xl transition-transform focus:translate-y-2"
       >
         Skip to Main Content
       </a>

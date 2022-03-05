@@ -1,13 +1,15 @@
 import { CodeIcon, ExternalIcon, InfoIcon } from '@/components/icons'
+import cx from '@/utils/cx'
 import NextLink from 'next/link'
 import { ProjectCardComponent } from '../ProjectCard'
+import { COMMON_CLASSNAMES } from '../utils'
 
 const cardLinkClassName =
-  'inline-flex items-center px-3 py-1 ml-2 mt-2 space-x-1 text-sm font-semibold transition-colors border-2 border-current border-white rounded-sm hover:text-green-700 hover:bg-white'
+  'inline-flex items-center px-3 py-1 ml-2 mt-2 space-x-1 text-sm font-semibold transition-colors border-2 border-current border-white rounded-sm hocus:text-green-700 hocus:bg-white'
 
 const NotMessengerCard: ProjectCardComponent = ({ project }) => {
   return (
-    <div className="relative overflow-hidden rounded-xl bg-gray-700 transition hover:shadow-xl md:hover:scale-105">
+    <div className={cx('bg-gray-700', COMMON_CLASSNAMES.specialCardRoot)}>
       <div className="flex h-full flex-col space-y-4 p-8">
         <header className="flex items-center font-display text-3xl font-bold text-green-400">
           Not Messenger

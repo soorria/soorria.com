@@ -1,40 +1,64 @@
+import { useSkills } from '@/lib/skills'
 import CustomLink from '../CustomLink'
+import { RefreshIcon } from '../icons'
 import LandingSection from './LandingSection'
-
-const SKILLS = [
-  'Next.js & React.js',
-  'Express.js',
-  'SQL / PostgreSQL',
-  'MongoDB',
-  'TypeScript',
-  'HTML5 & CSS3',
-  'Python Flask',
-  'Jest & Cypress',
-]
 
 const titles = ["What I've Learned", 'Technical Skills', 'Tools I Use']
 
-const Skills: React.FC<{ random?: number }> = ({ random = 0 }) => {
+const SkillListItem: React.FC = ({ children }) => {
   return (
-    <LandingSection id="skills" title={titles[random % titles.length]}>
+    <li className="group flex items-center space-x-2">
+      <span className="h-2 w-2 transform rounded-full border-2 border-drac-fg transition group-hover:border-drac-pink" />
+      <span>{children}</span>
+    </li>
+  )
+}
+
+const Skills: React.FC<{ random?: number; skillIndexes: number[] }> = ({
+  random = 0,
+  skillIndexes,
+}) => {
+  const { skills, shuffle, toggleShowAll, showAll } = useSkills({ defaultIndexes: skillIndexes })
+  const title = titles[random % titles.length]
+
+  return (
+    <LandingSection id="skills" title={title}>
       <p className="mb-8 text-lg">
-        Here are some of the technicals skills I&apos;ve developed in and outside of my degree.
+        Here are some of the technicals skills during my degree, internships, work, and just out of
+        pure curiosity.
       </p>
-      <ul className="mb-8 grid grid-cols-2 gap-8 sm:grid-cols-3 md:grid-cols-4">
-        {SKILLS.map(skill => (
-          <li key={skill} className="group flex items-center space-x-2">
-            <span className="h-2 w-2 transform rounded-full border-2 border-drac-fg transition group-hover:border-drac-pink" />
-            <span>{skill}</span>
-          </li>
+      <ul className="mb-8 grid grid-cols-2 gap-x-6 gap-y-8 sm:grid-cols-3 md:grid-cols-4">
+        {skills.map(skill => (
+          <SkillListItem key={skill}>{skill}</SkillListItem>
         ))}
+        {showAll ? <SkillListItem>Adding random &ldquo;features&rdquo;</SkillListItem> : null}
       </ul>
-      <p className="text-center text-sm">
-        Want to see a pointless list of languages I&apos;ve used? Check out my{' '}
-        <CustomLink href="/snippets/hello-world" className="font-mono">
-          hello-world
-        </CustomLink>{' '}
-        snippet.
-      </p>
+      <div className="space-y-4 text-center text-sm">
+        <div className="flex items-center justify-center space-x-1">
+          <button
+            onClick={() => toggleShowAll()}
+            className="rounded bg-drac-curr px-2 py-1 text-drac-pink transition-colors hocus:text-drac-purple"
+          >
+            {showAll ? 'Show a random set of my skills' : "Show all the tech I've learned"}
+          </button>
+          <span>&nbsp;/&nbsp;</span>
+          <button
+            onClick={() => shuffle()}
+            className="flex items-center rounded bg-drac-curr px-2 py-1 text-drac-pink transition-colors hocus:text-drac-purple"
+          >
+            <RefreshIcon className="mr-1 inline-block h-[1em] w-[1em]" /> Randomise skills
+          </button>
+        </div>
+        <p>
+          Want to see a pointlessly long list of languages I&apos;ve used?
+          <br />
+          Check out my{' '}
+          <CustomLink href="/snippets/hello-world" className="font-mono">
+            hello-world
+          </CustomLink>{' '}
+          snippet.
+        </p>
+      </div>
     </LandingSection>
   )
 }

@@ -3,6 +3,8 @@ import { ExternalIcon, InfoIcon } from '@/components/icons'
 import { useReducer } from 'react'
 import { ProjectCardComponent } from '../ProjectCard'
 import { useTrackFirstEvent } from '@/lib/analytics'
+import { COMMON_CLASSNAMES } from '../utils'
+import cx from '@/utils/cx'
 
 const ClinicallyRelevantLogo: React.FC<{ className?: string }> = ({ className }) => (
   <svg
@@ -43,9 +45,7 @@ const ClinicallyRelevantCard: ProjectCardComponent = ({ project }) => {
   )
 
   return (
-    <div
-      className={`relative overflow-hidden rounded-xl transition hover:shadow-xl md:hover:scale-105 ${themeClasses[theme]}`}
-    >
+    <div className={cx(themeClasses[theme], COMMON_CLASSNAMES.specialCardRoot)}>
       <div className="flex h-full flex-col space-y-4 p-8">
         <header className="flex items-center font-display text-3xl font-bold">
           <ClinicallyRelevantLogo className="mr-2 inline-block h-6 w-6" />
@@ -57,10 +57,11 @@ const ClinicallyRelevantCard: ProjectCardComponent = ({ project }) => {
             <li>Automatically redeploys when MDX content is updated</li>
             <li>
               Light &amp; Dark mode{' '}
-              <button className="focus:outline-none" onClick={toggle}>
-                <span className="sr-only focus:not-sr-only">
-                  Toggle Clinically Relevant dark mode
-                </span>
+              <button
+                type="button"
+                onClick={toggle}
+                aria-label="Toggle Clinically Relevant dark mode"
+              >
                 {theme === 'light' ? '☀' : '🌙'}
               </button>
             </li>

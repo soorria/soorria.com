@@ -44,7 +44,7 @@ const ProjectCard: ProjectCardComponent = ({ project }) => {
           <Link href={`/projects/${project.slug}`}>
             <a
               aria-label={`See details for ${project.title}`}
-              className="inline-flex items-center space-x-1 text-drac-pink underline hover:text-drac-purple"
+              className="inline-flex items-center space-x-1 text-drac-pink underline hocus:text-drac-purple"
             >
               <InfoIcon className="inline-block h-4 w-4" />
               <span>Details</span>
@@ -57,7 +57,7 @@ const ProjectCard: ProjectCardComponent = ({ project }) => {
           <a
             href={project.live}
             aria-label={`View the live site for ${project.title}`}
-            className="inline-flex items-center space-x-1 text-drac-pink underline hover:text-drac-purple"
+            className="inline-flex items-center space-x-1 text-drac-pink underline hocus:text-drac-purple"
             target="_blank"
             rel="noopener noreferrer"
           >
@@ -72,7 +72,7 @@ const ProjectCard: ProjectCardComponent = ({ project }) => {
           <a
             href={project.source}
             aria-label={`View the source code for ${project.title}`}
-            className="inline-flex items-center space-x-1 text-drac-pink underline hover:text-drac-purple"
+            className="inline-flex items-center space-x-1 text-drac-pink underline hocus:text-drac-purple"
             target="_blank"
             rel="noopener noreferrer"
           >

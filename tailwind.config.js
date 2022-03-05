@@ -17,7 +17,7 @@ const drac = {
 }
 
 module.exports = {
-  content: ['./src/**/*.tsx'],
+  content: ['./src/**/*.{tsx,ts}'],
   theme: {
     extend: {
       colors: {
@@ -76,6 +76,7 @@ module.exports = {
     require('@tailwindcss/typography'),
     plugin(({ addVariant }) => {
       addVariant('hocus', ['&:hover', '&:focus'])
+      addVariant('hocus-within', ['&:hover', '&:focus-within'])
       addVariant('group-hocus', [':merge(.group):hover &', ':merge(.group):focus &'])
     }),
   ],
