@@ -6,7 +6,7 @@ interface PostLayoutProps {
 
 export const PostHeading: React.FC = ({ children }) => {
   return (
-    <h1 className="mt-0 mb-20 text-center text-5xl text-drac-pink sm:mt-8 sm:text-6xl">
+    <h1 className="mt-0 mb-20 break-all text-center text-5xl text-drac-pink sm:mt-8 sm:text-6xl">
       {children}
     </h1>
   )
