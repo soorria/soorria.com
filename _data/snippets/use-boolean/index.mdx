@@ -6,14 +6,15 @@ tags:
   - typescript
   - react
 createdAt: '2021-05-02'
-updatedAt: '2021-05-02'
+updatedAt: '2022-03-05'
 ---
 
 Toggle a piece of boolean state, but unlike with straight `useState` you can
 pass the `setState` function no arguments to toggle the boolean.
 
 ```typescript
-import { Dispatch, useReducer } from 'react'
+import type { Dispatch } from 'react'
+import { useReducer } from 'react'
 
 export const useBoolean = (initialValue = false): [boolean, (nextValue?: boolean) => void] => {
   return useReducer((currentValue: boolean, nextValue?: boolean) => {
