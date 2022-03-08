@@ -77,7 +77,7 @@ const Sparkles: React.FC<SparklesProps> = ({ children, block }) => {
 
       if (document.visibilityState === 'visible') {
         setSparkles(sparkles => {
-          const next = sparkles.filter(s => now - s.createdAt < 100000)
+          const next = sparkles.filter(s => now - s.createdAt < 1000)
           next.push(generateSparkleDetails())
           return next
         })

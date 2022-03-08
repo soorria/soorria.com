@@ -51,7 +51,7 @@ const LinksPage: React.FC = () => {
                 <Sparkles block>
                   <a
                     href={links.site.href + '?ref=links'}
-                    className={cx(classes.anchor, 'text-lg')}
+                    className={cx(classes.anchor, 'text-lg shadow-2xl')}
                   >
                     <links.site.icon
                       aria-label={links.site.iconAlt}
