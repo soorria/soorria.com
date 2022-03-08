@@ -1,6 +1,7 @@
 import Container from '@/components/Container'
 import Hero from '@/components/landing/Hero'
 import MadeBy from '@/components/MadeBy'
+import Sparkles from '@/components/mdx/Sparkles'
 import { links } from '@/links'
 import cx from '@/utils/cx'
 import { GetStaticProps } from 'next'
@@ -8,7 +9,7 @@ import { GetStaticProps } from 'next'
 const classes = {
   anchor: cx(
     'group flex items-center justify-between rounded-lg bg-drac-bg/70 py-6 px-8 text-drac-pink transition',
-    'hocus:bg-drac-bg hocus:text-drac-purple',
+    'hocus:bg-drac-bg hocus:text-drac-purple hocus:shadow-xl',
     'focus:outline-none focus:ring focus:ring-drac-purple'
   ),
 }
@@ -31,7 +32,7 @@ const LinksPage: React.FC = () => {
         <div className="relative">
           <Hero title="Hey, I'm Soorria" isStatic={true}>
             <main className="relative mx-auto mt-8 max-w-md space-y-8 text-lg sm:mt-24 sm:text-xl">
-              {orderedLinks.map(({ title, href, icon: Icon }) => (
+              {orderedLinks.map(({ title, href, icon: Icon, iconAlt }) => (
                 <a
                   key={href}
                   href={href}
@@ -39,14 +40,27 @@ const LinksPage: React.FC = () => {
                   rel="noopener noreferrer"
                   className={classes.anchor}
                 >
-                  <Icon className="mr-3 h-7 w-7 transition-transform group-hocus:-rotate-12" />
+                  <Icon
+                    aria-label={iconAlt}
+                    className="mr-3 h-7 w-7 transition-transform group-hocus:-rotate-12"
+                  />
                   <span>{title}</span>
                 </a>
               ))}
-              <a href={links.site.href + '?ref=links'} className={classes.anchor}>
-                <links.site.icon className="mr-3 h-7 w-7 transition-transform duration-300 group-hocus:-rotate-[360deg]" />
-                <span>the rest of my website</span>
-              </a>
+              <div className="text-4xl">
+                <Sparkles block>
+                  <a
+                    href={links.site.href + '?ref=links'}
+                    className={cx(classes.anchor, 'text-lg')}
+                  >
+                    <links.site.icon
+                      aria-label={links.site.iconAlt}
+                      className="mr-3 h-7 w-7 transition-transform duration-300 group-hocus:-rotate-[360deg]"
+                    />
+                    <span>the rest of my website</span>
+                  </a>
+                </Sparkles>
+              </div>
               <div className="h-16" />
             </main>
           </Hero>

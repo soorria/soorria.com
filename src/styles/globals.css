@@ -129,3 +129,36 @@ input {
     transition-delay: 1000ms;
   }
 }
+
+@keyframes sparkle {
+  0% {
+    opacity: 0;
+    transform: scale(0);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(0);
+  }
+}
+.animation-sparkle {
+  animation: sparkle 600ms ease-in-out forwards;
+}
+@keyframes rotate {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+.animation-rotate {
+  animation: rotate 600ms ease-in-out forwards;
+}
+
+.children-p-inline p {
+  @apply inline;
+}

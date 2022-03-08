@@ -46,7 +46,7 @@ const Skills: React.FC<{ random?: number; skillIndexes: number[] }> = ({
             onClick={() => shuffle()}
             className="flex items-center rounded bg-drac-curr px-2 py-1 text-drac-pink transition-colors hocus:text-drac-purple"
           >
-            <RefreshIcon className="mr-1 inline-block h-[1em] w-[1em]" /> Randomise skills
+            <RefreshIcon className="mr-1 inline-block h-em w-em" /> Randomise skills
           </button>
         </div>
         <p>

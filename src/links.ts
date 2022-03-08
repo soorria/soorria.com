@@ -17,47 +17,55 @@ interface Link {
   title: ReactNode
   href: string
   icon: IconComponent
+  iconAlt: string
   newTab?: boolean
 }
 
 const githubLink: Link = {
   title: 'mo0th',
+  iconAlt: 'github',
   href: GITHUB_URL,
   icon: GithubIconSolid,
 }
 
 const emailLink: Link = {
   title: 'soorria.ss@gmail.com',
+  iconAlt: 'email',
   href: 'mailto:soorria.ss@gmail.com',
   icon: EmailIcon,
 }
 
 const linkedinLink: Link = {
   title: 'soorria',
+  iconAlt: 'linkedin',
   href: 'https://www.linkedin.com/in/soorria/',
   icon: LinkedinIconSolid,
 }
 
 const twitterLink: Link = {
   title: '@soorriously',
+  iconAlt: 'twitter',
   href: 'https://twitter.com/soorriously',
   icon: TwitterIconSolid,
 }
 
 const facebookLink: Link = {
   href: 'https://www.facebook.com/soorriously/',
+  iconAlt: 'facebook',
   title: 'soorriously',
   icon: FacebookIconSolid,
 }
 
 const malLink: Link = {
   href: 'https://myanimelist.net/profile/soorriously',
+  iconAlt: 'my anime list',
   title: 'soorriously',
   icon: MALIconSolid,
 }
 
 const siteLink: Link = {
   href: 'https://mooth.tech',
+  iconAlt: 'purple and pink square',
   title: 'website',
   icon: Logo,
   newTab: false,
@@ -65,12 +73,14 @@ const siteLink: Link = {
 
 const discordLink: Link = {
   href: 'https://discordapp.com/users/405653727383388162',
+  iconAlt: 'discord',
   title: 'mooth#2369',
   icon: DiscordIcon,
 }
 
 const cardLink: Link = {
   href: 'https://links.mooth.tech',
+  iconAlt: 'link',
   title: 'all links',
   icon: LinkIcon,
 }

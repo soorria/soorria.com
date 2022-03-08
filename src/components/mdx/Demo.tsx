@@ -23,7 +23,7 @@ const DemoWrapper: React.FC<DemoWrapperProps> = ({ component: Component, lazy = 
               onClick={() => setKey(p => p + 1)}
               className="flex h-full w-full items-center justify-center rounded bg-drac-bg text-drac-pink transition-colors hocus:text-drac-purple"
             >
-              <RefreshIcon className="mr-1 h-[1em] w-[1em]" /> Reload Demo
+              <RefreshIcon className="mr-1 h-em w-em" /> Reload Demo
             </button>
           </div>
         </>

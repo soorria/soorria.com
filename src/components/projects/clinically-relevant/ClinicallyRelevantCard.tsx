@@ -31,8 +31,8 @@ type Theme = keyof typeof themeClasses
 const cardLinkClassName = (theme: Theme) =>
   'px-3 py-1 ml-2 mt-2 inline-flex space-x-1 text-sm items-center border-2 transition border-current rounded-sm font-semibold ' +
   (theme === 'light'
-    ? 'hover:bg-gray-800 hover:text-gray-100 hover:border-gray-800'
-    : 'hover:bg-gray-100 hover:text-gray-800 hover:border-gray-100')
+    ? 'hocus:bg-gray-800 hocus:text-gray-100 hocus:border-gray-800'
+    : 'hocus:bg-gray-100 hocus:text-gray-800 hocus:border-gray-100')
 
 const ClinicallyRelevantCard: ProjectCardComponent = ({ project }) => {
   const track = useTrackFirstEvent()

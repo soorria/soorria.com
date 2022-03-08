@@ -14,10 +14,11 @@ import { getSingletonJsonSafe, getSingletonTextSafe } from '@/lib/supabase'
 import { useMdxComponent } from '@/lib/mdx'
 import { render } from '@/lib/mdx.server'
 import { getRandomSkillIndexes } from '@/lib/skills'
+import Subtitle from '@/components/landing/Subtitle'
 
 interface IndexProps {
-  subtitle: string | null
-  nowMdx: string | null
+  subtitleOptions: string[] | null
+  now: string | null
   projects: ProjectFrontMatter[]
   randoms: number[]
   renderedAt: string
@@ -26,18 +27,22 @@ interface IndexProps {
 }
 
 const IndexPage: React.FC<IndexProps> = ({
-  subtitle,
-  nowMdx,
+  subtitleOptions,
+  now,
   projects,
   randoms,
   isHeroStatic,
   skillIndexes,
 }) => {
-  const Now = useMdxComponent(nowMdx)
+  const Now = useMdxComponent(now)
 
   return (
     <Container>
-      <Hero subtitle={subtitle} title="Hey, I'm Soorria" isStatic={isHeroStatic}>
+      <Hero
+        subtitle={<Subtitle options={subtitleOptions} />}
+        title="Hey, I'm Soorria"
+        isStatic={isHeroStatic}
+      >
         <div className="text-lg">
           <Now />
         </div>
@@ -53,10 +58,17 @@ const IndexPage: React.FC<IndexProps> = ({
 export default IndexPage
 
 export const getStaticProps: GetStaticProps<IndexProps> = async () => {
-  const subtitle = await getSingletonTextSafe('subtitle')
+  const subtitleText = (await getSingletonTextSafe('subtitle')) ?? ''
+  const subtitleChunks = subtitleText
+    .split('---')
+    .map(chunk => chunk.trim())
+    .filter(Boolean)
+  const subtitleOptions = await Promise.all(
+    subtitleChunks.map(chunk => render(chunk).then(({ code }) => code))
+  )
 
   const nowText = await getSingletonTextSafe('now')
-  const nowMdx = nowText ? (await render(nowText)).code : null
+  const now = nowText ? (await render(nowText)).code : null
 
   const { isHeroStatic, nSkills = 8 } = await getSingletonJsonSafe('index-options')
 
@@ -79,8 +91,8 @@ export const getStaticProps: GetStaticProps<IndexProps> = async () => {
 
   return {
     props: {
-      subtitle,
-      nowMdx,
+      subtitleOptions,
+      now,
       projects,
       randoms,
       renderedAt: new Date().toISOString(),

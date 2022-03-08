@@ -28,6 +28,9 @@ module.exports = {
         display: ["'Poppins'", ...fontFamily.sans],
       },
       screens: {},
+      spacing: {
+        em: '1em',
+      },
       typography: () => {
         const { fg, pink, purple, comment } = drac
         return {
