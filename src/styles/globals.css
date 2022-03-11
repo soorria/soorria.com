@@ -147,17 +147,6 @@ input {
 .animation-sparkle {
   animation: sparkle 600ms ease-in-out forwards;
 }
-@keyframes rotate {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
-.animation-rotate {
-  animation: rotate 600ms ease-in-out forwards;
-}
 
 .children-p-inline p {
   @apply inline;
