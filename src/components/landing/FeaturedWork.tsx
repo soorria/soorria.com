@@ -1,4 +1,4 @@
-import { WorkFrontMatter } from '@/types/work'
+import type { WorkFrontMatter } from '@/types/work'
 import WorkItem from '../WorkItem'
 import LandingSection from './LandingSection'
 

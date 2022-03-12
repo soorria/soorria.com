@@ -1,6 +1,6 @@
+import type { ReactNode } from 'react'
 import { links } from '@/links'
 import Link from 'next/link'
-import { ReactNode } from 'react'
 import Container from './Container'
 import { EmailIcon, GithubIconSolid, LinkedinIconSolid } from './icons'
 import MadeBy from './MadeBy'

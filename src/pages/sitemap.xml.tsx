@@ -1,5 +1,5 @@
+import type { GetServerSideProps } from 'next'
 import { generateSitemap } from '@/lib/sitemap'
-import { GetServerSideProps } from 'next'
 
 interface SitemapProps {}
 

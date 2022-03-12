@@ -1,5 +1,5 @@
+import type { GetServerSideProps } from 'next'
 import { createOGMarkup } from '@/lib/og'
-import { GetServerSideProps } from 'next'
 
 const OGCategoryImagePage: React.FC = () => {
   return null

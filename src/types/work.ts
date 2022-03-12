@@ -1,4 +1,4 @@
-import { ApiData, BaseData, FrontMatter } from './data'
+import type { ApiData, BaseData, FrontMatter } from './data'
 
 export interface Work extends BaseData {
   company: string

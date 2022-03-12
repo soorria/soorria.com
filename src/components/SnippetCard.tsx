@@ -1,3 +1,4 @@
+import type { SnippetFrontMatter } from '@/types/snippet'
 import Link from 'next/link'
 import { format } from 'date-fns'
 import {
@@ -10,7 +11,6 @@ import {
   ScriptIcon,
   TypescriptIcon,
 } from '@/components/icons'
-import { SnippetFrontMatter } from '@/types/snippet'
 
 const categoryToIcon: Record<string, IconComponent> = {
   react: ReactIcon,

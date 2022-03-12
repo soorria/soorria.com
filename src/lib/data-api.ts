@@ -1,5 +1,5 @@
-import { BaseFrontMatter, DataType } from '@/types/data'
-import { NextApiHandler } from 'next'
+import type { BaseFrontMatter, DataType } from '@/types/data'
+import type { NextApiHandler } from 'next'
 import { addCorsHeaders } from './cors'
 import { getAllFilesFrontMatter, getFileWithContent } from './data'
 

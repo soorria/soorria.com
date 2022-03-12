@@ -1,7 +1,7 @@
-import { GetStaticProps } from 'next'
+import type { GetStaticProps } from 'next'
+import type { PostFrontMatter } from '@/types/post'
 import { NextSeo } from 'next-seo'
 import { PostHeading } from '@/components/PostLayout'
-import { PostFrontMatter } from '@/types/post'
 import { getAllFilesFrontMatter } from '@/lib/data'
 import { DataType } from '@/types/data'
 import PostCard from '@/components/PostCard'
@@ -52,5 +52,6 @@ export const getStaticProps: GetStaticProps = async () => {
 
   return {
     props: { posts },
+    notFound: true,
   }
 }

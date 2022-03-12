@@ -1,10 +1,10 @@
+import type { GetStaticProps } from 'next'
 import CustomLink from '@/components/CustomLink'
 import PostLayout, { PostBottomSection } from '@/components/PostLayout'
 import { getFileWithMdx } from '@/lib/data'
 import { useMdxComponent } from '@/lib/mdx'
 import { BaseData, DataType } from '@/types/data'
 import { getOgImage } from '@/utils/og'
-import { GetStaticProps } from 'next'
 import { NextSeo } from 'next-seo'
 
 interface UsesPageProps {

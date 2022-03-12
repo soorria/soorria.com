@@ -1,4 +1,5 @@
-import { NextMiddleware, NextResponse } from 'next/server'
+import type { NextMiddleware } from 'next/server'
+import { NextResponse } from 'next/server'
 
 const BASE_URL = process.env.NODE_ENV === 'production' ? 'mooth.tech' : 'localhost:3000'
 

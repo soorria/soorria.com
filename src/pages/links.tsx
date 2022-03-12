@@ -1,10 +1,10 @@
+import type { GetStaticProps } from 'next'
 import Container from '@/components/Container'
 import Hero from '@/components/landing/Hero'
 import MadeBy from '@/components/MadeBy'
 import Sparkles from '@/components/mdx/Sparkles'
 import { links } from '@/links'
 import cx from '@/utils/cx'
-import { GetStaticProps } from 'next'
 
 const classes = {
   anchor: cx(

@@ -1,7 +1,7 @@
+import type { ProjectCardComponent } from '../ProjectCard'
 import NextLink from 'next/link'
 import { ExternalIcon, InfoIcon } from '@/components/icons'
 import { useReducer } from 'react'
-import { ProjectCardComponent } from '../ProjectCard'
 import { useTrackFirstEvent } from '@/lib/analytics'
 import { COMMON_CLASSNAMES } from '../utils'
 import cx from '@/utils/cx'

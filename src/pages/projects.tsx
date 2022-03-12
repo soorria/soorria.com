@@ -1,12 +1,12 @@
+import type { GetStaticProps } from 'next'
+import type { ProjectFrontMatter } from '@/types/project'
 import PostLayout from '@/components/PostLayout'
 import ProjectCard from '@/components/projects/ProjectCard'
 import ProjectsGrid from '@/components/projects/ProjectsGrid'
 import { featuredProjects } from '@/constants'
 import { getAllFilesFrontMatter } from '@/lib/data'
 import { DataType } from '@/types/data'
-import { ProjectFrontMatter } from '@/types/project'
 import { getOgImage } from '@/utils/og'
-import { GetStaticProps } from 'next'
 import { NextSeo } from 'next-seo'
 
 interface ProjectsPageProps {

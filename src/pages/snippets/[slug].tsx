@@ -1,6 +1,6 @@
-import { GetStaticPaths, GetStaticProps } from 'next'
+import type { GetStaticPaths, GetStaticProps } from 'next'
+import type { Snippet, SnippetFrontMatter } from '@/types/snippet'
 import PostLayout, { PostBottomSection } from '@/components/PostLayout'
-import { Snippet, SnippetFrontMatter } from '@/types/snippet'
 import { getAllFilesFrontMatter, getFileWithMdx } from '@/lib/data'
 import { DataType } from '@/types/data'
 import editUrl from '@/utils/editUrl'

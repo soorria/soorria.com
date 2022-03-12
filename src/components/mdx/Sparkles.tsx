@@ -1,7 +1,7 @@
+import type { IconComponent } from '../icons'
 import cx from '@/utils/cx'
 import { random, randomItem } from '@/utils/random'
 import { useEffect, useState } from 'react'
-import { IconComponent } from '../icons'
 
 interface SparklesProps {
   block?: boolean

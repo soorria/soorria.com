@@ -1,6 +1,6 @@
-import { GetStaticPaths, GetStaticProps } from 'next'
+import type { GetStaticPaths, GetStaticProps } from 'next'
+import type { Project, ProjectFrontMatter } from '@/types/project'
 import PostLayout from '@/components/PostLayout'
-import { Project, ProjectFrontMatter } from '@/types/project'
 import { getAllFilesFrontMatter, getFileWithMdx } from '@/lib/data'
 import { DataType } from '@/types/data'
 import { NextSeo } from 'next-seo'

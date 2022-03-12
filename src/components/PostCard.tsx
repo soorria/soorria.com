@@ -1,7 +1,7 @@
+import type { PostFrontMatter } from '@/types/post'
 import Link from 'next/link'
 import { format } from 'date-fns'
 import { ClockIconSolid, EditIcon } from '@/components/icons'
-import { PostFrontMatter } from '@/types/post'
 
 const SnippetCard: React.FC<{ post: PostFrontMatter }> = ({
   post: { slug, title, shortDescription, createdAt, updatedAt },

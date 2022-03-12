@@ -1,4 +1,4 @@
-import { ProjectFrontMatter } from '@/types/project'
+import type { ProjectFrontMatter } from '@/types/project'
 import Link from 'next/link'
 import { CodeIcon, ExternalIcon, InfoIcon } from '../icons'
 import ClinicallyRelevantCard from './clinically-relevant/ClinicallyRelevantCard'

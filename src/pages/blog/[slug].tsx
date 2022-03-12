@@ -1,6 +1,6 @@
-import { GetStaticPaths, GetStaticProps } from 'next'
+import type { GetStaticPaths, GetStaticProps } from 'next'
+import type { Post, PostFrontMatter } from '@/types/post'
 import PostLayout from '@/components/PostLayout'
-import { Post, PostFrontMatter } from '@/types/post'
 import { getAllFilesFrontMatter, getFileWithMdx } from '@/lib/data'
 import { DataType } from '@/types/data'
 import editUrl from '@/utils/editUrl'

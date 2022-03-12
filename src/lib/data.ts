@@ -1,5 +1,6 @@
-import { BaseData, DataType, FrontMatter, BaseApiData } from '@/types/data'
-import { PathLike, promises as fs } from 'fs'
+import type { BaseData, DataType, FrontMatter, BaseApiData } from '@/types/data'
+import type { PathLike } from 'fs'
+import { promises as fs } from 'fs'
 import readingTime from 'reading-time'
 import matter from 'gray-matter'
 import path from 'path'

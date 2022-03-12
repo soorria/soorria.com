@@ -1,11 +1,11 @@
+import type { BaseFrontMatter } from '@/types/data'
+import type { Awaited } from '@/utils/types'
 import { bundleMDX } from 'mdx-bundler'
 import mdxPrism from 'mdx-prism'
 import rehypeSlug from 'rehype-slug'
 import rehypeAutolinkHeadings from 'rehype-autolink-headings'
 import { rehypeAccessibleEmojis } from 'rehype-accessible-emojis'
 import { rehypeCodeTitles } from './rehype.server'
-import { BaseFrontMatter } from '@/types/data'
-import type { Awaited } from '@/utils/types'
 
 export type BundleResult<T extends BaseFrontMatter> = Omit<
   Awaited<ReturnType<typeof bundleMDX>>,

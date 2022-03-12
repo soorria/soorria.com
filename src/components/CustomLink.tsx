@@ -1,6 +1,6 @@
+import type { AnchorHTMLAttributes } from 'react'
 import cx from '@/utils/cx'
 import Link from 'next/link'
-import { AnchorHTMLAttributes } from 'react'
 
 const defaultClassName = 'text-drac-pink underline hocus:text-drac-purple'
 

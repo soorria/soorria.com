@@ -1,5 +1,6 @@
 import Head from 'next/head'
-import { AppProps } from 'next/app'
+import type { ReactNode } from 'react'
+import type { AppProps } from 'next/app'
 import { DefaultSeo } from 'next-seo'
 import PlausibleProvider from 'next-plausible'
 
@@ -9,7 +10,6 @@ import { SEO } from '@/next-seo.config'
 
 import '../styles/globals.css'
 import '../styles/prose.css'
-import { ReactNode } from 'react'
 
 const defaultWrapper = (node: ReactNode) => (
   <>

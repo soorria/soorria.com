@@ -1,5 +1,5 @@
+import type { SVGProps } from 'react'
 import cx from '@/utils/cx'
-import { SVGProps } from 'react'
 
 const SIZES = {
   sm: 'w-8 h-8',

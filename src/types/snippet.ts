@@ -1,4 +1,4 @@
-import { BaseData, FrontMatter } from './data'
+import type { BaseData, FrontMatter } from './data'
 
 export interface Snippet extends BaseData {
   category: string

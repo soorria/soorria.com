@@ -1,4 +1,4 @@
-import { DefaultSeoProps } from 'next-seo'
+import type { DefaultSeoProps } from 'next-seo'
 
 const title = 'Soorria Saruva - Full Stack Software Engineer'
 const description = 'Full Stack Software Engineer'
