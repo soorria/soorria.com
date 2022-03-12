@@ -35,7 +35,7 @@ const Hero: React.FC<{
   return (
     <div
       id="hero"
-      className="circuit-bg -mx-4 -mt-36 px-4 pb-12 pt-36 md:-mx-8 lg:mx-[-4.5rem] lg:px-[4.5rem] xl:-mx-32 xl:px-32"
+      className="circuit-bg -mx-4 -mt-36 px-4 pb-12 pt-36 md:-mx-8 md:px-8 lg:mx-[-4.5rem] lg:px-[4.5rem] xl:-mx-32 xl:px-32"
     >
       <div className="group mx-auto my-4 cursor-default overflow-x-hidden py-16 text-center font-display text-6xl font-bold leading-tight outline-none sm:my-8 sm:text-[4rem] md:text-[5rem] lg:text-8xl">
         <div className="relative">

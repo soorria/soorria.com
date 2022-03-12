@@ -39,7 +39,7 @@ const Subtitle: React.FC<SubtitleProps> = ({ options }) => {
       <Component />
       <button
         onClick={randomise}
-        className="ml-2 inline-flex items-center text-drac-comment transition-colors hocus:text-drac-purple"
+        className="inline-flex items-center text-drac-comment transition-colors hocus:text-drac-purple"
       >
         <RefreshIcon
           className={cx(
