@@ -1,6 +1,7 @@
 import { useMdxComponents } from '@/lib/mdx'
-import { randomItem } from '@/utils/random'
-import { useState } from 'react'
+import cx from '@/utils/cx'
+import { randomIndex } from '@/utils/random'
+import { useRef, useState } from 'react'
 import { RefreshIcon } from '../icons'
 
 interface SubtitleProps {
@@ -8,6 +9,8 @@ interface SubtitleProps {
 }
 
 const Subtitle: React.FC<SubtitleProps> = ({ options }) => {
+  const [rotations, setRotations] = useState(0)
+  const rotationTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>()
   const [index, setIndex] = useState(0)
   const components = useMdxComponents(options)
   const Component = components[index]
@@ -15,12 +18,20 @@ const Subtitle: React.FC<SubtitleProps> = ({ options }) => {
   const randomise = () => {
     if (components.length < 1) return
 
-    let c = Component
-    while (c === Component) {
-      c = randomItem(components)
+    let i = index
+    while (i === index) {
+      i = randomIndex(components)
     }
 
-    setIndex(components.indexOf(c))
+    setIndex(i)
+
+    setRotations(r => r + 1)
+    if (rotationTimeoutRef.current) {
+      clearTimeout(rotationTimeoutRef.current)
+    }
+    rotationTimeoutRef.current = setTimeout(() => {
+      setRotations(0)
+    }, 1000)
   }
 
   return (
@@ -30,7 +41,13 @@ const Subtitle: React.FC<SubtitleProps> = ({ options }) => {
         onClick={randomise}
         className="ml-2 inline-flex items-center text-drac-comment transition-colors hocus:text-drac-purple"
       >
-        <RefreshIcon className="h-em w-em translate-y-1" />
+        <RefreshIcon
+          className={cx(
+            'h-em w-em translate-y-1 transform transition-transform',
+            rotations > 0 ? 'duration-700' : 'duration-[0s]'
+          )}
+          style={{ '--tw-rotate': `-${rotations}turn` } as any}
+        />
       </button>
     </div>
   )
