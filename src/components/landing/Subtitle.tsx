@@ -24,7 +24,7 @@ const Subtitle: React.FC<SubtitleProps> = ({ options }) => {
   }
 
   return (
-    <div className="children-p-inline">
+    <div className="subtitle-wrapper">
       <Component />
       <button
         onClick={randomise}

@@ -33,7 +33,7 @@ const SnippetsPage: React.FC<SnippetsPageProps> = ({ snippets }) => {
         }}
       />
       <p className="mt-6 mb-12 text-center text-lg">{description}</p>
-      <div className="grid auto-cols-min grid-cols-1 gap-8 md:grid-cols-2">
+      <div className="grid auto-cols-min grid-cols-1 gap-8 md:grid-cols-2 lg:gap-12">
         {snippets.map(snippet => (
           <SnippetCard key={snippet.slug} snippet={snippet} />
         ))}

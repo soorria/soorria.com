@@ -31,7 +31,7 @@ const Header: React.FC = () => {
         <nav className="flex space-x-1 font-display sm:space-x-3 sm:text-lg">
           {LINKS.map(({ title, href }) => (
             <Link key={href} href={href} passHref>
-              <a className="relative overflow-hidden rounded border-drac-fg px-1 py-0.5 leading-none transition-colors hover:bg-drac-curr hover:text-drac-pink sm:py-1 sm:px-2">
+              <a className="relative overflow-hidden rounded border-drac-fg px-2 py-1 leading-none transition-colors hocus:bg-drac-curr hocus:text-drac-pink sm:py-2 sm:px-3">
                 {title}
               </a>
             </Link>

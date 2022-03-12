@@ -11,7 +11,7 @@ const useHeroClassnames = (isStatic: boolean): HeroClassnames => {
     const classnames = {
       common: 'hidden sm:block absolute inset-0 select-none',
       mainText:
-        'absolute inset-0 bg-gradient-to-tr from-drac-pink to-drac-purple bg-clip-text text-transparent sm:text-drac-fg ',
+        'absolute cursor-text inset-0 bg-gradient-to-tr from-drac-pink to-drac-purple bg-clip-text text-transparent sm:text-drac-fg ',
     }
 
     if (!isStatic) {
@@ -37,13 +37,13 @@ const Hero: React.FC<{
       id="hero"
       className="circuit-bg -mx-4 -mt-36 px-4 pb-12 pt-36 md:-mx-8 lg:mx-[-4.5rem] lg:px-[4.5rem] xl:-mx-32 xl:px-32"
     >
-      <div className="group mx-auto mt-8 mb-8 cursor-default overflow-x-hidden py-16 text-center font-display text-5xl font-bold leading-tight outline-none sm:my-8 sm:text-6xl md:text-7xl lg:text-8xl">
+      <div className="group mx-auto my-4 cursor-default overflow-x-hidden py-16 text-center font-display text-6xl font-bold leading-tight outline-none sm:my-8 sm:text-[4rem] md:text-[5rem] lg:text-8xl">
         <div className="relative">
           <p
             aria-hidden
             role="presentation"
             className={cx(
-              `-translate-x-4 -translate-y-4 text-drac-pink md:-translate-x-8 md:-translate-y-8`,
+              `-translate-x-4 -translate-y-4 text-drac-pink sm:-translate-x-8 sm:-translate-y-8`,
               classnames.common
             )}
           >
@@ -57,7 +57,7 @@ const Hero: React.FC<{
             aria-hidden
             role="presentation"
             className={cx(
-              `translate-x-4 translate-y-4 text-drac-purple md:translate-x-8 md:translate-y-8`,
+              `translate-x-4 translate-y-4 text-drac-purple sm:translate-x-8 sm:translate-y-8`,
               classnames.common
             )}
           >
@@ -66,7 +66,7 @@ const Hero: React.FC<{
         </div>
       </div>
       {subtitle ? (
-        <h2 className="mb-8 text-xl sm:my-8 sm:text-2xl md:text-3xl">{subtitle}</h2>
+        <h2 className="mb-8 text-2xl sm:my-8 sm:text-2xl md:text-3xl">{subtitle}</h2>
       ) : null}
       {children}
     </div>

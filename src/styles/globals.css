@@ -148,6 +148,6 @@ input {
   animation: sparkle 600ms ease-in-out forwards;
 }
 
-.children-p-inline p {
+.subtitle-wrapper p {
   @apply inline;
 }
