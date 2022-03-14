@@ -1,4 +1,4 @@
-import type { IconComponent } from '../icons'
+import { IconComponent, ReactIcon, TypescriptIcon } from '../icons'
 import cx from '@/utils/cx'
 import { random, randomItem } from '@/utils/random'
 import { useEffect, useState } from 'react'
@@ -21,6 +21,43 @@ const zIndexes = {
   front: 15,
 }
 
+const SparkleSvg: SparkleComponent = props => {
+  const { style, color, kind } = props
+  if (kind && exoticSparkleComponents[kind]) {
+    const Sparkle = exoticSparkleComponents[kind]
+    return <Sparkle {...props} />
+  }
+  return (
+    <svg
+      width="160"
+      height="160"
+      viewBox="0 0 160 160"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      style={style}
+      className={sparkleClassname}
+    >
+      <path
+        d="M80 0C80 0 84.2846 41.2925 101.496 58.504C118.707 75.7154 160 80 160 80C160 80 118.707 84.2846 101.496 101.496C84.2846 118.707 80 160 80 160C80 160 75.7154 118.707 58.504 101.496C41.2925 84.2846 0 80 0 80C0 80 41.2925 75.7154 58.504 58.504C75.7154 41.2925 80 0 80 0Z"
+        fill={color}
+      />
+    </svg>
+  )
+}
+
+const iconComponentToSparkleComponent = (Icon: IconComponent): SparkleComponent => {
+  const sparkleComponent: SparkleComponent = ({ color, style }) => (
+    <Icon style={{ ...style, color }} className={sparkleClassname} />
+  )
+  return sparkleComponent
+}
+
+const exoticSparkleComponents: Record<string, SparkleComponent> = {
+  react: iconComponentToSparkleComponent(ReactIcon),
+  ts: iconComponentToSparkleComponent(TypescriptIcon),
+}
+const kinds: string[] = Object.keys(exoticSparkleComponents)
+
 const generateSparkleDetails = () => {
   const sizeNum = random(40, 100) / 100
   const size = `${sizeNum}em`
@@ -37,29 +74,14 @@ const generateSparkleDetails = () => {
       height: size,
       zIndex: front ? zIndexes.front : zIndexes.back,
     },
+    kind: Math.random() > 0.9 ? randomItem(kinds) : null,
   }
 }
 
 type SparkleDetails = ReturnType<typeof generateSparkleDetails>
+type SparkleComponent = React.FC<SparkleDetails>
 
-const SparkleSvg: IconComponent = ({ fill, ...props }) => {
-  return (
-    <svg
-      width="160"
-      height="160"
-      viewBox="0 0 160 160"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-      {...props}
-      className={cx(props.className, 'animation-sparkle pointer-events-none absolute')}
-    >
-      <path
-        d="M80 0C80 0 84.2846 41.2925 101.496 58.504C118.707 75.7154 160 80 160 80C160 80 118.707 84.2846 101.496 101.496C84.2846 118.707 80 160 80 160C80 160 75.7154 118.707 58.504 101.496C41.2925 84.2846 0 80 0 80C0 80 41.2925 75.7154 58.504 58.504C75.7154 41.2925 80 0 80 0Z"
-        fill={fill}
-      />
-    </svg>
-  )
-}
+const sparkleClassname = 'animation-sparkle pointer-events-none absolute'
 
 const Sparkles: React.FC<SparklesProps> = ({ children, block }) => {
   const [sparkles, setSparkles] = useState<SparkleDetails[]>([])
@@ -95,12 +117,13 @@ const Sparkles: React.FC<SparklesProps> = ({ children, block }) => {
 
   return (
     <span className={cx('relative', block ? 'block' : 'inline-block')}>
+      {sparkles.map(s => (
+        <SparkleSvg key={s.createdAt} {...s} />
+      ))}
       <span className="relative" style={{ zIndex: zIndexes.content }}>
         {children}
       </span>
-      {sparkles.map(s => (
-        <SparkleSvg key={s.createdAt} style={s.style} fill={s.color} />
-      ))}
+      &nbsp;
     </span>
   )
 }

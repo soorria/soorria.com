@@ -8,9 +8,12 @@ interface SubtitleProps {
   options?: string[] | null | undefined
 }
 
+const getDurationMs = (n: number) => 700 + n * 200
+
 const Subtitle: React.FC<SubtitleProps> = ({ options }) => {
   const [rotations, setRotations] = useState(0)
   const rotationTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>()
+  const rotationDuration = rotations > 0 ? getDurationMs(rotations) : 0
   const [index, setIndex] = useState(0)
   const components = useMdxComponents(options)
   const Component = components[index]
@@ -25,13 +28,14 @@ const Subtitle: React.FC<SubtitleProps> = ({ options }) => {
 
     setIndex(i)
 
-    setRotations(r => r + 1)
     if (rotationTimeoutRef.current) {
       clearTimeout(rotationTimeoutRef.current)
     }
     rotationTimeoutRef.current = setTimeout(() => {
       setRotations(0)
-    }, 1000)
+    }, getDurationMs(rotations + 1) + 300)
+
+    setRotations(r => r + 1)
   }
 
   return (
@@ -42,11 +46,11 @@ const Subtitle: React.FC<SubtitleProps> = ({ options }) => {
         className="inline-flex items-center text-drac-comment transition-colors hocus:text-drac-purple"
       >
         <RefreshIcon
-          className={cx(
-            'h-em w-em translate-y-1 transform transition-transform',
-            rotations > 0 ? 'duration-700' : 'duration-[0s]'
-          )}
-          style={{ '--tw-rotate': `-${rotations}turn` } as any}
+          className={cx('h-em w-em translate-y-1 transform transition-transform ease-in-out')}
+          style={{
+            ['--tw-rotate' as string]: `-${rotations}turn`,
+            transitionDuration: `${rotationDuration}ms`,
+          }}
         />
       </button>
     </div>

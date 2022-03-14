@@ -1,6 +1,6 @@
 import type { SVGProps } from 'react'
 
-type IconProps = {
+export type IconProps = {
   className?: string
 } & SVGProps<SVGSVGElement>
 
