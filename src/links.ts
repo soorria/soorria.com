@@ -8,6 +8,7 @@ import {
   LinkedinIconSolid,
   LinkIcon,
   MALIconSolid,
+  MessengerIcon,
   TwitterIconSolid,
 } from './components/icons'
 import Logo from './components/logo'
@@ -56,6 +57,13 @@ const facebookLink: Link = {
   icon: FacebookIconSolid,
 }
 
+const messengerLink: Link = {
+  href: 'https://www.messenger.com/t/soorriously',
+  iconAlt: 'messenger',
+  title: 'soorriously',
+  icon: MessengerIcon,
+}
+
 const malLink: Link = {
   href: 'https://myanimelist.net/profile/soorriously',
   iconAlt: 'my anime list',
@@ -95,15 +103,16 @@ export const links = {
   site: siteLink,
   discord: discordLink,
   card: cardLink,
+  messenger: messengerLink,
 } as const
 
 export const contactLinks: Link[] = [
   githubLink,
   emailLink,
-  linkedinLink,
-  facebookLink,
+  messengerLink,
   twitterLink,
+  linkedinLink,
   cardLink,
 ]
 
-export const allLinks: Link[] = [...contactLinks, discordLink, malLink, cardLink]
+export const allLinks: Link[] = [...contactLinks, discordLink, malLink, facebookLink, cardLink]
