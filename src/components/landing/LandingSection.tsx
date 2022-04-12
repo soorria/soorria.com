@@ -1,4 +1,5 @@
 import type { ReactNode } from 'react'
+import CustomLink from '../CustomLink'
 
 interface LandingSectionProps {
   title: ReactNode
@@ -8,7 +9,10 @@ interface LandingSectionProps {
 const LandingSection: React.FC<LandingSectionProps> = ({ title, children, id }) => {
   return (
     <section id={id} className="mt-8 mb-24" style={{ scrollMarginTop: '1rem' }}>
-      <h3 className="mb-8 text-4xl font-bold">{title}</h3>
+      <h3 className="mb-8 text-4xl font-bold">
+        {title}
+        <CustomLink href={`#${id}`} className="heading-anchor" />
+      </h3>
       {children}
     </section>
   )

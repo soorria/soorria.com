@@ -157,3 +157,28 @@ input {
 .subtitle-wrapper *:last-child {
   @apply mr-0;
 }
+
+/*
+ * Heading anchors
+ */
+.heading-anchor {
+  @apply absolute no-underline opacity-0 transition-opacity;
+
+  margin-left: 0.5em;
+  padding-right: -1em;
+  cursor: pointer;
+}
+
+.heading-anchor:hover,
+*:hover > .heading-anchor {
+  @apply opacity-100;
+}
+
+.heading-anchor:after {
+  @apply font-normal text-drac-comment transition-colors duration-100;
+  content: '#';
+}
+
+*:hover > .heading-anchor:hover:after {
+  @apply text-drac-pink;
+}
