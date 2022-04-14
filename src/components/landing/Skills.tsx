@@ -1,4 +1,5 @@
 import { useSkills } from '@/lib/skills'
+import cx from '@/utils/cx'
 import CustomLink from '../CustomLink'
 import { RefreshIcon } from '../icons'
 import LandingSection from './LandingSection'
@@ -12,6 +13,11 @@ const SkillListItem: React.FC = ({ children }) => {
       <span>{children}</span>
     </li>
   )
+}
+
+const classes = {
+  buttonCommon:
+    'rounded bg-drac-curr px-2 py-1 text-drac-fg transition-colors hocus:text-drac-purple',
 }
 
 const Skills: React.FC<{ random?: number; skillIndexes: number[] }> = ({
@@ -35,10 +41,7 @@ const Skills: React.FC<{ random?: number; skillIndexes: number[] }> = ({
       </ul>
       <div className="space-y-4 text-center text-sm">
         <div className="flex items-center justify-center space-x-1">
-          <button
-            onClick={() => toggleShowAll()}
-            className="rounded bg-drac-curr px-2 py-1 text-drac-pink transition-colors hocus:text-drac-purple"
-          >
+          <button onClick={() => toggleShowAll()} className={classes.buttonCommon}>
             {showAll ? 'Show a random set of my skills' : "Show all the tech I've learned"}
           </button>
           <span>&nbsp;/&nbsp;</span>
@@ -47,7 +50,7 @@ const Skills: React.FC<{ random?: number; skillIndexes: number[] }> = ({
               if (showAll) toggleShowAll(false)
               shuffle()
             }}
-            className="flex items-center rounded bg-drac-curr px-2 py-1 text-drac-pink transition-colors hocus:text-drac-purple"
+            className={cx('flex items-center', classes.buttonCommon)}
           >
             <RefreshIcon className="mr-1 inline-block h-em w-em" /> Randomise skills
           </button>
