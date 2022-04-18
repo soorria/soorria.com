@@ -1,7 +1,7 @@
 import type { GetStaticPaths, GetStaticProps } from 'next'
 import type { Project, ProjectFrontMatter } from '@/types/project'
 import PostLayout from '@/components/PostLayout'
-import { getAllFilesFrontMatter, getFileWithMdx } from '@/lib/data'
+import { getFileWithMdx } from '@/lib/data'
 import { DataType } from '@/types/data'
 import { NextSeo } from 'next-seo'
 import { getOgImage } from '@/utils/og'
@@ -58,7 +58,8 @@ export const getStaticProps: GetStaticProps<ProjectPageProps, { slug: string }> 
 }
 
 export const getStaticPaths: GetStaticPaths = async () => {
-  const snippets = await getAllFilesFrontMatter<ProjectFrontMatter>(DataType.projects)
+  // const snippets = await getAllFilesFrontMatter<ProjectFrontMatter>(DataType.projects)
+  const snippets: ProjectFrontMatter[] = []
 
   return {
     paths: snippets.map(({ slug }) => ({ params: { slug } })),
