@@ -54,7 +54,7 @@ const Subtitle: React.FC<SubtitleProps> = ({ options }) => {
         />
         <span
           className={cx(
-            'pointer-events-none absolute -top-full left-1/2 w-auto -translate-x-1/2',
+            'pointer-events-none absolute -top-full left-1/2 z-50 w-auto -translate-x-1/2',
             'whitespace-pre rounded bg-drac-bg px-2 py-1 text-sm text-drac-fg',
             'opacity-0 transition-opacity group-hover:opacity-100 group-hover:delay-150'
           )}
