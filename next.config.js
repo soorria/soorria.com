@@ -32,6 +32,11 @@ const config = {
         destination: 'https://plausible.mooth.tech/mooth.tech',
         permanent: false,
       },
+      {
+        source: '/src',
+        destination: 'https://github.com/mo0th/mooth.tech',
+        permanent: false,
+      },
     ]
   },
   async rewrites() {
