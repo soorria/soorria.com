@@ -51,7 +51,7 @@ const ProjectsPage: React.FC<ProjectsPageProps> = ({ projects, numMainProjects }
 
 export default ProjectsPage
 
-const projectOrder = [...featuredProjects, 'aqrm', 'sizes']
+const projectOrder = [...featuredProjects, 'aqrm', 'sizes', 'wordle-score', 'fight-for-tribeland']
 const getProjectIndex = (slug: string): number => {
   const idx = projectOrder.indexOf(slug)
   return idx >= 0 ? idx : projectOrder.length + 10

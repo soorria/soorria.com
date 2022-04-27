@@ -12,9 +12,9 @@ interface ProjectPageProps {
   mdx: string
 }
 
-const PostPage: React.FC<ProjectPageProps> = ({ project, mdx }) => {
-  const url = `https://mooth.tech/posts/${project.slug}`
-  const title = `${project.title} | Blog`
+const ProjectPage: React.FC<ProjectPageProps> = ({ project, mdx }) => {
+  const url = `https://mooth.tech/projects/${project.slug}`
+  const title = `${project.title} | Projects`
   const Content = useMdxComponent(mdx)
 
   return (
@@ -38,7 +38,7 @@ const PostPage: React.FC<ProjectPageProps> = ({ project, mdx }) => {
   )
 }
 
-export default PostPage
+export default ProjectPage
 
 export const getStaticProps: GetStaticProps<ProjectPageProps, { slug: string }> = async ({
   params,
@@ -50,19 +50,18 @@ export const getStaticProps: GetStaticProps<ProjectPageProps, { slug: string }> 
   }
 
   const { slug } = params
-  const { code, ...snippet } = await getFileWithMdx<Project>(DataType.projects, slug)
+  const { code, ...project } = await getFileWithMdx<Project>(DataType.projects, slug)
 
   return {
-    props: { project: snippet, mdx: code },
+    props: { project, mdx: code },
   }
 }
 
 export const getStaticPaths: GetStaticPaths = async () => {
-  // const snippets = await getAllFilesFrontMatter<ProjectFrontMatter>(DataType.projects)
-  const snippets: ProjectFrontMatter[] = []
+  const projects: ProjectFrontMatter[] = []
 
   return {
-    paths: snippets.map(({ slug }) => ({ params: { slug } })),
+    paths: projects.map(({ slug }) => ({ params: { slug } })),
     fallback: false,
   }
 }

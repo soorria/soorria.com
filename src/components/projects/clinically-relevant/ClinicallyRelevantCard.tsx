@@ -61,6 +61,7 @@ const ClinicallyRelevantCard: ProjectCardComponent = ({ project }) => {
                 type="button"
                 onClick={toggle}
                 aria-label="Toggle Clinically Relevant dark mode"
+                tabIndex={-1}
               >
                 {theme === 'light' ? '☀' : '🌙'}
               </button>

@@ -11,3 +11,8 @@ declare namespace NodeJS {
     SUPABASE_URL: string
   }
 }
+
+declare module '*.png' {
+  const value: any
+  export = value
+}

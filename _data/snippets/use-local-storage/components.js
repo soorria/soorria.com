@@ -35,11 +35,13 @@ const ActualDemoComponent = () => {
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'space-between',
+        gap: '1rem',
       }}
     >
       <input
         style={{
           background: 'var(--bg)',
+          flex: '1 1',
           border: '2px solid var(--pink)',
           padding: '0.5rem 1rem',
         }}

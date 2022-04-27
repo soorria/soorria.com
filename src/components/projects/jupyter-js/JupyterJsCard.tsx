@@ -4,6 +4,7 @@ import Image from 'next/image'
 import { CodeIcon, ExternalIcon, InfoIcon } from '@/components/icons'
 import cx from '@/utils/cx'
 import { COMMON_CLASSNAMES } from '../utils'
+import bgImg from './jupyter-js-card.png'
 
 interface JupyterJsCardProps {
   project: ProjectFrontMatter
@@ -16,12 +17,7 @@ const JupyterJsCard: React.FC<JupyterJsCardProps> = ({ project }) => {
   return (
     <div className={cx('bg-purple-600 sm:col-span-2', COMMON_CLASSNAMES.specialCardRoot)}>
       <div className="absolute inset-y-0 right-0 hidden items-center sm:flex">
-        <Image
-          src="/assets/projects/jupyter-js/jupyter-js-card.png"
-          height="392"
-          width="546"
-          alt="jupyter.js preview"
-        />
+        <Image src={bgImg} height="392" width="546" alt="jupyter.js preview" placeholder="blur" />
       </div>
       <div className="absolute inset-0 hidden bg-gradient-to-r from-purple-600 via-purple-600 to-transparent sm:block" />
       <div className="relative z-10 flex h-full flex-col space-y-4 p-8">

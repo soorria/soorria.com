@@ -1,0 +1,48 @@
+---
+title: File Downloads
+shortDescription: Download a file with or without JavaScript
+category: TypeScript
+tags:
+  - typescript
+createdAt: '2022-04-26'
+updatedAt: '2022-04-26'
+---
+
+Download a file, text, blob, etc programmatically with JavaScript, or download
+from a url without JavaScript
+
+## With JavaScript
+
+```TypeScript
+export const download = (content: string | Blob | File, fileName: string, type?: string) => {
+  const blob = typeof content === 'string' ? new Blob([content], { type }) : content
+  const a = document.createElement('a')
+  a.href = URL.createObjectURL(blob)
+  a.download = fileName
+  a.rel = 'noopener'
+  a.dispatchEvent(new MouseEvent('click'))
+}
+```
+
+**Note**:
+
+- We use `a.dispatchEvent` over `a.click` since some browsers don't start the
+  download when `a.click` is called.
+
+## Without JavaScript
+
+```html
+<a href="{{url}}" download="{{fileName}}">Click me to download!</a>
+```
+
+**Note**:
+
+- The `url` must point to a resource on the same domain and should only contain
+  the path. e.g. to download `https://mooth.tech/og.png`, the `url` should be
+  `/og.png`
+
+## Demo
+
+import { Example } from './components'
+
+<Example />

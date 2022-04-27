@@ -23,6 +23,8 @@ module.exports = {
       colors: {
         drac,
         current: 'currentColor',
+        'var-col': 'var(--col)',
+        'var-bg': 'var(--bg)',
       },
       fontFamily: {
         display: ["'Poppins'", ...fontFamily.sans],

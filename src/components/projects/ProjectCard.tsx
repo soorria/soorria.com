@@ -1,20 +1,19 @@
 import type { ProjectFrontMatter } from '@/types/project'
 import Link from 'next/link'
+import dynamic from 'next/dynamic'
 import { CodeIcon, ExternalIcon, InfoIcon } from '../icons'
-import ClinicallyRelevantCard from './clinically-relevant/ClinicallyRelevantCard'
-import JupyterJsCard from './jupyter-js/JupyterJsCard'
-import NotMessengerCard from './not-messenger/NotMessengerCard'
 
 interface ProjectCardProps {
   project: ProjectFrontMatter
 }
 
-export type ProjectCardComponent = React.FC<ProjectCardProps>
+export type ProjectCardComponent = React.ComponentType<ProjectCardProps>
 
 const projectCardMap: Record<string, ProjectCardComponent> = {
-  'jupyter-js': JupyterJsCard,
-  'clinically-relevant': ClinicallyRelevantCard,
-  'not-messenger': NotMessengerCard,
+  'jupyter-js': dynamic(() => import('./jupyter-js/JupyterJsCard')),
+  'clinically-relevant': dynamic(() => import('./clinically-relevant/ClinicallyRelevantCard')),
+  'not-messenger': dynamic(() => import('./not-messenger/NotMessengerCard')),
+  sizes: dynamic(() => import('./sizes/SizesCard')),
 }
 
 const ProjectCard: ProjectCardComponent = ({ project }) => {
