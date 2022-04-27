@@ -17,7 +17,7 @@ const SizesCard: ProjectCardComponent = ({ project }) => {
       className={cx(COMMON_CLASSNAMES.specialCardRoot, 'col-span-full bg-var-bg')}
       style={{ ['--bg' as any]: '#414558', ['--col' as any]: '#FF7AC6' }}
     >
-      <div className="absolute inset-y-0 right-0 hidden sm:block">
+      <div className="absolute inset-y-0 right-0 hidden items-center sm:flex">
         <Image
           src={bgImg}
           height="356"
