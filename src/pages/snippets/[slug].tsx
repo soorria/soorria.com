@@ -30,7 +30,7 @@ const CategoryIconDivider: React.FC<{ category: string }> = ({ category }) => {
     >
       {line}
       <Icon
-        className="inline-block h-6 w-6"
+        className="inline-block h-6 w-6 transition-transform"
         style={{
           transform: `rotate(calc(var(${SCROLL_VAR}) * 360deg))`,
         }}
