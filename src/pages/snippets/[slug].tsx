@@ -7,7 +7,38 @@ import editUrl from '@/utils/editUrl'
 import { NextSeo } from 'next-seo'
 import { getOgImage } from '@/utils/og'
 import { useMdxComponent } from '@/lib/mdx'
+import { categoryLowerCaseToIcon } from '@/components/categories'
+import { formatDate } from '@/utils/date'
+import { useScrollCssVar } from '@/utils/use-scroll-css-var'
 
+const SCROLL_VAR = '--scroll'
+const CategoryIconDivider: React.FC<{ category: string }> = ({ category }) => {
+  useScrollCssVar(SCROLL_VAR)
+
+  const Icon = categoryLowerCaseToIcon[category.toLowerCase()]
+
+  const line = (
+    <div role="presentation" className="flex items-center opacity-50">
+      <div className="h-px flex-1 bg-current" />
+    </div>
+  )
+
+  return (
+    <div
+      className="grid gap-4 pb-6 text-center text-drac-comment"
+      style={{ gridTemplateColumns: '1fr auto 1fr' }}
+    >
+      {line}
+      <Icon
+        className="inline-block h-6 w-6"
+        style={{
+          transform: `rotate(calc(var(${SCROLL_VAR}) * 360deg))`,
+        }}
+      />
+      {line}
+    </div>
+  )
+}
 interface SnippetPageProps {
   snippet: SnippetFrontMatter
   mdx: string
@@ -39,17 +70,23 @@ const SnippetPage: React.FC<SnippetPageProps> = ({ snippet, mdx }) => {
           images: [getOgImage(DataType.snippets, snippet.title)],
         }}
       />
+      <CategoryIconDivider category={snippet.category} />
       <div className="prose mx-auto mt-6 md:prose-lg">
         <Content />
         <PostBottomSection>
-          Found a mistake, or want to suggest an improvement? Edit on GitHub{' '}
-          <a
-            href={editUrl(DataType.snippets, snippet.slug)}
-            rel="noopenner noreferrer"
-            target="_blank"
-          >
-            here
-          </a>
+          <div>
+            Created {formatDate(snippet.createdAt)} / Updated {formatDate(snippet.updatedAt)}
+          </div>
+          <div>
+            Found a mistake, or want to suggest an improvement? Edit on GitHub{' '}
+            <a
+              href={editUrl(DataType.snippets, snippet.slug)}
+              rel="noopenner noreferrer"
+              target="_blank"
+            >
+              here
+            </a>
+          </div>
         </PostBottomSection>
       </div>
     </PostLayout>

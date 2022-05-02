@@ -1,0 +1,45 @@
+---
+title: useCopy (solid.js)
+shortDescription: Copy to clipboard with a 'copied' timeout
+category: SolidJS
+tags:
+  - typescript
+  - solidjs
+createdAt: '2022-05-02'
+updatedAt: '2022-05-02'
+---
+
+Copy text to your clipboard, and know when it's done so you can change the
+button's text to `copied!`.
+
+```typescript
+import type { Accessor } from 'solid-js'
+import { createSignal } from 'solid-js'
+
+export type UseCopyProps = {
+  copiedTimeout?: number
+}
+
+type CopyFn = (text: string) => Promise<void>
+
+export const useCopy = ({ copiedTimeout = 2000 }: UseCopyProps = {}): [
+  copy: CopyFn,
+  copied: Accessor<boolean>
+] => {
+  const [copied, setCopied] = createSignal(false)
+  let timeout: NodeJS.Timeout
+
+  const copy: CopyFn = async text => {
+    await navigator.clipboard.writeText(text)
+    setCopied(true)
+    if (timeout) clearTimeout(timeout)
+    timeout = setTimeout(() => setCopied(false), copiedTimeout)
+  }
+
+  return [copy, copied]
+}
+```
+
+---
+
+Check out the React version [here](/snippets/use-copy-react).

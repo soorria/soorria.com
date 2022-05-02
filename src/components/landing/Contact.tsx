@@ -199,7 +199,7 @@ const Contact: React.FC<ContactProps> = ({ random = 0 }) => {
               className="group flex items-center text-drac-pink hocus:text-drac-purple"
               {...(newTab ? { target: '_blank', rel: 'noopener noreferrer' } : null)}
             >
-              <Icon className="mr-3 h-5 w-5 transition-transform group-hocus:-rotate-12" />
+              <Icon className="mr-3 h-5 w-5 transition-transform group-hocus:-rotate-20" />
               <span>{title}</span>
             </a>
           ))}

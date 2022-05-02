@@ -42,7 +42,7 @@ const LinksPage: React.FC = () => {
                 >
                   <Icon
                     aria-label={iconAlt}
-                    className="mr-3 h-7 w-7 transition-transform group-hocus:-rotate-12"
+                    className="mr-3 h-7 w-7 transition-transform group-hocus:-rotate-20"
                   />
                   <span>{title}</span>
                 </a>

@@ -30,6 +30,9 @@ module.exports = {
         display: ["'Poppins'", ...fontFamily.sans],
       },
       screens: {},
+      rotate: {
+        20: '20deg',
+      },
       spacing: {
         em: '1em',
       },
@@ -56,6 +59,7 @@ module.exports = {
               },
               hr: {
                 borderTopColor: comment,
+                opacity: 0.5,
               },
               thead: {
                 color: fg,
