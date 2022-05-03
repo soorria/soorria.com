@@ -9,7 +9,8 @@ export default OGCategoryImagePage
 
 export const getServerSideProps: GetServerSideProps = async ({ res, params }) => {
   res.setHeader('Cache-Control', 's-maxage=86400, stale-while-revalidate')
-  res.end(createOGMarkup(typeof params?.category === 'string' ? params.category : 'Empty Category'))
+  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+  res.end(createOGMarkup(params!.title as string, params!.subtitle as string))
 
   return { props: {} }
 }

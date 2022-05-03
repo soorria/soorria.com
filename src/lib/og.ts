@@ -6,9 +6,7 @@ export const createOGMarkup = (main: string, subtitle?: string): string => `
     <div class="text-wrapper">
       <div class="text-wrapper-inner">
         <p class="text--main">${main}</p>
-        <p class="text--subtitle">${
-          subtitle ? `<span style="text-transform: capitalize">${subtitle}</span> | ` : ''
-        }mooth.tech</p>
+        <p class="text--subtitle">${subtitle}</p>
       </div>
     </div>
   </div>
