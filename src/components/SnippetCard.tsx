@@ -21,7 +21,7 @@ const SnippetCard: React.FC<{ snippet: SnippetFrontMatter }> = ({
           <div className="font-display text-xl font-bold text-drac-pink group-hover:underline">
             {title}
           </div>
-          <div className="flex-1">{shortDescription}</div>
+          <div className="min-h-[3rem] flex-1">{shortDescription}</div>
           <div className="flex items-center justify-between text-sm">
             <div className="flex items-center space-x-2">
               <ClockIconSolid className="inline-block h-4 w-4" />

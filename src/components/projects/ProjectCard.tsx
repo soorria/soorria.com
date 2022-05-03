@@ -3,7 +3,7 @@ import Link from 'next/link'
 import dynamic from 'next/dynamic'
 import { CodeIcon, ExternalIcon, InfoIcon } from '../icons'
 
-interface ProjectCardProps {
+export interface ProjectCardProps {
   project: ProjectFrontMatter
 }
 

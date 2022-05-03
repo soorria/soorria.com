@@ -51,7 +51,8 @@ const ProjectsPage: React.FC<ProjectsPageProps> = ({ projects, numMainProjects }
 
 export default ProjectsPage
 
-const projectOrder = [...featuredProjects, 'aqrm', 'sizes', 'wordle-score', 'fight-for-tribeland']
+const aboveFold = [...featuredProjects, 'aqrm', 'wordle-score', 'fight-for-tribeland']
+const projectOrder = [...aboveFold]
 const getProjectIndex = (slug: string): number => {
   const idx = projectOrder.indexOf(slug)
   return idx >= 0 ? idx : projectOrder.length + 10
@@ -63,6 +64,6 @@ export const getStaticProps: GetStaticProps<ProjectsPageProps> = async () => {
   )
 
   return {
-    props: { projects, numMainProjects: featuredProjects.length },
+    props: { projects, numMainProjects: aboveFold.length },
   }
 }
