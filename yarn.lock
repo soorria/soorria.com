@@ -1869,6 +1869,11 @@ globby@^11.0.3:
     merge2 "^1.4.1"
     slash "^3.0.0"
 
+goober@^2.1.9:
+  version "2.1.9"
+  resolved "https://registry.yarnpkg.com/goober/-/goober-2.1.9.tgz#0faee08fab1a5d55b23e9ec043bb5a1b46fa025a"
+  integrity sha512-PAtnJbrWtHbfpJUIveG5PJIB6Mc9Kd0gimu9wZwPyA+wQUSeOeA4x4Ug16lyaaUUKZ/G6QEH1xunKOuXP1F4Vw==
+
 good-listener@^1.2.2:
   version "1.2.2"
   resolved "https://registry.yarnpkg.com/good-listener/-/good-listener-1.2.2.tgz#d53b30cdf9313dffb7dc9a0d477096aa6d145c50"

@@ -1,16 +1,21 @@
 import cx from '@/utils/cx'
-import { ComponentType, useState } from 'react'
+import { ComponentType, useEffect, useState } from 'react'
 import { RefreshIcon } from '../icons'
 import { COMMON_CLASSNAMES } from './utils'
 
 interface DemoWrapperProps {
   component: ComponentType
-  lazy?: boolean
+  init?: 'lazy' | 'mount' | 'always'
 }
 
-const DemoWrapper: React.FC<DemoWrapperProps> = ({ component: Component, lazy = false }) => {
-  const [started, setStarted] = useState(!lazy)
+const DemoWrapper: React.FC<DemoWrapperProps> = ({ component: Component, init = 'always' }) => {
+  const [started, setStarted] = useState(init === 'always')
   const [key, setKey] = useState<number>(0)
+
+  const initOnMount = init === 'mount'
+  useEffect(() => {
+    if (initOnMount) setStarted(true)
+  }, [initOnMount])
 
   return (
     <div className={cx('demo-wrapper', COMMON_CLASSNAMES.codeAndDemoRoot)}>

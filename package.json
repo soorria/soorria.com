@@ -17,6 +17,7 @@
     "date-fns": "^2.19.0",
     "esbuild": "^0.14.18",
     "globby": "^11.0.3",
+    "goober": "^2.1.9",
     "gray-matter": "^4.0.2",
     "mdx-bundler": "^8.0.1",
     "mdx-prism": "^0.3.3",

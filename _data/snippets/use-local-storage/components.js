@@ -26,7 +26,7 @@ const useLocalStorage = (key, initialValue) => {
 
 export const LOCALSTORAGE_KEY = 'example:input'
 
-const ActualDemoComponent = () => {
+export const Example = () => {
   const [input, setInput, reset] = useLocalStorage(LOCALSTORAGE_KEY, '')
 
   return (
@@ -60,14 +60,4 @@ const ActualDemoComponent = () => {
       </button>
     </div>
   )
-}
-
-export const Example = () => {
-  const [mounted, setMounted] = useState(false)
-
-  useEffect(() => {
-    setMounted(true)
-  }, [])
-
-  return <>{mounted ? <ActualDemoComponent /> : null}</>
 }

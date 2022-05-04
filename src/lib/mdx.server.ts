@@ -7,6 +7,13 @@ import rehypeAutolinkHeadings from 'rehype-autolink-headings'
 import { rehypeAccessibleEmojis } from 'rehype-accessible-emojis'
 import { rehypeCodeTitles } from './rehype.server'
 
+const STYLE_UTILS = `
+import { createElement } from 'react'
+import { setup, styled, css } from 'goober'
+setup(createElement)
+export { styled, css }
+`
+
 export type BundleResult<T extends BaseFrontMatter> = Omit<
   Awaited<ReturnType<typeof bundleMDX>>,
   'frontmatter'
@@ -22,6 +29,7 @@ export const render = async <T extends BaseFrontMatter>(
     source,
     files: {
       './components': components,
+      $styles: STYLE_UTILS,
     },
     xdmOptions(options) {
       options.rehypePlugins = [
