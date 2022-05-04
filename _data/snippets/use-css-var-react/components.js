@@ -63,11 +63,11 @@ export const Example = () => {
           onChange={event => {
             const value = event.target.valueAsNumber
             if (!Number.isFinite(value)) return
-            controls.set((Math.abs(value) % 360).toFixed(2))
+            controls.set((value % 360).toFixed(2))
           }}
         />
         <button style={styles.button} onClick={() => controls.remove()}>
-          Remove {EXAMPLE_CSS_VAR}
+          Remove CSS Var
         </button>
       </div>
       <div
