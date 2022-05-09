@@ -44,6 +44,8 @@ const Subtitle: React.FC<SubtitleProps> = ({ options }) => {
       <button
         onClick={randomise}
         className="group relative inline-flex items-center text-drac-comment transition-colors hocus:text-drac-purple"
+        aria-label="refresh subtitle about me"
+        title="refresh subtitle about me"
       >
         <RefreshIcon
           className={cx('h-em w-em translate-y-1 transform transition-transform ease-in-out')}
@@ -52,15 +54,6 @@ const Subtitle: React.FC<SubtitleProps> = ({ options }) => {
             transitionDuration: `${rotationDuration}ms`,
           }}
         />
-        <span
-          className={cx(
-            'pointer-events-none absolute -top-full left-1/2 z-50 w-auto -translate-x-1/2',
-            'whitespace-pre rounded bg-drac-bg px-2 py-1 text-sm text-drac-fg',
-            'opacity-0 transition-opacity group-hover:opacity-100 group-hover:delay-150'
-          )}
-        >
-          refresh subtitle about me
-        </span>
       </button>
     </div>
   )
