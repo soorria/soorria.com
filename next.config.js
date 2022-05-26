@@ -51,6 +51,10 @@ const config = {
   future: {
     webpack5: true,
   },
+  experimental: {
+    legacyBrowsers: false,
+    browsersListForSwc: true,
+  },
 }
 
 module.exports = withPlausibleConfig(withBundleAnalyzer(config))

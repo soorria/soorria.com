@@ -29,7 +29,7 @@ export const render = async <T extends BaseFrontMatter>(
     source,
     files: {
       './components': components,
-      $styles: STYLE_UTILS,
+      ...(source.includes('$styles') ? { $styles: STYLE_UTILS } : null),
     },
     xdmOptions(options) {
       options.rehypePlugins = [
