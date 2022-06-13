@@ -8,6 +8,7 @@ import PostCard from '@/components/PostCard'
 import MainLayout from '@/components/MainLayout'
 import { getOgImage } from '@/utils/og'
 import { filterUnpublished, sortByCreatedAtField } from '@/utils/content'
+import { PUBLIC_URL } from '@/constants'
 
 interface PostsPageProps {
   posts: PostFrontMatter[]
@@ -15,7 +16,7 @@ interface PostsPageProps {
 
 const description = 'Written things'
 const title = 'Posts'
-const url = 'https://mooth.tech/blog'
+const url = `${PUBLIC_URL}/blog`
 
 const PostsPage: React.FC<PostsPageProps> = ({ posts }) => {
   return (

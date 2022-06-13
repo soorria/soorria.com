@@ -23,7 +23,7 @@ interface Link {
 }
 
 const githubLink: Link = {
-  title: 'mo0th',
+  title: 'soorria',
   iconAlt: 'github',
   href: GITHUB_URL,
   icon: GithubIconSolid,
@@ -72,7 +72,7 @@ const malLink: Link = {
 }
 
 const siteLink: Link = {
-  href: 'https://mooth.tech',
+  href: 'https://sorria.com',
   iconAlt: 'purple and pink square',
   title: 'website',
   icon: Logo,
@@ -87,7 +87,7 @@ const discordLink: Link = {
 }
 
 const cardLink: Link = {
-  href: 'https://links.mooth.tech',
+  href: 'https://links.soorria.com',
   iconAlt: 'link',
   title: 'all links',
   icon: LinkIcon,

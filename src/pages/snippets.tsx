@@ -7,6 +7,7 @@ import { DataType } from '@/types/data'
 import SnippetCard from '@/components/SnippetCard'
 import { getOgImage } from '@/utils/og'
 import { sortByCreatedAtField } from '@/utils/content'
+import { PUBLIC_URL } from '@/constants'
 
 interface SnippetsPageProps {
   snippets: SnippetFrontMatter[]
@@ -15,7 +16,7 @@ interface SnippetsPageProps {
 const description =
   'Little bits of code that I find useful. Mostly written in TypeScript and often for React.'
 const title = 'Snippets'
-const url = 'https://mooth.tech/snippets'
+const url = `${PUBLIC_URL}/snippets`
 
 const SnippetsPage: React.FC<SnippetsPageProps> = ({ snippets }) => {
   return (

@@ -8,6 +8,7 @@ import { NextSeo } from 'next-seo'
 import { getOgImage } from '@/utils/og'
 import { filterUnpublished } from '@/utils/content'
 import { useMdxComponent } from '@/lib/mdx'
+import { PUBLIC_URL } from '@/constants'
 
 interface PostPageProps {
   post: PostFrontMatter
@@ -15,7 +16,7 @@ interface PostPageProps {
 }
 
 const PostPage: React.FC<PostPageProps> = ({ post, mdx }) => {
-  const url = `https://mooth.tech/posts/${post.slug}`
+  const url = `${PUBLIC_URL}/posts/${post.slug}`
   const title = `${post.title} | Blog`
   const Content = useMdxComponent(mdx)
 

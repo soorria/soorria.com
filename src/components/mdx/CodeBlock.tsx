@@ -41,8 +41,8 @@ const CustomCodeBlock: React.FC<any> = ({ children, className, ...rest }) => {
           <a
             type="button"
             className={cx(classes.button, '!text-drac-bg no-underline')}
-            href={`https://utils.mooth.tech/remove-types?${new URLSearchParams({
-              ref: 'mooth.tech',
+            href={`https://utils.soorria.com/remove-types?${new URLSearchParams({
+              ref: 'soorria.com',
               ts: content,
               copyWhenDone: 'on',
               ...(language.includes('react') ? { isTsx: 'on' } : {}),

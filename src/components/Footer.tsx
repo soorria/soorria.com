@@ -40,7 +40,7 @@ const LINKS: LinkType[][] = [
       title: (
         <span className="inline-flex items-center space-x-1">
           <GithubIconSolid className="h-3 w-3" />
-          <span>mo0th</span>
+          <span>soorria</span>
         </span>
       ),
       key: 'github',

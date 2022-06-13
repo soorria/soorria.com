@@ -19,7 +19,7 @@ export const generateSitemap = async (): Promise<string> => {
     .filter(page => !page.includes('['))
 
   const urls = pages
-    .map(page => `<url><loc>https://mooth.tech${page}</loc></url>`)
+    .map(page => `<url><loc>https://soorria.com${page}</loc></url>`)
     .join('')
     .replace(/\s*/g, '')
 

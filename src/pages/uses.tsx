@@ -6,6 +6,7 @@ import { useMdxComponent } from '@/lib/mdx'
 import { BaseData, DataType } from '@/types/data'
 import { getOgImage } from '@/utils/og'
 import { NextSeo } from 'next-seo'
+import { PUBLIC_URL } from '@/constants'
 
 interface UsesPageProps {
   mdx: string
@@ -13,7 +14,7 @@ interface UsesPageProps {
 }
 
 const title = 'What I Use'
-const url = 'https://mooth.tech/uses'
+const url = `${PUBLIC_URL}/uses`
 const shortDescription = 'Stuff I use'
 
 const UsesPage: React.FC<UsesPageProps> = ({ mdx, updatedAt }) => {

@@ -34,7 +34,7 @@ const config = {
       },
       {
         source: '/src',
-        destination: 'https://github.com/mo0th/mooth.tech',
+        destination: 'https://github.com/soorria/soorria.com',
         permanent: false,
       },
     ]

@@ -6,6 +6,7 @@ import { DataType } from '@/types/data'
 import { NextSeo } from 'next-seo'
 import { getOgImage } from '@/utils/og'
 import { useMdxComponent } from '@/lib/mdx'
+import { PUBLIC_URL } from '@/constants'
 
 interface ProjectPageProps {
   project: ProjectFrontMatter
@@ -13,7 +14,7 @@ interface ProjectPageProps {
 }
 
 const ProjectPage: React.FC<ProjectPageProps> = ({ project, mdx }) => {
-  const url = `https://mooth.tech/projects/${project.slug}`
+  const url = `${PUBLIC_URL}/projects/${project.slug}`
   const title = `${project.title} | Projects`
   const Content = useMdxComponent(mdx)
 

@@ -1,7 +1,7 @@
 import type { NextMiddleware } from 'next/server'
 import { NextResponse } from 'next/server'
 
-const BASE_URL = process.env.NODE_ENV === 'production' ? 'mooth.tech' : 'localhost:3000'
+const BASE_URL = process.env.NODE_ENV === 'production' ? 'soorria.com' : 'localhost:3000'
 
 const linksPageSubdomain = new Set(['links', 'card', 'cardd', 'carrd'])
 

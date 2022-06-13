@@ -1,3 +1,3 @@
 # My Personal Website
 
-See [here](https://mooth.tech)
+See [here](https://soorria.com)

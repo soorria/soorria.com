@@ -133,14 +133,14 @@ const ContactForm: React.FC = () => {
             readOnly
             type="text"
             name="_next"
-            value="https://mooth.tech/contact-success"
+            value="https://soorria.com/contact-success"
             className="hidden"
           />
           <input
             readOnly
             type="text"
             name="_subject"
-            value="mooth.tech Form Submission"
+            value="soorria.com Form Submission"
             className="hidden"
           />
 

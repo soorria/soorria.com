@@ -9,17 +9,17 @@ export const SEO: DefaultSeoProps = {
   // titleTemplate: '%s - Soorria Saruva',
   // titleTemplate: '%s / Soorria Saruva',
   defaultTitle: title,
-  canonical: 'https://mooth.tech',
+  canonical: 'https://soorria.com',
   description,
   openGraph: {
     type: 'website',
     locale: 'en_AU',
-    url: 'https://mooth.tech',
+    url: 'https://soorria.com',
     title,
     description,
     images: [
       {
-        url: 'https://mooth.tech/og.png',
+        url: 'https://soorria.com/og.png',
         height: 900,
         width: 1600,
       },

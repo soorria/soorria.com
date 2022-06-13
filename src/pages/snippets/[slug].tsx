@@ -10,6 +10,7 @@ import { useMdxComponent } from '@/lib/mdx'
 import { categoryLowerCaseToIcon } from '@/components/categories'
 import { formatDate } from '@/utils/date'
 import { useScrollCssVar } from '@/utils/use-scroll-css-var'
+import { PUBLIC_URL } from '@/constants'
 
 const SCROLL_VAR = '--scroll'
 const CategoryIconDivider: React.FC<{ category: string }> = ({ category }) => {
@@ -45,7 +46,7 @@ interface SnippetPageProps {
 }
 
 const SnippetPage: React.FC<SnippetPageProps> = ({ snippet, mdx }) => {
-  const url = `https://mooth.tech/snippets/${snippet.slug}`
+  const url = `${PUBLIC_URL}/snippets/${snippet.slug}`
   const title = `${snippet.title} | Snippets`
   const Content = useMdxComponent(mdx)
 

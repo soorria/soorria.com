@@ -3,7 +3,7 @@ import type { ProjectFrontMatter } from '@/types/project'
 import PostLayout from '@/components/PostLayout'
 import ProjectCard from '@/components/projects/ProjectCard'
 import ProjectsGrid from '@/components/projects/ProjectsGrid'
-import { featuredProjects } from '@/constants'
+import { featuredProjects, PUBLIC_URL } from '@/constants'
 import { getAllFilesFrontMatter } from '@/lib/data'
 import { DataType } from '@/types/data'
 import { getOgImage } from '@/utils/og'
@@ -16,7 +16,7 @@ interface ProjectsPageProps {
 
 const description = "Things I've made. Some are more useful and cooler than others."
 const title = 'Projects'
-const url = 'https://mooth.tech/projects'
+const url = `${PUBLIC_URL}/projects`
 
 const ProjectsPage: React.FC<ProjectsPageProps> = ({ projects, numMainProjects }) => {
   return (

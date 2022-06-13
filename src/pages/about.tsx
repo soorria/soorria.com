@@ -5,6 +5,7 @@ import { useMdxComponent } from '@/lib/mdx'
 import { BaseData, DataType } from '@/types/data'
 import { getOgImage } from '@/utils/og'
 import { NextSeo } from 'next-seo'
+import { PUBLIC_URL } from '@/constants'
 
 interface AboutPageProps {
   mdx: string
@@ -12,7 +13,7 @@ interface AboutPageProps {
 }
 
 const title = 'About Me'
-const url = 'https://mooth.tech/about'
+const url = `${PUBLIC_URL}/about`
 const shortDescription = 'Who I am and what I do'
 
 const AboutPage: React.FC<AboutPageProps> = ({ mdx, updatedAt }) => {
