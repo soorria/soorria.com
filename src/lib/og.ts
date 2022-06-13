@@ -62,20 +62,19 @@ export const createOGMarkup = (main: string, subtitle?: string): string => `
     display: flex;
     flex-direction: column;
     justify-content: center;
-    padding: 4rem 0;
+    padding: 3.5rem 0;
     width: 600px;
     background: #282a36B2;
     color: #f8f8f2;
     border-radius: 1.5rem;
   }
   .text--main {
-    margin-bottom: 1rem;
     font-weight: 700;
-    text-transform: capitalize;
     font-size: 3.75rem;
     line-height: 1;
   }
   .text--subtitle {
+    margin-top: 2rem;
     font-size: 1.875rem;
     line-height: 2.25rem;
   }

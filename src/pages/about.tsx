@@ -3,9 +3,9 @@ import PostLayout from '@/components/PostLayout'
 import { getFileWithMdx } from '@/lib/data'
 import { useMdxComponent } from '@/lib/mdx'
 import { BaseData, DataType } from '@/types/data'
-import { getOgImage } from '@/utils/og'
 import { NextSeo } from 'next-seo'
 import { PUBLIC_URL } from '@/constants'
+import { getOgImage } from '@/utils/og'
 
 interface AboutPageProps {
   mdx: string
@@ -36,7 +36,7 @@ const AboutPage: React.FC<AboutPageProps> = ({ mdx, updatedAt }) => {
             modifiedTime: new Date(updatedAt).toISOString(),
             publishedTime: new Date(updatedAt).toISOString(),
           },
-          images: [getOgImage('About Me')],
+          images: [getOgImage('About Me', 'soorria.com')],
         }}
       />
       <div className="prose mx-auto mt-6 md:prose-lg md:mt-16">

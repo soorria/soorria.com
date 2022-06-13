@@ -4,7 +4,7 @@ import PostLayout from '@/components/PostLayout'
 import { getFileWithMdx } from '@/lib/data'
 import { DataType } from '@/types/data'
 import { NextSeo } from 'next-seo'
-import { getOgImage } from '@/utils/og'
+import { getOgImageForData } from '@/utils/og'
 import { useMdxComponent } from '@/lib/mdx'
 import { PUBLIC_URL } from '@/constants'
 
@@ -29,7 +29,7 @@ const ProjectPage: React.FC<ProjectPageProps> = ({ project, mdx }) => {
           title,
           description: project.shortDescription,
           type: 'article',
-          images: [getOgImage(DataType.blog, project.title)],
+          images: [getOgImageForData(DataType.projects, project.title)],
         }}
       />
       <div className="prose mx-auto mt-6 md:prose-lg md:mt-16">

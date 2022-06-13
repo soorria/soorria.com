@@ -37,7 +37,7 @@ const SecretsPage: React.FC = () => {
       <NextSeo
         title={title}
         noindex
-        openGraph={{ url, description, images: [getOgImage(title)] }}
+        openGraph={{ url, description, images: [getOgImage(title, 'soorria.com')] }}
         canonical={url}
         description={description}
       />

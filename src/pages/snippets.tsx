@@ -5,7 +5,7 @@ import PostLayout from '@/components/PostLayout'
 import { getAllFilesFrontMatter } from '@/lib/data'
 import { DataType } from '@/types/data'
 import SnippetCard from '@/components/SnippetCard'
-import { getOgImage } from '@/utils/og'
+import { getOgImageForData } from '@/utils/og'
 import { sortByCreatedAtField } from '@/utils/content'
 import { PUBLIC_URL } from '@/constants'
 
@@ -30,7 +30,7 @@ const SnippetsPage: React.FC<SnippetsPageProps> = ({ snippets }) => {
           description,
           type: 'website',
           url,
-          images: [getOgImage(DataType.snippets)],
+          images: [getOgImageForData(DataType.snippets)],
         }}
       />
       <p className="mt-6 mb-12 text-center text-lg">{description}</p>

@@ -6,7 +6,7 @@ import { getAllFilesFrontMatter } from '@/lib/data'
 import { DataType } from '@/types/data'
 import PostCard from '@/components/PostCard'
 import MainLayout from '@/components/MainLayout'
-import { getOgImage } from '@/utils/og'
+import { getOgImageForData } from '@/utils/og'
 import { filterUnpublished, sortByCreatedAtField } from '@/utils/content'
 import { PUBLIC_URL } from '@/constants'
 
@@ -30,7 +30,7 @@ const PostsPage: React.FC<PostsPageProps> = ({ posts }) => {
           description,
           type: 'website',
           url,
-          images: [getOgImage(DataType.blog)],
+          images: [getOgImageForData(DataType.blog)],
         }}
       />
       <PostHeading>Blog</PostHeading>

@@ -6,7 +6,7 @@ import ProjectsGrid from '@/components/projects/ProjectsGrid'
 import { featuredProjects, PUBLIC_URL } from '@/constants'
 import { getAllFilesFrontMatter } from '@/lib/data'
 import { DataType } from '@/types/data'
-import { getOgImage } from '@/utils/og'
+import { getOgImageForData } from '@/utils/og'
 import { NextSeo } from 'next-seo'
 
 interface ProjectsPageProps {
@@ -30,7 +30,7 @@ const ProjectsPage: React.FC<ProjectsPageProps> = ({ projects, numMainProjects }
           description,
           type: 'website',
           url,
-          images: [getOgImage(DataType.projects)],
+          images: [getOgImageForData(DataType.projects)],
         }}
       />
       <p className="mt-6 mb-12 text-center text-lg">{description}</p>

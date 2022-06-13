@@ -5,7 +5,7 @@ import { getAllFilesFrontMatter, getFileWithMdx } from '@/lib/data'
 import { DataType } from '@/types/data'
 import editUrl from '@/utils/editUrl'
 import { NextSeo } from 'next-seo'
-import { getOgImage } from '@/utils/og'
+import { getOgImageForData } from '@/utils/og'
 import { useMdxComponent } from '@/lib/mdx'
 import { categoryLowerCaseToIcon } from '@/components/categories'
 import { formatDate } from '@/utils/date'
@@ -68,7 +68,7 @@ const SnippetPage: React.FC<SnippetPageProps> = ({ snippet, mdx }) => {
             publishedTime: new Date(snippet.createdAt).toISOString(),
             modifiedTime: new Date(snippet.updatedAt).toISOString(),
           },
-          images: [getOgImage(DataType.snippets, snippet.title)],
+          images: [getOgImageForData(DataType.snippets, snippet.title)],
         }}
       />
       <CategoryIconDivider category={snippet.category} />

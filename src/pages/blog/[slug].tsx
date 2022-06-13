@@ -5,7 +5,7 @@ import { getAllFilesFrontMatter, getFileWithMdx } from '@/lib/data'
 import { DataType } from '@/types/data'
 import editUrl from '@/utils/editUrl'
 import { NextSeo } from 'next-seo'
-import { getOgImage } from '@/utils/og'
+import { getOgImageForData } from '@/utils/og'
 import { filterUnpublished } from '@/utils/content'
 import { useMdxComponent } from '@/lib/mdx'
 import { PUBLIC_URL } from '@/constants'
@@ -38,7 +38,7 @@ const PostPage: React.FC<PostPageProps> = ({ post, mdx }) => {
             publishedTime: post.createdAt ? new Date(post.createdAt).toISOString() : 'N/A',
             modifiedTime: post.updatedAt ? new Date(post.updatedAt).toISOString() : 'N/A',
           },
-          images: [getOgImage(DataType.blog, post.title)],
+          images: [getOgImageForData(DataType.blog, post.title)],
         }}
       />
       <div className="prose mx-auto mt-6 md:prose-lg md:mt-16">

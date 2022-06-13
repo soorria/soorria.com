@@ -4,7 +4,7 @@ import PostLayout, { PostBottomSection } from '@/components/PostLayout'
 import { getFileWithMdx } from '@/lib/data'
 import { useMdxComponent } from '@/lib/mdx'
 import { BaseData, DataType } from '@/types/data'
-import { getOgImage } from '@/utils/og'
+import { getOgImageForData } from '@/utils/og'
 import { NextSeo } from 'next-seo'
 import { PUBLIC_URL } from '@/constants'
 
@@ -37,7 +37,7 @@ const UsesPage: React.FC<UsesPageProps> = ({ mdx, updatedAt }) => {
             modifiedTime: new Date(updatedAt).toISOString(),
             publishedTime: new Date(updatedAt).toISOString(),
           },
-          images: [getOgImage('About Me')],
+          images: [getOgImageForData('About Me')],
         }}
       />
       <div className="prose mx-auto mt-6 md:prose-lg md:mt-16">
