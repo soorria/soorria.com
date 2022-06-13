@@ -37,6 +37,11 @@ const config = {
         destination: 'https://github.com/soorria/soorria.com',
         permanent: false,
       },
+      {
+        source: '/contact',
+        destination: 'https://soorria.com/?ref=%2Fcontact#contact',
+        permanent: true,
+      },
     ]
   },
   async rewrites() {
