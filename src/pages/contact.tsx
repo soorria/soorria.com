@@ -8,7 +8,7 @@ const Sitemap: React.FC<SitemapProps> = () => {
 
 export default Sitemap
 
-export const getServerSideProps: GetServerSideProps = async ({ res }) => {
+export const getServerSideProps: GetServerSideProps = async () => {
   return {
     props: {},
     redirect: {
