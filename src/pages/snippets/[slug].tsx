@@ -7,7 +7,7 @@ import editUrl from '@/utils/editUrl'
 import { NextSeo } from 'next-seo'
 import { getOgImageForData } from '@/utils/og'
 import { useMdxComponent } from '@/lib/mdx'
-import { categoryLowerCaseToIcon } from '@/components/categories'
+import { categoryLowerCaseToIcon, defaultCategoryIcon } from '@/components/categories'
 import { formatDate } from '@/utils/date'
 import { useScrollCssVar } from '@/utils/use-scroll-css-var'
 import { PUBLIC_URL } from '@/constants'
@@ -16,7 +16,7 @@ const SCROLL_VAR = '--scroll'
 const CategoryIconDivider: React.FC<{ category: string }> = ({ category }) => {
   useScrollCssVar(SCROLL_VAR)
 
-  const Icon = categoryLowerCaseToIcon[category.toLowerCase()]
+  const Icon = categoryLowerCaseToIcon[category.toLowerCase()] || defaultCategoryIcon
 
   const line = (
     <div role="presentation" className="flex items-center opacity-50">

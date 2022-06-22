@@ -18,7 +18,7 @@ const projectCardMap: Record<string, ProjectCardComponent> = {
 
 const ProjectCard: ProjectCardComponent = ({ project }) => {
   if (project.slug in projectCardMap) {
-    const Comp = projectCardMap[project.slug]
+    const Comp = projectCardMap[project.slug]!
     return <Comp project={project} />
   }
 

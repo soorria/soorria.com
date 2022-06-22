@@ -53,9 +53,7 @@ const config = {
     ]
   },
   reactStrictMode: true,
-  future: {
-    webpack5: true,
-  },
+  // swcMinify: true,
   experimental: {
     legacyBrowsers: false,
     browsersListForSwc: true,

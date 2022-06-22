@@ -55,7 +55,7 @@ export const useSkills = ({
     () => defaultShowAll
   )
 
-  const skills = showAll ? SKILLS : indexes.map(i => SKILLS[i])
+  const skills = showAll ? SKILLS : indexes.map(i => SKILLS[i]!)
 
   return { skills, shuffle, toggleShowAll, showAll }
 }

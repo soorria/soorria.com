@@ -24,7 +24,7 @@ const zIndexes = {
 const SparkleSvg: SparkleComponent = props => {
   const { style, color, kind } = props
   if (kind && exoticSparkleComponents[kind]) {
-    const Sparkle = exoticSparkleComponents[kind]
+    const Sparkle = exoticSparkleComponents[kind]!
     return <Sparkle {...props} />
   }
   return (

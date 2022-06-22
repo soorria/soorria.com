@@ -16,7 +16,7 @@ const Subtitle: React.FC<SubtitleProps> = ({ options }) => {
   const rotationDuration = rotations > 0 ? getDurationMs(rotations) : 0
   const [index, setIndex] = useState(0)
   const components = useMdxComponents(options)
-  const Component = components[index]
+  const Component = components[index]!
 
   const randomise = () => {
     if (components.length < 1) return

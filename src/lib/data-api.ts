@@ -1,7 +1,30 @@
 import type { BaseFrontMatter, DataType } from '@/types/data'
-import type { NextApiHandler } from 'next'
+import type { NextApiHandler, NextApiRequest } from 'next'
 import { addCorsHeaders } from './cors'
 import { getAllFilesFrontMatter, getFileWithContent } from './data'
+
+const getQueryAsPositiveInteger = (req: NextApiRequest, param: string, def = 0): number => {
+  const value = req.query[param]
+  if (typeof value === 'string') {
+    const asMaybeInt = parseInt(value)
+    if (Number.isSafeInteger(asMaybeInt)) {
+      return asMaybeInt >= 0 ? asMaybeInt : def
+    }
+  }
+  return def
+}
+
+type PaginationOptions = {
+  page: number
+  size: number | null
+}
+
+const getPaginationOptions = (req: NextApiRequest): PaginationOptions => {
+  return {
+    page: getQueryAsPositiveInteger(req, '_page', 0),
+    size: getQueryAsPositiveInteger(req, '_size', 0),
+  }
+}
 
 interface GetAllOptions<T> {
   end?: boolean
@@ -17,10 +40,17 @@ export const createGetAllHandler =
     if (req.method === 'GET') {
       addCorsHeaders(res)
 
-      const frontMatters = await getAllFilesFrontMatter<T>(type)
+      let frontMatters = await getAllFilesFrontMatter<T>(type)
 
       if (compareForSort) {
         frontMatters.sort(compareForSort)
+      }
+
+      const { page, size } = getPaginationOptions(req)
+
+      if (size) {
+        const offset = page * size
+        frontMatters = frontMatters.slice(offset, offset + size)
       }
 
       res.setHeader('Cache-Control', 'public, s-max-age=31536000')

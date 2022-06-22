@@ -8,7 +8,7 @@ interface DemoWrapperProps {
   init?: 'lazy' | 'mount' | 'always'
 }
 
-const DemoWrapper: React.FC<DemoWrapperProps> = ({ component: Component, init = 'always' }) => {
+const DemoWrapper: React.FC<DemoWrapperProps> = ({ component: Component, init = 'mount' }) => {
   const [started, setStarted] = useState(init === 'always')
   const [key, setKey] = useState<number>(0)
 
@@ -35,14 +35,22 @@ const DemoWrapper: React.FC<DemoWrapperProps> = ({ component: Component, init = 
       ) : null}
 
       {!started ? (
-        <div className="h-20 bg-drac-purple/50 p-4 md:px-6">
-          <button
-            onClick={() => setStarted(true)}
-            className="block h-full w-full rounded bg-drac-bg text-drac-pink transition-colors hocus:text-drac-purple"
-          >
-            Start Demo
-          </button>
-        </div>
+        <>
+          <div className="no-js-hidden h-20 bg-drac-purple/50 p-4 md:px-6">
+            <button
+              onClick={() => setStarted(true)}
+              className="block h-full w-full rounded bg-drac-bg text-drac-pink transition-colors hocus:text-drac-purple"
+            >
+              Start Demo
+            </button>
+          </div>
+          <noscript>
+            <div className="grid h-full w-full place-items-center">
+              Enable JavaScript to see this demo
+            </div>
+            <style>{'.no-js-hidden{display:none}'}</style>
+          </noscript>
+        </>
       ) : null}
     </div>
   )

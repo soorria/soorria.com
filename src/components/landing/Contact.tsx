@@ -171,7 +171,7 @@ const Contact: React.FC<ContactProps> = ({ random = 0 }) => {
       <div className="grid grid-flow-row-dense grid-cols-1 gap-y-8 gap-x-16 sm:grid-cols-2">
         <div className="row-start space-y-4 sm:row-start-1">
           <p className="text-lg">
-            Want to work with me, or just want to chat? Shoot me an email or a message on Messenger
+            Want to work with me, or just want to chat? Shoot me an email or a message on Messenger{' '}
             <button
               type="button"
               tabIndex={-1}
@@ -206,11 +206,9 @@ const Contact: React.FC<ContactProps> = ({ random = 0 }) => {
         </div>
       </div>
       <noscript>
-        <style
-          dangerouslySetInnerHTML={{
-            __html: `.no-js-block{display:block !important}.no-js-text{color:#f8f8f2}`,
-          }}
-        />
+        <style>
+          {'.no-js-block{display:block !important}.no-js-text{color:#f8f8f2 !important}'}
+        </style>
       </noscript>
     </LandingSection>
   )

@@ -27,7 +27,9 @@
       ]
     },
     "incremental": true,
-    "importsNotUsedAsValues": "error"
+    "importsNotUsedAsValues": "error",
+    "strictNullChecks": true,
+    "noUncheckedIndexedAccess": true
   },
   "exclude": [
     "node_modules"

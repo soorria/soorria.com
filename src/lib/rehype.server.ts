@@ -43,7 +43,7 @@ export function rehypeCodeTitles() {
       // i.e. language-typescript:lib/mdx.ts
       if (cls.includes(':')) {
         // Split on the ':'
-        const [langClassName, title] = cls.split(':')
+        const [langClassName, title] = cls.split(':') as [string, string]
         // Add the title block to the tree at the index prior
         // to the <pre /> with the title we found.
         // eslint-disable-next-line @typescript-eslint/no-non-null-assertion

@@ -17,3 +17,5 @@ export const categoryLowerCaseToIcon: Record<string, IconComponent> = {
   miscellaneous: MiscCodeIcon,
   solidjs: SolidJsIcon,
 }
+
+export const defaultCategoryIcon = MiscCodeIcon

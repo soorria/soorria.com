@@ -1,14 +1,13 @@
 import type { SnippetFrontMatter } from '@/types/snippet'
 import Link from 'next/link'
 import { ClockIconSolid, EditIcon } from '@/components/icons'
-import { categoryLowerCaseToIcon } from './categories'
+import { categoryLowerCaseToIcon, defaultCategoryIcon } from './categories'
 import { formatDate } from '@/utils/date'
 
 const SnippetCard: React.FC<{ snippet: SnippetFrontMatter }> = ({
   snippet: { slug, title, shortDescription, createdAt, updatedAt, category },
 }) => {
-  const Icon =
-    categoryLowerCaseToIcon[category.toLowerCase()] || categoryLowerCaseToIcon.miscellaneous
+  const Icon = categoryLowerCaseToIcon[category.toLowerCase()] || defaultCategoryIcon
   return (
     <Link href={`/snippets/${slug}`} passHref>
       <a className="group relative overflow-hidden rounded-xl bg-drac-curr p-4 ring-drac-pink transition-shadow hover:shadow-2xl focus:outline-none focus:ring md:py-6 md:px-8 md:focus:ring-4">
