@@ -72,7 +72,7 @@ const malLink: Link = {
 }
 
 const siteLink: Link = {
-  href: 'https://sorria.com',
+  href: 'https://soorria.com',
   iconAlt: 'purple and pink square',
   title: 'website',
   icon: Logo,
