@@ -51,7 +51,7 @@ const UtilsProjectCard: React.FC<UtilsProjectCardProps> = ({
           <span>{project.title}</span> <UtilsTag />
         </header>
         <div className="flex max-w-[25rem]">
-          <ul className="list-disc space-y-2 pl-6">{children}</ul>
+          <ul className="list-disc space-y-4 pl-6">{children}</ul>
         </div>
         <div className="-m-2 mb-0">
           {project.hasContent && (

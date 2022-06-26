@@ -10,12 +10,10 @@ const SizesCard: ProjectCardComponent = ({ project }) => {
         (deflate, gzip, brotli)
       </li>
       <li>
-        Works when JavaScript is disabled, so you know I&apos;m not fingerprinting your browser. (I
-        will eat your files though 🙂)
+        Works when JavaScript is disabled, so you can rest assured Google and Facebook aren&apos;t
+        tracking you
       </li>
-      <li>
-        Has more themes than you&apos;ll ever need for an app like this! (29 &amp; random themes)
-      </li>
+      <li>Use the api endpoint if you&apos;re disgusted by UIs or a terminal maximalist</li>
     </UtilsProjectCard>
   )
 }
