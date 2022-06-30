@@ -30,11 +30,13 @@ export function rehypeCodeTitles() {
   return (tree: UnistNode) => visit(tree, 'element', visitor)
 
   function visitor(node: UnistNode, index: number | null, parent: Parent | null): void {
+    // @ts-expect-error idk
     if (!parent || node.tagName !== 'pre') {
       return
     }
 
     const pre = node
+    // @ts-expect-error also idk
     const code = Array.isArray(pre.children) ? pre.children[0] : pre.children
     const className: Array<string | never> = code.properties.className || []
 
@@ -48,6 +50,7 @@ export function rehypeCodeTitles() {
         // to the <pre /> with the title we found.
         // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
         parent.children.splice(index!, 0, {
+          // @ts-expect-error also also idk
           children: [
             {
               tagName: 'span',
@@ -69,6 +72,7 @@ export function rehypeCodeTitles() {
       return acc
     }, [] as Array<string>)
 
+    // @ts-expect-error also also also idk
     pre.children = [{ ...code, properties: { className: updatedClassName } }]
   }
 }

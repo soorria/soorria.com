@@ -1,6 +1,6 @@
 import cx from '@/utils/cx'
 import NextLink from 'next/link'
-import Image, { ImageProps } from 'next/image'
+import Image, { ImageProps } from 'next/future/image'
 import type { ProjectCardProps } from '../ProjectCard'
 import { COMMON_CLASSNAMES } from '../utils'
 import UtilsTag from './UtilsTag'
@@ -14,10 +14,12 @@ type UtilsProjectCardProps = ProjectCardProps &
     | {
         fullWidth: true
         bgImage?: ImageProps['src']
+        bgAlt: string
       }
     | {
         fullWidth?: false
         bgImage: never
+        bgAlt: never
       }
   )
 

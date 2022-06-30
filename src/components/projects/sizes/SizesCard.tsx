@@ -4,7 +4,12 @@ import UtilsProjectCard from '../_utils/UtilsProjectCard'
 
 const SizesCard: ProjectCardComponent = ({ project }) => {
   return (
-    <UtilsProjectCard fullWidth project={project} bgImage={bgImg}>
+    <UtilsProjectCard
+      fullWidth
+      project={project}
+      bgImage={bgImg}
+      bgAlt="flowchart showing simulated usage of the sizes utility with text, html and png files compressed with gzip coming resulting in a size of 2830 bytes"
+    >
       <li>
         Measure the size of your files when compressed with algorithms used across the web!
         (deflate, gzip, brotli)
