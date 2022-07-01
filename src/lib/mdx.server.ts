@@ -1,7 +1,7 @@
 import type { BaseFrontMatter } from '@/types/data'
 import type { Awaited } from '@/utils/types'
 import { bundleMDX } from 'mdx-bundler'
-import mdxPrism from 'mdx-prism'
+import rehypePrism from 'rehype-prism-plus'
 import rehypeSlug from 'rehype-slug'
 import rehypeAutolinkHeadings from 'rehype-autolink-headings'
 import { rehypeAccessibleEmojis } from 'rehype-accessible-emojis'
@@ -31,12 +31,12 @@ export const render = async <T extends BaseFrontMatter>(
       './components': components,
       ...(source.includes('$styles') ? { $styles: STYLE_UTILS } : null),
     },
-    xdmOptions(options) {
+    mdxOptions(options) {
       options.rehypePlugins = [
         ...(options.rehypePlugins ?? []),
         rehypeSlug,
         rehypeCodeTitles,
-        mdxPrism,
+        rehypePrism,
         [
           rehypeAutolinkHeadings,
           {

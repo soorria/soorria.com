@@ -25,7 +25,7 @@ const CustomCodeBlock: React.FC<any> = ({ children, className, ...rest }) => {
     setContent(pre.current?.innerText ?? '')
   }, [])
 
-  if (className && className.includes('not-custom')) {
+  if (className?.includes('not-custom')) {
     return <pre className={className}>{children}</pre>
   }
 
@@ -33,9 +33,9 @@ const CustomCodeBlock: React.FC<any> = ({ children, className, ...rest }) => {
   const language = LANGUAGE_NAME_MAP[languageFromClassName] ?? languageFromClassName
 
   return (
-    <div className={cx('my-[1.7em]', COMMON_CLASSNAMES.codeAndDemoRoot)}>
-      <div className="mb-2 flex items-center space-x-2 font-display text-sm font-bold tracking-wide">
-        <div className="text-xs uppercase text-drac-purple sm:text-sm">{language}</div>
+    <div className={cx('my-7 !pb-0', COMMON_CLASSNAMES.codeAndDemoRoot)}>
+      <div className="mb-4 flex items-center space-x-2 font-display text-sm font-bold tracking-wide">
+        <div className="text-sm uppercase text-drac-purple sm:text-sm">{language}</div>
         <div className="flex-1" />
         {content && language.startsWith('typescript') && (
           <a

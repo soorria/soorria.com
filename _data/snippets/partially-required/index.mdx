@@ -14,7 +14,7 @@ type PartiallyRequired<T, K extends keyof T> = Omit<T, K> & Required<Pick<T, K>>
 
 ## Usage
 
-```tsx
+```typescript
 type User = {
   name: string
   email?: string

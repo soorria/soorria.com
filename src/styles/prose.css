@@ -37,16 +37,29 @@
  * Code Snippets
  */
 .prose pre {
-  @apply m-0 rounded-none bg-drac-bg p-0;
+  @apply rounded-none bg-drac-bg p-0;
+  @apply pb-3 -mx-2;
 }
 
+.code-line {
+  @apply relative px-2;
+}
+@screen md {
+.prose pre {
+  @apply -mx-6;
+}
+.code-line {
+  @apply px-6;
+}
+}
 .prose code {
   @apply rounded bg-drac-curr p-1 leading-none text-drac-pink;
 }
 
-.prose pre code {
+code.code-highlight {
   font-size: 1em;
-  @apply rounded-none bg-transparent p-0 text-drac-fg;
+  @apply rounded-none bg-transparent p-0 text-drac-fg grid;
+  line-height: 1.75;
 }
 
 .prose code::before,
@@ -54,13 +67,8 @@
   content: '';
 }
 
-.prose pre code::before,
-.prose pre code::after {
-  content: none;
-}
-
-.prose pre {
-  @apply pb-2;
+.highlight-line {
+  @apply bg-drac-curr;
 }
 
 /* Chrome */
