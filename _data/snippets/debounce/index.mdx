@@ -16,7 +16,7 @@ const debounce = <T extends CallableFunction>(fn: T, delay: number): T => {
 
   return ((...args: any[]) => {
     if (timer) clearTimeout(timer)
-    setTimeout(() => {
+    timer = setTimeout(() => {
       fn(...args)
     }, delay)
   }) as any
