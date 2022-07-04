@@ -14,6 +14,7 @@ const projectCardMap: Record<string, ProjectCardComponent> = {
   'clinically-relevant': dynamic(() => import('./clinically-relevant/ClinicallyRelevantCard')),
   'not-messenger': dynamic(() => import('./not-messenger/NotMessengerCard')),
   sizes: dynamic(() => import('./sizes/SizesCard')),
+  pokelife: dynamic(() => import('./pokelife/PokelifeCard')),
 }
 
 const ProjectCard: ProjectCardComponent = ({ project }) => {
