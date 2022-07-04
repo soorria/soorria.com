@@ -182,3 +182,8 @@ input {
 *:hover > .heading-anchor:hover:after {
   @apply text-drac-pink;
 }
+
+/** next/future/image maybe fix */
+img + noscript > img {
+  display: none;
+}

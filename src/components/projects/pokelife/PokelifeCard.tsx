@@ -40,18 +40,28 @@ const PokelifeCard: React.FC<PokelifeCardProps> = ({ project }) => {
     return `https://pokelife.soorria.com/?${new URLSearchParams(params)}`
   }, [delay, destroyCpu, types])
 
+  const isDataSaver = typeof window !== 'undefined' && (navigator?.connection as any)?.saveData
+
   return (
     <div
       id="pokelife"
       className={cx('bg-[#272933] sm:col-span-2', COMMON_CLASSNAMES.specialCardRoot)}
     >
       <div className="absolute -inset-4 grid grid-cols-3 overflow-hidden rounded-xl">
-        <iframe
-          title="Pokelife"
-          src={url}
-          className="col-span-2 col-start-2 ml-auto block h-full w-full rounded-xl"
-          allowTransparency
-        />
+        {!isDataSaver && (
+          <iframe
+            title="Pokelife"
+            src={url}
+            className="no-js-hidden col-span-2 col-start-2 ml-auto block h-full w-full rounded-xl"
+            allowTransparency
+          />
+        )}
+        <noscript className="col-span-2 col-start-2 grid items-center justify-end p-12">
+          <style>{'.no-js-hidden{display:none}'}</style>
+          <p className="hidden w-48 text-right text-xl sm:block">
+            Enable JavaScript to see a demo here!
+          </p>
+        </noscript>
       </div>
       <div className="absolute -inset-4 bg-gradient-to-r from-[#272933] via-[#272933] to-[#27293377] sm:to-transparent" />
       <div className="relative z-10 flex h-full flex-col space-y-4 p-8">
@@ -85,7 +95,7 @@ const PokelifeCard: React.FC<PokelifeCardProps> = ({ project }) => {
                 remove types you don&apos;t like
               </SettingButton>
             </li>
-            <li>Embeddable, and mesmerising to look at →.</li>
+            <li className="no-js-hidden">Embeddable, and mesmerising to look at →.</li>
             <li>
               Runs off the main thread so UI still works okay even on the most taxing settings.
             </li>

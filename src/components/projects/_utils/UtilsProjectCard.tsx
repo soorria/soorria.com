@@ -37,13 +37,15 @@ const UtilsProjectCard: React.FC<UtilsProjectCardProps> = ({
       {fullWidth && bgImage ? (
         <>
           <div className="absolute inset-y-0 right-0 hidden items-center sm:flex">
-            <Image
-              src={bgImage}
-              height="356"
-              width="381"
-              alt="flowchart showing file sizes after gzip"
-              placeholder="blur"
-            />
+            <div>
+              <Image
+                src={bgImage}
+                height="356"
+                width="381"
+                alt="flowchart showing file sizes after gzip"
+                placeholder="blur"
+              />
+            </div>
           </div>
           <div className="absolute inset-0 bg-gradient-to-r from-var-bg via-var-bg to-transparent"></div>
         </>
