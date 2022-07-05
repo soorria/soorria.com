@@ -64,7 +64,7 @@ const PokelifeCard: React.FC<PokelifeCardProps> = ({ project }) => {
         </noscript>
       </div>
       <div className="absolute -inset-4 bg-gradient-to-r from-[#272933] via-[#272933] to-[#27293377] sm:to-transparent" />
-      <div className="relative z-10 flex h-full flex-col space-y-4 p-8">
+      <div className="relative z-10 flex h-full flex-col space-y-4 rounded-xl p-8 ring-4 ring-inset ring-drac-pink">
         <header className="font-display text-3xl font-bold">Pokelife</header>
         <div className="max-w-[25rem] flex-1">
           <ul className="list-disc space-y-4 pl-6">
@@ -94,6 +94,7 @@ const PokelifeCard: React.FC<PokelifeCardProps> = ({ project }) => {
               <SettingButton onClick={() => setTypes((types + 1) % typesOptions.length)}>
                 remove types you don&apos;t like
               </SettingButton>
+              . <small>(click underlined words!)</small>
             </li>
             <li className="no-js-hidden">Embeddable, and mesmerising to look at →.</li>
             <li>
