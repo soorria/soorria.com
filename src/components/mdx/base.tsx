@@ -1,5 +1,5 @@
 import CustomLink from '../CustomLink'
-import CustomCodeBlock from './CodeBlock'
+import CustomCodeBlock, { TsJsSwitcher } from './CodeBlock'
 import Demo from './Demo'
 import Sparkles from './Sparkles'
 
@@ -8,4 +8,5 @@ export const baseComponents = {
   pre: CustomCodeBlock,
   Demo,
   Sparkles,
+  TsJsSwitcher,
 }

@@ -5,7 +5,7 @@ category: TypeScript
 tags:
   - typescript
 createdAt: '2021-05-09'
-updatedAt: '2021-05-09'
+updatedAt: '2022-07-06'
 ---
 
 A tiny helper function to conditionally join classnames. Simplified version
@@ -19,9 +19,13 @@ const cx = (...classes: (string | boolean | null | undefined)[]) =>
 
 ## Usage
 
-```tsx
+```tsx {3-4}
 const Button: React.FC<{ disabled?: boolean }> = ({ disabled, children }) => (
-  <button className={cx('button', disabled && 'button--disabled')} disabled={disabled}>
+  <button
+    // When rendered, the button will have class="button button--disabled"
+    className={cx('button', disabled && 'button--disabled')}
+    disabled={disabled}
+  >
     {children}
   </button>
 )

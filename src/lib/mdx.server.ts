@@ -6,6 +6,7 @@ import rehypeSlug from 'rehype-slug'
 import rehypeAutolinkHeadings from 'rehype-autolink-headings'
 import { rehypeAccessibleEmojis } from 'rehype-accessible-emojis'
 import { rehypeCodeTitles } from './rehype.server'
+import { remarkTypeScriptTransform } from './remark.server'
 
 const STYLE_UTILS = `
 import { createElement } from 'react'
@@ -32,6 +33,7 @@ export const render = async <T extends BaseFrontMatter>(
       ...(source.includes('$styles') ? { $styles: STYLE_UTILS } : null),
     },
     mdxOptions(options) {
+      options.remarkPlugins = [...(options.remarkPlugins ?? []), remarkTypeScriptTransform]
       options.rehypePlugins = [
         ...(options.rehypePlugins ?? []),
         rehypeSlug,

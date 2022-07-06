@@ -38,28 +38,31 @@
  */
 .prose pre {
   @apply rounded-none bg-drac-bg p-0;
-  @apply pb-3 -mx-2;
+  @apply -mx-2 pb-3;
 }
 
 .code-line {
-  @apply relative px-2;
+  @apply relative px-2 block;
 }
 @screen md {
-.prose pre {
-  @apply -mx-6;
+  .prose pre {
+    @apply -mx-6;
+  }
+  .code-line {
+    @apply px-6;
+  }
 }
-.code-line {
-  @apply px-6;
-}
-}
+
 .prose code {
   @apply rounded bg-drac-curr p-1 leading-none text-drac-pink;
 }
 
 code.code-highlight {
   font-size: 1em;
-  @apply rounded-none bg-transparent p-0 text-drac-fg grid;
+  @apply rounded-none bg-transparent p-0 text-drac-fg;
   line-height: 1.75;
+  float: left; /* 1 */
+  min-width: 100%; /* 2 */
 }
 
 .prose code::before,
@@ -68,7 +71,9 @@ code.code-highlight {
 }
 
 .highlight-line {
-  @apply bg-drac-curr;
+  background-color: #21222c;
+  position: relative;
+  box-shadow: inset 4px 0 0 0 theme('colors.drac.purple');
 }
 
 /* Chrome */
@@ -78,7 +83,7 @@ code.code-highlight {
 }
 
 .prose pre::-webkit-scrollbar-track {
-  @apply bg-transparent;
+  @apply bg-transparent rounded-full;
 }
 
 .prose pre::-webkit-scrollbar-thumb {

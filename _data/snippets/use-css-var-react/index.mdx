@@ -28,7 +28,10 @@ type CssVarControls = {
   remove: () => void
 }
 
-export const useCssVar = ({ name, root = document.body }: UseCssVarProps): CssVarControls => {
+export const useCssVar = ({
+  name,
+  root = document.body,
+}: UseCssVarProps): CssVarControls => {
   const controls: CssVarControls = useMemo(
     () => ({
       set: value => root.style.setProperty(name, value),

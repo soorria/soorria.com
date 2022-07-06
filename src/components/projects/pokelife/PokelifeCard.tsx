@@ -53,7 +53,6 @@ const PokelifeCard: React.FC<PokelifeCardProps> = ({ project }) => {
             title="Pokelife"
             src={url}
             className="no-js-hidden col-span-2 col-start-2 ml-auto block h-full w-full rounded-xl"
-            allowTransparency
           />
         )}
         <noscript className="col-span-2 col-start-2 grid items-center justify-end p-12">
