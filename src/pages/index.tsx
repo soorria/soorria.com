@@ -68,7 +68,7 @@ export const getStaticProps: GetStaticProps<IndexProps> = async () => {
   )
 
   const nowText = await getSingletonTextSafe('now')
-  const now = nowText ? (await render(nowText)).code : null
+  const now = nowText ? (await render(nowText ?? '')).code : null
 
   const { isHeroStatic, nSkills = 8 } = await getSingletonJsonSafe('index-options')
 
