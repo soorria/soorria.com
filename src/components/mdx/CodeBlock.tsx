@@ -1,6 +1,7 @@
 import cx from '@/utils/cx'
 import { useCopy } from '@/utils/use-copy'
-import React, { Children, useMemo, useRef, useState, isValidElement, ReactElement } from 'react'
+import { useSyncedLocalStorage } from '@/utils/use-synced-local-storage'
+import React, { Children, useMemo, useRef, isValidElement, ReactElement } from 'react'
 import { COMMON_CLASSNAMES } from './utils'
 
 const LANGUAGE_NAME_MAP: Record<string, string> = {
@@ -66,7 +67,7 @@ export default CustomCodeBlock
 
 const TS_CLASSNAMES = new Set(['language-ts', 'language-tsx', 'language-typescript'])
 export const TsJsSwitcher: React.FC = props => {
-  const [isTs, setIsTs] = useState(true)
+  const [isTs, setIsTs] = useSyncedLocalStorage('scom:isTs', true)
   const [copy, copied] = useCopy()
   const pre = useRef<HTMLPreElement>(null)
 
