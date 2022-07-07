@@ -112,7 +112,7 @@ export const useSyncedLocalStorage = <T extends NonNullable<any>, K extends stri
 
 **Note**:
 
-- This hook relies on the [`mitt`](https://github.com/developit/mitt) event emitted package - it's
+- This hook relies on the [`mitt`](https://github.com/developit/mitt) event emitter package - it's
   only tiny at only 200 bytes(!!) that I would have had to include anyway (for syncing between hook
   instances in the same tab), and has
   [tests](https://github.com/developit/mitt/blob/main/test/index_test.ts) that I don't want to
