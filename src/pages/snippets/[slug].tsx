@@ -75,7 +75,7 @@ const SnippetPage: React.FC<SnippetPageProps> = ({ snippet, mdx }) => {
       <div className="prose mx-auto mt-6 md:prose-lg">
         <Content />
         <PostBottomSection>
-          <div>
+          <div suppressHydrationWarning>
             Created {formatDate(snippet.createdAt)} / Updated {formatDate(snippet.updatedAt)}
           </div>
           <div>
