@@ -3,7 +3,7 @@ import type { BaseData, FrontMatter } from './data'
 export interface Snippet extends BaseData {
   category: string
   createdAt: string
-  updatedAt: string
+  updatedAt?: string
   tags: string[]
 }
 

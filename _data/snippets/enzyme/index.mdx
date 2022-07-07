@@ -17,7 +17,9 @@ const wrapper = shallow(<ComponentThatRendersAnInput />)
 const inputWrapper = wrapper.find('input[type="email"]')
 
 // Change `target` to `currentTarget` if you're updating state based on that instead
-inputWrapper.simulate('change', { target: { value: 'soorria.ss@gmail.com' } })
+inputWrapper.simulate('change', {
+  target: { value: 'soorria.ss@gmail.com' },
+})
 ```
 
 ## Form Submit Event
@@ -36,4 +38,5 @@ formWrapper.simulate('submit', { preventDefault: noop })
 **NB**:
 
 - Unfortunately this does not work properly if you're using `FormData` 😔
-- You can't test submitting a form by clicking a button / input with `type="submit"` due to events not working the same in jsdom
+- You can't test submitting a form by clicking a button / input with `type="submit"` due to events
+  not working the same in jsdom

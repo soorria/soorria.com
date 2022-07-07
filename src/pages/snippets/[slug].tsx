@@ -66,7 +66,7 @@ const SnippetPage: React.FC<SnippetPageProps> = ({ snippet, mdx }) => {
             section: 'Snippets',
             authors: ['Soorria Saruva'],
             publishedTime: new Date(snippet.createdAt).toISOString(),
-            modifiedTime: new Date(snippet.updatedAt).toISOString(),
+            modifiedTime: new Date(snippet.updatedAt || snippet.createdAt).toISOString(),
           },
           images: [getOgImageForData(DataType.snippets, snippet.title)],
         }}
@@ -76,7 +76,8 @@ const SnippetPage: React.FC<SnippetPageProps> = ({ snippet, mdx }) => {
         <Content />
         <PostBottomSection>
           <div suppressHydrationWarning>
-            Created {formatDate(snippet.createdAt)} / Updated {formatDate(snippet.updatedAt)}
+            Created {formatDate(snippet.createdAt)}
+            {!!snippet.updatedAt && `/ Updated ${formatDate(snippet.updatedAt)}`}
           </div>
           <div>
             Found a mistake, or want to suggest an improvement? Edit on GitHub{' '}

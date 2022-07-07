@@ -1,5 +1,5 @@
 ---
-title: useLocalStorage
+title: useLocalStorage (React)
 shortDescription: Save state to localStorage with an interface almost identical to useState
 category: React Hook
 tags:
@@ -45,11 +45,10 @@ const useLocalStorage = <T>(
 
 **Note**:
 
-- This version of the hook with only work client-side and will throw an error
-  you server-render a component using the hook
-- You should only run the hook once per key at a time - the hook doesn't handle
-  changes when another instance of the hook updates the matching key in
-  `localStorage`
+- This version of the hook with only work client-side and will throw an error you server-render a
+  component using the hook
+- You should only run the hook once per key at a time - the hook doesn't handle changes when another
+  instance of the hook updates the matching key in `localStorage`
 
 ## Usage
 
@@ -69,9 +68,8 @@ const Example = () => {
 
 import { Example, LOCALSTORAGE_KEY } from './components'
 
-Watch the value for the <code>{LOCALSTORAGE_KEY}</code> key in the
-`Application > Local Storage` section in your devtools as you type in the input.
-If you're on mobile, enter some text into the input, and reload the page - when
-you do, you'll see the same text that you entered pre-filled.
+Watch the value for the <code>{LOCALSTORAGE_KEY}</code> key in the `Application > Local Storage`
+section in your devtools as you type in the input. If you're on mobile, enter some text into the
+input, and reload the page - when you do, you'll see the same text that you entered pre-filled.
 
 <Demo component={Example} init="mount" />

@@ -1,6 +1,7 @@
 ---
 title: useBoolean
-shortDescription: Toggle and set a boolean piece of state with a slightly better interface than straight useState
+shortDescription:
+  Toggle and set a boolean piece of state with a slightly better interface than straight useState
 category: React Hook
 tags:
   - typescript
@@ -9,16 +10,14 @@ createdAt: '2021-05-02'
 updatedAt: '2022-03-05'
 ---
 
-Toggle a piece of boolean state, but unlike with straight `useState` you can
-pass the `setState` function no arguments to toggle the boolean.
+Toggle a piece of boolean state, but unlike with straight `useState` you can pass the `setState`
+function no arguments to toggle the boolean.
 
 ```typescript
 import type { Dispatch } from 'react'
 import { useReducer } from 'react'
 
-export const useBoolean = (
-  initialValue = false
-): [boolean, (nextValue?: boolean) => void] => {
+export const useBoolean = (initialValue = false): [boolean, (nextValue?: boolean) => void] => {
   return useReducer((currentValue: boolean, nextValue?: boolean) => {
     return typeof nextValue !== 'undefined' ? nextValue : !currentValue
   }, initialValue)

@@ -42,7 +42,7 @@
 }
 
 .code-line {
-  @apply relative px-2 block;
+  @apply relative block px-2;
 }
 @screen md {
   .prose pre {
@@ -83,7 +83,7 @@ code.code-highlight {
 }
 
 .prose pre::-webkit-scrollbar-track {
-  @apply bg-transparent rounded-full;
+  @apply rounded-full bg-transparent;
 }
 
 .prose pre::-webkit-scrollbar-thumb {

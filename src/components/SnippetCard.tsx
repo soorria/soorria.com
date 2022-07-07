@@ -26,10 +26,12 @@ const SnippetCard: React.FC<{ snippet: SnippetFrontMatter }> = ({
               <ClockIconSolid className="inline-block h-4 w-4" />
               <span>{formatDate(createdAt)}</span>
             </div>
-            <div className="flex items-center space-x-2">
-              <EditIcon className="inline-block h-4 w-4" />
-              <span>{formatDate(updatedAt)}</span>
-            </div>
+            {updatedAt && createdAt !== updatedAt ? (
+              <div className="flex items-center space-x-2">
+                <EditIcon className="inline-block h-4 w-4" />
+                <span>{formatDate(updatedAt)}</span>
+              </div>
+            ) : null}
           </div>
         </div>
       </a>

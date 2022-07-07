@@ -1,5 +1,7 @@
 import { Parent, visit } from 'unist-util-visit'
-import { transformSync } from 'esbuild'
+import { transformSync } from '@babel/core'
+// @ts-expect-error no types
+import tsPreset from '@babel/preset-typescript'
 import { format } from 'prettier'
 import type { Transformer } from 'unified'
 import type { Code } from 'mdast'
@@ -13,11 +15,12 @@ export const remarkTypeScriptTransform = (): Transformer => {
     if (!lang || !isTypescriptCodeBlock(lang)) return
 
     const transformedLang = getJavascriptType(lang)
-    const transformedCode = transformSync(value, {
-      jsx: 'preserve',
-      minify: false,
-      loader: lang === 'tsx' ? 'tsx' : 'ts',
-    }).code
+    const transformedCode =
+      transformSync(value, {
+        filename: `file.${lang === 'tsx' ? 'tsx' : 'ts'}`,
+        retainLines: true,
+        presets: [tsPreset],
+      })?.code ?? ''
 
     const formattedCode = format(transformedCode, {
       semi: false,

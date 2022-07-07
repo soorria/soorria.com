@@ -6,12 +6,16 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint --fix src",
-    "format": "prettier -w src ./**/*.js && prettier --config './_data/.prettierrc' --parser mdx -w _data/**/*.mdx",
+    "format": "run-s format:*",
+    "format:code": "prettier -w src ./**/*.js",
+    "format:mdx": "prettier --config './_data/.prettierrc' -w _data/**/*.mdx",
     "type-check": "tsc --noEmit",
     "husky:install": "husky install",
     "prepare": "is-ci-cli \"\" \"husky:install\""
   },
   "dependencies": {
+    "@babel/core": "^7.18.6",
+    "@babel/preset-typescript": "^7.18.6",
     "@next/bundle-analyzer": "^10.2.0",
     "@supabase/supabase-js": "^1.27.0",
     "date-fns": "^2.19.0",
@@ -40,6 +44,7 @@
   "devDependencies": {
     "@next/eslint-plugin-next": "^12.0.1",
     "@tailwindcss/typography": "^0.5.1",
+    "@types/babel__core": "^7.1.19",
     "@types/node": "^12.12.21",
     "@types/prettier": "^2.6.3",
     "@types/react": "^17.0.2",
@@ -56,6 +61,7 @@
     "husky": "^6.0.0",
     "is-ci-cli": "^2.2.0",
     "lint-staged": "^10.5.4",
+    "npm-run-all": "^4.1.5",
     "postcss": "^8.4.5",
     "prettier-plugin-tailwindcss": "^0.1.4",
     "rehype": "^11.0.0",

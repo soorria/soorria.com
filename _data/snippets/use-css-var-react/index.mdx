@@ -9,10 +9,10 @@ createdAt: '2022-05-04'
 updatedAt: '2022-05-04'
 ---
 
-Set, get and remove a [CSS custom property](https://developer.mozilla.org/en-US/docs/Web/CSS/Using_CSS_custom_properties)
-from the comfort of a React component. This _could_ result in slightly more performant
-code when you're setting the `style` property directly since React will re-run your
-component fewer times.
+Set, get and remove a
+[CSS custom property](https://developer.mozilla.org/en-US/docs/Web/CSS/Using_CSS_custom_properties)
+from the comfort of a React component. This _could_ result in slightly more performant code when
+you're setting the `style` property directly since React will re-run your component fewer times.
 
 ```typescript
 import { useMemo, useEffect } from 'react'
@@ -28,10 +28,7 @@ type CssVarControls = {
   remove: () => void
 }
 
-export const useCssVar = ({
-  name,
-  root = document.body,
-}: UseCssVarProps): CssVarControls => {
+export const useCssVar = ({ name, root = document.body }: UseCssVarProps): CssVarControls => {
   const controls: CssVarControls = useMemo(
     () => ({
       set: value => root.style.setProperty(name, value),
@@ -51,27 +48,29 @@ export const useCssVar = ({
 
 **Note**:
 
-- We use `useMemo`, so that if you follow hook rules and use the helpers in a
-  function inside a `useEffect` , `useCallback`, etc, you won't have code
-  (re-)running unnecessarily.
+- We use `useMemo`, so that if you follow hook rules and use the helpers in a function inside a
+  `useEffect` , `useCallback`, etc, you won't have code (re-)running unnecessarily.
 
-- If you don't want the variable to be removed when the hook is no longer used,
-  you can either remove the `useEffect`, or add an extra prop and conditionally
-  return a cleanup function in the `useEffect`.
+- If you don't want the variable to be removed when the hook is no longer used, you can either
+  remove the `useEffect`, or add an extra prop and conditionally return a cleanup function in the
+  `useEffect`.
 
-- This hook doesn't use `useState` since it would nullify the performance aspect,
-  and I didn't feel the need to be notified when the variable changed on the root.
-  You could use [`MutationObserver`](https://developer.mozilla.org/en-US/docs/Web/API/MutationObserver)
-  if you wanted to know if the variable was updated on the `root`.
+- This hook doesn't use `useState` since it would nullify the performance aspect, and I didn't feel
+  the need to be notified when the variable changed on the root. You could use
+  [`MutationObserver`](https://developer.mozilla.org/en-US/docs/Web/API/MutationObserver) if you
+  wanted to know if the variable was updated on the `root`.
 
 ## Demo
 
 import { Example, EXAMPLE_CSS_VAR, EXAMPLE_TRANSFORM } from './components'
 
-If you open up your browser's devtools, find the `<main>` element and look at
-its `style` attribute, you'll see the <code>{EXAMPLE_CSS_VAR}</code> CSS
-variable change as you change the input's value or press the button.
+If you open up your browser's devtools, find the `<main>` element and look at its `style` attribute,
+you'll see the
 
-The image's rotation is handled by styling it with <code>transform: {EXAMPLE_TRANSFORM}</code>.
+<code>{EXAMPLE_CSS_VAR}</code> CSS variable change as you change the input's value or press the button.
+
+The image's rotation is handled by styling it with
+
+<code>transform: {EXAMPLE_TRANSFORM}</code>.
 
 <Demo component={Example} />
