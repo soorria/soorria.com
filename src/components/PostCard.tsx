@@ -1,7 +1,7 @@
 import type { PostFrontMatter } from '@/types/post'
 import Link from 'next/link'
-import { format } from 'date-fns'
 import { ClockIconSolid, EditIcon } from '@/components/icons'
+import { formatDate } from '@/utils/date'
 
 const SnippetCard: React.FC<{ post: PostFrontMatter }> = ({
   post: { slug, title, shortDescription, createdAt, updatedAt },
@@ -16,12 +16,12 @@ const SnippetCard: React.FC<{ post: PostFrontMatter }> = ({
         <div className="flex items-center space-x-8 text-sm">
           <div className="flex items-center space-x-2">
             <ClockIconSolid className="inline-block h-4 w-4" />
-            <span>{createdAt ? format(new Date(createdAt), 'dd/MM/yy') : 'UNPUBLISHED'}</span>
+            <span>{createdAt ? formatDate(createdAt) : 'UNPUBLISHED'}</span>
           </div>
           {updatedAt ? (
             <div className="flex items-center space-x-2">
               <EditIcon className="inline-block h-4 w-4" />
-              <span>{format(new Date(updatedAt), 'dd/MM/yy')}</span>
+              <span>{formatDate(updatedAt)}</span>
             </div>
           ) : null}
         </div>
