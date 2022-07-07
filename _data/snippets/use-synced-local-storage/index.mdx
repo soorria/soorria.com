@@ -10,7 +10,7 @@ updatedAt:
 ---
 
 Save state to localStorage and sync it between hook instances, tabs and windows! It also has an
-almost idential interface to `useState`.
+almost identical interface to `useState`.
 
 This is an extended / advanced version of [`useLocalStorage`](/snippets/use-local-storage) that adds
 the following features:
@@ -28,17 +28,18 @@ import mitt from 'mitt'
 const em = mitt<Record<string, any>>()
 
 // This block relies on window, so to make sure it only runs on the client
-// we need to icheck if `window` is defined
+// we need to check if `window` is defined
 if (typeof window !== 'undefined') {
   // We define this globally since it simplifies the already extremely
-  // complicated hook a tiny bit, and we can handle
+  // complicated hook a tiny bit, and we can handle emitting changes from
+  // other tabs / windows in one spot
   window.addEventListener('storage', event => {
     if (event.storageArea === localStorage && event.key != null) {
       em.emit(event.key, event.newValue == null ? null : JSON.parse(event.newValue))
     }
   })
 
-  // Same as above  - we can handle setting localStorage all in one spot.
+  // Same as above  - we can handle setting localStorage all in one spot
   em.on('*', (key, data) => {
     localStorage.setItem(key, data)
   })
@@ -122,3 +123,6 @@ export const useSyncedLocalStorage = <T extends NonNullable<any>, K extends stri
   issues should be caught at compile-time, I recommend wrapping your state in an object (e.g.
   `useSyncedLocalStorage<{ user: User | null }>('user', { user: null })`), or you can modify the
   hook to suit your needs.
+
+- Unfortunately we have 4 refs of which none are used for DOM elements, and I'm not sure of a better
+  way to get around the issues they solve without adding extra state
