@@ -22,7 +22,7 @@ const SettingButton: React.FC<ButtonHTMLAttributes<HTMLButtonElement>> = props =
   )
 }
 
-const typesOptions = [['fire', 'water', 'grass'], ['ice', 'electric', 'rock'], []]
+const typesOptions = [['fire', 'water', 'grass'], ['ground', 'grass', 'poison'], []]
 
 const PokelifeCard: React.FC<PokelifeCardProps> = ({ project }) => {
   const [delay, setDelay] = useState(100)
