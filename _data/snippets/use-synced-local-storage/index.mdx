@@ -45,8 +45,8 @@ if (typeof window !== 'undefined') {
   })
 }
 
-export const useSyncedLocalStorage = <T extends NonNullable<any>, K extends string>(
-  key: K,
+export const useSyncedLocalStorage = <T extends NonNullable<any>>(
+  key: string,
   initialValue: T
 ): [T, Dispatch<SetStateAction<T>>] => {
   const [state, setState] = useState<T>(initialValue)
