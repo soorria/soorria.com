@@ -21,7 +21,7 @@ export const getTextFromNullablePre = (pre: HTMLPreElement | undefined | null): 
 
   return Array.from(firstCodeChild.children)
     .map(line => (line as HTMLElement).innerText || '')
-    .join()
+    .join('\n')
 }
 
 export const LANGUAGE_NAME_MAP: Record<string, string> = {
