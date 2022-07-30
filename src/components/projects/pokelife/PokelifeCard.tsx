@@ -4,7 +4,7 @@ import { CodeIcon, ExternalIcon, InfoIcon } from '@/components/icons'
 import cx from '@/utils/cx'
 import { COMMON_CLASSNAMES } from '../utils'
 import type React from 'react'
-import { ButtonHTMLAttributes, useMemo, useState } from 'react'
+import { ButtonHTMLAttributes, useEffect, useMemo, useRef, useState } from 'react'
 
 interface PokelifeCardProps {
   project: ProjectFrontMatter
@@ -28,6 +28,8 @@ const PokelifeCard: React.FC<PokelifeCardProps> = ({ project }) => {
   const [delay, setDelay] = useState(100)
   const [destroyCpu, setDestroyCpu] = useState(false)
   const [types, setTypes] = useState(0)
+  const [showDemo, setShowDemo] = useState(false)
+  const root = useRef<HTMLDivElement>(null)
 
   const url = useMemo(() => {
     const params = { embed: 'true' } as any
@@ -40,15 +42,39 @@ const PokelifeCard: React.FC<PokelifeCardProps> = ({ project }) => {
     return `https://pokelife.soorria.com/?${new URLSearchParams(params)}`
   }, [delay, destroyCpu, types])
 
+  useEffect(() => {
+    if (!root.current) return
+
+    const obs = new IntersectionObserver(
+      entries => {
+        console.log(entries)
+        if (entries[0]?.isIntersecting) {
+          setShowDemo(true)
+          obs.disconnect()
+        }
+      },
+      {
+        threshold: [0],
+      }
+    )
+
+    obs.observe(root.current)
+
+    return () => {
+      obs.disconnect()
+    }
+  }, [])
+
   const isDataSaver = typeof window !== 'undefined' && (navigator?.connection as any)?.saveData
 
   return (
     <div
       id="pokelife"
+      ref={root}
       className={cx('bg-[#272933] sm:col-span-2', COMMON_CLASSNAMES.specialCardRoot)}
     >
       <div className="absolute -inset-4 grid grid-cols-3 overflow-hidden rounded-xl">
-        {!isDataSaver && (
+        {!isDataSaver && showDemo && (
           <iframe
             title="Pokelife"
             src={url}
