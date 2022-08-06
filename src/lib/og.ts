@@ -74,7 +74,7 @@ export const createOGMarkup = (main: string, subtitle?: string): string => `
     line-height: 1;
   }
   .text--subtitle {
-    margin-top: 2rem;
+    margin-top: 1rem;
     font-size: 1.875rem;
     line-height: 2.25rem;
   }

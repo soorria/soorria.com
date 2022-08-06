@@ -19,9 +19,9 @@ export const SEO: DefaultSeoProps = {
     description,
     images: [
       {
-        url: 'https://soorria.com/og.png',
-        height: 900,
-        width: 1600,
+        url: 'https://soorria.com/api/og?title=Soorria%20Saruva&subtitle=soorria.com',
+        width: 1200,
+        height: 630,
       },
     ],
   },
