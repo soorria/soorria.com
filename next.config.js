@@ -50,6 +50,11 @@ const config = {
         source: '/api/og',
         destination: 'https://og-gen-mooth.vercel.app/api/og',
       },
+      {
+        source: '/og.png',
+        destination:
+          'https://og-gen-mooth.vercel.app/api/og?title=Soorria%20Saruva&subtitle=soorria.com',
+      },
     ]
   },
   reactStrictMode: true,
