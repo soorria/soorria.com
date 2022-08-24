@@ -6,7 +6,7 @@ tags:
   - typescript
   - react
 createdAt: '2022-05-04'
-updatedAt: '2022-05-04'
+updatedAt: '2022-08-24'
 ---
 
 Set, get and remove a
@@ -65,12 +65,9 @@ export const useCssVar = ({ name, root = document.body }: UseCssVarProps): CssVa
 import { Example, EXAMPLE_CSS_VAR, EXAMPLE_TRANSFORM } from './components'
 
 If you open up your browser's devtools, find the `<main>` element and look at its `style` attribute,
-you'll see the
+you'll see the <code>{EXAMPLE_CSS_VAR}</code> CSS variable change as you change the input's value or
+press the button.
 
-<code>{EXAMPLE_CSS_VAR}</code> CSS variable change as you change the input's value or press the button.
-
-The image's rotation is handled by styling it with
-
-<code>transform: {EXAMPLE_TRANSFORM}</code>.
+The image's rotation is handled by styling it with <code>transform: {EXAMPLE_TRANSFORM}</code>.
 
 <Demo component={Example} />
