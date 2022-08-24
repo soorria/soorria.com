@@ -1,5 +1,4 @@
 import type { BaseFrontMatter } from '@/types/data'
-import type { Awaited } from '@/utils/types'
 import { bundleMDX } from 'mdx-bundler'
 import rehypePrism from 'rehype-prism-plus'
 import rehypeSlug from 'rehype-slug'
@@ -15,17 +14,7 @@ setup(createElement)
 export { styled, css }
 `
 
-export type BundleResult<T extends BaseFrontMatter> = Omit<
-  Awaited<ReturnType<typeof bundleMDX>>,
-  'frontmatter'
-> & {
-  frontmatter: T
-}
-
-export const render = async <T extends BaseFrontMatter>(
-  source: string,
-  components = ''
-): Promise<BundleResult<T>> => {
+export const render = async <T extends BaseFrontMatter>(source: string, components = '') => {
   return bundleMDX<T>({
     source,
     files: {
