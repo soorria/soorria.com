@@ -62,7 +62,7 @@ export const createOGMarkup = (main: string, subtitle?: string): string => `
     display: flex;
     flex-direction: column;
     justify-content: center;
-    padding: 3.5rem 5rem;
+    padding: 3.5rem;
     min-width: 600px;
     max-width: 900px;
     background: #282a36B2;
@@ -77,7 +77,7 @@ export const createOGMarkup = (main: string, subtitle?: string): string => `
     word-break: break-word;
   }
   .text--subtitle {
-    margin-top: 1rem;
+    margin-top: 2rem;
     font-size: 1.875rem;
     line-height: 2.25rem;
   }
