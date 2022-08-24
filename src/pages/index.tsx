@@ -58,21 +58,23 @@ const IndexPage: React.FC<IndexProps> = ({
 export default IndexPage
 
 export const getStaticProps: GetStaticProps<IndexProps> = async () => {
-  const subtitleText = (await getSingletonTextSafe('subtitle')) ?? ''
-  const subtitleChunks = subtitleText
-    .split('---')
-    .map(chunk => chunk.trim())
-    .filter(Boolean)
-  const subtitleOptions = await Promise.all(
-    subtitleChunks.map(chunk => render(chunk).then(({ code }) => code))
-  )
+  const subtitleOptionsPromise = (async () => {
+    const subtitleText = (await getSingletonTextSafe('subtitle')) ?? ''
+    const subtitleChunks = subtitleText
+      .split('---')
+      .map(chunk => chunk.trim())
+      .filter(Boolean)
+    return await Promise.all(subtitleChunks.map(chunk => render(chunk).then(({ code }) => code)))
+  })()
 
-  const nowText = await getSingletonTextSafe('now')
-  const now = nowText ? (await render(nowText ?? '')).code : null
+  const nowPromise = (async () => {
+    const nowText = await getSingletonTextSafe('now')
+    return nowText ? (await render(nowText ?? '')).code : null
+  })()
 
-  const { isHeroStatic, nSkills = 8 } = await getSingletonJsonSafe('index-options')
+  const indexOptionsPromise = getSingletonJsonSafe('index-options')
 
-  const projects: ProjectFrontMatter[] = await Promise.all(
+  const projectsPromise: Promise<ProjectFrontMatter[]> = Promise.all(
     featuredProjects.map(async projectSlug => {
       const frontmatter = await getFileFrontMatter<ProjectFrontMatter>(
         DataType.projects,
@@ -85,9 +87,14 @@ export const getStaticProps: GetStaticProps<IndexProps> = async () => {
 
   const randoms = randomArray(0, 100, 5)
 
-  const skillIndexes = getRandomSkillIndexes(
-    typeof nSkills === 'number' && nSkills > 0 ? nSkills : 8
-  )
+  const skillIndexes = getRandomSkillIndexes(8)
+
+  const [subtitleOptions, now, projects, { isHeroStatic }] = await Promise.all([
+    subtitleOptionsPromise,
+    nowPromise,
+    projectsPromise,
+    indexOptionsPromise,
+  ])
 
   return {
     props: {

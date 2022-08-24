@@ -5,7 +5,7 @@ export const SKILLS = [
   'Kotlin',
   'Python',
   'HTML5 & CSS3',
-  'React.js',
+  'React',
   'Next.js',
   'Remix.run',
   'Express.js',
@@ -20,6 +20,10 @@ export const SKILLS = [
   'Azure Functions',
   'GCP Functions',
   'Linux (Debian & Ubuntu)',
+  'Vue.js',
+  'NuxtJS',
+  'Serverless',
+  'Solid.js',
 ]
 
 type UseSkillsInput = {
