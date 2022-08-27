@@ -69,15 +69,12 @@
   },
   "license": "MIT",
   "lint-staged": {
-    "*.{ts,tsx}": [
+    "*.{ts,js,tsx}": [
       "prettier -w",
       "eslint --fix --cache"
     ],
     "_data/**/*.mdx": [
       "prettier --config './_data/.prettierrc' --parser mdx -w"
-    ],
-    "_data/**/*.js": [
-      "pretter -w"
     ]
   }
 }

@@ -23,7 +23,7 @@ export const SKILLS = [
   'Vue.js',
   'NuxtJS',
   'Serverless',
-  'Solid.js',
+  'SolidJS',
 ]
 
 type UseSkillsInput = {

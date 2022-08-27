@@ -14,6 +14,7 @@ const useLocalStorage = (key, initialValue) => {
   })
 
   useEffect(() => {
+    console.log(key, state)
     localStorage.setItem(key, JSON.stringify(state))
   }, [state, key])
 
@@ -38,20 +39,23 @@ export const Example = () => {
         gap: '1rem',
       }}
     >
+      {' '}
       <input
         style={{
           background: 'var(--bg)',
           flex: '1 1',
           border: '2px solid var(--pink)',
+          borderRadius: '0.25rem',
           padding: '0.5rem 1rem',
         }}
-        value={input}
+        value={input ?? ''}
         onChange={e => setInput(e.target.value)}
-      />
+      />{' '}
       <button
         style={{
           padding: '0.5rem 1rem',
           background: 'var(--curr)',
+          borderRadius: '0.25rem',
         }}
         type="button"
         onClick={() => reset()}

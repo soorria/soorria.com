@@ -4,14 +4,22 @@ import mitt from 'mitt'
 
 const em = mitt<Record<string, any>>()
 
+const trackedKeys: Record<string, number> = {}
+
 // This block relies on window, so to make sure it only runs on the client
 // we need to icheck if `window` is defined
 if (typeof window !== 'undefined') {
   // We define this globally since it simplifies the already extremely
   // complicated hook a tiny bit, and we can handle
   window.addEventListener('storage', event => {
-    if (event.storageArea === localStorage && event.key != null) {
-      em.emit(event.key, event.newValue == null ? null : JSON.parse(event.newValue))
+    if (event.storageArea === localStorage && event.key != null && trackedKeys[event.key]) {
+      let parsed
+      try {
+        parsed = JSON.parse(event.newValue ?? '')
+      } catch {
+        parsed = null
+      }
+      em.emit(event.key, event.newValue == null ? null : parsed)
     }
   })
 
@@ -34,6 +42,13 @@ export const useSyncedLocalStorage = <T extends NonNullable<any>, K extends stri
   useEffect(() => {
     initialValueRef.current = initialValue
   }, [initialValue])
+
+  useEffect(() => {
+    trackedKeys[key] = (trackedKeys[key] ?? 0) + 1
+    return () => {
+      trackedKeys[key]--
+    }
+  }, [key])
 
   useEffect(() => {
     if (initialised.current) return
