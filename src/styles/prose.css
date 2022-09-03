@@ -27,7 +27,7 @@
   @apply relative block px-2 md:px-6;
   @apply rounded-none bg-transparent text-base text-drac-fg;
   line-height: 1.75;
-  min-height: 1rem;
+  min-height: 1.75rem;
   @apply motion-safe:transition;
 }
 
