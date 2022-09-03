@@ -19,12 +19,12 @@ tags:
   - c++
   - haskell
 createdAt: '2021-03-24'
-updatedAt: '2022-03-09'
+updatedAt: '2022-09-03'
 ---
 
-This only exists to test out the [mdx](https://mdxjs.com/) & [prism](https://prismjs.com/) stuff.
-Also happens to be a list of languages I've used - not a list of languages I _know_ and not in any
-particular order.
+This only exists to test out the [mdx](https://mdxjs.com/) & ~~prism~~
+[shiki twoslash](https://shikijs.github.io/twoslash/) stuff. Also happens to be a list of languages
+and / or frameworks I've used - not a list of languages I _know_ and not in any particular order.
 
 ```javascript
 console.log('Hello, World!')
@@ -34,18 +34,105 @@ console.log('Hello, World!')
 ;((console as any).log as any)('Hello, World!' as any)
 ```
 
-```jsx
+```jsx title="SolidJS (JavaScript)"
+import { createSignal } from 'solid-js'
+import { render } from 'solid-js/web'
+
+const App = () => {
+  const [message, setMessage] = createSignal('Hello, World!')
+
+  return <div>{message()}</div>
+}
+
+render(() => <App />, document.getElementById('root'))
+```
+
+```tsx title="SolidJS (TypeScript)"
+import type { Component } from 'solid-js'
+import { createSignal } from 'solid-js'
+import { render } from 'solid-js/web'
+
+const App: Component = () => {
+  const [message, setMessage] = createSignal('Hello, World!')
+
+  return <div>{message()}</div>
+}
+
+render(() => <App />, document.getElementById('root'))
+```
+
+```vue title="Vue 3"
+<template>
+  <div>{{ message }}</div>
+</template>
+
+<script setup lang="ts">
+import { ref } from 'vue'
+
+const message = ref('Hello, World!')
+</script>
+```
+
+```vue title="Vue 2 (Composition API)"
+<template>
+  <div>{{ message }}</div>
+</template>
+
+<script lang="ts">
+import { defineComponent, ref } from 'vue'
+
+export default defineComponent({
+  setup() {
+    const message = ref('Hello, World!')
+
+    return {
+      message,
+    }
+  },
+})
+</script>
+```
+
+```vue title="Vue 2 (Options API)"
+<template>
+  <div>{{ message }}</div>
+</template>
+
+<script lang="ts">
+import { defineComponent, ref } from 'vue'
+
+export default defineComponent({
+  data() {
+    return {
+      message: 'Hello, World!',
+    }
+  },
+})
+</script>
+```
+
+```jsx title="React (JavaScript)"
 import { render } from 'react-dom'
 
-const App = () => <div>Hello, World!</div>
+const App = () => {
+  const [message, setMessage] = useState('Hello, World!')
+
+  return <div>{message}</div>
+}
 
 render(<App />, document.getElementById('root'))
 ```
 
-```tsx
+```tsx title="React (TypeScript)"
+import type { FC } from 'react'
+import { useState } from 'react'
 import { render } from 'react-dom'
 
-const App: React.FC = () => <div>Hello, World!</div>
+const App: FC = () => {
+  const [message, setMessage] = useState('Hello, World!')
+
+  return <div>{message}</div>
+}
 
 render(<App />, document.getElementById('root'))
 ```

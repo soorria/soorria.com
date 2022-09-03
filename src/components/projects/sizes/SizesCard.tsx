@@ -18,7 +18,7 @@ const SizesCard: ProjectCardComponent = ({ project }) => {
         Works when JavaScript is disabled, so you can rest assured Google and Facebook aren&apos;t
         tracking you
       </li>
-      <li>Use the api endpoint if you&apos;re disgusted by UIs or a terminal maximalist</li>
+      <li>Use the API endpoint if you&apos;re disgusted by UIs or a terminal maximalist</li>
     </UtilsProjectCard>
   )
 }

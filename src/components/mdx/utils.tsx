@@ -1,4 +1,5 @@
 import cx from '@/utils/cx'
+import type React from 'react'
 
 export const COMMON_CLASSNAMES = {
   codeAndDemoRoot: 'relative -mx-2 rounded p-2 ring-2 ring-drac-purple md:-mx-6 md:py-4 md:px-6',
@@ -21,13 +22,21 @@ export const getTextFromNullablePre = (pre: HTMLPreElement | undefined | null): 
 
   return Array.from(firstCodeChild.children)
     .map(line => (line as HTMLElement).innerText || '')
-    .join('')
+    .join('\n')
 }
 
 export const LANGUAGE_NAME_MAP: Record<string, string> = {
   js: 'javascript',
-  jsx: 'javascript react',
+  jsx: 'jsx',
   ts: 'typescript',
-  tsx: 'typescript react',
+  tsx: 'tsx',
   md: 'markdown',
 }
+
+export const CodeBlockTitle: React.FC<{ children: React.ReactNode }> = props => (
+  <div className="-mb-[1.7rem] rounded rounded-b-none font-mono text-sm font-bold text-drac-bg">
+    <span className="inline-block rounded rounded-b-none bg-drac-purple px-3 py-0.5">
+      {props.children}
+    </span>
+  </div>
+)

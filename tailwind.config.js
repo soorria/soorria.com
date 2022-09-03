@@ -28,6 +28,7 @@ module.exports = {
       },
       fontFamily: {
         display: ["'Poppins'", ...fontFamily.sans],
+        mono: ["'JetBrains Mono'", ...fontFamily.mono],
       },
       screens: {},
       rotate: {

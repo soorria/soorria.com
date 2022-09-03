@@ -5,15 +5,15 @@ category: TypeScript
 tags:
   - typescript
 createdAt: '2021-05-09'
-updatedAt: '2022-07-06'
+updatedAt: '2022-09-03'
 ---
 
 A tiny helper function to conditionally join classnames. Simplified version of JedWatson's
 [classnames](https://github.com/JedWatson/classnames) and lukeed's
 [clsx](https://github.com/lukeed/clsx).
 
-```typescript
-const cx = (...classes: (string | boolean | null | undefined)[]) =>
+```ts
+export const cx = (...classes: (string | boolean | null | undefined)[]) =>
   classes.filter(cls => typeof cls === 'string').join(' ')
 ```
 

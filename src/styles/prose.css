@@ -2,6 +2,83 @@
   @apply max-w-none;
 }
 
+.prose *:not(.shiki) code {
+  @apply rounded bg-drac-curr p-1 leading-none text-drac-pink;
+}
+
+/*
+ * Code Snippets
+ */
+.prose pre {
+  @apply rounded-none bg-drac-bg;
+  @apply px-0 pt-0;
+  @apply -mx-2 pb-3 md:-mx-6;
+}
+
+.prose code {
+  @apply rounded bg-drac-curr p-1 leading-none text-drac-pink;
+}
+
+.prose .shiki code {
+  @apply rounded-none p-0;
+}
+
+.prose pre .line {
+  @apply relative block px-2 md:px-6;
+  @apply rounded-none bg-transparent text-base text-drac-fg;
+  line-height: 1.75;
+  min-height: 1rem;
+  @apply motion-safe:transition;
+}
+
+.prose code::before,
+.prose code::after {
+  content: none;
+}
+
+.prose .shiki .dim {
+  opacity: 0.5;
+}
+.prose .shiki:hover .dim {
+  opacity: 1;
+}
+.prose .shiki .highlight {
+  opacity: 1;
+}
+.prose .shiki .highlight {
+  background-color: #21222c;
+}
+.prose .shiki:hover .highlight {
+  box-shadow: inset 0.25rem 0 0 0 theme('colors.drac.purple');
+}
+
+/* Visually differentiates twoslash code samples  */
+pre.twoslash {
+  border-color: #719af4;
+  overflow-y: visible;
+}
+
+/** When you mouse over the pre, show the underlines */
+pre.twoslash data-lsp {
+  @apply border-b border-dotted border-drac-curr;
+}
+
+/** The tooltip-like which provides the LSP response */
+pre.twoslash data-lsp:hover::before {
+  content: attr(lsp);
+  position: absolute;
+  transform: translate(0, 1.75rem);
+
+  @apply whitespace-pre-wrap rounded bg-drac-curr px-1 py-2 text-left font-mono text-sm text-drac-fg;
+  z-index: 100;
+}
+
+pre code {
+  white-space: pre;
+  -webkit-overflow-scrolling: touch;
+  font-variant-ligatures: discretionary-ligatures;
+}
+
 /*
  * List bullets
  */
@@ -13,67 +90,11 @@
   @apply bg-drac-pink/75;
 }
 
-/*
- * Code title
- */
-.prose .code-title {
-  /* Value comes from CodeBlock component */
-  margin-bottom: -1.7em;
-  @apply rounded rounded-b-none font-mono font-bold text-drac-bg;
-}
-
-.prose .code-title span {
-  @apply inline-block rounded rounded-b-none bg-drac-purple px-2 py-0.5;
-}
-
 /**
  * Demo Wrapper
  */
 .prose .demo-wrapper > *:first-child {
   margin-top: 0;
-}
-
-/*
- * Code Snippets
- */
-.prose pre {
-  @apply rounded-none bg-drac-bg p-0;
-  @apply -mx-2 pb-3;
-}
-
-.code-line {
-  @apply relative block px-2;
-}
-@screen md {
-  .prose pre {
-    @apply -mx-6;
-  }
-  .code-line {
-    @apply px-6;
-  }
-}
-
-.prose code {
-  @apply rounded bg-drac-curr p-1 leading-none text-drac-pink;
-}
-
-code.code-highlight {
-  font-size: 1em;
-  @apply rounded-none bg-transparent p-0 text-drac-fg;
-  line-height: 1.75;
-  float: left; /* 1 */
-  min-width: 100%; /* 2 */
-}
-
-.prose code::before,
-.prose code::after {
-  content: '';
-}
-
-.highlight-line {
-  background-color: #21222c;
-  position: relative;
-  box-shadow: inset 4px 0 0 0 theme('colors.drac.purple');
 }
 
 /* Chrome */
@@ -94,94 +115,4 @@ code.code-highlight {
 * {
   scrollbar-width: thin;
   scrollbar-color: theme('colors.drac.purple') theme('colors.transparent');
-}
-
-.token.bold {
-  @apply font-bold;
-}
-
-.language-javascript .token.constant,
-.token.italic {
-  font-style: italic;
-}
-
-.language-css .token.selector,
-.token.atrule,
-.token.attr-name,
-.token.attr-value,
-.token.maybe-class-name,
-.language-css .token.entity,
-.token.function {
-  @apply text-drac-green;
-}
-
-.token.builtin,
-.token.class-name,
-.language-css .token.function,
-.token.url,
-.token.operator,
-.language-css .token.property {
-  @apply text-drac-cyan;
-}
-
-.token.property,
-.language-javascript .token.constant,
-.token.symbol,
-.language-css .token.url {
-  @apply text-drac-orange;
-}
-
-.language-css .token.atrule,
-.token.boolean,
-.token.constant,
-.language-html .token.entity.named-entity,
-.token.number,
-.token.dom.variable,
-.language-css,
-.language-markup .token.entity.named-entity {
-  @apply text-drac-purple;
-}
-
-.language-html .token.entity:not(.named-entity),
-.language-markup .token.entity:not(.named-entity),
-.token.important,
-.token.entity,
-.token.selector,
-.token.tag,
-.token,
-.language-css .token,
-.token.char,
-.token.keyword {
-  @apply text-drac-pink;
-}
-
-.token.regex {
-  @apply text-drac-red;
-}
-
-.language-html .token.punctuation,
-.language-css .token.rule:not(.atrule),
-.language-markup .token.punctuation,
-.language-jsx .token.plain-text,
-.language-tsx .token.plain-text,
-.token.script,
-.token.punctuation,
-.token.prolog {
-  @apply text-drac-fg;
-}
-
-.language-html .token.attr-value,
-.token.string,
-.language-markup .token.attr-value {
-  @apply text-drac-yellow;
-}
-
-.token.comment,
-.token.variable {
-  @apply text-drac-comment;
-}
-
-.token.namespace,
-.token.deleted {
-  color: #e2777a;
 }
