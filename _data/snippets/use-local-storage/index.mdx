@@ -6,7 +6,7 @@ tags:
   - typescript
   - react
 createdAt: '2021-03-26'
-updatedAt: '2022-05-04'
+updatedAt: '2022-09-03'
 ---
 
 Save to `localStorage` whenever state changes and read form it for the first render.
@@ -52,7 +52,7 @@ const useLocalStorage = <T>(
 
 ## Usage
 
-```tsx
+```tsx {1,5}
 const Example = () => {
   const [input, setInput] = useLocalStorage('example:input', '')
 

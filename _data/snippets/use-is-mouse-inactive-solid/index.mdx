@@ -6,7 +6,7 @@ tags:
   - typescript
   - solidjs
 createdAt: '2022-08-27'
-updatedAt:
+updatedAt: '2022-09-03'
 ---
 
 Get a signal that lets you know when the mouse has stopped moving.
@@ -59,8 +59,8 @@ export const useIsMouseInactive = (props: UseIsMouseInactiveOptions = {}) => {
 
 ## Usage
 
-```tsx
-import { VoidComponent } from 'solid-js'
+```tsx {3,5-7,15-16}
+import type { VoidComponent } from 'solid-js'
 
 export const Example: VoidComponent = () => {
   const [element, setElement] = createSignal<HTMLElement>()

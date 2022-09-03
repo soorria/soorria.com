@@ -106,6 +106,6 @@ export const getStaticProps: GetStaticProps<IndexProps> = async () => {
       isHeroStatic: Boolean(isHeroStatic),
       skillIndexes,
     },
-    revalidate: 1,
+    revalidate: 10,
   }
 }
