@@ -19,14 +19,21 @@ class MyDocument extends NextDocument {
           <meta name="theme-color" content="#282a36" />
           <link
             rel="preload"
-            href="/fonts/poppins-regular-latin.woff2"
+            href="/fonts/poppins-latin-700.woff2"
             as="font"
             type="font/woff2"
             crossOrigin="anonymous"
           />
           <link
             rel="preload"
-            href="/fonts/poppins-bold-latin.woff2"
+            href="/fonts/poppins-latin-400.woff2"
+            as="font"
+            type="font/woff2"
+            crossOrigin="anonymous"
+          />
+          <link
+            rel="preload"
+            href="/fonts/jetbrains-mono-latin-400.woff2"
             as="font"
             type="font/woff2"
             crossOrigin="anonymous"

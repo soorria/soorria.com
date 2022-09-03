@@ -350,16 +350,6 @@
   resolved "https://registry.yarnpkg.com/@fal-works/esbuild-plugin-global-externals/-/esbuild-plugin-global-externals-2.1.2.tgz#c05ed35ad82df8e6ac616c68b92c2282bd083ba4"
   integrity sha512-cEee/Z+I12mZcFJshKcCqC8tuX5hG3s+d+9nZ3LabqKF1vKdF41B92pJVCBggjAGORAeOzyyDDKrZwIkLffeOQ==
 
-"@fontsource/jetbrains-mono@^4.5.10":
-  version "4.5.10"
-  resolved "https://registry.yarnpkg.com/@fontsource/jetbrains-mono/-/jetbrains-mono-4.5.10.tgz#c237505aeea535cf6ce1462c4ea39258f0677c2b"
-  integrity sha512-dylbkBmAWL0fkjDpDoDbQCwTQ/W3DzLtVXmwGyAyttfKliPGSP2WpAmmMFYp9NpqFMF7CLprFyzppe8u39Orkw==
-
-"@fontsource/poppins@^4.5.9":
-  version "4.5.9"
-  resolved "https://registry.yarnpkg.com/@fontsource/poppins/-/poppins-4.5.9.tgz#e5c192aef005177c87e23c1b783415d1e9b4b7a8"
-  integrity sha512-PMHOYeUpdmdN1xk13aGvhvZZrv9Zt3ubx2PmDvnROHgefm0ixpFd3ogAi0fY/aWtlkUdvgt0mSkGGbtt5i4MsQ==
-
 "@humanwhocodes/config-array@^0.5.0":
   version "0.5.0"
   resolved "https://registry.yarnpkg.com/@humanwhocodes/config-array/-/config-array-0.5.0.tgz#1407967d4c6eecd7388f83acf1eaf4d0c6e58ef9"
