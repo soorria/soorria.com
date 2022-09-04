@@ -20,7 +20,7 @@
 }
 
 .prose .shiki code {
-  @apply rounded-none p-0;
+  @apply float-left min-w-full rounded-none bg-transparent p-0;
 }
 
 .prose pre .line {
