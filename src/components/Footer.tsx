@@ -16,10 +16,10 @@ const LINKS: LinkType[][] = [
       title: 'home',
       href: '/',
     },
-    {
-      title: 'about',
-      href: '/about',
-    },
+    // {
+    //   title: 'about',
+    //   href: '/about',
+    // },
     {
       title: '/uses',
       href: '/uses',
