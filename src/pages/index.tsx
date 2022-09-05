@@ -58,18 +58,22 @@ const IndexPage: React.FC<IndexProps> = ({
 export default IndexPage
 
 export const getStaticProps: GetStaticProps<IndexProps> = async () => {
+  const renderText = (text: string) => render(text, undefined, { hasCodeBlocks: false })
+
   const subtitleOptionsPromise = (async () => {
     const subtitleText = (await getSingletonTextSafe('subtitle')) ?? ''
     const subtitleChunks = subtitleText
       .split('---')
       .map(chunk => chunk.trim())
       .filter(Boolean)
-    return await Promise.all(subtitleChunks.map(chunk => render(chunk).then(({ code }) => code)))
+    return await Promise.all(
+      subtitleChunks.map(chunk => renderText(chunk).then(({ code }) => code))
+    )
   })()
 
   const nowPromise = (async () => {
     const nowText = await getSingletonTextSafe('now')
-    return nowText ? (await render(nowText ?? '')).code : null
+    return nowText ? (await renderText(nowText ?? '')).code : null
   })()
 
   const indexOptionsPromise = getSingletonJsonSafe('index-options')
