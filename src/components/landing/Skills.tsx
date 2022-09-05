@@ -33,7 +33,7 @@ const Skills: React.FC<{ random?: number; skillIndexes: number[] }> = ({
         Here are some of the technicals skills during my degree, internships, work, and just out of
         pure curiosity.
       </p>
-      <ul className="mb-8 grid grid-cols-2 gap-x-6 gap-y-8 sm:grid-cols-3 md:grid-cols-4">
+      <ul className="mb-8 grid grid-cols-2 gap-x-6 gap-y-8 md:grid-cols-4">
         {skills.map(skill => (
           <SkillListItem key={skill}>{skill}</SkillListItem>
         ))}

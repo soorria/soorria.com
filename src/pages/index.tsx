@@ -96,6 +96,12 @@ export const getStaticProps: GetStaticProps<IndexProps> = async () => {
     indexOptionsPromise,
   ])
 
+  console.log({
+    isHeroStatic,
+    randoms,
+    skillIndexes,
+  })
+
   return {
     props: {
       subtitleOptions,
