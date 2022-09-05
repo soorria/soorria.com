@@ -1,8 +1,10 @@
 import type { BaseFrontMatter } from '@/types/data'
+import path from 'path'
 import { bundleMDX } from 'mdx-bundler'
 import rehypeSlug from 'rehype-slug'
 import rehypeAutolinkHeadings from 'rehype-autolink-headings'
 import { rehypeAccessibleEmojis } from 'rehype-accessible-emojis'
+import { loadTheme as shikiLoadTheme, IThemeRegistration } from 'shiki'
 import remarkTwoslash from 'remark-shiki-twoslash'
 import remarkGfm from 'remark-gfm'
 import rehypeRaw from 'rehype-raw'
@@ -17,7 +19,17 @@ setup(createElement)
 export { styled, css }
 `
 
+const themePath = path.resolve(process.cwd(), 'src', 'lib', 'shiki', 'dracula.json')
+
+let theme: IThemeRegistration
+const loadDraculaTheme = async () => {
+  if (theme) return theme
+  theme = await shikiLoadTheme(themePath)
+  return theme
+}
+
 export const render = async <T extends BaseFrontMatter>(source: string, components = '') => {
+  const theme = await loadDraculaTheme()
   return bundleMDX<T>({
     source,
     files: {
@@ -32,7 +44,7 @@ export const render = async <T extends BaseFrontMatter>(source: string, componen
         [
           remarkTwoslash,
           {
-            theme: 'dracula',
+            theme,
             langs: [
               'html',
               'css',
