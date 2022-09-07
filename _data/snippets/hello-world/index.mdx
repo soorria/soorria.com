@@ -19,7 +19,7 @@ tags:
   - c++
   - haskell
 createdAt: '2021-03-24'
-updatedAt: '2022-09-03'
+updatedAt: '2022-09-07'
 ---
 
 This only exists to test out the [mdx](https://mdxjs.com/) & ~~prism~~
@@ -62,7 +62,7 @@ const App: Component = () => {
 render(() => <App />, document.getElementById('root'))
 ```
 
-```vue title="Vue 3"
+```vue title="Vue 3 (script setup)"
 <template>
   <div>{{ message }}</div>
 </template>
@@ -74,7 +74,7 @@ const message = ref('Hello, World!')
 </script>
 ```
 
-```vue title="Vue 2 (Composition API)"
+```vue title="Vue 2.7/3 (Composition API)"
 <template>
   <div>{{ message }}</div>
 </template>
@@ -94,7 +94,7 @@ export default defineComponent({
 </script>
 ```
 
-```vue title="Vue 2 (Options API)"
+```vue title="Vue 2/3 (Options API)"
 <template>
   <div>{{ message }}</div>
 </template>
@@ -113,6 +113,7 @@ export default defineComponent({
 ```
 
 ```jsx title="React (JavaScript)"
+import { useState } from 'react'
 import { render } from 'react-dom'
 
 const App = () => {
