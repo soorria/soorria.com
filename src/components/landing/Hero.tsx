@@ -1,64 +1,40 @@
 import cx from '@/utils/cx'
-import { ReactNode, useMemo } from 'react'
+import type { ReactNode } from 'react'
 
-interface HeroClassnames {
-  common: string
-  mainText: string
-}
-
-const useHeroClassnames = (isStatic: boolean): HeroClassnames => {
-  return useMemo(() => {
-    const classnames = {
-      common: 'hidden sm:block absolute inset-0 select-none',
-      mainText:
-        'absolute cursor-text inset-0 bg-gradient-to-tr from-drac-pink to-drac-purple bg-clip-text text-transparent sm:text-drac-fg ',
-    }
-
-    if (!isStatic) {
-      classnames.common +=
-        ' motion-safe:group-hover:translate-x-0 motion-safe:group-hover:translate-y-0 transition-transform '
-      classnames.mainText +=
-        ' duration-0 transition-opacity group-hover:delay-100 sm:motion-safe:group-hover:opacity-0'
-    }
-
-    return classnames
-  }, [isStatic])
+const classes = {
+  secondary: 'hidden sm:block absolute inset-0 select-none contrast-more:sm:hidden',
+  main: 'relative cursor-text inset-0 bg-gradient-to-tr from-drac-pink to-drac-purple bg-clip-text text-transparent sm:text-drac-fg contrast-more:sm:text-drac-pink',
 }
 
 const Hero: React.FC<{
   subtitle?: ReactNode | null
   title: ReactNode
   isStatic?: boolean
-}> = ({ subtitle, title, isStatic = false, children }) => {
-  const classnames = useHeroClassnames(isStatic)
-
+}> = ({ subtitle, title, children }) => {
   return (
     <div
       id="hero"
       className="circuit-bg -mx-4 -mt-36 px-4 pb-12 pt-36 md:-mx-8 md:px-8 lg:mx-[-4.5rem] lg:px-[4.5rem] xl:-mx-32 xl:px-32"
     >
-      <div className="group mx-auto my-4 cursor-default overflow-x-hidden py-16 text-center font-display text-6xl font-bold leading-tight outline-none sm:my-8 sm:text-[4rem] md:text-[5rem] lg:text-8xl">
+      <div className="mx-auto my-4 cursor-default py-16 text-center font-display text-6xl font-bold leading-tight outline-none sm:my-8 sm:text-[4rem] md:text-[5rem] lg:text-8xl">
         <div className="relative">
           <p
             aria-hidden
             role="presentation"
             className={cx(
               `-translate-x-4 -translate-y-4 text-drac-pink sm:-translate-x-8 sm:-translate-y-8`,
-              classnames.common
+              classes.secondary
             )}
           >
             {title}
           </p>
-          <p role="presentation" aria-hidden className="select-none opacity-0">
-            {title}
-          </p>
-          <h1 className={classnames.mainText}>{title}</h1>
+          <h1 className={classes.main}>{title}</h1>
           <p
             aria-hidden
             role="presentation"
             className={cx(
               `translate-x-4 translate-y-4 text-drac-purple sm:translate-x-8 sm:translate-y-8`,
-              classnames.common
+              classes.secondary
             )}
           >
             {title}

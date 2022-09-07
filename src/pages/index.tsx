@@ -22,7 +22,7 @@ interface IndexProps {
   projects: ProjectFrontMatter[]
   randoms: number[]
   renderedAt: string
-  isHeroStatic?: boolean
+  heroText: string
   skillIndexes: number[]
 }
 
@@ -31,18 +31,14 @@ const IndexPage: React.FC<IndexProps> = ({
   now,
   projects,
   randoms,
-  isHeroStatic,
+  heroText,
   skillIndexes,
 }) => {
   const Now = useMdxComponent(now)
 
   return (
     <Container>
-      <Hero
-        subtitle={<Subtitle options={subtitleOptions} />}
-        title="Hey, I'm Soorria"
-        isStatic={isHeroStatic}
-      >
+      <Hero subtitle={<Subtitle options={subtitleOptions} />} title={heroText}>
         <div className="text-lg">
           <Now />
         </div>
@@ -93,7 +89,7 @@ export const getStaticProps: GetStaticProps<IndexProps> = async () => {
 
   const skillIndexes = getRandomSkillIndexes(8)
 
-  const [subtitleOptions, now, projects, { isHeroStatic }] = await Promise.all([
+  const [subtitleOptions, now, projects, { heroText }] = await Promise.all([
     subtitleOptionsPromise,
     nowPromise,
     projectsPromise,
@@ -101,9 +97,9 @@ export const getStaticProps: GetStaticProps<IndexProps> = async () => {
   ])
 
   console.log({
-    isHeroStatic,
     randoms,
     skillIndexes,
+    heroText,
   })
 
   return {
@@ -113,7 +109,7 @@ export const getStaticProps: GetStaticProps<IndexProps> = async () => {
       projects,
       randoms,
       renderedAt: new Date().toISOString(),
-      isHeroStatic: Boolean(isHeroStatic),
+      heroText: typeof heroText === 'string' ? heroText : "Hey, I'm Soorria",
       skillIndexes,
     },
     revalidate: 10,
