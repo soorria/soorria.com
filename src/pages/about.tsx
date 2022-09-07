@@ -55,6 +55,5 @@ export const getStaticProps: GetStaticProps<AboutPageProps> = async () => {
   )
   return {
     props: { mdx: code, updatedAt },
-    notFound: true,
   }
 }
