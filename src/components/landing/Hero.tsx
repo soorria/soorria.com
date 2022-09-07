@@ -2,7 +2,8 @@ import cx from '@/utils/cx'
 import type { ReactNode } from 'react'
 
 const classes = {
-  secondary: 'hidden sm:block absolute inset-0 select-none contrast-more:sm:hidden',
+  secondary:
+    'hidden sm:block absolute inset-0 select-none contrast-more:sm:hidden pointer-events-none',
   main: 'relative cursor-text inset-0 bg-gradient-to-tr from-drac-pink to-drac-purple bg-clip-text text-transparent sm:text-drac-fg contrast-more:sm:text-drac-pink',
 }
 
