@@ -69,26 +69,24 @@ h1 {
 
 /* Scrollbar */
 
-@screen sm {
-  /* Chrome */
-  ::-webkit-scrollbar {
-    width: 8px;
-    height: 8px;
-  }
+/* Chrome */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
 
-  ::-webkit-scrollbar-track {
-    @apply bg-drac-curr;
-  }
+::-webkit-scrollbar-track {
+  @apply bg-drac-curr;
+}
 
-  ::-webkit-scrollbar-thumb {
-    @apply rounded-full bg-drac-purple transition-colors hover:bg-drac-pink;
-  }
+::-webkit-scrollbar-thumb {
+  @apply rounded-full bg-drac-purple transition-colors hover:bg-drac-pink;
+}
 
-  /* Firefox */
-  * {
-    scrollbar-width: 'thin';
-    scrollbar-color: theme('colors.drac.purple') theme('colors.transparent');
-  }
+/* Firefox */
+* {
+  scrollbar-width: 'thin';
+  scrollbar-color: theme('colors.drac.purple') theme('colors.transparent');
 }
 
 @tailwind components;
