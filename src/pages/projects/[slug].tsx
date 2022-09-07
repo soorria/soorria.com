@@ -15,18 +15,18 @@ interface ProjectPageProps {
 
 const ProjectPage: React.FC<ProjectPageProps> = ({ project, mdx }) => {
   const url = `${PUBLIC_URL}/projects/${project.slug}`
-  const title = `${project.title} | Projects`
+  const SEOTitle = `${project.title} | Projects`
   const Content = useMdxComponent(mdx)
 
   return (
     <PostLayout title={project.title}>
       <NextSeo
-        title={title}
+        title={SEOTitle}
         description={project.shortDescription}
         canonical={url}
         openGraph={{
           url,
-          title,
+          title: SEOTitle,
           description: project.shortDescription,
           type: 'article',
           images: [getOgImageForData(DataType.projects, project.title)],

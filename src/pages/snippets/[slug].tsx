@@ -48,18 +48,18 @@ interface SnippetPageProps {
 
 const SnippetPage: React.FC<SnippetPageProps> = ({ snippet, mdx }) => {
   const url = `${PUBLIC_URL}/snippets/${snippet.slug}`
-  const title = `${snippet.title} | Snippets`
+  const SEOTitle = `${snippet.title} | Snippets`
   const Content = useMdxComponent(mdx)
 
   return (
     <PostLayout title={snippet.title}>
       <NextSeo
-        title={title}
+        title={SEOTitle}
         description={snippet.shortDescription}
         canonical={url}
         openGraph={{
           url,
-          title,
+          title: SEOTitle,
           description: snippet.shortDescription,
           type: 'article',
           article: {
@@ -93,7 +93,13 @@ const SnippetPage: React.FC<SnippetPageProps> = ({ snippet, mdx }) => {
           </div>
         </PostBottomSection>
       </div>
-      <License summary="License for this snippet" />
+      <License
+        summary="License &amp; Attribution"
+        attribution={{
+          url,
+          title: snippet.title,
+        }}
+      />
     </PostLayout>
   )
 }

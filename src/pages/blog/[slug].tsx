@@ -17,18 +17,18 @@ interface PostPageProps {
 
 const PostPage: React.FC<PostPageProps> = ({ post, mdx }) => {
   const url = `${PUBLIC_URL}/posts/${post.slug}`
-  const title = `${post.title} | Blog`
+  const SEOTitle = `${post.title} | Blog`
   const Content = useMdxComponent(mdx)
 
   return (
     <PostLayout title={post.title}>
       <NextSeo
-        title={title}
+        title={SEOTitle}
         description={post.shortDescription}
         canonical={url}
         openGraph={{
           url,
-          title,
+          title: SEOTitle,
           description: post.shortDescription,
           type: 'article',
           article: {
