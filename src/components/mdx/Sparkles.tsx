@@ -1,4 +1,4 @@
-import { IconComponent, ReactIcon, TypescriptIcon } from '../icons'
+import { IconComponent, ReactIcon, SolidJsIcon, TypescriptIcon } from '../icons'
 import cx from '@/utils/cx'
 import { random, randomItem } from '@/utils/random'
 import { useEffect, useState } from 'react'
@@ -22,7 +22,7 @@ const zIndexes = {
 }
 
 const SparkleSvg: SparkleComponent = props => {
-  const { style, color, kind } = props
+  const { style, kind } = props
   if (kind && exoticSparkleComponents[kind]) {
     const Sparkle = exoticSparkleComponents[kind]!
     return <Sparkle {...props} />
@@ -39,15 +39,15 @@ const SparkleSvg: SparkleComponent = props => {
     >
       <path
         d="M80 0C80 0 84.2846 41.2925 101.496 58.504C118.707 75.7154 160 80 160 80C160 80 118.707 84.2846 101.496 101.496C84.2846 118.707 80 160 80 160C80 160 75.7154 118.707 58.504 101.496C41.2925 84.2846 0 80 0 80C0 80 41.2925 75.7154 58.504 58.504C75.7154 41.2925 80 0 80 0Z"
-        fill={color}
+        fill="currentColor"
       />
     </svg>
   )
 }
 
 const iconComponentToSparkleComponent = (Icon: IconComponent): SparkleComponent => {
-  const sparkleComponent: SparkleComponent = ({ color, style }) => (
-    <Icon style={{ ...style, color }} className={sparkleClassname} />
+  const sparkleComponent: SparkleComponent = ({ style }) => (
+    <Icon style={style} className={sparkleClassname} />
   )
   return sparkleComponent
 }
@@ -55,8 +55,9 @@ const iconComponentToSparkleComponent = (Icon: IconComponent): SparkleComponent 
 const exoticSparkleComponents: Record<string, SparkleComponent> = {
   react: iconComponentToSparkleComponent(ReactIcon),
   ts: iconComponentToSparkleComponent(TypescriptIcon),
+  solid: iconComponentToSparkleComponent(SolidJsIcon),
 }
-const kinds: string[] = Object.keys(exoticSparkleComponents)
+const exoticKinds: string[] = Object.keys(exoticSparkleComponents)
 
 const generateSparkleDetails = () => {
   const sizeNum = random(40, 100) / 100
@@ -65,16 +66,15 @@ const generateSparkleDetails = () => {
   const position = () => `calc(${random(0, 100) + '%'} - ${sizeNum / 2}em)`
   return {
     createdAt: Date.now(),
-    // Bright yellow color:
-    color: randomItem(COLORS),
     style: {
+      color: randomItem(COLORS),
       top: position(),
       left: position(),
       width: size,
       height: size,
       zIndex: front ? zIndexes.front : zIndexes.back,
     },
-    kind: Math.random() > 0.9 ? randomItem(kinds) : null,
+    kind: Math.random() > 0.9 ? randomItem(exoticKinds) : null,
   }
 }
 
