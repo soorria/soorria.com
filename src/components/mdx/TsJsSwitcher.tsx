@@ -16,18 +16,26 @@ const TsJsSwitcher: React.FC = props => {
   const hydrated = useHydrated()
   const pre = useRef<HTMLPreElement>(null)
 
-  const { blocks, isTsx } = useMemo(() => {
+  const { blocks, names } = useMemo(() => {
     const children = Children.toArray(props.children).filter(el =>
       isValidElement(el)
     ) as ReactElement[]
 
-    if (children.length <= 1) return { blocks: [] }
+    if (children.length <= 1) return { blocks: [], names: {} }
 
     const [a, b] = children as [ReactElement, ReactElement]
 
-    const [ts, js] = TS_LANGUAGES.has(a.props.language) ? [a, b] : [b, a]
+    const blocks = TS_LANGUAGES.has(a.props.language) ? ([a, b] as const) : ([b, a] as const)
 
-    return { blocks: [ts, js], isTsx: ts.props.language === 'tsx' }
+    const isTsx = blocks[0].props.language === 'tsx'
+
+    return {
+      blocks: blocks,
+      names: {
+        ts: LANGUAGE_NAME_MAP[isTsx ? 'tsx' : 'ts'],
+        js: LANGUAGE_NAME_MAP[isTsx ? 'jsx' : 'js'],
+      },
+    } as const
   }, [props.children])
 
   if (blocks.length <= 1) return <>{props.children}</>
@@ -41,7 +49,24 @@ const TsJsSwitcher: React.FC = props => {
       <div className={cx('shiki', CODE_BLOCK_CLASSNAMES.root)}>
         <div className={CODE_BLOCK_CLASSNAMES.header}>
           <div className={CODE_BLOCK_CLASSNAMES.languageTitle}>
-            {LANGUAGE_NAME_MAP[`${isTs ? 't' : 'j'}s${isTsx ? 'x' : ''}`]}
+            <span className="inline-grid overflow-y-hidden">
+              <span
+                className={cx(
+                  'col-start-1 row-start-1 transition-transform',
+                  isTs && '-translate-y-full'
+                )}
+              >
+                {names.ts}
+              </span>
+              <span
+                className={cx(
+                  'col-start-1 row-start-1 transition-transform',
+                  !isTs && 'translate-y-full'
+                )}
+              >
+                {names.js}
+              </span>
+            </span>
           </div>
           <div className="flex-1" />
           {hydrated && (
