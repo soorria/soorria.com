@@ -8,6 +8,7 @@ import SnippetCard from '@/components/SnippetCard'
 import { getOgImageForData } from '@/utils/og'
 import { sortByCreatedAtField } from '@/utils/content'
 import { PUBLIC_URL } from '@/constants'
+import License from '@/components/License'
 
 interface SnippetsPageProps {
   snippets: SnippetFrontMatter[]
@@ -40,6 +41,7 @@ const SnippetsPage: React.FC<SnippetsPageProps> = ({ snippets }) => {
         ))}
       </div>
       <div className="my-12 text-center">{snippets.length} snippets total</div>
+      <License summary="License for these snippets" />
     </PostLayout>
   )
 }

@@ -16,7 +16,7 @@
 }
 
 .prose code {
-  @apply rounded bg-drac-curr p-1 leading-none text-drac-pink;
+  @apply rounded bg-drac-curr py-1 px-1.5 leading-none text-drac-pink;
 }
 
 .prose .shiki code {
@@ -46,7 +46,7 @@
   opacity: 1;
 }
 .prose .shiki .highlight {
-  background-color: #21222c;
+  background-color: theme('colors.drac.bg-dark');
 }
 .prose .shiki:hover .highlight {
   box-shadow: inset 0.25rem 0 0 0 theme('colors.drac.purple');

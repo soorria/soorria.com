@@ -17,6 +17,10 @@ const projectCardMap: Record<string, ProjectCardComponent> = {
   pokelife: dynamic(() => import('./pokelife/PokelifeCard')),
 }
 
+const classes = {
+  link: 'inline-flex items-center space-x-1 text-drac-pink underline hocus:text-drac-purple focus-ring rounded -mx-1 px-1',
+}
+
 const ProjectCard: ProjectCardComponent = ({ project }) => {
   if (project.slug in projectCardMap) {
     const Comp = projectCardMap[project.slug]!
@@ -42,10 +46,7 @@ const ProjectCard: ProjectCardComponent = ({ project }) => {
       <div className="flex space-x-4 text-sm">
         {project.hasContent && (
           <Link href={`/projects/${project.slug}`}>
-            <a
-              aria-label={`See details for ${project.title}`}
-              className="inline-flex items-center space-x-1 text-drac-pink underline hocus:text-drac-purple"
-            >
+            <a aria-label={`See details for ${project.title}`} className={classes.link}>
               <InfoIcon className="inline-block h-4 w-4" />
               <span>Details</span>
               <span className="sr-only"> for {project.title}</span>
@@ -57,7 +58,7 @@ const ProjectCard: ProjectCardComponent = ({ project }) => {
           <a
             href={project.live}
             aria-label={`View the live site for ${project.title}`}
-            className="inline-flex items-center space-x-1 text-drac-pink underline hocus:text-drac-purple"
+            className={classes.link}
             target="_blank"
             rel="noopener noreferrer"
           >
@@ -72,7 +73,7 @@ const ProjectCard: ProjectCardComponent = ({ project }) => {
           <a
             href={project.source}
             aria-label={`View the source code for ${project.title}`}
-            className="inline-flex items-center space-x-1 text-drac-pink underline hocus:text-drac-purple"
+            className={classes.link}
             target="_blank"
             rel="noopener noreferrer"
           >

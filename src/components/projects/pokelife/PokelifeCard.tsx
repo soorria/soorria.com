@@ -11,13 +11,13 @@ interface PokelifeCardProps {
 }
 
 const cardLinkClassName =
-  'inline-flex items-center px-6 py-2 ml-4 mt-4 space-x-2 font-semibold transition-colors border-2 border-current border-white rounded hocus:text-purple-500 hocus:bg-white'
+  'inline-flex items-center px-6 py-2 ml-4 mt-4 space-x-2 font-semibold transition-colors border-2 border-current border-white rounded hocus:text-drac-bg hocus:bg-white focus-ring'
 
 const SettingButton: React.FC<ButtonHTMLAttributes<HTMLButtonElement>> = props => {
   return (
     <button
       {...props}
-      className="cursor-pointer break-words break-all underline disabled:cursor-not-allowed disabled:opacity-50"
+      className="focus-ring -mx-1 cursor-pointer break-words break-all rounded px-1 underline disabled:cursor-not-allowed disabled:opacity-50"
     />
   )
 }
@@ -47,7 +47,6 @@ const PokelifeCard: React.FC<PokelifeCardProps> = ({ project }) => {
 
     const obs = new IntersectionObserver(
       entries => {
-        console.log(entries)
         if (entries[0]?.isIntersecting) {
           setShowDemo(true)
           obs.disconnect()
@@ -65,7 +64,7 @@ const PokelifeCard: React.FC<PokelifeCardProps> = ({ project }) => {
     }
   }, [])
 
-  const isDataSaver = typeof window !== 'undefined' && (navigator?.connection as any)?.saveData
+  const isDataSaver = typeof window !== 'undefined' && (navigator as any)?.connection?.saveData
 
   return (
     <div
@@ -77,6 +76,7 @@ const PokelifeCard: React.FC<PokelifeCardProps> = ({ project }) => {
         {!isDataSaver && showDemo && (
           <iframe
             title="Pokelife"
+            tabIndex={-1}
             src={url}
             className="no-js-hidden col-span-2 col-start-2 ml-auto block h-full w-full rounded-xl"
           />

@@ -24,6 +24,10 @@ const LINKS: LinkType[][] = [
       title: '/uses',
       href: '/uses',
     },
+    {
+      title: 'source',
+      href: 'https://soorria.com/src',
+    },
   ],
   [
     {
@@ -69,7 +73,7 @@ const LINKS: LinkType[][] = [
   ],
 ]
 
-const linkClass = 'transition-colors text-drac-pink hocus:text-drac-purple'
+const linkClass = 'transition-colors text-drac-pink hocus:text-drac-purple focus-ring rounded'
 
 interface FooterProps {}
 

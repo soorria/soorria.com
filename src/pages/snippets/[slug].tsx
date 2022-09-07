@@ -11,6 +11,7 @@ import { categoryLowerCaseToIcon, defaultCategoryIcon } from '@/components/categ
 import { formatDate } from '@/utils/date'
 import { useScrollCssVar } from '@/utils/use-scroll-css-var'
 import { PUBLIC_URL } from '@/constants'
+import License from '@/components/License'
 
 const SCROLL_VAR = '--scroll'
 const CategoryIconDivider: React.FC<{ category: string }> = ({ category }) => {
@@ -72,7 +73,7 @@ const SnippetPage: React.FC<SnippetPageProps> = ({ snippet, mdx }) => {
         }}
       />
       <CategoryIconDivider category={snippet.category} />
-      <div className="prose mx-auto mt-6 md:prose-lg">
+      <div className="prose mx-auto mt-6 mb-8 md:prose-lg">
         <Content />
         <PostBottomSection>
           <div suppressHydrationWarning>
@@ -83,6 +84,7 @@ const SnippetPage: React.FC<SnippetPageProps> = ({ snippet, mdx }) => {
             Found a mistake, or want to suggest an improvement? Edit on GitHub{' '}
             <a
               href={editUrl(DataType.snippets, snippet.slug)}
+              className="focus-ring -mx-1 rounded px-1 focus:ring-1"
               rel="noopenner noreferrer"
               target="_blank"
             >
@@ -91,6 +93,7 @@ const SnippetPage: React.FC<SnippetPageProps> = ({ snippet, mdx }) => {
           </div>
         </PostBottomSection>
       </div>
+      <License summary="License for this snippet" />
     </PostLayout>
   )
 }

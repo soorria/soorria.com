@@ -92,6 +92,11 @@ h1 {
 }
 
 @tailwind components;
+
+.focus-ring {
+  @apply ring-drac-pink transition-shadow focus:outline-none focus:ring-2;
+}
+
 @tailwind utilities;
 
 .circuit-bg {
@@ -167,11 +172,16 @@ input {
  * Heading anchors
  */
 .heading-anchor {
-  @apply absolute no-underline opacity-0 transition-opacity;
+  @apply absolute inline-grid place-items-center no-underline opacity-0 transition-opacity;
 
   margin-left: 0.5em;
-  padding-right: -1em;
   cursor: pointer;
+  width: 1em;
+  height: 1em;
+}
+
+.heading-anchor:focus {
+  @apply ring-0;
 }
 
 .heading-anchor:hover,

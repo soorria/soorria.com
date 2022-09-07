@@ -1,19 +1,18 @@
 import cx from '@/utils/cx'
-import { useCopy } from '@/utils/use-copy'
 import { useHydrated } from '@/utils/use-hydrated'
 import { useSyncedLocalStorage } from '@/utils/use-synced-local-storage'
 import { Children, isValidElement, ReactElement, useMemo, useRef } from 'react'
+import { CodeBlockCopyButton } from './utils'
 import {
   CodeBlockTitle,
   CODE_BLOCK_CLASSNAMES,
-  getTextFromNullablePre,
+  getCodeLinesFromPre,
   LANGUAGE_NAME_MAP,
 } from './utils'
 
 const TS_LANGUAGES = new Set(['ts', 'tsx', 'typescript'])
 const TsJsSwitcher: React.FC = props => {
   const [isTs, setIsTs] = useSyncedLocalStorage('scom:isTs', true)
-  const [copy, copied] = useCopy()
   const hydrated = useHydrated()
   const pre = useRef<HTMLPreElement>(null)
 
@@ -52,15 +51,36 @@ const TsJsSwitcher: React.FC = props => {
                 className={CODE_BLOCK_CLASSNAMES.button}
                 onClick={() => setIsTs(t => !t)}
               >
-                <span className="hidden sm:inline">switch</span> to {isTs ? 'js' : 'ts'}
+                {/**
+                 * What should get shown here:
+                 *
+                 *              < sm => 'to js'
+                 * sm <= screen < md => 'switch to js'
+                 * md <= screen      => 'switch to javascript'
+                 */}
+                <span className="hidden sm:inline">switch</span> to{' '}
+                <span className="inline-grid overflow-y-hidden">
+                  <span
+                    className={cx(
+                      'col-start-1 row-start-1 transition-transform',
+                      isTs && '-translate-y-full'
+                    )}
+                  >
+                    <span className="hidden md:inline">typescript</span>
+                    <span className="md:hidden">ts</span>
+                  </span>
+                  <span
+                    className={cx(
+                      'col-start-1 row-start-1 transition-transform',
+                      !isTs && 'translate-y-full'
+                    )}
+                  >
+                    <span className="hidden md:inline">javascript</span>
+                    <span className="md:hidden">js</span>
+                  </span>
+                </span>
               </button>
-              <button
-                type="button"
-                className={CODE_BLOCK_CLASSNAMES.button}
-                onClick={() => copy(getTextFromNullablePre(pre.current))}
-              >
-                {copied ? 'copied' : 'copy'}
-              </button>
+              <CodeBlockCopyButton getText={() => getCodeLinesFromPre(pre.current)} />
             </>
           )}
         </div>

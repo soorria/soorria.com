@@ -4,6 +4,7 @@ const plugin = require('tailwindcss/plugin')
 
 const drac = {
   bg: '#282a36',
+  'bg-dark': '#21222c',
   curr: '#44475a',
   fg: '#f8f8f2',
   comment: '#6272a4',
@@ -48,6 +49,9 @@ module.exports = {
                 '&:hover': {
                   color: purple,
                 },
+                '&:focus': {
+                  color: purple,
+                },
               },
               'a code': {
                 color: pink,
@@ -75,6 +79,7 @@ module.exports = {
               },
               img: {
                 width: '100%',
+                borderRadius: '1rem',
               },
             },
           },

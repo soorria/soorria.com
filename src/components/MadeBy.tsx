@@ -7,7 +7,7 @@ interface MadeByProps {}
 const MadeBy: React.FC<MadeByProps> = () => {
   return (
     <Link href={PUBLIC_URL}>
-      <a className="group block text-center">
+      <a className="focus-ring group block rounded text-center">
         Made with{' '}
         <span className="relative inline-block h-5 w-5 align-middle">
           <HeartIcon className="absolute inset-0 fill-current text-drac-purple" />

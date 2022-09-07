@@ -7,7 +7,7 @@ import UtilsTag from './UtilsTag'
 import { CodeIcon, ExternalIcon, InfoIcon } from '@/components/icons'
 
 const cardLinkClassName =
-  'inline-flex items-center px-3 py-1 ml-2 mt-2 space-x-1 text-sm font-semibold transition-colors border-2 border-current border-white rounded-sm hocus:text-var-bg hocus:bg-white'
+  'inline-flex items-center px-3 py-1 ml-2 mt-2 space-x-1 text-sm font-semibold transition-colors border-2 border-current border-white rounded-sm hocus:text-var-bg hocus:bg-white focus-ring'
 
 type UtilsProjectCardProps = ProjectCardProps &
   (

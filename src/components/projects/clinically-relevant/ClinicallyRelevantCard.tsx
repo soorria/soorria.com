@@ -29,10 +29,12 @@ const themeClasses = {
 type Theme = keyof typeof themeClasses
 
 const cardLinkClassName = (theme: Theme) =>
-  'px-3 py-1 ml-2 mt-2 inline-flex space-x-1 text-sm items-center border-2 transition border-current rounded-sm font-semibold ' +
-  (theme === 'light'
-    ? 'hocus:bg-gray-800 hocus:text-gray-100 hocus:border-gray-800'
-    : 'hocus:bg-gray-100 hocus:text-gray-800 hocus:border-gray-100')
+  cx(
+    'px-3 py-1 ml-2 mt-2 inline-flex space-x-1 text-sm items-center border-2 transition border-current rounded-sm font-semibold focus-ring',
+    theme === 'light'
+      ? 'hocus:bg-gray-800 hocus:text-gray-100 hocus:border-gray-800'
+      : 'hocus:bg-gray-100 hocus:text-gray-800 hocus:border-gray-100'
+  )
 
 const ClinicallyRelevantCard: ProjectCardComponent = ({ project }) => {
   const track = useTrackFirstEvent()
@@ -60,6 +62,7 @@ const ClinicallyRelevantCard: ProjectCardComponent = ({ project }) => {
               <button
                 type="button"
                 onClick={toggle}
+                className="focus-ring rounded"
                 aria-label="Toggle Clinically Relevant dark mode"
               >
                 {theme === 'light' ? '🌙' : '☀'}

@@ -43,12 +43,12 @@ const Subtitle: React.FC<SubtitleProps> = ({ options }) => {
       <Component />
       <button
         onClick={randomise}
-        className="group relative inline-flex items-center text-drac-comment transition-colors hocus:text-drac-purple"
+        className="focus-ring group relative inline-flex translate-y-1 items-center rounded text-drac-comment transition hocus:text-drac-purple"
         aria-label="refresh subtitle about me"
         title="refresh subtitle about me"
       >
         <RefreshIcon
-          className={cx('h-em w-em translate-y-1 transform transition-transform ease-in-out')}
+          className={cx('h-em w-em transform transition-transform ease-in-out')}
           style={{
             ['--tw-rotate' as string]: `-${rotations}turn`,
             transitionDuration: `${rotationDuration}ms`,

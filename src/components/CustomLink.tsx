@@ -2,7 +2,8 @@ import type { AnchorHTMLAttributes } from 'react'
 import cx from '@/utils/cx'
 import Link from 'next/link'
 
-const defaultClassName = 'text-drac-pink underline hocus:text-drac-purple'
+const defaultClassName =
+  'text-drac-pink underline hocus:text-drac-purple focus-ring rounded -mx-1 px-1'
 
 const CustomLink: React.FC<{ href: string } & AnchorHTMLAttributes<HTMLAnchorElement>> = ({
   href,

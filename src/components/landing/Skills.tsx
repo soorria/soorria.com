@@ -17,7 +17,7 @@ const SkillListItem: React.FC = ({ children }) => {
 
 const classes = {
   buttonCommon:
-    'rounded bg-drac-curr px-2 py-1 text-drac-fg transition-colors hocus:text-drac-purple',
+    'rounded bg-drac-curr px-2 py-1 text-drac-fg transition-colors hocus:text-drac-purple focus-ring',
 }
 
 const Skills: React.FC<{ random?: number; skillIndexes: number[] }> = ({
