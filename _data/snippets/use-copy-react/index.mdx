@@ -9,8 +9,8 @@ createdAt: '2022-05-02'
 updatedAt: '2022-05-02'
 ---
 
-Copy text to your clipboard, and know when it's done so you can change the button's text to
-`copied!`.
+Copy text to your clipboard, and know when it's done so you can change the
+button's text to `copied!`.
 
 ```typescript
 import { useState, useCallback, useRef } from 'react'
@@ -44,8 +44,9 @@ export const useCopy = ({ copiedTimeout = 2000 }: UseCopyProps = {}): [
 
 **Note**:
 
-- We use `useCallback`, so that if you follow hook rules and use the `copy` function inside a
-  `useEffect` or another `useCallback`, you won't have code (re-)running unnecessarily.
+- We use `useCallback`, so that if you follow hook rules and use the `copy`
+  function inside a `useEffect` or another `useCallback`, you won't have code
+  (re-)running unnecessarily.
 
 ---
 

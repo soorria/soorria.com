@@ -1,6 +1,7 @@
 ---
 title: debounce
-shortDescription: Run a function at most once every N seconds, at the end of the N seconds.
+shortDescription:
+  Run a function at most once every N seconds, at the end of the N seconds.
 category: TypeScript
 tags:
   - typescript
@@ -8,7 +9,8 @@ createdAt: '2021-03-28'
 updatedAt: '2021-03-28'
 ---
 
-See [throttle](/snippets/throttle) if you want your function to run at the start of the N seconds.
+See [throttle](/snippets/throttle) if you want your function to run at the start
+of the N seconds.
 
 ```typescript
 const debounce = <T extends CallableFunction>(fn: T, delay: number): T => {

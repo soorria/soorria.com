@@ -12,7 +12,14 @@ updatedAt: '2022-09-03'
 Get a signal that lets you know when the mouse has stopped moving.
 
 ```ts
-import { Accessor, createEffect, createMemo, createSignal, onCleanup, onMount } from 'solid-js'
+import {
+  Accessor,
+  createEffect,
+  createMemo,
+  createSignal,
+  onCleanup,
+  onMount,
+} from 'solid-js'
 
 interface UseIsMouseInactiveOptions {
   timeout?: number | Accessor<number>

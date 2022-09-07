@@ -8,14 +8,19 @@ createdAt: '2022-04-26'
 updatedAt: '2022-09-03'
 ---
 
-Download a file, text, blob, etc programmatically with JavaScript, or download from a url without
-JavaScript
+Download a file, text, blob, etc programmatically with JavaScript, or download
+from a url without JavaScript
 
 ## With JavaScript
 
 ```ts
-export const download = (content: string | Blob | File, fileName: string, type?: string) => {
-  const blob = typeof content === 'string' ? new Blob([content], { type }) : content
+export const download = (
+  content: string | Blob | File,
+  fileName: string,
+  type?: string
+) => {
+  const blob =
+    typeof content === 'string' ? new Blob([content], { type }) : content
   const a = document.createElement('a')
   a.href = URL.createObjectURL(blob)
   a.download = fileName
@@ -26,8 +31,8 @@ export const download = (content: string | Blob | File, fileName: string, type?:
 
 **Note**:
 
-- We use `a.dispatchEvent` over `a.click` since some browsers don't start the download when
-  `a.click` is called.
+- We use `a.dispatchEvent` over `a.click` since some browsers don't start the
+  download when `a.click` is called.
 
 ## Without JavaScript
 
@@ -37,9 +42,9 @@ export const download = (content: string | Blob | File, fileName: string, type?:
 
 **Note**:
 
-- The `url` must point to a resource on the same domain and should only contain the path. e.g. if
-  the domain you're on is `soorria.com` to download `https://soorria.com/og.png`, the `url` should
-  be `/og.png`
+- The `url` must point to a resource on the same domain and should only contain
+  the path. e.g. if the domain you're on is `soorria.com` to download
+  `https://soorria.com/og.png`, the `url` should be `/og.png`
 
 ## Demo
 

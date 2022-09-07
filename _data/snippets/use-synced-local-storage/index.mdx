@@ -1,6 +1,8 @@
 ---
 title: useSyncedLocalStorage (React)
-shortDescription: Save state to localStorage and sync it between hook instances, tabs and windows!
+shortDescription:
+  Save state to localStorage and sync it between hook instances, tabs and
+  windows!
 category: React Hook
 tags:
   - typescript
@@ -9,16 +11,17 @@ createdAt: '2022-07-07'
 updatedAt: '2022-08-27'
 ---
 
-Save state to localStorage and sync it between hook instances, tabs and windows! It also has an
-almost identical interface to `useState`.
+Save state to localStorage and sync it between hook instances, tabs and windows!
+It also has an almost identical interface to `useState`.
 
-This is an extended / advanced version of [`useLocalStorage`](/snippets/use-local-storage) that adds
-the following features:
+This is an extended / advanced version of
+[`useLocalStorage`](/snippets/use-local-storage) that adds the following
+features:
 
-- SSR / SSG support (defaults to `initialValue` on the server, and on initial render to prevent
-  react's hydration warnings)
-- Synchronisation of state for `key` across `useSyncedLocalStorage` instances in the same /
-  different tabs and between windows of the same app.
+- SSR / SSG support (defaults to `initialValue` on the server, and on initial
+  render to prevent react's hydration warnings)
+- Synchronisation of state for `key` across `useSyncedLocalStorage` instances in
+  the same / different tabs and between windows of the same app.
 
 ```ts
 import type { Dispatch, SetStateAction } from 'react'
@@ -35,7 +38,11 @@ if (typeof window !== 'undefined') {
   // We define this globally since it simplifies the already extremely
   // complicated hook a tiny bit, and we can handle
   window.addEventListener('storage', event => {
-    if (event.storageArea === localStorage && event.key != null && trackedKeys[event.key]) {
+    if (
+      event.storageArea === localStorage &&
+      event.key != null &&
+      trackedKeys[event.key]
+    ) {
       let parsed
       try {
         parsed = JSON.parse(event.newValue ?? '')
@@ -52,7 +59,10 @@ if (typeof window !== 'undefined') {
   })
 }
 
-export const useSyncedLocalStorage = <T extends NonNullable<any>, K extends string>(
+export const useSyncedLocalStorage = <
+  T extends NonNullable<any>,
+  K extends string
+>(
   key: K,
   initialValue: T
 ): [T, Dispatch<SetStateAction<T>>] => {
@@ -126,17 +136,19 @@ export const useSyncedLocalStorage = <T extends NonNullable<any>, K extends stri
 
 **Note**:
 
-- This hook relies on the [`mitt`](https://github.com/developit/mitt) event emitter package - it's
-  only tiny at only 200 bytes(!!) that I would have had to include anyway (for syncing between hook
-  instances in the same tab), and has
-  [tests](https://github.com/developit/mitt/blob/main/test/index_test.ts) that I don't want to
-  write.
+- This hook relies on the [`mitt`](https://github.com/developit/mitt) event
+  emitter package - it's only tiny at only 200 bytes(!!) that I would have had
+  to include anyway (for syncing between hook instances in the same tab), and
+  has [tests](https://github.com/developit/mitt/blob/main/test/index_test.ts)
+  that I don't want to write.
 
-- The type of the `state` that you use this hook with cannot be nullable (i.e. cannot be `null` or
-  `undefined`). This is enforced in the type signature of the hook so if you're using TypeScript,
-  issues should be caught at compile-time, I recommend wrapping your state in an object (e.g.
-  `useSyncedLocalStorage<{ user: User | null }>('user', { user: null })`), or you can modify the
-  hook to suit your needs.
+- The type of the `state` that you use this hook with cannot be nullable (i.e.
+  cannot be `null` or `undefined`). This is enforced in the type signature of
+  the hook so if you're using TypeScript, issues should be caught at
+  compile-time, I recommend wrapping your state in an object (e.g.
+  `useSyncedLocalStorage<{ user: User | null }>('user', { user: null })`), or
+  you can modify the hook to suit your needs.
 
-- Unfortunately we have 4 refs of which none are used for DOM elements, and I'm not sure of a better
-  way to get around the issues they solve without adding extra state
+- Unfortunately we have 4 refs of which none are used for DOM elements, and I'm
+  not sure of a better way to get around the issues they solve without adding
+  extra state
