@@ -123,7 +123,8 @@ const PokelifeCard: React.FC<PokelifeCardProps> = ({ project }) => {
             </li>
             <li className="no-js-hidden">Embeddable, and mesmerising to look at →.</li>
             <li>
-              Runs off the main thread so UI still works okay even on the most taxing settings.
+              Runs off the main thread so you get a buttery smooth<sup>ish</sup> UI even on the most
+              taxing settings
             </li>
           </ul>
         </div>
