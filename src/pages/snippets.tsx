@@ -15,7 +15,7 @@ interface SnippetsPageProps {
 }
 
 const description =
-  'Little bits of code that I find useful and you might too! Mostly written in TypeScript (with transpiled JavaScript) and often for React and SolidJS.'
+  'Little bits of code that I find useful and you might too! Mostly written in TypeScript (with a transpiled JavaScript available) and often for React and SolidJS.'
 const title = 'Snippets'
 const url = `${PUBLIC_URL}/snippets`
 
