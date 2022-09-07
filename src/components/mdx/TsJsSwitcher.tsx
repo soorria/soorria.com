@@ -53,18 +53,18 @@ const TsJsSwitcher: React.FC = props => {
               <span
                 className={cx(
                   'col-start-1 row-start-1 transition-transform',
-                  isTs && '-translate-y-full'
+                  !isTs && '-translate-y-full'
                 )}
               >
-                {names.js}
+                {names.ts}
               </span>
               <span
                 className={cx(
                   'col-start-1 row-start-1 transition-transform',
-                  !isTs && 'translate-y-full'
+                  isTs && 'translate-y-full'
                 )}
               >
-                {names.ts}
+                {names.js}
               </span>
             </span>
           </div>
