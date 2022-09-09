@@ -14,7 +14,16 @@ interface LogoProps extends SVGProps<SVGSVGElement> {
 const Logo: React.FC<LogoProps> = ({ size = 'auto', className, ...rest }) => {
   return (
     <svg {...rest} className={cx(SIZES[size], className)} viewBox="0 0 24 24">
-      <mask id="a" mask-type="alpha" width="24" height="24" x="0" y="0">
+      <mask
+        id="a"
+        // eslint doesn't think it's legit :(
+        // eslint-disable-next-line react/no-unknown-property
+        mask-type="alpha"
+        width="24"
+        height="24"
+        x="0"
+        y="0"
+      >
         <rect width="24" height="24" fill="#fff" rx="3" />
       </mask>
       <g mask="url(#a)">
