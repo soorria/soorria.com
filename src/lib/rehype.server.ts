@@ -1,7 +1,6 @@
 import type { Node as UnistNode } from 'unist'
 import { visit, Visitor } from 'unist-util-visit'
 import type { Element, Node } from 'hast'
-import {} from 'react-dom'
 
 const isPreElement = (n: Node): n is Element => (n as any).tagName === 'pre'
 

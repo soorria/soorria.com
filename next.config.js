@@ -73,9 +73,6 @@ const config = {
   experimental: {
     legacyBrowsers: false,
     browsersListForSwc: true,
-    images: {
-      allowFutureImage: true,
-    },
   },
 }
 
