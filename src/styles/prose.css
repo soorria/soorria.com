@@ -9,8 +9,8 @@
 /*
  * Code Snippets
  */
-.prose pre {
-  @apply rounded-none bg-drac-bg;
+.prose pre.shiki {
+  @apply rounded-none bg-transparent;
   @apply px-0 pt-0;
   @apply -mx-2 pb-3 md:-mx-6;
 }
@@ -23,7 +23,7 @@
   @apply float-left min-w-full rounded-none bg-transparent p-0;
 }
 
-.prose pre .line {
+.prose .shiki line {
   @apply relative block px-2 md:px-6;
   @apply rounded-none bg-transparent text-base text-drac-fg;
   line-height: 1.75;
