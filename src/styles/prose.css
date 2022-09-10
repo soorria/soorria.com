@@ -23,7 +23,7 @@
   @apply float-left min-w-full rounded-none bg-transparent p-0;
 }
 
-.prose .shiki line {
+.prose .shiki .line {
   @apply relative block px-2 md:px-6;
   @apply rounded-none bg-transparent text-base text-drac-fg;
   line-height: 1.75;
