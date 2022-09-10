@@ -87,7 +87,7 @@ const discordLink: Link = {
 }
 
 const cardLink: Link = {
-  href: 'https://links.soorria.com',
+  href: 'https://soorria.com/links',
   iconAlt: 'link',
   title: 'all links',
   icon: LinkIcon,

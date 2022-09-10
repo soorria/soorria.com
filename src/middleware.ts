@@ -25,7 +25,7 @@ const middleware: NextMiddleware = async req => {
   if (linksPageSubdomain.has(subdomain)) {
     const dest = req.nextUrl.clone()
     dest.pathname = '/links'
-    return NextResponse.rewrite(dest)
+    return NextResponse.redirect(dest)
   }
 
   return NextResponse.next()

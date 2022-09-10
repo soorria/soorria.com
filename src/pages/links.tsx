@@ -5,6 +5,7 @@ import MadeBy from '@/components/MadeBy'
 import Sparkles from '@/components/mdx/Sparkles'
 import { links } from '@/links'
 import cx from '@/utils/cx'
+import { getSingletonJsonSafe } from '@/lib/supabase'
 
 const classes = {
   anchor: cx(
@@ -24,13 +25,17 @@ const orderedLinks = [
   links.linkedin,
 ]
 
-const LinksPage: React.FC = () => {
+type LinksPageProps = {
+  heroText: string
+}
+
+const LinksPage: React.FC<LinksPageProps> = ({ heroText }) => {
   return (
     <>
       <Container>
         <div className="h-8 sm:h-20" />
         <div className="relative">
-          <Hero title="Hey, I'm Soorria" isStatic={true}>
+          <Hero title={heroText} isStatic={true}>
             <main className="relative mx-auto mt-8 max-w-md space-y-8 text-lg sm:mt-24 sm:text-xl">
               {orderedLinks.map(({ title, href, icon: Icon, iconAlt }) => (
                 <a
@@ -76,9 +81,12 @@ const LinksPage: React.FC = () => {
 export default LinksPage
 
 export const getStaticProps: GetStaticProps = async () => {
+  const { heroText, linksHeroText } = await getSingletonJsonSafe('index-options')
   return {
     props: {
       layout: 'nah',
+      heroText: linksHeroText || heroText || "Hey, I'm Soorria",
     },
+    revalidate: 10,
   }
 }
