@@ -36,7 +36,7 @@ const LinksPage: React.FC<LinksPageProps> = ({ heroText }) => {
 
   useEffect(() => {
     track('Links Page', { props: {} })
-  }, [])
+  }, [track])
 
   return (
     <>
