@@ -14,6 +14,7 @@ const middleware: NextMiddleware = async req => {
     pathname.includes('.') ||
     pathname.startsWith('/api') ||
     pathname.startsWith('/proxy') ||
+    pathname.startsWith('/secrets') ||
     !host ||
     !isSubDomain
   ) {
