@@ -1,3 +1,0 @@
-User-Agent: *
-Disallow: /stats
-Sitemap: https://soorria.com/sitemap.xml
