@@ -17,10 +17,6 @@ const LINKS: LinkType[][] = [
       href: '/',
     },
     {
-      title: 'about',
-      href: '/about',
-    },
-    {
       title: 'projects',
       href: '/projects',
     },
@@ -30,6 +26,10 @@ const LINKS: LinkType[][] = [
     },
   ],
   [
+    {
+      title: 'about',
+      href: '/about',
+    },
     {
       title: '/uses',
       href: '/uses',
