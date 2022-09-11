@@ -70,6 +70,7 @@ const generateSparkleDetails = () => {
       color: randomItem(COLORS),
       top: position(),
       left: position(),
+      tranform: 'translate(-50%, -50%)',
       width: size,
       height: size,
       zIndex: front ? zIndexes.front : zIndexes.back,
@@ -123,7 +124,6 @@ const Sparkles: React.FC<SparklesProps> = ({ children, block }) => {
       <span className="relative" style={{ zIndex: zIndexes.content }}>
         {children}
       </span>
-      &nbsp;
     </span>
   )
 }

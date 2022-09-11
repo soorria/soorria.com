@@ -3,6 +3,7 @@ import { useCallback, useRef } from 'react'
 
 export type AnalyticsCustomEvents = {
   'Easter Egg': { which: string }
+  'Links Page': { link?: string }
 }
 
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
@@ -20,5 +21,5 @@ export const useTrackFirstEvent = (): ReturnType<typeof useTrackEvent> => {
       }
     },
     [track]
-  )
+  ) as typeof track
 }

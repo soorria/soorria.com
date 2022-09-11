@@ -6,6 +6,8 @@ import Sparkles from '@/components/mdx/Sparkles'
 import { links } from '@/links'
 import cx from '@/utils/cx'
 import { getSingletonJsonSafe } from '@/lib/supabase'
+import { useTrackEvent } from '@/lib/analytics'
+import { useEffect } from 'react'
 
 const classes = {
   anchor: cx(
@@ -30,6 +32,12 @@ type LinksPageProps = {
 }
 
 const LinksPage: React.FC<LinksPageProps> = ({ heroText }) => {
+  const track = useTrackEvent()
+
+  useEffect(() => {
+    track('Links Page', { props: {} })
+  }, [])
+
   return (
     <>
       <Container>
