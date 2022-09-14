@@ -3,7 +3,7 @@ import type { Snippet, SnippetFrontMatter } from '@/types/snippet'
 import PostLayout, { PostBottomSection } from '@/components/PostLayout'
 import { getAllFilesFrontMatter, getFileWithMdx } from '@/lib/data'
 import { DataType } from '@/types/data'
-import editUrl from '@/utils/editUrl'
+import { editUrl, historyUrl } from '@/utils/repo'
 import { NextSeo } from 'next-seo'
 import { getOgImageForData } from '@/utils/og'
 import { useMdxComponent } from '@/lib/mdx'
@@ -73,18 +73,28 @@ const SnippetPage: React.FC<SnippetPageProps> = ({ snippet, mdx }) => {
         }}
       />
       <CategoryIconDivider category={snippet.category} />
-      <div className="prose mx-auto mt-6 mb-8 md:prose-lg">
+      <div className="prose mx-auto mt-6 mb-12 md:prose-lg">
         <Content />
         <PostBottomSection>
           <div suppressHydrationWarning>
             Created {formatDate(snippet.createdAt)}
-            {!!snippet.updatedAt && `/ Updated ${formatDate(snippet.updatedAt)}`}
+            {!!snippet.updatedAt && ` • Updated ${formatDate(snippet.updatedAt)}`}
           </div>
           <div>
             Found a mistake, or want to suggest an improvement? Edit on GitHub{' '}
             <a
               href={editUrl(DataType.snippets, snippet.slug)}
-              className="focus-ring -mx-1 rounded px-1 focus:ring-1"
+              className="focus-ring -mx-1 rounded px-1"
+              rel="noopenner noreferrer"
+              target="_blank"
+            >
+              here
+            </a>
+            <br />
+            and see edit history{' '}
+            <a
+              href={historyUrl(DataType.snippets, snippet.slug)}
+              className="focus-ring -mx-1 rounded px-1"
               rel="noopenner noreferrer"
               target="_blank"
             >
