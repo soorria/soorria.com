@@ -55,9 +55,7 @@ export default IndexPage
 
 export const getStaticProps: GetStaticProps<IndexProps> = async () => {
   const renderText = (text: string) =>
-    render(text, undefined, { hasCodeBlocks: false }).then(
-      result => (result as { code: string }).code
-    )
+    render(text, undefined, { hasCodeBlocks: false }).then(result => result.code)
 
   const subtitleOptionsPromise = (async () => {
     const subtitleText = (await getSingletonTextSafe('subtitle')) ?? ''

@@ -107,13 +107,7 @@ export const getFileWithMdx = async <TData extends BaseData>(
     code,
     frontmatter: data,
     matter: { content },
-  } = (await render<FrontMatter<TData>>(mdx, components)) as {
-    code: string
-    frontmatter: FrontMatter<TData>
-    matter: {
-      content: string
-    }
-  }
+  } = await render<FrontMatter<TData>>(mdx, components)
 
   if (hasLiveUrlProperty(data)) {
     data.live = addRefToUrl(data.live)
