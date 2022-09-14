@@ -11,7 +11,7 @@ interface PokelifeCardProps {
 }
 
 const cardLinkClassName =
-  'inline-flex items-center px-6 py-2 ml-4 mt-4 space-x-2 font-semibold transition-colors border-2 border-current border-white rounded hocus:text-drac-bg hocus:bg-white focus-ring'
+  'inline-flex items-center px-6 py-2 ml-4 mt-4 space-x-2 font-semibold transition-colors border-2 border-current border-white rounded hocus:text-drac-base hocus:bg-white focus-ring'
 
 const SettingButton: React.FC<ButtonHTMLAttributes<HTMLButtonElement>> = props => {
   return (

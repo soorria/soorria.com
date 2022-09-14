@@ -100,7 +100,7 @@ interface FooterProps {}
 const Footer: React.FC<FooterProps> = () => {
   return (
     <Container>
-      <footer className="flex flex-col space-y-8 border-t border-drac-curr pt-8 pb-10">
+      <footer className="flex flex-col space-y-8 border-t border-drac-base-light pt-8 pb-10">
         <MadeBy />
         <div className="mx-auto grid max-w-sm grid-cols-1 justify-center gap-4 text-center lowercase sm:grid-cols-3">
           {LINKS.map((col, i) => (

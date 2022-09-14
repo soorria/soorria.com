@@ -42,7 +42,7 @@ export const Example = () => {
       {' '}
       <input
         style={{
-          background: 'var(--bg)',
+          background: 'var(--base)',
           flex: '1 1',
           border: '2px solid var(--pink)',
           borderRadius: '0.25rem',
@@ -54,7 +54,7 @@ export const Example = () => {
       <button
         style={{
           padding: '0.5rem 1rem',
-          background: 'var(--curr)',
+          background: 'var(--base-light)',
           borderRadius: '0.25rem',
         }}
         type="button"

@@ -7,7 +7,7 @@ const SnippetCard: React.FC<{ post: PostFrontMatter }> = ({
   post: { slug, title, shortDescription, createdAt, updatedAt },
 }) => (
   <Link href={`/blog/${slug}`} passHref>
-    <a className="group relative overflow-hidden rounded-xl bg-drac-curr px-4 py-3 ring-drac-pink transition-shadow hover:shadow-2xl focus:ring-2 md:py-6 md:px-8">
+    <a className="group relative overflow-hidden rounded-xl bg-drac-base-light px-4 py-3 ring-drac-pink transition-shadow hover:shadow-2xl focus:ring-2 md:py-6 md:px-8">
       <div className="relative z-10 flex h-full flex-col space-y-3">
         <div className="font-display text-xl font-bold text-drac-pink group-hover:underline">
           {title}

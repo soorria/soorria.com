@@ -27,7 +27,7 @@ const CategoryIconDivider: React.FC<{ category: string }> = ({ category }) => {
 
   return (
     <div
-      className="grid gap-4 pb-6 text-center text-drac-comment"
+      className="grid gap-4 pb-6 text-center text-drac-highlight"
       style={{ gridTemplateColumns: '1fr auto 1fr' }}
     >
       {line}

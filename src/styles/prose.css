@@ -3,7 +3,7 @@
 }
 
 .prose *:not(.shiki) code {
-  @apply rounded bg-drac-curr p-1 leading-none text-drac-pink;
+  @apply rounded bg-drac-base-light p-1 leading-none text-drac-pink;
 }
 
 /*
@@ -16,7 +16,7 @@
 }
 
 .prose code {
-  @apply rounded bg-drac-curr py-1 px-1.5 leading-none text-drac-pink;
+  @apply rounded bg-drac-base-light py-1 px-1.5 leading-none text-drac-pink;
 }
 
 .prose .shiki code {
@@ -25,7 +25,7 @@
 
 .prose .shiki .line {
   @apply relative block px-2 md:px-6;
-  @apply rounded-none bg-transparent text-base text-drac-fg;
+  @apply rounded-none bg-transparent text-base text-drac-content;
   line-height: 1.75;
   min-height: 1.75rem;
   @apply motion-safe:transition;
@@ -46,7 +46,7 @@
   opacity: 1;
 }
 .prose .shiki .highlight {
-  background-color: theme('colors.drac.bg-dark');
+  background-color: theme('colors.drac.base-dark');
 }
 .prose .shiki:hover .highlight {
   box-shadow: inset 0.25rem 0 0 0 theme('colors.drac.purple');
@@ -60,7 +60,7 @@ pre.twoslash {
 
 /** When you mouse over the pre, show the underlines */
 pre.twoslash data-lsp {
-  @apply border-b border-dotted border-drac-curr;
+  @apply border-b border-dotted border-drac-base-light;
 }
 
 /** The tooltip-like which provides the LSP response */
@@ -69,7 +69,7 @@ pre.twoslash data-lsp:hover::before {
   position: absolute;
   transform: translate(0, 1.75rem);
 
-  @apply whitespace-pre-wrap rounded bg-drac-curr px-1 py-2 text-left font-mono text-sm text-drac-fg;
+  @apply whitespace-pre-wrap rounded bg-drac-base-light px-1 py-2 text-left font-mono text-sm text-drac-content;
   z-index: 100;
 }
 

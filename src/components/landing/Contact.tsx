@@ -12,7 +12,7 @@ const classes = {
   formGroup: 'flex flex-col space-y-4 group',
   label: 'block group-focus-within:text-drac-pink transition-colors',
   input:
-    'block w-full bg-drac-curr focus:outline-none focus:ring focus:ring-drac-pink transition p-2 rounded',
+    'block w-full bg-drac-base-light focus:outline-none focus:ring focus:ring-drac-pink transition p-2 rounded',
 }
 
 enum FormStatus {
@@ -147,7 +147,7 @@ const ContactForm: React.FC = () => {
           <button
             type="submit"
             className={cx(
-              'block w-full rounded bg-drac-pink px-4 py-2 font-semibold text-drac-bg transition-colors',
+              'block w-full rounded bg-drac-pink px-4 py-2 font-semibold text-drac-base transition-colors',
               status === FormStatus.SUBMITTING
                 ? 'cursor-not-allowed opacity-70'
                 : 'hover:bg-drac-purple'
@@ -181,7 +181,7 @@ const Contact: React.FC<ContactProps> = ({ random = 0 }) => {
               }}
               className={cx(
                 'no-js-text break-words focus:outline-none',
-                showForm ? 'text-drac-purple' : 'text-drac-bg hover:text-drac-purple'
+                showForm ? 'text-drac-purple' : 'text-drac-base hover:text-drac-purple'
               )}
             >
               or use this <span className={showForm ? 'line-through' : ''}>secret</span> form

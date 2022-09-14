@@ -33,7 +33,7 @@ const License: React.FC<{ summary: ReactNode; attribution?: AttributionOptions }
   attribution,
 }) => {
   return (
-    <details className="not-prose group space-y-8 rounded bg-drac-bg-dark p-4 transition-shadow">
+    <details className="not-prose group space-y-8 rounded bg-drac-base-dark p-4 transition-shadow">
       <summary className="focus-ring -m-4 flex cursor-pointer appearance-none items-center space-x-4 rounded p-4">
         <TriangleIcon className="h-3 w-3 rotate-90 fill-white text-white transition-transform group-open:rotate-180" />
         <h2 className="ml-1 inline-block font-display font-bold">{summary}</h2>

@@ -4,12 +4,12 @@ import { useCopy } from '@/utils/use-copy'
 
 export const COMMON_CLASSNAMES = {
   codeAndDemoRoot:
-    'relative -mx-2 rounded p-2 ring-2 ring-drac-purple md:-mx-6 md:py-4 md:px-6 bg-drac-bg',
+    'relative -mx-2 rounded p-2 ring-2 ring-drac-purple md:-mx-6 md:py-4 md:px-6 bg-drac-base',
 } as const
 
 export const CODE_BLOCK_CLASSNAMES = {
   button:
-    'rounded bg-drac-purple px-2 font-bold tracking-wider text-drac-bg focus:outline-none focus:ring-2 focus:ring-drac-pink focus:ring-offset-2 focus:ring-offset-current text-center transition-shadow',
+    'rounded bg-drac-purple px-2 font-bold tracking-wider text-drac-base focus:outline-none focus:ring-2 focus:ring-drac-pink focus:ring-offset-2 focus:ring-offset-current text-center transition-shadow',
   root: cx('my-7 !pb-0', COMMON_CLASSNAMES.codeAndDemoRoot),
   pre: '!my-0',
   header: 'mb-4 flex items-center space-x-2 font-display text-sm font-bold tracking-wide',
@@ -36,7 +36,7 @@ export const LANGUAGE_NAME_MAP: Record<string, string> = {
 }
 
 export const CodeBlockTitle: React.FC<{ children: React.ReactNode }> = props => (
-  <div className="-mb-[1.7rem] rounded rounded-b-none font-display text-sm font-bold text-drac-bg">
+  <div className="-mb-[1.7rem] rounded rounded-b-none font-display text-sm font-bold text-drac-base">
     <span className="inline-block rounded rounded-b-none bg-drac-purple px-3 py-0.5">
       {props.children}
     </span>

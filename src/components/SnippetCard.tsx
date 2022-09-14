@@ -10,8 +10,8 @@ const SnippetCard: React.FC<{ snippet: SnippetFrontMatter }> = ({
   const Icon = categoryLowerCaseToIcon[category.toLowerCase()] || defaultCategoryIcon
   return (
     <Link href={`/snippets/${slug}`} passHref>
-      <a className="group relative overflow-hidden rounded-xl bg-drac-curr p-4 ring-drac-pink transition-shadow hover:shadow-2xl focus:outline-none focus:ring md:py-6 md:px-8 md:focus:ring-4">
-        <div className="absolute inset-0 flex items-center text-drac-comment text-opacity-20">
+      <a className="group relative overflow-hidden rounded-xl bg-drac-base-light p-4 ring-drac-pink transition-shadow hover:shadow-2xl focus:outline-none focus:ring md:py-6 md:px-8 md:focus:ring-4">
+        <div className="absolute inset-0 flex items-center text-drac-highlight text-opacity-20">
           <div className="h-48 w-48 -translate-x-6 scale-110 group-hocus:-rotate-20 motion-safe:transition-transform">
             <Icon />
           </div>

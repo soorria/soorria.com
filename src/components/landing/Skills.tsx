@@ -9,7 +9,7 @@ const titles = ["What I've Learned", 'Technical Skills', 'Tools I Use']
 const SkillListItem: React.FC = ({ children }) => {
   return (
     <li className="group flex items-center space-x-2">
-      <span className="h-2 w-2 transform rounded-full border-2 border-drac-fg transition group-hover:border-drac-pink" />
+      <span className="h-2 w-2 transform rounded-full border-2 border-drac-content transition group-hover:border-drac-pink" />
       <span>{children}</span>
     </li>
   )
@@ -17,7 +17,7 @@ const SkillListItem: React.FC = ({ children }) => {
 
 const classes = {
   buttonCommon:
-    'rounded bg-drac-curr px-2 py-1 text-drac-fg transition-colors hocus:text-drac-purple focus-ring',
+    'rounded bg-drac-base-light px-2 py-1 text-drac-content transition-colors hocus:text-drac-purple focus-ring',
 }
 
 const Skills: React.FC<{ random?: number; skillIndexes: number[] }> = ({

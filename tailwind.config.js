@@ -3,11 +3,11 @@ const { fontFamily } = require('tailwindcss/defaultTheme')
 const plugin = require('tailwindcss/plugin')
 
 const drac = {
-  bg: '#282a36',
-  'bg-dark': '#21222c',
-  curr: '#44475a',
-  fg: '#f8f8f2',
-  comment: '#6272a4',
+  'base-light': '#44475a',
+  base: '#282a36',
+  'base-dark': '#21222c',
+  content: '#f8f8f2',
+  highlight: '#6272a4',
   cyan: '#8be9fd',
   green: '#50fa7b',
   orange: '#ffb86c',
@@ -39,11 +39,11 @@ module.exports = {
         em: '1em',
       },
       typography: () => {
-        const { fg, pink, purple, comment } = drac
+        const { content, pink, purple, highlight } = drac
         return {
           DEFAULT: {
             css: {
-              color: fg,
+              color: content,
               a: {
                 color: pink,
                 '&:hover': {
@@ -57,24 +57,24 @@ module.exports = {
                 color: pink,
               },
               'h1,h2,h3,h4,h5,h6,blockquote,strong,b,i,em': {
-                color: fg,
+                color: content,
               },
               blockquote: {
                 borderLeftColor: purple,
               },
               hr: {
-                borderTopColor: comment,
+                borderTopColor: highlight,
                 opacity: 0.5,
               },
               thead: {
-                color: fg,
-                borderBottomColor: fg,
+                color: content,
+                borderBottomColor: content,
               },
               'tbody tr': {
-                borderBottomColor: fg,
+                borderBottomColor: content,
               },
               'figure figcaption': {
-                color: fg,
+                color: content,
                 opacity: 0.8,
               },
               img: {

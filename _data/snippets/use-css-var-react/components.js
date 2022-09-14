@@ -27,7 +27,7 @@ const styles = {
   input: {
     padding: '0.5rem 1rem',
     background: 'var(--bg)',
-    color: 'var(--fg)',
+    color: 'var(--content)',
     border: '2px solid var(--pink)',
   },
 }

@@ -26,7 +26,7 @@ const DemoWrapper: React.FC<DemoWrapperProps> = ({ component: Component, init = 
           <div className="absolute inset-x-0 bottom-0 h-20 bg-drac-purple/50 p-4 md:px-6">
             <button
               onClick={() => setKey(p => p + 1)}
-              className="focus-ring flex h-full w-full items-center justify-center rounded bg-drac-bg text-drac-pink transition hocus:text-drac-purple"
+              className="focus-ring flex h-full w-full items-center justify-center rounded bg-drac-base text-drac-pink transition hocus:text-drac-purple"
             >
               <RefreshIcon className="mr-1 h-em w-em" /> Reload Demo
             </button>
@@ -39,7 +39,7 @@ const DemoWrapper: React.FC<DemoWrapperProps> = ({ component: Component, init = 
           <div className="no-js-hidden h-20 bg-drac-purple/50 p-4 md:px-6">
             <button
               onClick={() => setStarted(true)}
-              className="focus-ring block h-full w-full rounded bg-drac-bg text-drac-pink transition hocus:text-drac-purple"
+              className="focus-ring block h-full w-full rounded bg-drac-base text-drac-pink transition hocus:text-drac-purple"
             >
               Start Demo
             </button>

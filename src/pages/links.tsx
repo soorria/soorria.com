@@ -11,8 +11,8 @@ import { useEffect } from 'react'
 
 const classes = {
   anchor: cx(
-    'group flex items-center justify-between rounded-lg bg-drac-bg/70 py-6 px-8 text-drac-pink transition',
-    'hocus:bg-drac-bg hocus:text-drac-purple hocus:shadow-xl',
+    'group flex items-center justify-between rounded-lg bg-drac-base/70 py-6 px-8 text-drac-pink transition',
+    'hocus:bg-drac-base hocus:text-drac-purple hocus:shadow-xl',
     'focus:outline-none focus:ring focus:ring-drac-purple'
   ),
 }

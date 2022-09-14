@@ -39,7 +39,7 @@ class MyDocument extends NextDocument {
             crossOrigin="anonymous"
           />
         </Head>
-        <body className="h-full min-h-screen bg-drac-bg text-drac-fg">
+        <body className="h-full min-h-screen bg-drac-base text-drac-content">
           <Main />
           <NextScript />
         </body>
