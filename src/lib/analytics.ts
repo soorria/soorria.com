@@ -17,7 +17,7 @@ export const useTrackFirstEvent = (): ReturnType<typeof useTrackEvent> => {
     (...args) => {
       if (isFirst.current) {
         isFirst.current = false
-        ;(track as any)(...args)
+        track(...args)
       }
     },
     [track]

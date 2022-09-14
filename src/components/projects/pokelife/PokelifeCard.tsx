@@ -32,11 +32,18 @@ const PokelifeCard: React.FC<PokelifeCardProps> = ({ project }) => {
   const root = useRef<HTMLDivElement>(null)
 
   const url = useMemo(() => {
-    const params = { embed: 'true' } as any
+    type PokelifeOptions = {
+      embed?: 'true'
+      size?: string
+      delay?: string
+      types?: string
+    }
+
+    const params = { embed: 'true' } as PokelifeOptions
     if (destroyCpu) {
-      params.size = 1
+      params.size = '1'
     } else {
-      params.delay = delay
+      params.delay = delay.toString()
       params.types = typesOptions[types]?.join(',') ?? ''
     }
     return `https://pokelife.soorria.com/?${new URLSearchParams(params)}`
@@ -64,7 +71,9 @@ const PokelifeCard: React.FC<PokelifeCardProps> = ({ project }) => {
     }
   }, [])
 
-  const isDataSaver = typeof window !== 'undefined' && (navigator as any)?.connection?.saveData
+  const isDataSaver =
+    typeof window !== 'undefined' &&
+    (navigator as unknown as { connection: { saveData: boolean } })?.connection?.saveData
 
   return (
     <div

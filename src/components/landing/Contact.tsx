@@ -37,7 +37,7 @@ const ContactForm: React.FC = () => {
     setStatus(FormStatus.SUBMITTING)
     event.preventDefault()
     const form = event.target as HTMLFormElement
-    const data = Object.fromEntries(new FormData(form) as any)
+    const data = Object.fromEntries(new FormData(form) as unknown as Iterable<[string, any]>)
     data._captcha = 'false'
     delete data._next
     try {

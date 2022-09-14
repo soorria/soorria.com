@@ -1,18 +1,19 @@
+import type { Plugin } from 'unified'
 import type { Node as UnistNode } from 'unist'
 import { visit, Visitor } from 'unist-util-visit'
-import type { Element, Node } from 'hast'
+import type { Element, ElementContent, Node } from 'hast'
 
-const isPreElement = (n: Node): n is Element => (n as any).tagName === 'pre'
+const isPreElement = (n: Node): n is Element => (n as Element).tagName === 'pre'
 
-export function rehypeRearrangeShikiOutput() {
+export const rehypeRearrangeShikiOutput: Plugin = () => {
   const visitor = (node: Element, _index: number, _parent: Element) => {
     if (!Array.isArray(node.properties?.className) || !node.properties?.className.includes('shiki'))
       return
 
-    const children = node.children as any[]
+    const children = node.children as ElementContent[]
 
     let language = 'code'
-    let newChildren = [] as any[]
+    let newChildren = [] as ElementContent[]
 
     for (const child of children) {
       if (child.type !== 'element') {
@@ -20,10 +21,13 @@ export function rehypeRearrangeShikiOutput() {
       }
 
       const props = child.properties
-      const className = props?.className ?? []
+      const className =
+        (Array.isArray(props?.className) ? props?.className : [props?.className]) ?? []
 
       if (className.includes('language-id')) {
-        language = child.children.find((c: any) => Boolean(c.value)).value
+        language =
+          (child.children as unknown as Array<{ value: string }>)?.find(c => Boolean(c.value))
+            ?.value ?? ''
       } else if (className.includes('code-container')) {
         newChildren = child.children
       }
@@ -32,7 +36,7 @@ export function rehypeRearrangeShikiOutput() {
     node.properties = {
       ...node.properties,
       language,
-    } as any
+    }
 
     node.children = newChildren
   }

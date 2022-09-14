@@ -4,7 +4,7 @@ import React, { Fragment, useMemo } from 'react'
 
 // eslint-disable-next-line react/display-name
 const withCommonComponents = (Component: React.FC<MDXContentProps>) => () =>
-  <Component components={baseComponents as any} />
+  <Component components={baseComponents} />
 
 export const useMdxComponent = (code?: string | null | undefined): React.FC => {
   return useMemo(() => {

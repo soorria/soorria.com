@@ -1,6 +1,6 @@
 import cx from '@/utils/cx'
 import { useHydrated } from '@/utils/use-hydrated'
-import React, { useRef } from 'react'
+import React, { PropsWithChildren, ReactNode, useRef } from 'react'
 import {
   CodeBlockCopyButton,
   CodeBlockTitle,
@@ -9,21 +9,27 @@ import {
   LANGUAGE_NAME_MAP,
 } from './utils'
 
-const CustomCodeBlock: React.FC<any> = ({
+export type CustomCodeBlockProps = PropsWithChildren<{
+  className: string
+  language?: string
+  title?: ReactNode
+}>
+
+const CustomCodeBlock: React.FC<CustomCodeBlockProps> = ({
   children,
   className,
   language: languageFromMdx,
   title,
   ...rest
 }) => {
-  const pre = useRef<HTMLPreElement>()
+  const pre = useRef<HTMLPreElement>(null)
   const hydrated = useHydrated()
 
   if (!className?.includes('shiki')) {
     return <pre className={className}>{children}</pre>
   }
 
-  const language = LANGUAGE_NAME_MAP[languageFromMdx] ?? languageFromMdx
+  const language = (languageFromMdx && LANGUAGE_NAME_MAP[languageFromMdx]) ?? languageFromMdx
 
   return (
     <>

@@ -1,4 +1,5 @@
-import { Dispatch, SetStateAction, useEffect, useState } from 'react'
+import type { Dispatch, SetStateAction } from 'react'
+import { useEffect, useState } from 'react'
 
 export const useLocalStorage = <T>(
   key: string,
@@ -10,7 +11,7 @@ export const useLocalStorage = <T>(
     if (!cached) return initialValue
 
     try {
-      return JSON.parse(cached)
+      return JSON.parse(cached) as T
     } catch (err) {
       return initialValue
     }

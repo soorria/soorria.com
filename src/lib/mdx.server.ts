@@ -66,11 +66,15 @@ export type RenderOptions = {
   hasCodeBlocks?: boolean
 }
 
-export const render = async <T extends BaseFrontMatter>(
+export type RenderResult<T> = Awaited<ReturnType<typeof bundleMDX>> & {
+  frontmatter: T
+}
+
+export const render = async <T extends BaseFrontMatter = BaseFrontMatter>(
   source: string,
   components = '',
   { hasCodeBlocks = true }: RenderOptions = {}
-) => {
+): Promise<RenderResult<T>> => {
   return bundleMDX<T>({
     source,
     files: {

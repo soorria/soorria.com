@@ -15,7 +15,7 @@ if (typeof window !== 'undefined') {
     if (event.storageArea === localStorage && event.key != null && trackedKeys[event.key]) {
       let parsed
       try {
-        parsed = JSON.parse(event.newValue ?? '')
+        parsed = JSON.parse(event.newValue ?? '') as unknown
       } catch {
         parsed = null
       }
@@ -25,7 +25,7 @@ if (typeof window !== 'undefined') {
 
   // Same as above  - we can handle setting localStorage all in one spot.
   em.on('*', (key, data) => {
-    localStorage.setItem(key, data)
+    localStorage.setItem(key, JSON.stringify(data))
   })
 }
 
@@ -62,7 +62,7 @@ export const useSyncedLocalStorage = <T extends NonNullable<any>, K extends stri
     }
 
     try {
-      setState(JSON.parse(cached))
+      setState(JSON.parse(cached) as T)
     } catch (err) {
       setState(initialValueRef.current)
     }

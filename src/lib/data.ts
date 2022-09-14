@@ -94,7 +94,8 @@ export const getFileWithContent = async <TApiData extends BaseApiData>(
   } as TApiData
 }
 
-const hasLiveUrlProperty = (obj: any): obj is { live: string } => typeof obj.live === 'string'
+const hasLiveUrlProperty = (obj: unknown): obj is { live: string } =>
+  Boolean(obj) && typeof (obj as { live: unknown }).live === 'string'
 
 export const getFileWithMdx = async <TData extends BaseData>(
   type: DataType,
@@ -106,7 +107,13 @@ export const getFileWithMdx = async <TData extends BaseData>(
     code,
     frontmatter: data,
     matter: { content },
-  } = await render<FrontMatter<TData>>(mdx, components)
+  } = (await render<FrontMatter<TData>>(mdx, components)) as {
+    code: string
+    frontmatter: FrontMatter<TData>
+    matter: {
+      content: string
+    }
+  }
 
   if (hasLiveUrlProperty(data)) {
     data.live = addRefToUrl(data.live)

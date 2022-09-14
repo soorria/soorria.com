@@ -45,8 +45,8 @@ export const getSingletonJsonSafe = async (slug: string): Promise<Record<string,
   try {
     const singleton = await getSingleton(slug)
     const str = singleton.content
-    const parsed = JSON.parse(str)
-    return typeof parsed === 'object' ? parsed : {}
+    const parsed = JSON.parse(str) as unknown
+    return typeof parsed === 'object' ? (parsed as Record<string, unknown>) : {}
   } catch (err) {
     return {}
   }

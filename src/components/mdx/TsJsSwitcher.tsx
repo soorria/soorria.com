@@ -2,6 +2,7 @@ import cx from '@/utils/cx'
 import { useHydrated } from '@/utils/use-hydrated'
 import { useSyncedLocalStorage } from '@/utils/use-synced-local-storage'
 import { Children, isValidElement, ReactElement, useMemo, useRef } from 'react'
+import type { CustomCodeBlockProps } from './CodeBlock'
 import { CodeBlockCopyButton } from './utils'
 import {
   CodeBlockTitle,
@@ -23,9 +24,12 @@ const TsJsSwitcher: React.FC = props => {
 
     if (children.length <= 1) return { blocks: [], names: {} }
 
-    const [a, b] = children as [ReactElement, ReactElement]
+    const [a, b] = children as [
+      ReactElement<CustomCodeBlockProps>,
+      ReactElement<CustomCodeBlockProps>
+    ]
 
-    const blocks = TS_LANGUAGES.has(a.props.language) ? ([a, b] as const) : ([b, a] as const)
+    const blocks = TS_LANGUAGES.has(a.props.language ?? '') ? ([a, b] as const) : ([b, a] as const)
 
     const isTsx = blocks[0].props.language === 'tsx'
 
