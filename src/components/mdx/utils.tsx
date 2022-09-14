@@ -10,7 +10,7 @@ export const COMMON_CLASSNAMES = {
 export const CODE_BLOCK_CLASSNAMES = {
   button:
     'rounded bg-drac-purple px-2 font-bold tracking-wider text-drac-base focus:outline-none focus:ring-2 focus:ring-drac-pink focus:ring-offset-2 focus:ring-offset-current text-center transition-shadow',
-  root: cx('my-7 !pb-0', COMMON_CLASSNAMES.codeAndDemoRoot),
+  root: cx('my-7 !pb-0 overflow-hidden', COMMON_CLASSNAMES.codeAndDemoRoot),
   pre: '!my-0',
   header: 'mb-4 flex items-center space-x-2 font-display text-sm font-bold tracking-wide',
   languageTitle: 'text-sm uppercase text-drac-purple sm:text-sm',
