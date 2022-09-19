@@ -1,0 +1,77 @@
+---
+title: Tailwind CSS Hocus Plugin
+shortDescription:
+  A plugin for lazy people like me who use the same styles for hover and focus
+  states
+
+category: Miscellaneous
+tags:
+  - Tailwind CSS
+createdAt: '2022-09-19'
+updatedAt:
+---
+
+This is what I call my <Sparkles>Hocus Plugin</Sparkles> - a plugin that's great
+for lazy people like me who make their `:hover` and `:focus` states basically
+they same. As anyone who's used Tailwind CSS for a while might expect, it adds
+the `hocus:` variant which will add the specificd class on hover and focus. It
+also adds `hocus-within`, `group-hocus`, and `group-hocus-within` which are
+similar but based of slightly different existing variants.
+
+```js title="tailwind.config.js"
+const plugin = require('tailwindcss/plugin')
+
+const hocusPlugin = plugin(({ addVariant }) => {
+  addVariant('hocus', ['&:hover', '&:focus'])
+  addVariant('hocus-within', ['&:hover', '&:focus-within'])
+  addVariant('group-hocus', [
+    ':merge(.group):hover &',
+    ':merge(.group):focus &',
+  ])
+  addVariant('group-hocus-within', [
+    ':merge(.group):hover &',
+    ':merge(.group):focus-within &',
+  ])
+})
+
+/**
+ * @type {import('tailwindcss').Config}
+ */
+module.exports = {
+  // ...the rest of your config
+  plugins: [hocusPlugin],
+}
+```
+
+## Usage & CSS Output Example
+
+To use this plugin, you use it like any other variant - prefix an existing
+Tailwind class with `hocus:` or one of the other variants:
+
+```tsx title="high-quality-code.tsx"
+export const RealComponent: React.FC = () => {
+  return (
+    <button className="grid place-items-center rounded bg-red-100 text-red-700 hocus:bg-red-200">
+      Click Me!
+    </button>
+  )
+}
+```
+
+Here's what the Tailwind compiler outputs:
+
+```css title="output-styles.css"
+/* Other classes */
+
+.hocus\:bg-red-200:hover,
+.hocus\:bg-red-200:focus {
+  --tw-bg-opacity: 1;
+  background-color: rgb(254 202 202 / var(--tw-bg-opacity));
+}
+
+/* More other classes */
+```
+
+## Example
+
+- [This website](https://github.com/soorria/soorria.com/blob/main/tailwind.config.js)
