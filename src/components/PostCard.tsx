@@ -13,9 +13,9 @@ const SnippetCard: React.FC<{ post: PostFrontMatter }> = ({
         <div className="font-display text-2xl font-bold text-drac-pink group-hover:underline sm:text-2xl">
           {title}
         </div>
-        <div className="flex-1 text-sm sm:text-base">{shortDescription}</div>
+        <div className="flex-1 text-base">{shortDescription}</div>
         <hr className="my-2 border-drac-content/10" />
-        <div className="grid grid-cols-2 items-center justify-items-center gap-4 text-xs sm:grid-cols-4">
+        <div className="grid grid-cols-2 items-center justify-items-center gap-4 text-sm sm:grid-cols-4">
           <div className="flex items-center space-x-2">
             <BookIcon className="inline-block h-3 w-3" />
             <span>{readingTime}</span>
