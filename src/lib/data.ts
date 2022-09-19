@@ -25,7 +25,7 @@ export const getFiles = async (type: DataType): Promise<string[]> => fs.readdir(
 const COMPONENTS_FILE = 'components.js' as const
 const files = [COMPONENTS_FILE, 'index.mdx'] as const
 
-const wordsFormatter = Intl.NumberFormat('en', { notation: 'compact' })
+const wordsFormatter = Intl.NumberFormat('en', { notation: 'compact' } as Intl.NumberFormatOptions)
 
 const getContentMetrics = (content: string): { readingTime: string; words: string } => {
   const times = readingTime(content)
