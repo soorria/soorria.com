@@ -48,7 +48,6 @@
 
 html {
   scroll-behavior: smooth;
-  min-width: 360px;
 }
 
 #__next {

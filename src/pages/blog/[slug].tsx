@@ -11,6 +11,9 @@ import { useMdxComponent } from '@/lib/mdx'
 import { PUBLIC_URL } from '@/constants'
 import { SpinningIconDivider } from '@/components/posts/SpinningIconDivider'
 import { defaultCategoryIcon } from '@/components/categories'
+import { BookIcon, ClockIconSolid, EditIcon, TextIcon } from '@/components/icons'
+import { formatDate } from '@/utils/date'
+import cx from '@/utils/cx'
 
 interface PostPageProps {
   post: PostFrontMatter
@@ -44,7 +47,36 @@ const PostPage: React.FC<PostPageProps> = ({ post, mdx }) => {
           images: [getOgImageForData(DataType.blog, post.title)],
         }}
       />
+
       <SpinningIconDivider scrollVar={SCROLL_VAR} icon={defaultCategoryIcon} />
+
+      <div className="grid grid-cols-2 items-center justify-items-center gap-4 text-sm sm:grid-cols-4">
+        <div className="flex items-center space-x-2">
+          <BookIcon className="inline-block h-4 w-4" />
+          <span>{post.readingTime}</span>
+        </div>
+
+        <div className="flex items-center space-x-2">
+          <TextIcon className="inline-block h-4 w-4" />
+          <span>{post.words}</span>
+        </div>
+
+        <div
+          className={cx(
+            'flex items-center space-x-2',
+            post.updatedAt ? '' : 'pointer-events-none opacity-0'
+          )}
+        >
+          <EditIcon className="inline-block h-3 w-3" />
+          <span>{post.updatedAt ? formatDate(post.updatedAt) : 'UNCHANGED'}</span>
+        </div>
+
+        <div className="flex items-center space-x-2">
+          <ClockIconSolid className="inline-block h-4 w-4" />
+          <span>{post.createdAt ? formatDate(post.createdAt) : 'UNPUBLISHED'}</span>
+        </div>
+      </div>
+
       <div className="prose mx-auto mt-6 md:prose-lg md:mt-16">
         <Content />
         <div className="mx-auto max-w-xs py-12 text-center text-sm">

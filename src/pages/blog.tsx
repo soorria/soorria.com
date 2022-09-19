@@ -40,6 +40,7 @@ const PostsPage: React.FC<PostsPageProps> = ({ posts }) => {
           <PostCard key={post.slug} post={post} />
         ))}
       </div>
+      <div className="my-12 text-center">{posts.length} ramblings total</div>
     </MainLayout>
   )
 }
