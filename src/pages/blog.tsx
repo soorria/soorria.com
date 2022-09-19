@@ -14,7 +14,7 @@ interface PostsPageProps {
   posts: PostFrontMatter[]
 }
 
-const description = 'Written things'
+const description = 'Longer written things'
 const title = 'Posts'
 const url = `${PUBLIC_URL}/blog`
 
@@ -53,6 +53,5 @@ export const getStaticProps: GetStaticProps = async () => {
 
   return {
     props: { posts },
-    notFound: true,
   }
 }

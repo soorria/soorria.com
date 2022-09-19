@@ -25,6 +25,16 @@ export const getFiles = async (type: DataType): Promise<string[]> => fs.readdir(
 const COMPONENTS_FILE = 'components.js' as const
 const files = [COMPONENTS_FILE, 'index.mdx'] as const
 
+const wordsFormatter = Intl.NumberFormat('en', { notation: 'compact' })
+
+const getContentMetrics = (content: string): { readingTime: string; words: string } => {
+  const times = readingTime(content)
+  return {
+    readingTime: times.text,
+    words: wordsFormatter.format(times.words),
+  }
+}
+
 const readFilesForSlug = async (
   type: DataType,
   slug: string
@@ -55,8 +65,8 @@ export const getAllFilesFrontMatter = async <TFrontMatter>(
       return {
         ...(data as TFrontMatter),
         slug: fileToSlug(slug),
-        readingTime: readingTime(content).text,
         hasContent: content.trim().length !== 0,
+        ...getContentMetrics(content),
       } as TFrontMatter
     })
   )
@@ -72,8 +82,8 @@ export const getFileFrontMatter = async <TFrontMatter>(
   return {
     ...(data as TFrontMatter),
     slug,
-    readingTime: readingTime(content).text,
     hasContent: content.trim().length !== 0,
+    ...getContentMetrics(content),
   } as TFrontMatter
 }
 
@@ -89,8 +99,8 @@ export const getFileWithContent = async <TApiData extends BaseApiData>(
     slug,
     content,
     components,
-    readingTime: readingTime(content).text,
     hasContent: content.trim().length !== 0,
+    ...getContentMetrics(content),
   } as TApiData
 }
 
@@ -117,7 +127,7 @@ export const getFileWithMdx = async <TData extends BaseData>(
     ...(data as FrontMatter<TData>),
     slug,
     code,
-    readingTime: readingTime(content).text,
     hasContent: content.trim().length !== 0,
+    ...getContentMetrics(content),
   } as TData
 }

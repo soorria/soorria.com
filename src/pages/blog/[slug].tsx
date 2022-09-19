@@ -9,12 +9,15 @@ import { getOgImageForData } from '@/utils/og'
 import { filterUnpublished } from '@/utils/content'
 import { useMdxComponent } from '@/lib/mdx'
 import { PUBLIC_URL } from '@/constants'
+import { SpinningIconDivider } from '@/components/posts/SpinningIconDivider'
+import { defaultCategoryIcon } from '@/components/categories'
 
 interface PostPageProps {
   post: PostFrontMatter
   mdx: string
 }
 
+const SCROLL_VAR = '--scroll'
 const PostPage: React.FC<PostPageProps> = ({ post, mdx }) => {
   const url = `${PUBLIC_URL}/posts/${post.slug}`
   const SEOTitle = `${post.title} | Blog`
@@ -41,6 +44,7 @@ const PostPage: React.FC<PostPageProps> = ({ post, mdx }) => {
           images: [getOgImageForData(DataType.blog, post.title)],
         }}
       />
+      <SpinningIconDivider scrollVar={SCROLL_VAR} icon={defaultCategoryIcon} />
       <div className="prose mx-auto mt-6 md:prose-lg md:mt-16">
         <Content />
         <div className="mx-auto max-w-xs py-12 text-center text-sm">

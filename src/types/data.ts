@@ -12,6 +12,7 @@ export interface BaseData {
   shortDescription: string
   code: string
   readingTime?: string
+  words?: string
   hasContent: boolean
 }
 

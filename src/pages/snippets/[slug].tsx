@@ -9,38 +9,11 @@ import { getOgImageForData } from '@/utils/og'
 import { useMdxComponent } from '@/lib/mdx'
 import { categoryLowerCaseToIcon, defaultCategoryIcon } from '@/components/categories'
 import { formatDate } from '@/utils/date'
-import { useScrollCssVar } from '@/utils/use-scroll-css-var'
 import { PUBLIC_URL } from '@/constants'
 import License from '@/components/License'
+import { SpinningIconDivider } from '@/components/posts/SpinningIconDivider'
 
 const SCROLL_VAR = '--scroll'
-const CategoryIconDivider: React.FC<{ category: string }> = ({ category }) => {
-  useScrollCssVar(SCROLL_VAR)
-
-  const Icon = categoryLowerCaseToIcon[category.toLowerCase()] || defaultCategoryIcon
-
-  const line = (
-    <div role="presentation" className="flex items-center opacity-50">
-      <div className="h-px flex-1 bg-current" />
-    </div>
-  )
-
-  return (
-    <div
-      className="grid gap-4 pb-6 text-center text-drac-highlight"
-      style={{ gridTemplateColumns: '1fr auto 1fr' }}
-    >
-      {line}
-      <Icon
-        className="inline-block h-6 w-6 transition-transform"
-        style={{
-          transform: `rotate(calc(var(${SCROLL_VAR}) * 2 * 360deg))`,
-        }}
-      />
-      {line}
-    </div>
-  )
-}
 interface SnippetPageProps {
   snippet: SnippetFrontMatter
   mdx: string
@@ -72,7 +45,10 @@ const SnippetPage: React.FC<SnippetPageProps> = ({ snippet, mdx }) => {
           images: [getOgImageForData(DataType.snippets, snippet.title)],
         }}
       />
-      <CategoryIconDivider category={snippet.category} />
+      <SpinningIconDivider
+        scrollVar={SCROLL_VAR}
+        icon={categoryLowerCaseToIcon[snippet.category.toLowerCase()] || defaultCategoryIcon}
+      />
       <div className="prose mx-auto mt-6 mb-12 md:prose-lg">
         <Content />
         <PostBottomSection>
