@@ -19,7 +19,7 @@ module.exports = {
     amd: true,
     node: true,
   },
-  ignorePatterns: ['.eslintrc.js'],
+  ignorePatterns: ['.eslintrc.js', 'tailwind.config.js'],
   extends: [
     'eslint:recommended',
     'plugin:@typescript-eslint/eslint-recommended',

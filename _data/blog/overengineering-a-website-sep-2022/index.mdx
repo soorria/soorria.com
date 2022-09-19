@@ -27,11 +27,236 @@ The main technological pillars of this website are:
 - [Next.js](https://nextjs.org)
 - [Tailwind CSS](https://tailwindcss.com/)
 
-...aka the TMNT stack!!
+...aka the TMNT stack!!1!1!!
 
 ---
 
-On a slightly more serious note, I'll talk about most of the important tech used
-in this website in the rest of the article below, but if you want a TL;DR you
-can look through the
+On a _slightly_ more serious note, I'll talk about most of the important tech
+used in this website in the rest of the article below, but if you want a TL;DR
+you can look through the
 [`package.json`](https://github.com/soorria/soorria.com/blob/main/package.json).
+
+## The Code
+
+The vast majority of this website is written in TypeScript since it provides a
+signficiant quality of life boost for a minor initial investment. If only the
+stocks I invest in had a similar ROI.
+
+React is my ~framework~ library of choice with Next.js. This combo is extremely
+okay for my use-case (a mostly static site) thought I didn't know this when I
+started. The main reasons I chose tha pair are:
+
+- They were the first I learned.
+- Next.js SSR / SSG was easier to understand and hack around than Gatsby's
+  graphql + plugin system.
+
+This combo also happens to be pretty okay performance-wise (though unfortunately
+not on the level of [SolidJS](https://www.solidjs.com/),
+[Qwik](https://qwik.builder.io/) or [Astro](https://astro.build)) with a 78 on
+mobile and a <Sparkles>100</Sparkles> on desktop with
+[PageSpeed Insights](https://pagespeed.web.dev)' synthetic tests:
+
+<Image
+  src="/img/overengineering-a-website-sep-2022/pagespeed-desktop.png"
+  width={1916}
+  height={494}
+  alt="pagespeed.web.dev showing a 100 score on desktop for https://soorria.com"
+/>
+
+Now that I've used [Vue.js](https://vuejs.org/) with
+[Nuxt](https://nuxtjs.org/), and [SolidJS](https://www.solidjs.com/) with
+[Vite](https://vitejs.dev/) and
+[SolidStart](https://github.com/solidjs/solid-start), I would choose to use
+SolidJS once it's ready and I might even switch over as soon as I can.
+
+## Making it Pretty
+
+The styling for this website it mainly done with Tailwind CSS. I've made a few
+simple changes to the base theme:
+
+- Adding the [Dracula](https://draculatheme.com/) colours.
+- Adding a `display` font family with
+  [Poppins](https://fonts.google.com/specimen/Poppins) as the first font.
+- Overriding the `mono` font family with
+  [JetBrains Mono](https://www.jetbrains.com/lp/mono/) as the first font.
+
+For plugins, I've added the
+[`@tailwindcss/typography`](https://tailwindcss.com/docs/typography-plugin)
+plugin which makes posts like this one look pretty with a single `.prose`.
+
+Another plugin I use is what I like to call my <Sparkles>Hocus
+Plugin</Sparkles> - a plugin that's great for lazy people like me who make their
+`:hover` and `:focus` states basically they same. As anyone who's used Tailwind
+CSS for a while might expect, it adds the `hocus:` variant which will add the
+specificd class on hover and focus. It also adds `hocus-within`, `group-hocus`,
+and `group-hocus-within` which are similar but based of slightly different
+existing variants. <small>While writing this post I decided to procrastinate and
+add a [snippet for this plugin](/snippetes/tailwindcss-hocus).</small>
+
+## The Content
+
+Most websites have some sort of content. On this site, the content is mainly
+text with some code blocks, and fewer interactive-ish demos. Additionally I want
+to be able to edit some things (all on the home page) without needing to
+re-deploy my site. To suit my needs the content for this site is written in MDX
+and sourced either from the git repo, or a [Supabase](https://supabase.com/)
+"CMS" instance.
+
+### <Sparkles>MDX</Sparkles>
+
+MDX is markdown on steroids. It lets you embed React components in your
+markdown, giving you _way_ more flexibility than normal markdown. There are a
+few ways to _use_ MDX with next.js:
+
+1. [`@next/mdx`](https://github.com/vercel/next.js/tree/canary/packages/next-mdx) -
+   A first-party Next.js "plugin" that lets you use `.mdx` files as routes in
+   your `pages` folder.
+2. [`next-mdx-remote`](https://github.com/hashicorp/next-mdx-remote) - A library
+   from HashiCorp designed for, but not limited to, Next.js that compiles your
+   mdx text server-side, and lets you render it in a React component. This is
+   what I initially used but switched off in favour of ...
+3. [`mdx-bundler`](https://github.com/kentcdodds/mdx-bundler) - A library by
+   [Kent C. Dodds](https://kentcdodds.com/) that **_bundles_** your mdx text
+   server-side and also lets you render it in a React component. This is what I
+   use right now.
+
+Looking at the options above, `@next/mdx` seems like the easiest solution, but
+it's also the least flexible. On my site there are places I use MDX where the
+rendered content _isn't_ the page's main content. Take for example the home
+page. The subtitle and the little `Right now...` paragraph below it are rendered
+from MDX which allows me to have <Sparkles>`<Sparkles />`</Sparkles> in it _AND_
+change out what the text says without needing to re-deploy.
+
+Now that we've discarded option 1, you might be wondering why, after building my
+site with `next-mdx-remote` I switched to `mdx-bundler`. After all, both allow
+you to provide custom components to use in your MDX and let you add a bunch of
+plugins to modify the behaviour of your markdown and intermediate html. The
+reason is the bolded and italicised word in 3/ that's also part of the name of
+the library - **_bundling_**.
+
+When `next-mdx-remote` compiles your MDX, it converts your MDX to JavaScript
+that can run in your browser (with React), but it doesn't (and can't) deal with
+anything imported from other files. While this isn't a deal-breaker for most, it
+means that when you provide a custom component to your MDX in a parameterised
+route, the cost of the component is incurred in every page. This is bad when
+some pages have custom components like
+[this demo](/snippets/use-local-storage#demo) which are useless on other pages.
+`mdx-bundler` solves this issue by a) enabling imports in your MDX text and b)
+compiling and joining only the parts used in a piece of MDX into its final
+output. That is, it bundles your MDX text and any of its dependencies. This
+results in fewer bytes sent over the wire for each page, this letting me built
+custom demos and examples without worrying about destroying performance on other
+pages.
+
+### MDX Plugins
+
+The base features of MDX might be enough for most sites - but not for an
+over-engineered on like this. All the MDX rendering librarys mentioned above
+allow you to add [`remark`](https://remark.js.org/) and
+[`rehype`](https://github.com/rehypejs/rehype) to ~play around with~ modify the
+intermediate markdown and html syntax trees respectively.
+
+#### Remark Plugins
+
+These are the `remark` plugins I use in order:
+
+- [`remark-gfm`](https://github.com/remarkjs/remark-gfm) - Adds support for
+  [GitHub Flavoured Markdown](https://github.github.com/gfm/) with additions
+  like ~strikethrough~ and tables!
+- [`remarkTypescriptTransform`](https://github.com/soorria/soorria.com/blob/main/src/lib/remark.server.ts) -
+  A custom remark plugin I wrote to create a version of every TypeScript code
+  block that is transpiled to JavaScript. It then wraps the pair of code blocks
+  in my `<TsJsSwitcher />` component which handles conditionally showing the
+  correct version of the code block.
+- [`remark-shiki-twoslash`](https://github.com/shikijs/twoslash/tree/main/packages/remark-shiki-twoslash) -
+  Highlights code blocks with the [`shiki`](https://shiki.matsu.io/) syntax
+  highlighter - which uses the same underlying highlighter as VSCode. This needs
+  to be _after_ the `remarkTypescriptTransform` plugin so the original
+  TypeScript code block can be transpiled, and so the JavaScript copy of the
+  code block is highlighted the original TypeScript code block can be
+  transpiled, and so the JavaScript copy of the code block is highlighted.
+
+The `remarkTypescriptTransform` and `remark-shiki-twoslash` plugins are only
+used if the MDX text _might_ contain code blocks. I chose to do this since the
+highlighting and transform took too long for the home page (added close to 1
+extra second!!), and due to how Vercel copies deployment outputs rebuilds of the
+home page would fail due to missing language grammars.
+
+#### Rehype Plugins
+
+These are the `rehype` plugins I use in order:
+
+- [`rehype-raw`](https://github.com/rehypejs/rehype-raw) - A plugin that
+  re-parses nodes in the rehype tree as html. This is required to use the
+  `remark-shiki-twoslash` plugin as it outputs as html string rather than mdast
+  nodes, nad MDX cannot correctly interpret it.
+- [`rehype-slug`](https://github.com/rehypejs/rehype-slug) - Adds `id`s to every
+  heading in MDX content where the value is a slugified version of the heading
+  text.
+- [`rehypeRearrangeShikiOutput`](https://github.com/soorria/soorria.com/blob/main/src/lib/rehype.server.ts) -
+  A custom rehype plugin that rearranges the html output of the
+  `remark-shiki-twoslash` as it adds a few extra layers of html tags that aren't
+  very easy to replace with custom MDX components. It transforms the `shiki`
+  output from
+
+  ```html
+  <pre class="shiki dracula">
+    <div class='language-id'>ts</div>
+    <div class='code-container'>
+      <code>
+        <!-- Highlighted code lines here  -->
+      </code>
+    </div>
+  </pre>
+  ```
+
+  to
+
+  ```html
+  <pre class="shiki dracula" language="ts">
+    <code>
+      <!-- Highlighted code lines here  -->
+    </code>
+  </pre>
+  ```
+
+  which is flatter and does more work at build-time to reduce work at runtime
+  and client-side.
+
+- [`rehype-autolink-headings`](https://github.com/remarkjs/remark-autolink-headings) -
+  Adds links to each heading so you can share links to specific parts of a page.
+  You can see the link if you hover over any heading in this page except the one
+  at the top - e.g. hover over the `rehype plugins` above and you'll see a `#`
+  appear to the right.
+- [`rehype-accessible-emojis`](https://github.com/GaiAma/Coding4GaiAma/tree/master/packages/rehype-accessible-emojis) -
+  Wraps emoji in a `<span>` with an appropriate `aria-label` attribute.
+
+### The `_data` folder
+
+As the name suggests, the
+[`_data`](https://github.com/soorria/soorria.com/blob/main/_data) folder is
+where the vast majority of the data / content on this site is stored. The
+general structure of this folder is:
+
+```
+_data
+└  [type]
+   └  [slug]
+      ├  index.mdx
+      └  components.js
+```
+
+- `[type]` is one of `'blog'`, `'misc'`, `'projects'` or `'snippets'`.
+- `[slug]` is what gets used in the url for the page. Using the file system for
+  this means that I get unique slugs for free!!
+- `index.mdx` is where the MDX text and frontmatter goes.
+- `components.js` is an optional file from which the adjacent `index.mdx` file
+  can import components specific to that page.
+
+### My "CMS"
+
+## Random S#!t
+
+## Going Live
+
+## Dev Stuff

@@ -6,6 +6,10 @@
   @apply rounded bg-drac-base-light p-1 leading-none text-drac-pink;
 }
 
+.prose img {
+  @apply block rounded object-cover;
+}
+
 /*
  * Code Snippets
  */
