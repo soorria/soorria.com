@@ -435,8 +435,8 @@ on-demand like this one:
   alt="Example of an open graph image for this site with two lines of text saying 'Image Just for This Demo' and 'Over-Engineering a Website' in a dark, transulcent box, and on a pink and purple background"
 />
 
-I use these in a serverless function on Vercel to _generate_ a new image for
-each page with the following process:
+I use these query string parameters in a serverless function on Vercel to
+_generate_ a new image for each page with the following process:
 
 1. Start up a _headless_ chrome browser with a width of 1200px and a height of
    630px.
@@ -453,19 +453,20 @@ each page with the following process:
    Content-Type: image/png
    ```
 
-There is one pretty big downside with this process - when an image is first
-generate it will take a few seconds due to the serverless function's cold start,
-and the time required to spin up a chrome browser, load the page and take the
-screenshot, but this is generally mitigated by the caching implemented in
+There is one, however, pretty big downside with this process - when an image is
+first generated it will take a few seconds due to the serverless function's cold
+start, and the time required to spin up a chrome browser, load the page and take
+the screenshot, but this is generally mitigated by the caching implemented in
 step 4.
 
-The source code for this is available
+The source code for this serverless function is available
 [here](https://github.com/soorria/og-gen/blob/main/api/og.ts). If you click on
 the link, you may notice that it's in a different repo despite the final
-`og:image` url pointing to a route on the `soorria.com` domain! The serverless
+`og:image` url pointing to a route on the `soorria.com` domain. The serverless
 function defined in the link above is actually deployed to
 `https://og-gen-lovat.vercel.app/api/og` and requests to
-`https://soorria.com/api/og` are rewritten in this site's
+`https://soorria.com/api/og` are set to rewrite the image generation function in
+this site's
 [`next.config.js`](https://github.com/soorria/soorria.com/blob/main/next.config.js).
 
 This complicated process brings up the question of why have the image generation
@@ -478,7 +479,7 @@ generated images would need to be generated again.
 
 ### Link Tree?
 
-Who ever decided to call these things Link _Trees_ has obviously been outside
+Whoever decided to call these things Link _Trees_ has obviously been outside
 [less than programmers](https://i.redd.it/zf19wzbcjer51.png) - at least binary
 trees _kinda_ look like trees! In any case, I have a list of links available at
 [/links](/links), but also at [links.soorria.com](https://links.soorria.com). I
