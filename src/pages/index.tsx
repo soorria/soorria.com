@@ -15,6 +15,7 @@ import { useMdxComponent } from '@/lib/mdx'
 import { render } from '@/lib/mdx.server'
 import { getRandomSkillIndexes } from '@/lib/skills'
 import Subtitle from '@/components/landing/Subtitle'
+import { cached } from '@/utils/cached'
 
 interface IndexProps {
   subtitleOptions: string[] | null
@@ -84,7 +85,10 @@ export const getStaticProps: GetStaticProps<IndexProps> = async () => {
     })
   )
 
-  const randoms = randomArray(0, 100, 5)
+  const randoms = cached('index-randoms', () => {
+    console.log('getting randoms', Date.now())
+    return randomArray(0, 100, 5)
+  })
 
   const skillIndexes = getRandomSkillIndexes(8)
 
