@@ -43,7 +43,9 @@ const Hero: React.FC<{
         </div>
       </div>
       {subtitle ? (
-        <h2 className="mb-8 text-2xl sm:my-8 sm:text-2xl md:text-3xl">{subtitle}</h2>
+        <h2 className="mb-8 text-2xl sm:my-8 sm:text-2xl md:text-3xl" id="hero-subtitle">
+          {subtitle}
+        </h2>
       ) : null}
       {children}
     </div>

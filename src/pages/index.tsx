@@ -39,7 +39,7 @@ const IndexPage: React.FC<IndexProps> = ({
   return (
     <Container>
       <Hero subtitle={<Subtitle options={subtitleOptions} />} title={heroText}>
-        <div className="text-lg">
+        <div className="text-lg" id="now">
           <Now />
         </div>
       </Hero>

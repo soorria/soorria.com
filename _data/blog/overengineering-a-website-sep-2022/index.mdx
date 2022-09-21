@@ -14,7 +14,7 @@ I've spent way too much of the last 2 years tweaking this website and now, after
 a friend built [his website](https://ericpaul.me?ref=soorria.com) in 2 weeks and
 published the obligatory
 ["How I built my website"](https://www.ericpaul.me/blogs/ericpaul.me) post, I'm
-finally documenting all the crimes I've commited while making this website. The
+finally documenting all the crimes I've committed while making this website. The
 [repo](https://soorria.com/src) for this website is public so you can poke
 around and witness the horrors first hand.
 
@@ -39,7 +39,7 @@ you can look through the
 ## The Code
 
 The vast majority of this website is written in TypeScript since it provides a
-signficiant quality of life boost for a minor initial investment. If only the
+significant quality of life boost for a minor initial investment. If only the
 stocks I invest in had a similar ROI.
 
 React is my ~framework~ library of choice with Next.js. This combo is extremely
@@ -88,7 +88,7 @@ Another plugin I use is what I like to call my <Sparkles>Hocus
 Plugin</Sparkles> - a plugin that's great for lazy people like me who make their
 `:hover` and `:focus` states basically they same. As anyone who's used Tailwind
 CSS for a while might expect, it adds the `hocus:` variant which will add the
-specificd class on hover and focus. It also adds `hocus-within`, `group-hocus`,
+specified class on hover and focus. It also adds `hocus-within`, `group-hocus`,
 and `group-hocus-within` which are similar but based of slightly different
 existing variants. <small>While writing this post I decided to procrastinate and
 add a [snippet for this plugin](/snippetes/tailwindcss-hocus).</small>
@@ -123,9 +123,9 @@ few ways to _use_ MDX with next.js:
 Looking at the options above, `@next/mdx` seems like the easiest solution, but
 it's also the least flexible. On my site there are places I use MDX where the
 rendered content _isn't_ the page's main content. Take for example the home
-page. The subtitle and the little `Right now...` paragraph below it are rendered
-from MDX which allows me to have <Sparkles>`<Sparkles />`</Sparkles> in it _AND_
-change out what the text says without needing to re-deploy.
+page. The [subtitle paragraph](/#hero-subtitle) and the ["now" paragraph](/#now)
+below it are rendered from MDX allowing me to use the `<Sparkles />` component
+in it _AND_ change out what the text says without needing to re-deploy.
 
 Now that we've discarded option 1, you might be wondering why, after building my
 site with `next-mdx-remote` I switched to `mdx-bundler`. After all, both allow
@@ -151,7 +151,7 @@ pages.
 ### MDX Plugins
 
 The base features of MDX might be enough for most sites - but not for an
-over-engineered on like this. All the MDX rendering librarys mentioned above
+over-engineered on like this. All the MDX rendering libraries mentioned above
 allow you to add [`remark`](https://remark.js.org/) and
 [`rehype`](https://github.com/rehypejs/rehype) to ~play around with~ modify the
 intermediate markdown and html syntax trees respectively.
@@ -179,8 +179,8 @@ These are the `remark` plugins I use in order:
 The `remarkTypescriptTransform` and `remark-shiki-twoslash` plugins are only
 used if the MDX text _might_ contain code blocks. I chose to do this since the
 highlighting and transform took too long for the home page (added close to 1
-extra second!!), and due to how Vercel copies deployment outputs rebuilds of the
-home page would fail due to missing language grammars.
+extra second!!), and due to how Vercel handles deployment outputs rebuilds of
+the home page would fail due to missing language grammars.
 
 #### Rehype Plugins
 
@@ -196,10 +196,10 @@ These are the `rehype` plugins I use in order:
 - [`rehypeRearrangeShikiOutput`](https://github.com/soorria/soorria.com/blob/main/src/lib/rehype.server.ts) -
   A custom rehype plugin that rearranges the html output of the
   `remark-shiki-twoslash` as it adds a few extra layers of html tags that aren't
-  very easy to replace with custom MDX components. It transforms the `shiki`
-  output from
+  very easy to replace with custom MDX components. It transforms `shiki`'s code
+  block output from
 
-  ```html
+  ```html {0-2,6-7}
   <pre class="shiki dracula">
     <div class='language-id'>ts</div>
     <div class='code-container'>
@@ -212,7 +212,7 @@ These are the `rehype` plugins I use in order:
 
   to
 
-  ```html
+  ```html {0,4}
   <pre class="shiki dracula" language="ts">
     <code>
       <!-- Highlighted code lines here  -->
@@ -231,7 +231,7 @@ These are the `rehype` plugins I use in order:
 - [`rehype-accessible-emojis`](https://github.com/GaiAma/Coding4GaiAma/tree/master/packages/rehype-accessible-emojis) -
   Wraps emoji in a `<span>` with an appropriate `aria-label` attribute.
 
-### The `_data` folder
+### "CMS" #1 - the `_data` Folder
 
 As the name suggests, the
 [`_data`](https://github.com/soorria/soorria.com/blob/main/_data) folder is
@@ -253,7 +253,33 @@ _data
 - `components.js` is an optional file from which the adjacent `index.mdx` file
   can import components specific to that page.
 
-### My "CMS"
+### "CMS" #2 - Supabase
+
+For things that I want to be able to change _without_ re-deploying the site, I
+use a Supabase instance with the following schema (as SQL):
+
+```sql
+create table singletons (
+  id int8 generated by default as identity primary key,
+  slug text unique not null,
+  context text default '',
+  public boolean default true
+);
+```
+
+I also made a secret "CMS" frontend and set up security rules so that only I can
+create, update and delete rows.
+
+The format of the text in the `content` column depends on my needs:
+
+- For the [hero](/#hero) on the home page I want to be able to change out the
+  text, and previously I wanted to be able to control whether there was a hover
+  interaction. For this, the `content` is a JSON blob.
+
+- For the [subtitle](/#hero-subtitle) on the home page I want to have several
+  options that are compiled as MDX and can be randomly cycled through
+  client-side. For this, the `content` is a list of paragraphs separated by
+  `---`s.
 
 ## Random S#!t
 

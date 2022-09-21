@@ -10,8 +10,7 @@ import { filterUnpublished } from '@/utils/content'
 import { useMdxComponent } from '@/lib/mdx'
 import { PUBLIC_URL } from '@/constants'
 import { SpinningIconDivider } from '@/components/posts/SpinningIconDivider'
-import { defaultCategoryIcon } from '@/components/categories'
-import { BookIcon, ClockIconSolid, EditIcon, TextIcon } from '@/components/icons'
+import { BookIcon, ClockIconSolid, EditIcon, GlobeAuIcon, TextIcon } from '@/components/icons'
 import { formatDate } from '@/utils/date'
 import cx from '@/utils/cx'
 
@@ -48,7 +47,7 @@ const PostPage: React.FC<PostPageProps> = ({ post, mdx }) => {
         }}
       />
 
-      <SpinningIconDivider scrollVar={SCROLL_VAR} icon={defaultCategoryIcon} />
+      <SpinningIconDivider scrollVar={SCROLL_VAR} icon={GlobeAuIcon} />
 
       <div className="grid grid-cols-2 items-center justify-items-center gap-4 text-sm sm:grid-cols-4">
         <div className="flex items-center space-x-2">
