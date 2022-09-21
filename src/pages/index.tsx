@@ -87,7 +87,7 @@ export const getStaticProps: GetStaticProps<IndexProps> = async () => {
 
   const REVALIDATE = 10
 
-  const randoms = cached('index-randoms', REVALIDATE, () => randomArray(0, 100, 5))
+  const randoms = randomArray(0, 100, 5)
 
   const skillIndexes = getRandomSkillIndexes(8)
 
