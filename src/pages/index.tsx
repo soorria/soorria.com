@@ -15,7 +15,6 @@ import { useMdxComponent } from '@/lib/mdx'
 import { render } from '@/lib/mdx.server'
 import { getRandomSkillIndexes } from '@/lib/skills'
 import Subtitle from '@/components/landing/Subtitle'
-import { cached } from '@/utils/cached'
 
 interface IndexProps {
   subtitleOptions: string[] | null
