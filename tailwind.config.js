@@ -58,6 +58,9 @@ module.exports = {
               },
               'a code': {
                 color: pink,
+                '&:hover': {
+                  color: purple,
+                },
               },
               'h1,h2,h3,h4,h5,h6,blockquote,strong,b,i,em': {
                 color: content,

@@ -6,6 +6,14 @@
   @apply rounded bg-drac-base-light p-1 leading-none text-drac-pink;
 }
 
+.prose a:hover code {
+  @apply text-drac-purple;
+}
+
+.prose a:has(code) {
+  @apply -mt-1 -mb-1.5 pt-1 pb-1.5;
+}
+
 .prose img {
   @apply block rounded object-cover;
 }
