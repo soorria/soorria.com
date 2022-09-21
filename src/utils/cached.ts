@@ -12,5 +12,5 @@ export const cached = <T>(key: string, revalidate: number, getter: () => T): T =
       }, revalidate * 1000),
     })
   }
-  return cache.get(key) as T
+  return cache.get(key)?.value as T
 }
