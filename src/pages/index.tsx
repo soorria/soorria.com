@@ -85,7 +85,9 @@ export const getStaticProps: GetStaticProps<IndexProps> = async () => {
     })
   )
 
-  const randoms = cached('index-randoms', () => randomArray(0, 100, 5))
+  const REVALIDATE = 10
+
+  const randoms = cached('index-randoms', REVALIDATE, () => randomArray(0, 100, 5))
 
   const skillIndexes = getRandomSkillIndexes(8)
 
@@ -112,6 +114,6 @@ export const getStaticProps: GetStaticProps<IndexProps> = async () => {
       heroText: typeof heroText === 'string' ? heroText : "Hey, I'm Soorria",
       skillIndexes,
     },
-    revalidate: 10,
+    revalidate: REVALIDATE,
   }
 }
