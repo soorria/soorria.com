@@ -7,7 +7,7 @@ interface PostLayoutProps {
 export const PostHeading: React.FC = ({ children }) => {
   return (
     <h1
-      className="mt-0 mb-20 text-center text-5xl !leading-tight text-drac-pink sm:mt-8 sm:text-6xl"
+      className="mt-0 mb-20 text-center text-5xl !leading-tight text-drac-pink sm:mt-8 sm:text-6xl md:text-7xl"
       style={{ overflowWrap: 'break-word' }}
     >
       {children}

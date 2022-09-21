@@ -3,7 +3,7 @@ import type { OpenGraphMedia } from 'next-seo/lib/types'
 import { PUBLIC_URL } from '@/constants'
 
 export const getOgUrl = (title: string, subtitle?: string): string => {
-  return `${PUBLIC_URL}/api/og?title=${title}&subtitle=${
+  return `${PUBLIC_URL}/api/og?title=${encodeURIComponent(title)}&subtitle=${
     subtitle ? encodeURIComponent(subtitle) : ''
   }`
 }
