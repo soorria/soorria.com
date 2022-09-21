@@ -31,7 +31,7 @@ const getContentMetrics = (content: string): { readingTime: string; words: strin
   const times = readingTime(content)
   return {
     readingTime: times.text,
-    words: wordsFormatter.format(times.words) + ' words',
+    words: `~${wordsFormatter.format(times.words)} words`,
   }
 }
 
