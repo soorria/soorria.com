@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 const { fontFamily } = require('tailwindcss/defaultTheme')
-const plugin = require('tailwindcss/plugin')
+const hocus = require('tailwindcss-hocus')
 
 const drac = {
   'base-light': '#44475a',
@@ -93,13 +93,5 @@ module.exports = {
       },
     },
   },
-  plugins: [
-    require('@tailwindcss/typography'),
-    plugin(({ addVariant }) => {
-      addVariant('hocus', ['&:hover', '&:focus'])
-      addVariant('hocus-within', ['&:hover', '&:focus-within'])
-      addVariant('group-hocus', [':merge(.group):hover &', ':merge(.group):focus &'])
-      addVariant('group-hocus-within', [':merge(.group):hover &', ':merge(.group):focus-within &'])
-    }),
-  ],
+  plugins: [require('@tailwindcss/typography'), hocus],
 }

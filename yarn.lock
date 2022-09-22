@@ -4907,6 +4907,11 @@ table@^6.0.9:
     string-width "^4.2.3"
     strip-ansi "^6.0.1"
 
+tailwindcss-hocus@^0.0.1:
+  version "0.0.1"
+  resolved "https://registry.yarnpkg.com/tailwindcss-hocus/-/tailwindcss-hocus-0.0.1.tgz#db0a579a5b95c0f98c2d1f06edf07e1e5bd5d917"
+  integrity sha512-wGviwl7f5ahyANPAbKnIQ/9YDx9/vJ3kEr9F/ntpIsBL9hV+v0ewJxYNY2AZbW/AU2UIhgytKfSo8Dv34zMM/g==
+
 tailwindcss@^3.0.18:
   version "3.1.8"
   resolved "https://registry.yarnpkg.com/tailwindcss/-/tailwindcss-3.1.8.tgz#4f8520550d67a835d32f2f4021580f9fddb7b741"
