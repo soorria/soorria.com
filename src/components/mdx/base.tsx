@@ -2,6 +2,7 @@ import CustomLink from '../CustomLink'
 import Demo from './Demo'
 import TsJsSwitcher from './TsJsSwitcher'
 import CustomCodeBlock from './CodeBlock'
+import Note from './Note'
 import Sparkles from './Sparkles'
 import Image, { ImageProps } from 'next/future/image'
 import type { ComponentMap } from 'mdx-bundler/client'
@@ -15,6 +16,7 @@ export const baseComponents = {
       <Image {...props} />
     </div>
   ),
+  Note,
   Demo,
   Sparkles,
   TsJsSwitcher,

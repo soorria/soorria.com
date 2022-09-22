@@ -3,20 +3,26 @@ title: Tailwind CSS Hocus Plugin
 shortDescription:
   A plugin for lazy people like me who use the same styles for hover and focus
   states
-
-category: Miscellaneous
+category: TailwindCSS
 tags:
   - Tailwind CSS
 createdAt: '2022-09-19'
-updatedAt: '2022-09-21'
+updatedAt: '2022-09-22'
 ---
 
-This is what I call my <Sparkles>Hocus Plugin</Sparkles> (sparkles required) - a
-plugin that's great for lazy people like me who make their `:hover` and `:focus`
-states basically they same. As anyone who's used Tailwind CSS for a while might
-expect, it adds the `hocus:` variant which will add the specificd class on hover
-and focus. It also adds `hocus-within`, `group-hocus`, and `group-hocus-within`
-which are similar but based of slightly different existing variants.
+<Note variant="success">
+  A few days after adding this `snippet`, I published this plugin as an npm
+  package which you can now find under the name
+  [`tailwindcss-hocus`](https://www.npmjs.com/package/tailwindcss-hocus), and on
+  GitHub [here](https://github.com/soorria/tailwindcss-hocus).
+</Note>
+
+A plugin that's great for lazy people like me who make their `:hover` and
+`:focus` states basically they same. As anyone who's used Tailwind CSS for a
+while might expect, it adds the `hocus:` variant which will add the specificd
+class on hover and focus. It also adds `hocus-within`, `group-hocus`, and
+`group-hocus-within` which are similar but based of slightly different existing
+variants.
 
 ```js title="tailwind.config.js"
 const plugin = require('tailwindcss/plugin')
@@ -48,31 +54,25 @@ module.exports = {
 To use this plugin, you use it like any other variant - prefix an existing
 Tailwind class with `hocus:` or one of the other variants:
 
-```tsx title="high-quality-code.tsx"
-export const RealComponent: React.FC = () => {
-  return (
-    <button className="grid place-items-center rounded bg-red-100 text-red-700 hocus:bg-red-200">
-      Click Me!
-    </button>
-  )
-}
+```html title="high-quality-code.html"
+<button className="hocus:text-red-700">Click Me!</button>
 ```
 
-Here's what the Tailwind compiler outputs:
+Here's what the Tailwind compiler outputs for the HTML above:
 
 ```css title="output-styles.css"
-/* Other classes */
-
-.hocus\:bg-red-200:hover,
-.hocus\:bg-red-200:focus {
-  --tw-bg-opacity: 1;
-  background-color: rgb(254 202 202 / var(--tw-bg-opacity));
+.hocus\:text-red-700:hover,
+.hocus\:text-red-700:focus {
+  --tw-text-opacity: 1;
+  color: rgb(185 28 28 / var(--tw-text-opacity));
 }
-
-/* More other classes */
 ```
 
 ## Example
 
-- [This website](https://github.com/soorria/soorria.com/blob/main/tailwind.config.js) -
+- [This website (in the past)](https://github.com/soorria/soorria.com/blob/6ca157736c6f899bab2e6d1c7b01fa7bad3ab05b/tailwind.config.js) -
   Inspect element on the link!
+  <small>
+    **Note:** The latest version of the linked `tailwind.config.js` uses the npm
+    package.
+  </small>
