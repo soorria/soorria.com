@@ -25,7 +25,7 @@ const LINKS: LinkType[][] = [
       href: '/snippets',
     },
     {
-      title: 'blog posts',
+      title: 'posts',
       href: '/blog',
     },
   ],

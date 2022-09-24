@@ -15,7 +15,7 @@ interface PostsPageProps {
 }
 
 const description = 'Longer written things'
-const title = 'Posts'
+const title = 'Blog'
 const url = `${PUBLIC_URL}/blog`
 
 const PostsPage: React.FC<PostsPageProps> = ({ posts }) => {

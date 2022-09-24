@@ -3,7 +3,7 @@ const withBundleAnalyzer = require('@next/bundle-analyzer')({
   enabled: process.env.ANALYZE === 'true',
 })
 
-const withTM = require('next-transpile-modules')(['rehype-raw'])
+// const withTM = require('next-transpile-modules')(['rehype-raw'])
 
 const { withPlausibleProxy } = require('next-plausible')
 
@@ -65,6 +65,14 @@ const config = {
         source: '/og.png',
         destination:
           'https://og-gen-mooth.vercel.app/api/og?title=Soorria%20Saruva&subtitle=soorria.com',
+      },
+      {
+        source: '/posts/:path*',
+        destination: '/blog/:path*',
+      },
+      {
+        source: '/p/:path*',
+        destination: '/blog/:path*',
       },
     ]
   },
