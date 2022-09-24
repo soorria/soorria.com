@@ -16,7 +16,7 @@ const Note: React.FC<NoteProps> = ({ children, variant = 'info' }) => {
     <div className="-mx-0.5">
       <div
         className={cx(
-          '-mx-2 my-7 rounded-xl border-x-2 bg-opacity-10 px-2 py-1 md:-mx-6 md:px-6',
+          '-mx-2 my-7 rounded-xl border-x-2 bg-opacity-10 px-4 py-1 md:-mx-6 md:px-6',
           VARIANT_COLORS[variant]
         )}
       >
