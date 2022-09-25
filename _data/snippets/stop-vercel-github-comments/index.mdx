@@ -7,7 +7,7 @@ category: Miscellaneous
 tags:
   - Vercel
 createdAt: '2022-08-27'
-updatedAt: '2022-09-19'
+updatedAt: '2022-09-25'
 ---
 
 This stops Vercel's GitHub Bot from commenting on your PRs and commits, and so
@@ -38,3 +38,30 @@ in the `vercel.json`:
 - [This website, a Next.js app](https://github.com/soorria/soorria.com/blob/main/vercel.json)
 - [A Remix app](https://github.com/soorria/utils/blob/main/vercel.json)
 - [A SolidJS SPA with Vite](https://github.com/soorria/pokelife/blob/master/vercel.json)
+
+## Easy Usage
+
+<Note variant="warning">
+  **Note:** This only works correctly if you don't already have a `vercel.json`
+  in your folder.
+</Note>
+
+Copy the following snippet and run in your shell from the root of the git repo /
+app. It will:
+
+1. Create a `vercel.json` file with the above JSON.
+2. Commit and push it to your git repo.
+
+```bash
+cat > vercel.json <<EOF
+{
+  "github": {
+    "silent": true
+  }
+}
+EOF
+
+git add vercel.json
+git commit -m "stop vercel's github bot comment on commits"
+git push
+```

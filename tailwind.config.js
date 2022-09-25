@@ -41,7 +41,7 @@ module.exports = {
       spacing: {
         em: '1em',
       },
-      typography: () => {
+      typography: ({ theme }) => {
         const { content, pink, purple, highlight } = drac
         return {
           DEFAULT: {
@@ -55,15 +55,15 @@ module.exports = {
                 '&:focus': {
                   color: purple,
                 },
-              },
-              'a code': {
-                color: pink,
-                '&:hover': {
-                  color: purple,
+                '& code': {
+                  color: pink,
+                  '&:hover': {
+                    color: purple,
+                  },
                 },
               },
               'h1,h2,h3,h4,h5,h6,blockquote,strong,b,i,em': {
-                color: content,
+                color: 'inherit',
               },
               blockquote: {
                 borderLeftColor: purple,
@@ -85,7 +85,12 @@ module.exports = {
               },
               img: {
                 width: '100%',
+                display: 'block',
                 borderRadius: '1rem',
+                objectFit: 'cover',
+              },
+              'li::marker': {
+                color: 'inherit',
               },
             },
           },

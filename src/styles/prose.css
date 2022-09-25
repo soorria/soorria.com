@@ -15,7 +15,7 @@
 }
 
 .prose img {
-  @apply block rounded object-cover md:rounded-xl;
+  @apply rounded md:rounded-xl;
 }
 
 /*
@@ -127,4 +127,18 @@ pre code {
 * {
   scrollbar-width: thin;
   scrollbar-color: theme('colors.drac.purple') theme('colors.transparent');
+}
+
+.prose
+  .note
+  :where(h1, h2, h3, h4, h5, h6, blockquote, strong, b, i, em):not(:where([class~='not-prose'] *)) {
+  color: inherit;
+}
+
+.prose .note > *:first-child {
+  margin-top: 0;
+}
+
+.prose .note > *:last-child {
+  margin-bottom: 0;
 }
