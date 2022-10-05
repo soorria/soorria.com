@@ -159,11 +159,8 @@ input {
 .subtitle-wrapper p {
   @apply inline;
 }
-.subtitle-wrapper * {
-  @apply mr-2;
-}
-.subtitle-wrapper *:last-child {
-  @apply mr-0;
+.subtitle-wrapper {
+  @apply space-x-2;
 }
 
 /*
