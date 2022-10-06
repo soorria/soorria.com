@@ -53,6 +53,36 @@ const config = {
         destination: 'https://soorria.com/?ref=%2Fcontact#contact',
         permanent: true,
       },
+      {
+        source: '/blogs/:path*',
+        destination: '/blog/:path*',
+        permanent: true,
+      },
+      {
+        source: '/posts/:path*',
+        destination: '/blog/:path*',
+        permanent: true,
+      },
+      {
+        source: '/post/:path*',
+        destination: '/blog/:path*',
+        permanent: true,
+      },
+      {
+        source: '/p/:path*',
+        destination: '/blog/:path*',
+        permanent: true,
+      },
+      {
+        source: '/s/:path*',
+        destination: '/snippets/:path*',
+        permanent: true,
+      },
+      {
+        source: '/snippet/:path*',
+        destination: '/snippets/:path*',
+        permanent: true,
+      },
     ]
   },
   async rewrites() {
@@ -65,30 +95,6 @@ const config = {
         source: '/og.png',
         destination:
           'https://og-gen-mooth.vercel.app/api/og?title=Soorria%20Saruva&subtitle=soorria.com',
-      },
-      {
-        source: '/blogs/:path*',
-        destination: '/blog/:path*',
-      },
-      {
-        source: '/posts/:path*',
-        destination: '/blog/:path*',
-      },
-      {
-        source: '/post/:path*',
-        destination: '/blog/:path*',
-      },
-      {
-        source: '/p/:path*',
-        destination: '/blog/:path*',
-      },
-      {
-        source: '/s/:path*',
-        destination: '/snippets/:path*',
-      },
-      {
-        source: '/snippet/:path*',
-        destination: '/snippets/:path*',
       },
     ]
   },
