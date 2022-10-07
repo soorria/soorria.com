@@ -79,13 +79,15 @@ const SnippetPage: React.FC<SnippetPageProps> = ({ snippet, mdx }) => {
           </div>
         </PostBottomSection>
       </div>
-      <License
-        summary="License &amp; Attribution"
-        attribution={{
-          url,
-          title: snippet.title,
-        }}
-      />
+      {snippet.notMine && (
+        <License
+          summary="License &amp; Attribution"
+          attribution={{
+            url,
+            title: snippet.title,
+          }}
+        />
+      )}
     </PostLayout>
   )
 }

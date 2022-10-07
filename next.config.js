@@ -86,17 +86,33 @@ const config = {
     ]
   },
   async rewrites() {
-    return [
-      {
-        source: '/api/og',
-        destination: 'https://og-gen-mooth.vercel.app/api/og',
-      },
-      {
-        source: '/og.png',
-        destination:
-          'https://og-gen-mooth.vercel.app/api/og?title=Soorria%20Saruva&subtitle=soorria.com',
-      },
-    ]
+    return {
+      beforeFiles: [
+        {
+          source: '/:path*',
+          destination: '/api/curl-card',
+          has: [
+            {
+              type: 'header',
+              key: 'user-agent',
+              value: 'curl/(.*)',
+            },
+          ],
+        },
+      ],
+      afterFiles: [],
+      fallback: [
+        {
+          source: '/api/og',
+          destination: 'https://og-gen-mooth.vercel.app/api/og',
+        },
+        {
+          source: '/og.png',
+          destination:
+            'https://og-gen-mooth.vercel.app/api/og?title=Soorria%20Saruva&subtitle=soorria.com',
+        },
+      ],
+    }
   },
   reactStrictMode: true,
   // swcMinify: true,

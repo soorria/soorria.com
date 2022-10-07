@@ -11,6 +11,9 @@ export const sortByCreatedAtField = <T extends HasCreatedAtField>(arr: T[]): T[]
 export const filterUnpublished = <T extends HasCreatedAtField>(arr: T[]): T[] =>
   arr.filter(el => process.env.NODE_ENV !== 'production' || !!el.createdAt)
 
+export const filterNonPrivate = <T extends { private?: boolean }>(arr: T[]): T[] =>
+  arr.filter(el => process.env.NODE_ENV !== 'production' || !el.private)
+
 export const addRefToUrl = (url: string, ref = 'soorria.com'): string => {
   const u = new URL(url)
   u.searchParams.set('ref', ref)

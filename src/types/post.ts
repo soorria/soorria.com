@@ -6,6 +6,7 @@ export interface Post extends BaseData {
   updatedAt: string
   tags: string[]
   summary?: string
+  private?: boolean
 }
 
 export type PostFrontMatter = FrontMatter<Post>

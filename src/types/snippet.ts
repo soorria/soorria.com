@@ -5,6 +5,7 @@ export interface Snippet extends BaseData {
   createdAt: string
   updatedAt?: string
   tags: string[]
+  notMine?: boolean
 }
 
 export type SnippetFrontMatter = FrontMatter<Snippet>
