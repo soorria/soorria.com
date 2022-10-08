@@ -3,6 +3,7 @@ import { useHydrated } from '@/utils/use-hydrated'
 import { useSyncedLocalStorage } from '@/utils/use-synced-local-storage'
 import { Children, isValidElement, ReactElement, useMemo, useRef } from 'react'
 import type { CustomCodeBlockProps } from './CodeBlock'
+import { CodeBlockPre } from './CodeBlockPre'
 import { CodeBlockCopyButton } from './utils'
 import {
   CodeBlockTitle,
@@ -45,7 +46,7 @@ const TsJsSwitcher: React.FC = props => {
   if (blocks.length <= 1) return <>{props.children}</>
 
   const selectedBlock = blocks[isTs ? 0 : 1]!
-  const { children, className, title } = selectedBlock.props
+  const { children, className, title, ...rest } = selectedBlock.props
 
   return (
     <>
@@ -113,9 +114,9 @@ const TsJsSwitcher: React.FC = props => {
             </>
           )}
         </div>
-        <pre ref={pre} className={cx(className, CODE_BLOCK_CLASSNAMES.pre)}>
+        <CodeBlockPre ref={pre} className={className} {...rest}>
           {children}
-        </pre>
+        </CodeBlockPre>
       </div>
     </>
   )

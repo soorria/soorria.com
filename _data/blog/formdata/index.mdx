@@ -1,9 +1,9 @@
 ---
-title: FormData - My Favourite Web API!
+title: FormData - My Favourite Web API
 tags:
   - javascript
 shortDescription: |
-  hi
+  The FormData API lets you easily access the values of inputs inside a form.
 createdAt: '2022-10-10'
 # updatedAt: '2022-10-10'
 private: true
@@ -14,3 +14,199 @@ Of the close to 1000
 browsers and some server-side runtimes, the
 [FormData](https://developer.mozilla.org/en-US/docs/Web/API/FormData) class is
 my favourite.
+
+## Using it
+
+At first blush, the
+[methods available](https://developer.mozilla.org/en-US/docs/Web/API/FormData)
+see kinda useless - why use `FormData.get` and `FormData.set` when `Map`s do the
+exact same thing, and plain old objects can do basically the same thing with an
+arguable simpler interface? The real power of `FormData` comes when used with
+the `<form>` element. Take the simple register form below:
+
+```html truncate title="Register Form"
+<form id="register-form">
+  <!-- Email Input -->
+  <div>
+    <label for="register-email">Email</label>
+    <input type="email" id="register-email" required />
+  </div>
+
+  <!-- Password Input -->
+  <div>
+    <label for="register-password">Password</label>
+    <input type="password" id="register-password" required />
+  </div>
+
+  <!-- Mailing Lists -->
+  <fieldset>
+    <legend>
+      <p>Select the email lists you want to subscribe to</p>
+    </legend>
+
+    <label>
+      <input type="checkbox" id="register-mailing-marketing" />
+      Marketing Emails
+    </label>
+
+    <label>
+      <input type="checkbox" id="register-mailing-blog" />
+      Blog Notifications
+    </label>
+
+    <label>
+      <input type="checkbox" id="register-mailing-spam" />
+      Constant Spam
+    </label>
+  </fieldset>
+
+  <button type="submit">Register</button>
+</form>
+```
+
+When the form is submitted you'll need to get the values with JavaScript, which
+you might do like this:
+
+```ts title="Form Submission w/o FormData"
+const registerForm: HTMLFormElement = document.getElementById('register-form')
+const emailInput: HTMLInputElement = document.getElementById('register-email')
+const passwordInput: HTMLInputElement =
+  document.getElementById('register-password')
+const marketingMailingInput: HTMLInputElement = document.getElementById(
+  'register-mailing-marketing'
+)
+const blogMailingInput: HTMLInputElement = document.getElementById(
+  'register-mailing-blog'
+)
+const spamMailingInput: HTMLInputElement = document.getElementById(
+  'register-mailing-spam'
+)
+
+registerForm.addEventListener('submit', event => {
+  // Remember to prevent the default <form> submission behaviour
+  // if you're handling submissions with JavaScript!
+  event.preventDefault()
+
+  const email = emailInput.value
+  const password = passwordInput.value
+
+  const acceptedMailingLists = []
+
+  if (marketingMailingInput.checked) {
+    acceptedMailingLists.push('marketing')
+  }
+  if (blogMailingInput.checked) {
+    acceptedMailingLists.push('blog')
+  }
+  if (spamMailingInput.checked) {
+    acceptedMailingLists.push('spam')
+  }
+
+  doRegister(email, password, acceptedMailingLists)
+})
+```
+
+This doesn't look _that_ bad, but it's a lot of work that we could avoid.
+Consider (almost) the same script but now using `FormData`:
+
+```ts title="Form Submission with FormData" {7-12}
+const registerForm: HTMLFormElement = document.getElementById('register-form')
+
+registerForm.addEventListener('submit', event => {
+  // Remember to prevent the default <form> submission behaviour
+  // if you're handling submissions with JavaScript!
+  event.preventDefault()
+
+  const formdata = new FormData(registerForm)
+
+  const email = formdata.get('email')
+  const password = formdata.get('password')
+
+  const acceptedMailingLists = formdata.getAll('mailing-lists')
+
+  doRegister(email, password, acceptedMailingLists)
+})
+```
+
+This is good, but there's one pretty big issue with this that I haven't
+mentioned yet, which leads into the a (kind of) downside with using `FormData`.
+The code above _doesn't work_ - not because I suck at JavaScript or because
+FormData is too bleeding edge, but because we need to update the origina HTML to
+work with `FormData`, and _be more correct_.
+
+In the code snippet above, we used a few strings as arguments to `formdata.get`
+and `formdata.getAll`, but where do these come from? When you use create a
+`FormData` object with a `form`, the keys we use in `get` and `getAll` map to
+the `name` attribute for any `<input>`s, `<select>`s, and `<textarea>`s inside
+the `<form>`. We can fix this issue by adding `name`s to the inputs and adding
+`value`s to the `<input>`s with `type="checkbox"`:
+
+```html truncate title="Register Form"
+<form id="register-form">
+  <!-- Email Input -->
+  <div>
+    <label for="register-email">Email</label>
+    <input name="email" type="email" id="register-email" required />
+  </div>
+
+  <!-- Password Input -->
+  <div>
+    <label for="register-password">Password</label>
+    <input name="password" type="password" id="register-password" required />
+  </div>
+
+  <!-- Mailing Lists -->
+  <fieldset>
+    <legend>
+      <p>Select the email lists you want to subscribe to</p>
+    </legend>
+
+    <label>
+      <input
+        name="mailing-lists"
+        value="marketing"
+        type="checkbox"
+        id="register-mailing-marketing"
+      />
+      Marketing Emails
+    </label>
+
+    <label>
+      <input
+        name="mailing-lists"
+        value="blog"
+        type="checkbox"
+        id="register-mailing-blog"
+      />
+      Blog Notifications
+    </label>
+
+    <label>
+      <input
+        name="mailing-lists"
+        value="spam"
+        type="checkbox"
+        id="register-mailing-spam"
+      />
+      Constant Spam
+    </label>
+  </fieldset>
+
+  <button type="submit">Register</button>
+</form>
+```
+
+If you scroll all the way to the bottom, you'll notice that all the checkbox
+`<input>`s all have the same `name`, and they each have a `value`. As mentioned
+before, the `name` is how `FormData` knows what to associate the input's value
+with, but when there are multiple inputs with the same `name`, we can get the
+values for all of them with `getAll`. Now, to know which checkbox have been
+selected, we give them unique `value`s.
+
+After making the changes above, everything works! Here's a demo of the complete
+code in a CodeSandbox:
+
+<Sandbox
+  src="https://codesandbox.io/embed/blog-formdata-after-formdata-ghst14?fontsize=14&hidenavigation=1&theme=dark&file=src/index.js&view=preview"
+  title="blog/formdata - after FormData :)"
+/>

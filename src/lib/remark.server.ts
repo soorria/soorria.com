@@ -22,15 +22,17 @@ export const remarkTypeScriptTransform = (): Transformer => {
         presets: [tsPreset],
       })?.code ?? ''
 
-    const formattedCode = format(transformedCode, {
-      semi: false,
-      tabWidth: 2,
-      printWidth: 80,
-      singleQuote: true,
-      trailingComma: 'es5',
-      arrowParens: 'avoid',
-      parser: 'babel',
-    }).trim()
+    const formattedCode = !meta?.match(/\bnoformat\b/i)
+      ? format(transformedCode, {
+          semi: false,
+          tabWidth: 2,
+          printWidth: 80,
+          singleQuote: true,
+          trailingComma: 'es5',
+          arrowParens: 'avoid',
+          parser: 'babel',
+        }).trim()
+      : transformedCode
 
     const jsNode: Code = {
       type,

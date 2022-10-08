@@ -1,6 +1,7 @@
 import cx from '@/utils/cx'
 import { useHydrated } from '@/utils/use-hydrated'
 import React, { PropsWithChildren, ReactNode, useRef } from 'react'
+import { CodeBlockPre, CodeBlockPreExtraProps } from './CodeBlockPre'
 import {
   CodeBlockCopyButton,
   CodeBlockTitle,
@@ -9,11 +10,13 @@ import {
   LANGUAGE_NAME_MAP,
 } from './utils'
 
-export type CustomCodeBlockProps = PropsWithChildren<{
-  className: string
-  language?: string
-  title?: ReactNode
-}>
+export type CustomCodeBlockProps = PropsWithChildren<
+  {
+    className: string
+    language?: string
+    title?: ReactNode
+  } & CodeBlockPreExtraProps
+>
 
 const CustomCodeBlock: React.FC<CustomCodeBlockProps> = ({
   children,
@@ -40,9 +43,9 @@ const CustomCodeBlock: React.FC<CustomCodeBlockProps> = ({
           <div className="flex-1" />
           {hydrated && <CodeBlockCopyButton getText={() => getCodeLinesFromPre(pre.current)} />}
         </div>
-        <pre ref={pre} className={cx(className, CODE_BLOCK_CLASSNAMES.pre)} {...rest}>
+        <CodeBlockPre ref={pre} className={className} {...rest}>
           {children}
-        </pre>
+        </CodeBlockPre>
       </div>
     </>
   )

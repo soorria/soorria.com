@@ -8,7 +8,7 @@ interface NoteProps {
 
 const VARIANT_COLORS: Record<Variant, string> = {
   success: 'bg-drac-green border-drac-green text-drac-green',
-  info: 'bg-drac-cyan border-drac-cyan',
+  info: 'bg-drac-cyan border-drac-cyan text-drac-cyan',
   warning: 'bg-drac-orange border-drac-orange text-drac-orange',
 }
 

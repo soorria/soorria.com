@@ -9,12 +9,26 @@ export const COMMON_CLASSNAMES = {
 
 export const CODE_BLOCK_CLASSNAMES = {
   button:
-    'rounded bg-drac-purple px-2 font-bold tracking-wider text-drac-base focus:outline-none focus:ring-2 focus:ring-drac-pink focus:ring-offset-2 focus:ring-offset-current text-center transition-shadow',
+    'rounded bg-drac-purple px-2 font-bold tracking-wider text-drac-base focus:outline-none focus:ring-2 focus:ring-drac-pink focus:ring-offset-2 focus:ring-offset-current text-center transition text-sm font-bold font-display',
   root: cx('my-7 !pb-0 overflow-hidden', COMMON_CLASSNAMES.codeAndDemoRoot),
   pre: '!my-0',
   header: 'mb-4 flex items-center space-x-2 font-display text-sm font-bold tracking-wide',
   languageTitle: 'text-sm uppercase text-drac-purple sm:text-sm',
 } as const
+
+const CODE_LINE_HEIGHT = 28
+export const DEFAULT_TRUNCATE_HEIGHT = 10.5 * CODE_LINE_HEIGHT
+
+export const getTruncationHeight = (
+  truncate: string | number | boolean | undefined
+): string | number | undefined => {
+  if (typeof truncate === 'number') return (truncate + 0.5) * CODE_LINE_HEIGHT
+  if (!truncate) return undefined
+  if (truncate === true || truncate === 'true') return DEFAULT_TRUNCATE_HEIGHT
+  const asNumber = parseInt(truncate)
+  if (Number.isSafeInteger(asNumber)) return (asNumber + 0.5) * CODE_LINE_HEIGHT
+  return truncate
+}
 
 export const getCodeLinesFromPre = (pre: HTMLPreElement | undefined | null): string => {
   if (!pre) return ''

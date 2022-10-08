@@ -14,8 +14,14 @@
   @apply -mt-1 -mb-1.5 pt-1 pb-1.5;
 }
 
-.prose img {
+.prose img,
+.prose iframe {
   @apply rounded md:rounded-xl;
+}
+
+.prose iframe {
+  @apply w-full border-0 ring-2 ring-drac-purple;
+  height: 512px;
 }
 
 /*

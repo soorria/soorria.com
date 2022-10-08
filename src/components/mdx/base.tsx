@@ -16,6 +16,16 @@ export const baseComponents = {
       <Image {...props} />
     </div>
   ),
+  Sandbox: props => (
+    <div className="-mx-2 md:-mx-6">
+      {/* eslint-disable-next-line jsx-a11y/iframe-has-title */}
+      <iframe
+        allow="accelerometer; ambient-light-sensor; camera; encrypted-media; geolocation; gyroscope; hid; microphone; midi; payment; usb; vr; xr-spatial-tracking"
+        sandbox="allow-forms allow-modals allow-popups allow-presentation allow-same-origin allow-scripts"
+        {...props}
+      />
+    </div>
+  ),
   Note,
   Demo,
   Sparkles,

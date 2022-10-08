@@ -22,6 +22,7 @@ const JupyterJsCard: React.FC<JupyterJsCardProps> = ({ project }) => {
             src={bgImg}
             height="392"
             width="546"
+            className="h-auto w-full"
             alt="preview showing jupyter-js' code and markdown cells running"
             placeholder="blur"
           />
