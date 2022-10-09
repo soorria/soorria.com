@@ -1,5 +1,5 @@
 ---
-title: FormData - My Favourite Web API
+title: FormData - My 2nd Favourite Web API
 tags:
   - javascript
 shortDescription: |
@@ -9,11 +9,10 @@ createdAt: '2022-10-10'
 private: true
 ---
 
-Of the close to 1000
-[Web APIs](https://developer.mozilla.org/en-US/docs/Web/API) available in
-browsers and some server-side runtimes, the
+Of the hundreds of [Web APIs](https://developer.mozilla.org/en-US/docs/Web/API)
+available in browsers and some server-side runtimes, the
 [FormData](https://developer.mozilla.org/en-US/docs/Web/API/FormData) class is
-my favourite.
+one of my favourites.
 
 ## Using it
 
@@ -24,7 +23,7 @@ exact same thing, and plain old objects can do basically the same thing with an
 arguable simpler interface? The real power of `FormData` comes when used with
 the `<form>` element. Take the simple register form below:
 
-```html truncate title="Register Form"
+```html truncate title="Register Form Before FormData"
 <form id="register-form">
   <!-- Email Input -->
   <div>
@@ -141,7 +140,7 @@ the `name` attribute for any `<input>`s, `<select>`s, and `<textarea>`s inside
 the `<form>`. We can fix this issue by adding `name`s to the inputs and adding
 `value`s to the `<input>`s with `type="checkbox"`:
 
-```html truncate title="Register Form"
+```html truncate title="Register Form After FormData :)"
 <form id="register-form">
   <!-- Email Input -->
   <div>
@@ -210,3 +209,44 @@ code in a CodeSandbox:
   src="https://codesandbox.io/embed/blog-formdata-after-formdata-ghst14?fontsize=14&hidenavigation=1&theme=dark&file=src/index.js&view=preview"
   title="blog/formdata - after FormData :)"
 />
+
+## React and Other Frameworks
+
+If you've used React, you might notice a little issue with the using the code
+above - React doesn't (directly) give you access to the DOM elements created.
+You could use this weird hacky hook called `useRef`, but there's simpler
+solution. In fact, you can use this approach in _any_ framework where you have
+access to the `<form>`s submission event. We can use the `currentTarget`
+property on methods to get access to the element that we added an event listener
+to, so `currentTarget` for a submit event will be the form! Here's what a
+simplified React component using `FormData` would look like:
+
+```tsx title="FormData in React" {8}
+import type React from 'react'
+
+export const ExampleForm: React.FC = () => {
+  const handleSubmit: FormEventHandler<HTMLFormElement> = event => {
+    // Remember to prevent the default <form> submission behaviour
+    // if you're handling submissions with JavaScript!
+    event.preventDefault()
+
+    const formdata = new FormData(event.currentTarget)
+
+    const email = formdata.get('email')
+    const password = formdata.get('password')
+
+    const acceptedMailingLists = formdata.getAll('mailing-lists')
+
+    doRegister(email, password, acceptedMailingLists)
+  }
+
+  return (
+    <form onSubmit={handleSubmit}>
+      {/* Same form contents as the HTML form above */}
+    </form>
+  )
+}
+```
+
+Notice how there aren't any `useState`s and you don't need to manually wire up
+`value` and `onChange` to control and get values for all of the inputs!

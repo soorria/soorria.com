@@ -79,7 +79,7 @@ const SnippetPage: React.FC<SnippetPageProps> = ({ snippet, mdx }) => {
           </div>
         </PostBottomSection>
       </div>
-      {snippet.notMine && (
+      {snippet.notMine || (
         <License
           summary="License &amp; Attribution"
           attribution={{

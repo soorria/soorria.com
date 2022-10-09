@@ -2,20 +2,13 @@ import CustomLink from '../CustomLink'
 import Demo from './Demo'
 import TsJsSwitcher from './TsJsSwitcher'
 import CustomCodeBlock from './CodeBlock'
-import Note from './Note'
-import Sparkles from './Sparkles'
-import Image, { ImageProps } from 'next/future/image'
+import dynamic from 'next/dynamic'
 import type { ComponentMap } from 'mdx-bundler/client'
 
 export const baseComponents = {
   a: CustomLink,
   pre: CustomCodeBlock,
-  Image: (props: ImageProps) => (
-    <div className="-mx-2 md:-mx-6">
-      {/* eslint-disable-next-line jsx-a11y/alt-text */}
-      <Image {...props} />
-    </div>
-  ),
+  Image: dynamic(() => import('./MDXImage')),
   Sandbox: props => (
     <div className="-mx-2 md:-mx-6">
       {/* eslint-disable-next-line jsx-a11y/iframe-has-title */}
@@ -26,8 +19,9 @@ export const baseComponents = {
       />
     </div>
   ),
-  Note,
+  Note: dynamic(() => import('./Note')),
   Demo,
-  Sparkles,
+  Sparkles: dynamic(() => import('./Sparkles')),
   TsJsSwitcher,
+  Collapse: dynamic(() => import('./MDXCollapse')),
 } as ComponentMap

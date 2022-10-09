@@ -50,7 +50,7 @@ export const LANGUAGE_NAME_MAP: Record<string, string> = {
 }
 
 export const CodeBlockTitle: React.FC<{ children: React.ReactNode }> = props => (
-  <div className="-mb-[1.7rem] rounded rounded-b-none font-display text-sm font-bold text-drac-base">
+  <div className="code-block-title -mb-[1.7rem] rounded rounded-b-none font-display text-sm font-bold text-drac-base">
     <span className="inline-block rounded rounded-b-none bg-drac-purple px-3 py-0.5">
       {props.children}
     </span>

@@ -1,5 +1,5 @@
 import type { ReactNode } from 'react'
-import { TriangleIcon } from './icons'
+import Collapse from './Collapse'
 import { CodeBlockCopyButton } from './mdx/utils'
 
 const LICENSE = `
@@ -33,14 +33,9 @@ const License: React.FC<{ summary: ReactNode; attribution?: AttributionOptions }
   attribution,
 }) => {
   return (
-    <details className="not-prose group space-y-8 rounded bg-drac-base-dark p-4 transition-shadow">
-      <summary className="focus-ring -m-4 flex cursor-pointer appearance-none items-center space-x-4 rounded p-4">
-        <TriangleIcon className="h-3 w-3 rotate-90 fill-white text-white transition-transform group-open:rotate-180" />
-        <h2 className="ml-1 inline-block font-display font-bold">{summary}</h2>
-      </summary>
-
+    <Collapse summary={summary}>
       {attribution ? (
-        <div className="space-y-4">
+        <div className="not-prose space-y-4">
           <div className="flex items-center justify-between">
             <h3 className="text-2xl">Attribution</h3>
             <CodeBlockCopyButton getText={() => getAttributionText(attribution)} />
@@ -55,7 +50,7 @@ const License: React.FC<{ summary: ReactNode; attribution?: AttributionOptions }
         </div>
       ) : null}
 
-      <div className="space-y-4">
+      <div className="not-prose space-y-4">
         <div className="flex items-center justify-between">
           <h3 className="text-2xl">License</h3>
           <CodeBlockCopyButton getText={() => LICENSE} />
@@ -66,7 +61,7 @@ const License: React.FC<{ summary: ReactNode; attribution?: AttributionOptions }
         </p>
         <pre className={classes.pre}>{LICENSE}</pre>
       </div>
-    </details>
+    </Collapse>
   )
 }
 
