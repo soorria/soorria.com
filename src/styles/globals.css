@@ -132,7 +132,8 @@ input {
     @apply bg-clip-text text-transparent;
   }
 
-  .spinny-home-link:hover {
+  .spinny-home-link:hover,
+  .spinny-home-link:focus {
     background-position: right;
     transition-delay: 1000ms;
   }
