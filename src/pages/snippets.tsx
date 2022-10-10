@@ -35,7 +35,10 @@ const SnippetsPage: React.FC<SnippetsPageProps> = ({ snippets }) => {
         }}
       />
       <p className="mt-6 mb-12 text-center text-lg">{description}</p>
-      <div className="grid auto-cols-min grid-cols-1 gap-8 md:grid-cols-2 lg:gap-12">
+      <div
+        style={{ gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))' }}
+        className="grid auto-cols-min grid-cols-1 gap-y-8 gap-x-6 sm:!grid-cols-2 sm:gap-x-8 lg:gap-12"
+      >
         {snippets.map(snippet => (
           <SnippetCard key={snippet.slug} snippet={snippet} />
         ))}
