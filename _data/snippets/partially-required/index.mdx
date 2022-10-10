@@ -1,24 +1,29 @@
 ---
 title: PartiallyRequired
-shortDescription: A TypeScript type to make part of another type not optional.
+shortDescription:
+  A TypeScript generic type to make part of another type required
 category: TypeScript
 tags:
   - typescript
 createdAt: '2021-10-28'
-updatedAt: '2021-10-28'
+updatedAt: '2022-10-10'
 ---
 
-```typescript
+Make some keys on a type required. Opposite of
+[PartiallyOptional](/snippets/partially-optional).
+
+```typescript nojs
 type PartiallyRequired<T, K extends keyof T> = Omit<T, K> & Required<Pick<T, K>>
 ```
 
 ## Usage
 
-```typescript
+```typescript nojs
 type User = {
-  name: string
+  name?: string
   email?: string
 }
 
+// Type where `email` is required, but `name` is still optional
 type UserWithEmailRequired = PartiallyRequired<User, 'email'>
 ```

@@ -12,7 +12,7 @@ const getJavascriptType = (lang: string) => (lang === 'tsx' ? 'jsx' : 'js')
 export const remarkTypeScriptTransform = (): Transformer => {
   const visitor = (node: Code, index: number, parent: Parent) => {
     const { lang, value, meta, data, type } = node
-    if (!lang || !isTypescriptCodeBlock(lang)) return
+    if (!lang || !isTypescriptCodeBlock(lang) || meta?.match(/\bnojs\b/)) return
 
     const transformedLang = getJavascriptType(lang)
     const transformedCode =
