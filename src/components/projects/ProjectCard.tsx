@@ -31,7 +31,11 @@ const ProjectCard: ProjectCardComponent = ({ project }) => {
     <div className="flex flex-col space-y-3">
       <div className="font-display text-xl font-bold text-drac-pink">
         {project.title}
-        {project.wip && <span className="ml-2 font-sans text-sm font-normal italic">(WIP)</span>}
+        {project.wip && (
+          <span className="ml-2 font-sans text-sm font-normal italic">
+            (<abbr title="work in progress">WIP</abbr>)
+          </span>
+        )}
       </div>
       <div className="flex-1">{project.shortDescription}</div>
       <div>
