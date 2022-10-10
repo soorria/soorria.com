@@ -1,7 +1,7 @@
 import {
+  CodeIcon,
   IconComponent,
   JavascriptIcon,
-  MiscCodeIcon,
   ReactIcon,
   ScriptIcon,
   SolidJsIcon,
@@ -15,9 +15,9 @@ export const categoryLowerCaseToIcon: Record<string, IconComponent> = {
   javascript: JavascriptIcon,
   typescript: TypescriptIcon,
   script: ScriptIcon,
-  miscellaneous: MiscCodeIcon,
+  miscellaneous: CodeIcon,
   solidjs: SolidJsIcon,
   tailwindcss: TailwindIcon,
 }
 
-export const defaultCategoryIcon = MiscCodeIcon
+export const defaultCategoryIcon = CodeIcon
