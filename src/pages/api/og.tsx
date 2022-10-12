@@ -6,46 +6,46 @@ export const config: PageConfig = {
   runtime: 'experimental-edge',
 }
 
-const getFont = async (name: string) => {
-  const url = new URL(`../../../public/fonts/${name}.ttf`, import.meta.url)
+// const getFont = async (name: string) => {
+//   const url = new URL(`../../../public/fonts/${name}.ttf`, import.meta.url)
 
-  console.log(url.href)
+//   console.log(url.href)
 
-  try {
-    const res = await fetch(url.href)
-    return { data: res.arrayBuffer(), url: url.href }
-  } catch (reason) {
-    return { data: null, url: url.href }
-  }
-}
+//   try {
+//     const res = await fetch(url.href)
+//     return { data: res.arrayBuffer(), url: url.href }
+//   } catch (reason) {
+//     return { data: null, url: url.href }
+//   }
+// }
 
-const poppinsRegular = getFont('poppins-regular')
-const poppinsBold = getFont('poppins-bold')
+// const poppinsRegular = getFont('poppins-regular')
+// const poppinsBold = getFont('poppins-bold')
 
-type Falsy = null | undefined | false | 0 | ''
+// type Falsy = null | undefined | false | 0 | ''
 
-const filterBoolean = <T extends any = any, TArray extends Array<T | Falsy> = Array<T | Falsy>>(
-  array: TArray
-): Array<T> => array.filter(Boolean) as Array<T>
+// const filterBoolean = <T extends any = any, TArray extends Array<T | Falsy> = Array<T | Falsy>>(
+//   array: TArray
+// ): Array<T> => array.filter(Boolean) as Array<T>
 
 const handler = async (req: NextRequest): Promise<ImageResponse> => {
-  const [regular, bold] = await Promise.all([poppinsRegular, poppinsBold])
+  // const [regular, bold] = await Promise.all([poppinsRegular, poppinsBold])
   const title = req.nextUrl.searchParams.get('title') ?? '404'
   const subtitle = req.nextUrl.searchParams.get('subtitle')
-  const fonts = filterBoolean([
-    regular && {
-      data: regular.data,
-      name: 'Poppins',
-      style: 'normal',
-      weight: 400,
-    },
-    bold && {
-      data: bold.data,
-      name: 'Poppins',
-      style: 'normal',
-      weight: 700,
-    },
-  ])
+  // const fonts = filterBoolean([
+  //   regular && {
+  //     data: regular.data,
+  //     name: 'Poppins',
+  //     style: 'normal',
+  //     weight: 400,
+  //   },
+  //   bold && {
+  //     data: bold.data,
+  //     name: 'Poppins',
+  //     style: 'normal',
+  //     weight: 700,
+  //   },
+  // ])
   return new ImageResponse(
     (
       <div
@@ -137,10 +137,10 @@ const handler = async (req: NextRequest): Promise<ImageResponse> => {
     ),
     {
       debug: true,
-      fonts: fonts.length ? fonts : undefined,
+      // fonts: fonts.length ? fonts : undefined,
 
       headers: {
-        'x-urls': [regular.url, bold.url].join(','),
+        // 'x-urls': [regular.url, bold.url].join(','),
       },
     }
   )
