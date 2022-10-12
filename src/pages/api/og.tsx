@@ -138,7 +138,7 @@ const handler = async (req: NextRequest): Promise<ImageResponse> => {
     ),
     {
       fonts: fonts.length ? fonts : undefined,
-
+      debug: req.nextUrl.searchParams.has('debug'),
       headers: {
         'x-urls': [regular.url, bold.url].join(','),
       },
