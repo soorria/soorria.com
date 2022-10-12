@@ -12,7 +12,7 @@ const getFont = async (name: string) => {
   console.log(url.href)
 
   try {
-    const res = await fetch(url)
+    const res = await fetch(url.href)
     return { data: res.arrayBuffer(), url: url.href }
   } catch (reason) {
     return { data: null, url: url.href }
