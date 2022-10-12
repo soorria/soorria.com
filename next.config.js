@@ -102,10 +102,10 @@ const config = {
       ],
       afterFiles: [],
       fallback: [
-        {
-          source: '/api/og',
-          destination: 'https://og-gen-mooth.vercel.app/api/og',
-        },
+        // {
+        //   source: '/api/og',
+        //   destination: 'https://og-gen-mooth.vercel.app/api/og',
+        // },
         {
           source: '/og.png',
           destination:
