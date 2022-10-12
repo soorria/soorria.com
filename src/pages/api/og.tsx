@@ -5,16 +5,14 @@ import type { NextRequest } from 'next/server'
 export const config: PageConfig = {
   runtime: 'experimental-edge',
 }
+const BASE_URL = process.env.VERCEL_URL ?? 'http://localhost:3000'
 
 const getFont = async (name: string) => {
-  console.log(process.env.VERCEL_URL)
-  const url = `${process.env.VERCEL_URL}/public/fonts/${name}.ttf`
-
-  console.log(url)
+  const url = `${BASE_URL}/fonts/${name}.ttf`
 
   try {
     const res = await fetch(url)
-    return { data: res.arrayBuffer(), url }
+    return { data: await res.arrayBuffer(), url }
   } catch (reason) {
     return { data: null, url }
   }
@@ -34,19 +32,20 @@ const handler = async (req: NextRequest): Promise<ImageResponse> => {
   const title = req.nextUrl.searchParams.get('title') ?? '404'
   const subtitle = req.nextUrl.searchParams.get('subtitle')
   const fonts = filterBoolean([
-    regular && {
-      data: regular.data,
-      name: 'Poppins',
-      style: 'normal',
-      weight: 400,
-    },
-    bold && {
+    bold.data && {
       data: bold.data,
-      name: 'Poppins',
+      name: 'PoppinsBold',
       style: 'normal',
       weight: 700,
     },
+    regular.data && {
+      data: regular.data,
+      name: 'PoppinsRegular',
+      style: 'normal',
+      weight: 400,
+    },
   ])
+
   return new ImageResponse(
     (
       <div
@@ -59,7 +58,6 @@ const handler = async (req: NextRequest): Promise<ImageResponse> => {
           justifyContent: 'center',
           backgroundColor: 'white',
           position: 'relative',
-          // overflow: 'hidden',
         }}
       >
         <div
@@ -112,7 +110,8 @@ const handler = async (req: NextRequest): Promise<ImageResponse> => {
             ></div>
             <p
               style={{
-                fontWeight: 700,
+                fontFamily: 'PoppinsBold',
+                fontWeight: 400,
                 fontSize: 60,
                 lineHeight: 1,
                 whiteSpace: 'pre-wrap',
@@ -124,6 +123,7 @@ const handler = async (req: NextRequest): Promise<ImageResponse> => {
             {subtitle ? (
               <p
                 style={{
+                  fontFamily: 'PoppinsRegular',
                   fontWeight: 400,
                   fontSize: 30,
                   marginTop: 24,
@@ -139,10 +139,6 @@ const handler = async (req: NextRequest): Promise<ImageResponse> => {
     {
       debug: true,
       fonts: fonts.length ? fonts : undefined,
-
-      headers: {
-        'x-urls': [regular.url, bold.url].join(','),
-      },
     }
   )
 }
