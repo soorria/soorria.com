@@ -21,13 +21,13 @@ const SnippetCard: React.FC<{ snippet: SnippetFrontMatter }> = ({
         </div>
         <div className="min-h-[3rem] flex-1">{shortDescription}</div>
         <div className="flex items-center justify-between text-sm">
-          <div className="flex items-center space-x-2">
-            <ClockIconSolid className="inline-block h-4 w-4" />
+          <div className="tooltip flex items-center space-x-2" aria-label="Created at">
+            <ClockIconSolid role="presentation" className="inline-block h-4 w-4" />
             <span>{formatDate(createdAt)}</span>
           </div>
           {updatedAt && createdAt !== updatedAt ? (
-            <div className="flex items-center space-x-2">
-              <EditIcon className="inline-block h-4 w-4" />
+            <div className="tooltip flex items-center space-x-2" aria-label="Updated at">
+              <EditIcon role="presentation" className="inline-block h-4 w-4" />
               <span>{formatDate(updatedAt)}</span>
             </div>
           ) : null}
