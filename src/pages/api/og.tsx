@@ -137,7 +137,6 @@ const handler = async (req: NextRequest): Promise<ImageResponse> => {
       </div>
     ),
     {
-      debug: true,
       fonts: fonts.length ? fonts : undefined,
     }
   )
