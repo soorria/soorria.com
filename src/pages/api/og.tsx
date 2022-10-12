@@ -89,9 +89,9 @@ const handler = async (req: NextRequest): Promise<ImageResponse> => {
               textAlign: 'center',
               alignItems: 'center',
               justifyContent: 'center',
-              padding: 56,
+              padding: '36px 80px',
               minWidth: 600,
-              maxWidth: 900,
+              maxWidth: 960,
               color: '#f8f8f2',
               borderRadius: 24,
             }}
@@ -113,9 +113,9 @@ const handler = async (req: NextRequest): Promise<ImageResponse> => {
                 fontFamily: 'PoppinsBold',
                 fontWeight: 400,
                 fontSize: 60,
-                lineHeight: 1,
                 whiteSpace: 'pre-wrap',
                 wordBreak: 'break-word',
+                margin: 0,
               }}
             >
               {title}
@@ -126,10 +126,10 @@ const handler = async (req: NextRequest): Promise<ImageResponse> => {
                   fontFamily: 'PoppinsRegular',
                   fontWeight: 400,
                   fontSize: 30,
-                  marginTop: 24,
+                  margin: 0,
                 }}
               >
-                soorria.com
+                {subtitle}
               </p>
             ) : null}
           </div>
@@ -140,7 +140,7 @@ const handler = async (req: NextRequest): Promise<ImageResponse> => {
       fonts: fonts.length ? fonts : undefined,
       debug: req.nextUrl.searchParams.has('debug'),
       headers: {
-        'x-urls': [regular.url, bold.url].join(','),
+        'x-font-urls': [regular.url, bold.url].join(','),
       },
     }
   )
