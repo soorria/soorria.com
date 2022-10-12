@@ -5,7 +5,7 @@ import type { NextRequest } from 'next/server'
 export const config: PageConfig = {
   runtime: 'experimental-edge',
 }
-const BASE_URL = process.env.VERCEL_URL ?? 'http://localhost:3000'
+const BASE_URL = 'https://soorria.com'
 
 const getFont = async (name: string) => {
   const url = `${BASE_URL}/fonts/${name}.ttf`
