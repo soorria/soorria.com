@@ -137,10 +137,10 @@ const handler = async (req: NextRequest): Promise<ImageResponse> => {
     ),
     {
       debug: true,
-      // fonts: fonts.length ? fonts : undefined,
+      fonts: fonts.length ? fonts : undefined,
 
       headers: {
-        // 'x-urls': [regular.url, bold.url].join(','),
+        'x-urls': [regular.url, bold.url].join(','),
       },
     }
   )
