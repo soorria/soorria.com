@@ -7,15 +7,16 @@ export const config: PageConfig = {
 }
 
 const getFont = async (name: string) => {
-  const url = new URL(`../../../public/fonts/${name}.ttf`, process.env.VERCEL_URL)
+  console.log(process.env.VERCEL_URL)
+  const url = `${process.env.VERCEL_URL}/public/fonts/${name}.ttf`
 
-  console.log(url.href)
+  console.log(url)
 
   try {
-    const res = await fetch(url.href)
-    return { data: res.arrayBuffer(), url: url.href }
+    const res = await fetch(url)
+    return { data: res.arrayBuffer(), url }
   } catch (reason) {
-    return { data: null, url: url.href }
+    return { data: null, url }
   }
 }
 
