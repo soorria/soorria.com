@@ -36,7 +36,7 @@ const handler = async (req: NextRequest): Promise<ImageResponse> => {
       data: bold.data,
       name: 'PoppinsBold',
       style: 'normal',
-      weight: 700,
+      weight: 400,
     },
     regular && {
       data: regular.data,
@@ -111,7 +111,7 @@ const handler = async (req: NextRequest): Promise<ImageResponse> => {
             <p
               style={{
                 fontFamily: 'PoppinsBold',
-                fontWeight: 700,
+                fontWeight: 400,
                 fontSize: 60,
                 lineHeight: 1,
                 whiteSpace: 'pre-wrap',
