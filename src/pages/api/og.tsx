@@ -32,13 +32,13 @@ const handler = async (req: NextRequest): Promise<ImageResponse> => {
   const title = req.nextUrl.searchParams.get('title') ?? '404'
   const subtitle = req.nextUrl.searchParams.get('subtitle')
   const fonts = filterBoolean([
-    bold.data && {
+    bold && {
       data: bold.data,
       name: 'PoppinsBold',
       style: 'normal',
       weight: 700,
     },
-    regular.data && {
+    regular && {
       data: regular.data,
       name: 'PoppinsRegular',
       style: 'normal',
@@ -111,7 +111,7 @@ const handler = async (req: NextRequest): Promise<ImageResponse> => {
             <p
               style={{
                 fontFamily: 'PoppinsBold',
-                fontWeight: 400,
+                fontWeight: 700,
                 fontSize: 60,
                 lineHeight: 1,
                 whiteSpace: 'pre-wrap',
@@ -138,6 +138,10 @@ const handler = async (req: NextRequest): Promise<ImageResponse> => {
     ),
     {
       fonts: fonts.length ? fonts : undefined,
+
+      headers: {
+        'x-urls': [regular.url, bold.url].join(','),
+      },
     }
   )
 }
