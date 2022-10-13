@@ -40,11 +40,9 @@ if (typeof window !== 'undefined') {
   // complicated hook a tiny bit, and we can handle it all in one event handler
   window.addEventListener('storage', event => {
     if (
-      // the `storage` event also fires for `sessonStorage`, and we don't care
-      // about that for this hook
+      // the `storage` event also fires for `sessonStorage`, and we don't care about that for this hook
       event.storageArea === localStorage &&
-      // Intentionally using `!=` instead of `!==` since it checks `null`
-      // and `undefined`
+      // Intentionally using `!=` instead of `!==` since it checks `null` and `undefined`
       event.key != null &&
       trackedKeys[event.key]
     ) {
@@ -64,8 +62,18 @@ if (typeof window !== 'undefined') {
   })
 }
 
+type NonNullJsonValue =
+  | string
+  | number
+  | boolean
+  | null
+  | { [key: string]: JsonValue | undefined }
+  | JsonValue[]
+
+type JsonValue = NonNullJsonValue | null
+
 export const useSyncedLocalStorage = <
-  T extends NonNullable<any>,
+  T extends NonNullJsonValue,
   K extends string
 >(
   key: K,
@@ -152,10 +160,11 @@ export const useSyncedLocalStorage = <
 <Note variant='warning'>
 
 - The type of the `state` that you use this hook with cannot be nullable (i.e.
-  cannot be `null` or `undefined`). This is enforced in the type signature of
-  the hook so if you're using TypeScript, issues should be caught at
-  compile-time. If you do want the value to be nullable, I recommend wrapping
-  your state in an object (e.g.
+  cannot be `null` or `undefined`) - and must be something that can be
+  serialised as JSON (you can't used things like `Set` or `Map`). This is
+  enforced in the type signature of the hook so if you're using TypeScript,
+  issues should be caught at compile-time. If you do want the value to be
+  nullable, I recommend wrapping your state in an object (e.g.
   `useSyncedLocalStorage<{ user: User | null }>('user', { user: null })`), or
   you can modify the hook to suit your needs.
 
