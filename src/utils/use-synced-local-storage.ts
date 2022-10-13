@@ -4,15 +4,22 @@ import mitt from 'mitt'
 
 const em = mitt<Record<string, any>>()
 
+// Store which keys are tracked so we don't do unnecessary work for other uses of localStorage
 const trackedKeys: Record<string, number> = {}
 
 // This block relies on window, so to make sure it only runs on the client
 // we need to icheck if `window` is defined
 if (typeof window !== 'undefined') {
   // We define this globally since it simplifies the already extremely
-  // complicated hook a tiny bit, and we can handle
+  // complicated hook a tiny bit, and we can handle it all in one event handler
   window.addEventListener('storage', event => {
-    if (event.storageArea === localStorage && event.key != null && trackedKeys[event.key]) {
+    if (
+      // the `storage` event also fires for `sessonStorage`, and we don't care about that for this hook
+      event.storageArea === localStorage &&
+      // Intentionally using `!=` instead of `!==` since it checks `null` and `undefined`
+      event.key != null &&
+      trackedKeys[event.key]
+    ) {
       let parsed
       try {
         parsed = JSON.parse(event.newValue ?? '') as unknown
