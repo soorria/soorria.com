@@ -14,7 +14,7 @@ import {
 
 const TS_LANGUAGES = new Set(['ts', 'tsx', 'typescript'])
 const TsJsSwitcher: React.FC = props => {
-  const [isTs, setIsTs] = useSyncedLocalStorage('scom:isTs', true)
+  const [isTs, setIsTs] = useSyncedLocalStorage<boolean>('soorria.com:isTs', true)
   const hydrated = useHydrated()
   const pre = useRef<HTMLPreElement>(null)
 

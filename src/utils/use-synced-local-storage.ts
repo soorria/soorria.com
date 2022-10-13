@@ -36,18 +36,12 @@ if (typeof window !== 'undefined') {
   })
 }
 
-type JsonValue =
-  | string
-  | number
-  | boolean
-  | null
-  | { [key: string]: JsonValue | undefined }
-  | JsonValue[]
+type JsonValue = NonNullJsonValue | null
 
-type NonNullJsonValue = Exclude<JsonValue, null>
+type NonNullJsonValue = string | number | boolean | { [key: string]: JsonValue } | JsonValue[]
 
-export const useSyncedLocalStorage = <T extends NonNullJsonValue, K extends string>(
-  key: K,
+export const useSyncedLocalStorage = <T extends NonNullJsonValue = NonNullJsonValue>(
+  key: string,
   initialValue: T
 ): [T, Dispatch<SetStateAction<T>>] => {
   const [state, setState] = useState<T>(initialValue)
