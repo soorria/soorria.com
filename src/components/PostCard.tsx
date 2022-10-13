@@ -1,7 +1,6 @@
 import type { PostFrontMatter } from '@/types/post'
 import { BookIcon, ClockIconSolid, EditIcon, TextIcon } from '@/components/icons'
 import { formatDate } from '@/utils/date'
-import cx from '@/utils/cx'
 import PostListItemLink from './posts/PostListItemLink'
 
 const SnippetCard: React.FC<{ post: PostFrontMatter }> = ({
