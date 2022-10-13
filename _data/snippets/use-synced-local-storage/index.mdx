@@ -8,7 +8,7 @@ tags:
   - typescript
   - react
 createdAt: '2022-07-07'
-updatedAt: '2022-09-14'
+updatedAt: '2022-10-13'
 ---
 
 Save state to localStorage and sync it between hook instances, tabs and windows!
@@ -134,13 +134,17 @@ export const useSyncedLocalStorage = <
 }
 ```
 
-**Note**:
+<Note variant='info'>
 
 - This hook relies on the [`mitt`](https://github.com/developit/mitt) event
   emitter package - it's only tiny at only 200 bytes(!!) that I would have had
   to include anyway (for syncing between hook instances in the same tab), and
   has [tests](https://github.com/developit/mitt/blob/main/test/index_test.ts)
   that I don't want to write.
+
+</Note>
+
+<Note variant='warning'>
 
 - The type of the `state` that you use this hook with cannot be nullable (i.e.
   cannot be `null` or `undefined`). This is enforced in the type signature of
@@ -152,3 +156,5 @@ export const useSyncedLocalStorage = <
 - Unfortunately we have 4 refs of which none are used for DOM elements, and I'm
   not sure of a better way to get around the issues they solve without adding
   extra state
+
+</Note>

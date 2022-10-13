@@ -5,7 +5,7 @@ category: TypeScript
 tags:
   - typescript
 createdAt: '2022-04-26'
-updatedAt: '2022-09-03'
+updatedAt: '2022-10-13'
 ---
 
 Download a file, text, blob, etc programmatically with JavaScript, or download
@@ -29,10 +29,12 @@ export const download = (
 }
 ```
 
-**Note**:
+<Note variant='info'>
 
 - We use `a.dispatchEvent` over `a.click` since some browsers don't start the
   download when `a.click` is called.
+
+</Note>
 
 ## Without JavaScript
 
@@ -40,11 +42,13 @@ export const download = (
 <a href="{{url}}" download="{{fileName}}">Click me to download!</a>
 ```
 
-**Note**:
+<Note variant="warning">
 
 - The `url` must point to a resource on the same domain and should only contain
   the path. e.g. if the domain you're on is `soorria.com` to download
   `https://soorria.com/og.png`, the `url` should be `/og.png`
+
+</Note>
 
 ## Demo
 

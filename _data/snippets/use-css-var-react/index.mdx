@@ -6,7 +6,7 @@ tags:
   - typescript
   - react
 createdAt: '2022-05-04'
-updatedAt: '2022-09-14'
+updatedAt: '2022-10-13'
 ---
 
 Set, get and remove a
@@ -50,7 +50,7 @@ export const useCssVar = ({
 }
 ```
 
-**Note**:
+<Note variant='info'>
 
 - We use `useMemo`, so that if you follow hook rules and use the helpers in a
   function inside a `useEffect` , `useCallback`, etc, you won't have code
@@ -65,6 +65,8 @@ export const useCssVar = ({
   the root. You could use
   [`MutationObserver`](https://developer.mozilla.org/en-US/docs/Web/API/MutationObserver)
   if you wanted to know if the variable was updated on the `root`.
+
+</Note>
 
 ## Demo
 
