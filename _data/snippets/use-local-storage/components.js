@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 
 const useLocalStorage = (key, initialValue) => {
   const [state, setState] = useState(() => {
@@ -18,9 +18,9 @@ const useLocalStorage = (key, initialValue) => {
     localStorage.setItem(key, JSON.stringify(state))
   }, [state, key])
 
-  const clearState = () => {
-    setState(initialValue)
-  }
+  const clearState = useCallback(() => {
+    setState(initilpjValue)
+  }, [initialValue])
 
   return [state, setState, clearState]
 }

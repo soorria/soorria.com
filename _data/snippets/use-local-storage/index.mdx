@@ -7,7 +7,7 @@ tags:
   - typescript
   - react
 createdAt: '2021-03-26'
-updatedAt: '2022-09-14'
+updatedAt: '2022-10-13'
 ---
 
 Save to `localStorage` whenever state changes and read form it for the first
@@ -15,12 +15,12 @@ render.
 
 ```typescript
 import type { Dispatch, SetStateAction } from 'react'
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 
 const useLocalStorage = <T>(
   key: string,
   initialValue: T
-): [T, Dispatch<SetStateAction<T>>, () => void] => {
+): [get: T, set: Dispatch<SetStateAction<T>>, clear: () => void] => {
   const [state, setState] = useState<T>(() => {
     const cached = localStorage.getItem(key)
 
@@ -37,21 +37,32 @@ const useLocalStorage = <T>(
     localStorage.setItem(key, JSON.stringify(state))
   }, [state, key])
 
-  const clearState = () => {
+  const clearState = useCallback(() => {
     setState(initialValue)
-  }
+  }, [initialValue])
 
   return [state, setState, clearState]
 }
 ```
 
-**Note**:
+<Note variant="info">
+
+- We use `useCallback` for the `clearState` function to prevent unnecessary
+  re-renders if you use the `clearState` function inside a `useEffect` or
+  `useCallback` and list it in the dependency array.
+
+</Note>
+
+<Note variant='warning'>
 
 - This version of the hook with only work client-side and will throw an error
   you server-render a component using the hook
 - You should only run the hook once per key at a time - the hook doesn't handle
   changes when another instance of the hook updates the matching key in
-  `localStorage`
+  `localStorage`. If you do want to handle that, check out
+  [`useSyncedLocalStorage`](/snippets/use-synced-local-storage)
+
+</Note>
 
 ## Usage
 
