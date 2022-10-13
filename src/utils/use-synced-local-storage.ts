@@ -36,7 +36,7 @@ if (typeof window !== 'undefined') {
   })
 }
 
-type NonNullJsonValue =
+type JsonValue =
   | string
   | number
   | boolean
@@ -44,7 +44,7 @@ type NonNullJsonValue =
   | { [key: string]: JsonValue | undefined }
   | JsonValue[]
 
-type JsonValue = NonNullJsonValue | null
+type NonNullJsonValue = Exclude<JsonValue, null>
 
 export const useSyncedLocalStorage = <T extends NonNullJsonValue, K extends string>(
   key: K,
