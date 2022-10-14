@@ -81,7 +81,7 @@ export const render = async <T extends BaseFrontMatter = BaseFrontMatter>(
     source,
     files: {
       './components': components,
-      ...(source.includes('$styles') ? { $styles: STYLE_UTILS } : null),
+      $styles: STYLE_UTILS,
     },
     mdxOptions(options) {
       options.remarkPlugins = [

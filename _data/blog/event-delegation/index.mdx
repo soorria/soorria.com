@@ -29,3 +29,26 @@ event's `target`. The browser then <Sparkles>_bubbles_</Sparkles> the event up
 the DOM tree, firing an event on every parent!
 
 <Demo component={BubblingDemo} init="always" />
+
+Let's try it out on this UI:
+
+```html
+<div>
+  <button>
+    <svg><!-- Water tribe icon --></svg>
+    Water
+  </button>
+  <button>
+    <svg><!-- Earth kingdom icon --></svg>
+    Earth
+  </button>
+  <button>
+    <svg><!-- Fire nation icon --></svg>
+    Fire
+  </button>
+  <button>
+    <svg><!-- Air temple icon --></svg>
+    Air
+  </button>
+</div>
+```
