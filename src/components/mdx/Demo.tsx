@@ -28,7 +28,11 @@ const DemoWrapper: React.FC<DemoWrapperProps> = ({ component: Component, init = 
               onClick={() => setKey(p => p + 1)}
               className="focus-ring flex h-full w-full items-center justify-center rounded bg-drac-base text-drac-pink transition hocus:text-drac-purple"
             >
-              <RefreshIcon className="mr-1 h-em w-em" /> Reload Demo
+              <RefreshIcon
+                className="mr-1 h-em w-em transition-transform duration-700"
+                style={{ transform: `rotate(-${key * 360}deg)` }}
+              />{' '}
+              Reload Demo
             </button>
           </div>
         </>

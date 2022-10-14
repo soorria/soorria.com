@@ -1,0 +1,31 @@
+---
+title: Event Delegation
+tags:
+  - javascript
+shortDescription:
+  A better way to handle multiple elements with the same event handlers
+createdAt: '2022-10-15'
+# updatedAt: '2022-10-10'
+private: true
+---
+
+import { BubblingDemo } from './components'
+
+## What and Why
+
+Event delegation allows you to add a single event listener to a parent element,
+rather than adding event listeners to each child elements. This is useful when
+the child elements (e.g. a list of buttons) change or there are lots of them. It
+can also be a bit more performant, and frameworks like
+[React](https://reactjs.org/) use it for all `click` events with the `onClick`
+prop.
+
+## How
+
+Event delegation exploits a behaviour of the DOM's event system - event
+_bubbling_. When an event (e.g. a `click` event) happens, your browser drills
+down to the smallest element affected by the event (e.g. clicked on) - the
+event's `target`. The browser then <Sparkles>_bubbles_</Sparkles> the event up
+the DOM tree, firing an event on every parent!
+
+<Demo component={BubblingDemo} init="always" />

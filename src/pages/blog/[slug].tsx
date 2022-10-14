@@ -1,9 +1,9 @@
 import type { GetStaticPaths, GetStaticProps } from 'next'
 import type { Post, PostFrontMatter } from '@/types/post'
-import PostLayout from '@/components/PostLayout'
+import PostLayout, { PostBottomSection } from '@/components/PostLayout'
 import { getAllFilesFrontMatter, getFileWithMdx } from '@/lib/data'
 import { DataType } from '@/types/data'
-import { editUrl } from '@/utils/repo'
+import { editUrl, historyUrl } from '@/utils/repo'
 import { NextSeo } from 'next-seo'
 import { getOgImageForData } from '@/utils/og'
 import { filterUnpublished } from '@/utils/content'
@@ -78,12 +78,29 @@ const PostPage: React.FC<PostPageProps> = ({ post, mdx }) => {
 
       <div className="prose mx-auto mt-6 md:prose-lg md:mt-16">
         <Content />
-        <div className="mx-auto max-w-xs py-12 text-center text-sm">
-          Found a mistake, or want to suggest an improvement? Edit on GitHub{' '}
-          <a href={editUrl(DataType.blog, post.slug)} rel="noopenner noreferrer" target="_blank">
-            here
-          </a>
-        </div>
+        <PostBottomSection>
+          <div>
+            Found a mistake, or want to suggest an improvement? Edit on GitHub{' '}
+            <a
+              href={editUrl(DataType.blog, post.slug)}
+              className="focus-ring -mx-1 rounded px-1"
+              rel="noopenner noreferrer"
+              target="_blank"
+            >
+              here
+            </a>
+            <br />
+            and see edit history{' '}
+            <a
+              href={historyUrl(DataType.blog, post.slug)}
+              className="focus-ring -mx-1 rounded px-1"
+              rel="noopenner noreferrer"
+              target="_blank"
+            >
+              here
+            </a>
+          </div>
+        </PostBottomSection>
       </div>
     </PostLayout>
   )
