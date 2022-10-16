@@ -7,7 +7,7 @@ import { DataType } from '@/types/data'
 import SnippetCard from '@/components/SnippetCard'
 import BlogPostCard from '@/components/BlogPostCard'
 import { getOgImageForData } from '@/utils/og'
-import { sortByCreatedAtField } from '@/utils/content'
+import { filterNonPrivate, sortByCreatedAtField } from '@/utils/content'
 import { PUBLIC_URL } from '@/constants'
 import type { BlogPostFrontMatter } from '@/types/blog-post'
 
@@ -69,7 +69,7 @@ export const getStaticProps: GetStaticProps<SnippetsPageProps> = async () => {
 
   const posts = sortByCreatedAtField([
     ...snippets.map(s => ({ ...s, type: DataType.snippets as const })),
-    ...blogPosts.map(p => ({ ...p, type: DataType.blog as const })),
+    ...filterNonPrivate(blogPosts).map(p => ({ ...p, type: DataType.blog as const })),
   ])
 
   return {
