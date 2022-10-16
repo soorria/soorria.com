@@ -23,7 +23,6 @@ const title = 'All Posts'
 const url = `${PUBLIC_URL}/all-posts`
 
 const SnippetsPage: React.FC<SnippetsPageProps> = ({ posts }) => {
-  console.log(posts)
   return (
     <PostLayout title="All Posts">
       <NextSeo
