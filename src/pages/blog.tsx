@@ -7,7 +7,12 @@ import { DataType } from '@/types/data'
 import PostCard from '@/components/BlogPostCard'
 import MainLayout from '@/components/MainLayout'
 import { getOgImageForData } from '@/utils/og'
-import { filterNonPrivate, filterUnpublished, sortByCreatedAtField } from '@/utils/content'
+import {
+  blogPostFilter,
+  filterPrivate,
+  filterUnpublished,
+  sortByCreatedAtField,
+} from '@/utils/content'
 import { PUBLIC_URL } from '@/constants'
 
 interface PostsPageProps {
@@ -48,10 +53,8 @@ const PostsPage: React.FC<PostsPageProps> = ({ posts }) => {
 export default PostsPage
 
 export const getStaticProps: GetStaticProps = async () => {
-  const posts = filterNonPrivate(
-    filterUnpublished(
-      sortByCreatedAtField(await getAllFilesFrontMatter<BlogPostFrontMatter>(DataType.blog))
-    )
+  const posts = blogPostFilter(
+    sortByCreatedAtField(await getAllFilesFrontMatter<BlogPostFrontMatter>(DataType.blog))
   )
 
   return {

@@ -1,3 +1,5 @@
+import type { BlogPostFrontMatter } from '@/types/blog-post'
+
 interface HasCreatedAtField {
   createdAt: string
 }
@@ -11,7 +13,7 @@ export const sortByCreatedAtField = <T extends HasCreatedAtField>(arr: T[]): T[]
 export const filterUnpublished = <T extends HasCreatedAtField>(arr: T[]): T[] =>
   arr.filter(el => process.env.NODE_ENV !== 'production' || !!el.createdAt)
 
-export const filterNonPrivate = <T extends { private?: boolean }>(arr: T[]): T[] =>
+export const filterPrivate = <T extends { private?: boolean }>(arr: T[]): T[] =>
   arr.filter(el => process.env.NODE_ENV !== 'production' || !el.private)
 
 export const addRefToUrl = (url: string, ref = 'soorria.com'): string => {
@@ -19,3 +21,13 @@ export const addRefToUrl = (url: string, ref = 'soorria.com'): string => {
   u.searchParams.set('ref', ref)
   return u.toString()
 }
+
+export const composeFilters = <T extends any>(
+  ...filters: Array<(arr: T[]) => T[]>
+): ((arr: T[]) => T[]) => {
+  return arr => {
+    return filters.reduce((arr, filter) => filter(arr), arr)
+  }
+}
+
+export const blogPostFilter = composeFilters<BlogPostFrontMatter>(filterPrivate, filterUnpublished)

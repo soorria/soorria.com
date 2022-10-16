@@ -7,7 +7,7 @@ import { DataType } from '@/types/data'
 import SnippetCard from '@/components/SnippetCard'
 import BlogPostCard from '@/components/BlogPostCard'
 import { getOgImageForData } from '@/utils/og'
-import { filterNonPrivate, sortByCreatedAtField } from '@/utils/content'
+import { blogPostFilter, sortByCreatedAtField } from '@/utils/content'
 import { PUBLIC_URL } from '@/constants'
 import type { BlogPostFrontMatter } from '@/types/blog-post'
 
@@ -38,10 +38,7 @@ const SnippetsPage: React.FC<SnippetsPageProps> = ({ posts }) => {
         }}
       />
       <p className="mt-6 mb-12 text-center text-lg">{description}</p>
-      <div
-        style={{ gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))' }}
-        className="grid auto-cols-min grid-flow-dense grid-cols-1 gap-y-8 gap-x-6 sm:!grid-cols-2 sm:gap-x-8 lg:gap-12"
-      >
+      <div className="grid auto-cols-min grid-flow-dense grid-cols-1 gap-y-8 gap-x-6 sm:grid-cols-2 sm:gap-x-8 lg:gap-12">
         {posts.map(p => {
           const key = `${p.type}/${p.slug}`
 
@@ -69,7 +66,7 @@ export const getStaticProps: GetStaticProps<SnippetsPageProps> = async () => {
 
   const posts = sortByCreatedAtField([
     ...snippets.map(s => ({ ...s, type: DataType.snippets as const })),
-    ...filterNonPrivate(blogPosts).map(p => ({ ...p, type: DataType.blog as const })),
+    ...blogPostFilter(blogPosts).map(p => ({ ...p, type: DataType.blog as const })),
   ])
 
   return {
