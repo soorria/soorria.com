@@ -7,12 +7,7 @@ import { DataType } from '@/types/data'
 import PostCard from '@/components/BlogPostCard'
 import MainLayout from '@/components/MainLayout'
 import { getOgImageForData } from '@/utils/og'
-import {
-  blogPostFilter,
-  filterPrivate,
-  filterUnpublished,
-  sortByCreatedAtField,
-} from '@/utils/content'
+import { blogPostFilter, sortByCreatedAtField } from '@/utils/content'
 import { PUBLIC_URL } from '@/constants'
 
 interface PostsPageProps {

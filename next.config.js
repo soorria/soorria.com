@@ -3,6 +3,14 @@ const withBundleAnalyzer = require('@next/bundle-analyzer')({
   enabled: process.env.ANALYZE === 'true',
 })
 
+const { FontaineTransform } = require('fontaine')
+
+const options = {
+  fallbacks: ['BlinkMacSystemFont', 'Segoe UI', 'Helvetica Neue', 'Arial', 'Noto Sans'],
+  // You may need to resolve assets like `/fonts/Roboto.woff2` to a particular directory
+  resolvePath: id => 'file://./public/fonts' + id,
+}
+
 // const withTM = require('next-transpile-modules')(['rehype-raw'])
 
 const { withPlausibleProxy } = require('next-plausible')
@@ -113,6 +121,11 @@ const config = {
         },
       ],
     }
+  },
+  webpack(config) {
+    config.plugins = config.plugins || []
+    config.plugins.push(FontaineTransform.webpack(options))
+    return config
   },
   reactStrictMode: true,
   // swcMinify: true,
