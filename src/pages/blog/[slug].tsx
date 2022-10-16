@@ -1,5 +1,5 @@
 import type { GetStaticPaths, GetStaticProps } from 'next'
-import type { Post, PostFrontMatter } from '@/types/post'
+import type { BlogPost, BlogPostFrontMatter } from '@/types/blog-post'
 import PostLayout, { PostBottomSection } from '@/components/PostLayout'
 import { getAllFilesFrontMatter, getFileWithMdx } from '@/lib/data'
 import { DataType } from '@/types/data'
@@ -15,7 +15,7 @@ import { formatDate } from '@/utils/date'
 import cx from '@/utils/cx'
 
 interface PostPageProps {
-  post: PostFrontMatter
+  post: BlogPostFrontMatter
   mdx: string
 }
 
@@ -118,7 +118,7 @@ export const getStaticProps: GetStaticProps<PostPageProps, { slug: string }> = a
   }
 
   const { slug } = params
-  const { code, ...snippet } = await getFileWithMdx<Post>(DataType.blog, slug)
+  const { code, ...snippet } = await getFileWithMdx<BlogPost>(DataType.blog, slug)
 
   return {
     props: { post: snippet, mdx: code },
@@ -126,7 +126,9 @@ export const getStaticProps: GetStaticProps<PostPageProps, { slug: string }> = a
 }
 
 export const getStaticPaths: GetStaticPaths = async () => {
-  const snippets = filterUnpublished(await getAllFilesFrontMatter<PostFrontMatter>(DataType.blog))
+  const snippets = filterUnpublished(
+    await getAllFilesFrontMatter<BlogPostFrontMatter>(DataType.blog)
+  )
 
   return {
     paths: snippets.map(({ slug }) => ({ params: { slug } })),

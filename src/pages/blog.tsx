@@ -1,17 +1,17 @@
 import type { GetStaticProps } from 'next'
-import type { PostFrontMatter } from '@/types/post'
+import type { BlogPostFrontMatter } from '@/types/blog-post'
 import { NextSeo } from 'next-seo'
 import { PostHeading } from '@/components/PostLayout'
 import { getAllFilesFrontMatter } from '@/lib/data'
 import { DataType } from '@/types/data'
-import PostCard from '@/components/PostCard'
+import PostCard from '@/components/BlogPostCard'
 import MainLayout from '@/components/MainLayout'
 import { getOgImageForData } from '@/utils/og'
 import { filterNonPrivate, filterUnpublished, sortByCreatedAtField } from '@/utils/content'
 import { PUBLIC_URL } from '@/constants'
 
 interface PostsPageProps {
-  posts: PostFrontMatter[]
+  posts: BlogPostFrontMatter[]
 }
 
 const description = 'Longer written things'
@@ -50,7 +50,7 @@ export default PostsPage
 export const getStaticProps: GetStaticProps = async () => {
   const posts = filterNonPrivate(
     filterUnpublished(
-      sortByCreatedAtField(await getAllFilesFrontMatter<PostFrontMatter>(DataType.blog))
+      sortByCreatedAtField(await getAllFilesFrontMatter<BlogPostFrontMatter>(DataType.blog))
     )
   )
 

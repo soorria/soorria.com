@@ -1,9 +1,9 @@
-import type { PostFrontMatter } from '@/types/post'
+import type { BlogPostFrontMatter } from '@/types/blog-post'
 import { BookIcon, ClockIconSolid, EditIcon, TextIcon } from '@/components/icons'
 import { formatDate } from '@/utils/date'
 import PostListItemLink from './posts/PostListItemLink'
 
-const SnippetCard: React.FC<{ post: PostFrontMatter }> = ({
+const BlogPostCard: React.FC<{ post: BlogPostFrontMatter }> = ({
   post: { slug, title, shortDescription, createdAt, updatedAt, readingTime, words },
 }) => (
   <PostListItemLink href={`/blog/${slug}`}>
@@ -44,4 +44,4 @@ const SnippetCard: React.FC<{ post: PostFrontMatter }> = ({
   </PostListItemLink>
 )
 
-export default SnippetCard
+export default BlogPostCard

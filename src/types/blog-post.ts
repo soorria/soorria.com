@@ -1,6 +1,6 @@
 import type { BaseData, FrontMatter } from './data'
 
-export interface Post extends BaseData {
+export interface BlogPost extends BaseData {
   category: string
   createdAt: string
   updatedAt: string
@@ -9,4 +9,4 @@ export interface Post extends BaseData {
   private?: boolean
 }
 
-export type PostFrontMatter = FrontMatter<Post>
+export type BlogPostFrontMatter = FrontMatter<BlogPost>
