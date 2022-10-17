@@ -14,7 +14,7 @@ interface ErrorPageProps {
 
 const DEFAULT_MESSAGE = 'I messed up :('
 
-const ErrorPage: React.FC<ErrorPageProps> = ({ statusCode, statusText, tryAgain }) => {
+const ErrorPage: React.FC<ErrorPageProps> = ({ statusCode, statusText, tryAgain = true }) => {
   const router = useRouter()
   return (
     <MainLayout>
