@@ -45,7 +45,7 @@ const SnippetsPage: React.FC<SnippetsPageProps> = ({ posts }) => {
           return p.type === DataType.snippets ? (
             <SnippetCard key={key} snippet={p} />
           ) : (
-            <div className="col-span-2 grid" key={key}>
+            <div className="grid sm:col-span-2" key={key}>
               <BlogPostCard post={p} />
             </div>
           )
