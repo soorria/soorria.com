@@ -14,7 +14,7 @@ interface PostsPageProps {
   posts: BlogPostFrontMatter[]
 }
 
-const description = 'Longer written things'
+const description = 'Longer written things that I think are interesting, useful, or just cool'
 const title = 'Blog'
 const url = `${PUBLIC_URL}/blog`
 
