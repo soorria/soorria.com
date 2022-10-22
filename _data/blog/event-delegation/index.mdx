@@ -4,9 +4,8 @@ tags:
   - javascript
 shortDescription:
   A better way to handle multiple elements with the same event handlers
-createdAt: '2022-10-15'
+createdAt: '2022-10-23'
 # updatedAt: '2022-10-10'
-private: true
 ---
 
 import { BubblingDemo } from './components'
@@ -60,7 +59,7 @@ of the buttons is clicked.
 
 The _default_ way to do this would be to select all of the buttons, and add an
 event listener to each of them. However, since we're using _event delegation_,
-we need to add an event listener to the parent:
+we'll add a `'click'` event listener to the parent:
 
 ```ts
 const list = document.getElementById('elements-list')!
@@ -83,12 +82,12 @@ us:
 Looking at the two options above, it seems like `event.target` is perfect, but
 in the example above we have a little issue. If a user clicks a button, but
 their mouse is over the image, `event.target` will be the `<img>`! Obviously, we
-_could_ just remove the icons, but they look nice and that's important to us.
+_could_ just remove the icons, but they'll look nice and that's important to me.
 Instead, we'll use the
 [`closest`](https://developer.mozilla.org/en-US/docs/Web/API/Element/closest)
-method available on all HTML elements. It accepts a CSS selector (like
+method available on all HTML elements. It accepts a CSS selector (just like
 `querySelector`) and walks up the DOM tree until it finds an element that
-matches the selector, or runs our of elements. This allows us to the get the
+matches the selector, or runs out of elements. This allows us to the get the
 button that was clicked _even if_ the deepest clicked element is something else!
 
 ```ts
@@ -104,12 +103,12 @@ list.addEventListener('click', event => {
 
 <Note variant='info'>
 
-Notice above that we return early `event.target.closest` if returns a nullish
+Notice above that we return early if `event.target.closest` returns a falsy
 value. We do this since:
 
 1. If a user clicks a part of the containing element (in this case the
    surrounding `<div>`), and their mouse isn't also over a button (e.g. if
-   there's some spacing between the buttons), it will return null.
+   there's some spacing between the buttons), it will return `null``.
 2. **TypeScript only**: The return type of `event.target.closest` is defined
    similar to `HTMLElement | null`, so if the return value is unchecked you will
    have type errors (and lose autocomplete) when using it.
@@ -122,10 +121,11 @@ We can finally show the alert, but we have a little issue. We have the button
 that was clicked, but how do we know _which_ specific button was clicked? We
 need a way to distinguish them from each other. In this example, we'll use
 [data attributes](https://developer.mozilla.org/en-US/docs/Learn/HTML/Howto/Use_data_attributes)
-since their values are easier to access in JavaScript.
+since their values are easy to access in JavaScript, and there's a no chance for
+conflicts with any attributes added to browsers in the future.
 
-You can use any data attribute, but since the buttons are for bending elements
-from
+You can use any data attribute, but since the buttons in this example are for
+bending elements from
 [Avatar: The Last Airbender](https://en.wikipedia.org/wiki/Avatar:_The_Last_Airbender)
 I'll use `data-element`.
 
@@ -144,7 +144,7 @@ I'll use `data-element`.
 </button>
 ```
 
-Now, we can access the value of the `data-element` attribute using there dataset
+Now, we can access the value of the `data-element` attribute using the `dataset`
 property on every element:
 
 ```ts
@@ -210,8 +210,8 @@ and our HTML (now with alt attributes!)
 
 ## Demo
 
-Here's a demo with the icons, and _a_ complete, useful and non-trivial
-`showAlertForElement`:
+Here's a demo with the icons, and _a_ complete, useful and 100% non-trivial
+`showAlertForElement` implementation:
 
 <Sandbox
   src="https://codesandbox.io/embed/event-delegation-complete-if0zp9?fontsize=14&hidenavigation=1&theme=dark&view=preview"
