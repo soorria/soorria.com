@@ -125,12 +125,12 @@ registerForm.addEventListener('submit', event => {
   // if you're handling submissions with JavaScript!
   event.preventDefault()
 
-  const formdata = new FormData(registerForm)
+  const formData = new FormData(registerForm)
 
-  const email = formdata.get('email')
-  const password = formdata.get('password')
+  const email = formData.get('email')
+  const password = formData.get('password')
 
-  const acceptedMailingLists = formdata.getAll('mailing-lists')
+  const acceptedMailingLists = formData.getAll('mailing-lists')
 
   doRegister(email, password, acceptedMailingLists)
 })
@@ -142,8 +142,8 @@ The code above _doesn't work_ - not because I suck at JavaScript or because
 FormData is too bleeding edge, but because we need to update the origina HTML to
 work with `FormData`, and _be more correct_.
 
-In the code snippet above, we used a few strings as arguments to `formdata.get`
-and `formdata.getAll`, but where do these come from? When you use create a
+In the code snippet above, we used a few strings as arguments to `formData.get`
+and `formData.getAll`, but where do these come from? When you use create a
 `FormData` object with a `form`, the keys we use in `get` and `getAll` map to
 the `name` attribute for any `<input>`s, `<select>`s, and `<textarea>`s inside
 the `<form>`. We can fix this issue by adding `name`s to the inputs and adding
@@ -215,8 +215,8 @@ After making the changes above, everything works! Here's a demo of the complete
 code in a CodeSandbox:
 
 <Sandbox
-  src="https://codesandbox.io/embed/blog-formdata-after-formdata-ghst14?fontsize=14&hidenavigation=1&theme=dark&file=src/index.js&view=preview"
-  title="blog/formdata - after FormData :)"
+  src="https://codesandbox.io/embed/blog-formData-after-formData-ghst14?fontsize=14&hidenavigation=1&theme=dark&file=src/index.js&view=preview"
+  title="blog/formData - after FormData :)"
 />
 
 ## React and Other Frameworks
@@ -307,10 +307,10 @@ import type { ActionArgs } from 'remix'
 export const action = async ({ request }: ActionArgs) => {
   const formData = await request.formData()
 
-  const email = formdata.get('email')
-  const password = formdata.get('password')
+  const email = formData.get('email')
+  const password = formData.get('password')
 
-  const acceptedMailingLists = formdata.getAll('mailing-lists')
+  const acceptedMailingLists = formData.getAll('mailing-lists')
 
   db.createAccount(email, password, acceptedMailingLists)
 }
