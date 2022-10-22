@@ -1,7 +1,7 @@
 import type { BlogPostFrontMatter } from '@/types/blog-post'
 import { BookIcon, ClockIconSolid, EditIcon, TextIcon } from '@/components/icons'
 import { formatDate } from '@/utils/date'
-import PostListItemLink from './posts/PostListItemLink'
+import PostListItemLink from './PostListItemLink'
 
 const BlogPostCard: React.FC<{ post: BlogPostFrontMatter }> = ({
   post: { slug, title, shortDescription, createdAt, updatedAt, readingTime, words },
@@ -13,7 +13,7 @@ const BlogPostCard: React.FC<{ post: BlogPostFrontMatter }> = ({
       </div>
       <div className="flex-1 text-base">{shortDescription}</div>
       <hr className="my-2 border-drac-content/10" />
-      <div className="grid grid-cols-2 items-center justify-items-center gap-4 text-sm sm:grid-cols-4">
+      <div className="grid grid-cols-2 items-center justify-items-center gap-4 text-sm tabular-nums sm:grid-cols-4">
         <div className="tooltip flex items-center space-x-2" aria-label="Reading time">
           <BookIcon role="presentation" className="inline-block h-3 w-3" />
           <span>{readingTime}</span>

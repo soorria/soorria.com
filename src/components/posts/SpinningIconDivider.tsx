@@ -22,7 +22,7 @@ export const SpinningIconDivider: React.FC<{ icon: IconComponent; scrollVar: str
     >
       {line}
       <Icon
-        className="inline-block h-6 w-6 transition-transform"
+        className="inline-block h-6 w-6 transition-transform ease-linear"
         style={{
           transform: `rotate(calc(var(${scrollVar}) * 2 * 360deg))`,
         }}

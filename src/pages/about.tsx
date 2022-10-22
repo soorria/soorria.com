@@ -1,5 +1,5 @@
 import type { GetStaticProps } from 'next'
-import PostLayout from '@/components/PostLayout'
+import PostLayout from '@/components/posts/PostLayout'
 import { getFileWithMdx } from '@/lib/data'
 import { useMdxComponent } from '@/lib/mdx'
 import { BaseData, DataType } from '@/types/data'
@@ -39,7 +39,7 @@ const AboutPage: React.FC<AboutPageProps> = ({ mdx, updatedAt }) => {
           images: [getOgImage('About Me', 'soorria.com')],
         }}
       />
-      <div className="prose mx-auto mt-6 md:prose-lg md:mt-16">
+      <div className="prose mx-auto mt-6 md:mt-16 md:prose-lg">
         <Content />
       </div>
     </PostLayout>

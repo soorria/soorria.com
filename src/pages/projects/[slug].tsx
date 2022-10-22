@@ -1,6 +1,6 @@
 import type { GetStaticPaths, GetStaticProps } from 'next'
 import type { Project, ProjectFrontMatter } from '@/types/project'
-import PostLayout from '@/components/PostLayout'
+import PostLayout from '@/components/posts/PostLayout'
 import { getFileWithMdx } from '@/lib/data'
 import { DataType } from '@/types/data'
 import { NextSeo } from 'next-seo'
@@ -32,7 +32,7 @@ const ProjectPage: React.FC<ProjectPageProps> = ({ project, mdx }) => {
           images: [getOgImageForData(DataType.projects, project.title)],
         }}
       />
-      <div className="prose mx-auto mt-6 md:prose-lg md:mt-16">
+      <div className="prose mx-auto mt-6 md:mt-16 md:prose-lg">
         {mdx ? <Content /> : <h2>Unfortunately, I&apos;m not done with this page yet ☹</h2>}
       </div>
     </PostLayout>

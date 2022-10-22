@@ -1,6 +1,6 @@
 import type { GetStaticProps } from 'next'
 import type { ProjectFrontMatter } from '@/types/project'
-import PostLayout from '@/components/PostLayout'
+import PostLayout from '@/components/posts/PostLayout'
 import ProjectCard from '@/components/projects/ProjectCard'
 import ProjectsGrid from '@/components/projects/ProjectsGrid'
 import { featuredProjects, PUBLIC_URL } from '@/constants'

@@ -1,8 +1,8 @@
 import type { SnippetFrontMatter } from '@/types/snippet'
 import { ClockIconSolid, EditIcon } from '@/components/icons'
-import { categoryLowerCaseToIcon, defaultCategoryIcon } from './categories'
+import { categoryLowerCaseToIcon, defaultCategoryIcon } from '../categories'
 import { formatDate } from '@/utils/date'
-import PostListItemLink from './posts/PostListItemLink'
+import PostListItemLink from './PostListItemLink'
 
 const SnippetCard: React.FC<{ snippet: SnippetFrontMatter }> = ({
   snippet: { slug, title, shortDescription, createdAt, updatedAt, category },
@@ -20,7 +20,7 @@ const SnippetCard: React.FC<{ snippet: SnippetFrontMatter }> = ({
           {title}
         </div>
         <div className="min-h-[3rem] flex-1">{shortDescription}</div>
-        <div className="flex items-center justify-between text-sm">
+        <div className="flex items-center justify-between text-sm tabular-nums">
           <div className="tooltip flex items-center space-x-2" aria-label="Created at">
             <ClockIconSolid role="presentation" className="inline-block h-4 w-4" />
             <span>{formatDate(createdAt)}</span>
