@@ -4,15 +4,24 @@ tags:
   - javascript
 shortDescription: |
   The FormData API lets you easily access the values of inputs inside a form.
-createdAt: '2022-10-10'
+createdAt: '2022-10-22'
 # updatedAt: '2022-10-10'
-private: true
 ---
 
 Of the hundreds of [Web APIs](https://developer.mozilla.org/en-US/docs/Web/API)
 available in browsers and some server-side runtimes, the
 [FormData](https://developer.mozilla.org/en-US/docs/Web/API/FormData) class is
 one of my favourites.
+
+## tl;dr
+
+1. Use a `<form>`.
+2. Add `names`s to all your inputs - most inputs should have unique names. All
+   inputs with `type="checkbox"` or `type="radio"` should have the same name for
+   logical groups, and should have `value`s.
+3. Construct a `FormData` object with the form as an argument:
+   `new FormData(form)`.
+4. Use the `get` and `getAll` methods to access any values you need!
 
 ## Using it
 
@@ -250,3 +259,67 @@ export const ExampleForm: React.FC = () => {
 
 Notice how there aren't any `useState`s and you don't need to manually wire up
 `value` and `onChange` to control and get values for all of the inputs!
+
+## `fetch`ing with `FormData`
+
+When you need to make a `fetch` request the values from form, you'll often get
+the specific values you need (as above), and make a request using them. However,
+if your API accepts `application/x-www-form-urlencoded` or `multipart/form-data`
+mime types for the request body (i.e. accepts those values for `Content-Type`),
+you can set the `body` of a `fetch` request to the FormData directly! Doing this
+also automatically adds the correct `Content-Type` header to your request.
+
+```ts
+const formData = new FormData(document.getElementById('register-form'))
+
+fetch('/your-endpoint', {
+  method: 'POST',
+  body: formData,
+})
+```
+
+This is also the only way I know of right now that allows you to send or upload
+_multiple_ files in a network request!
+
+## On the Server
+
+<Note variant="warning">
+  The following will work only if the HTTP request has the `Content-Type` header
+  set to `application/x-www-form-urlencoded` or `multipart/form-data`. If the
+  header has a different value, or is unset an error will be thrown.
+</Note>
+
+If you use a server-side framework / environment that uses Web API `Request`s
+(such as
+[Next.js' middleware](https://nextjs.org/docs/advanced-features/middleware),
+[Remix](https://remix.run/) and [Astro](https://astro.build)), you can use
+`FormData` on there too! `Request`s have a `formData` method that parses the
+request body as a `FormData` object, similar to how `Response.json()` parses a
+response's body as JSON.
+
+## A (Sometimes) Nice Hack
+
+<Note variant="warning">
+  The following will only works well if every input in your form has different
+  `name` attributes, and so doesn't really support inputs with
+  `type="checkbox"`.
+</Note>
+
+`FormData`'s interface is great, but sometimes you just need object to do the
+job. The following snippet converts a `FormData` to a plain JavaScript object
+where the keys and values correspond to those in your `FormData`.
+
+```ts
+const formData = new FormData(document.getElementById('register-form'))
+const dataAsObject = Object.fromEntries(formData as any)
+```
+
+<Note variant="warning">
+  For at least version `4.8.4` and earlier, TypeScript doesn't recognise the
+  required properties on `FormData` even though they're widely implemented so
+  you need to case the object with `as any`.
+</Note>
+
+## Conclusion
+
+`FormData` is great. Use it if you can.
