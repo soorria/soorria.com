@@ -1,4 +1,4 @@
-import cx from '@/utils/cx'
+import cx from '~/utils/cx'
 import type { ReactNode } from 'react'
 
 type Variant = 'success' | 'info' | 'warning'

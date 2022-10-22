@@ -1,6 +1,6 @@
 import type React from 'react'
-import cx from '@/utils/cx'
-import { useCopy } from '@/utils/use-copy'
+import cx from '~/utils/cx'
+import { useCopy } from '~/utils/use-copy'
 
 export const COMMON_CLASSNAMES = {
   codeAndDemoRoot:

@@ -1,4 +1,4 @@
-import type { BlogPostFrontMatter } from '@/types/blog-post'
+import type { BlogPostFrontMatter } from '~/types/blog-post'
 
 interface HasCreatedAtField {
   createdAt: string

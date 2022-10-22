@@ -1,4 +1,4 @@
-import type { BaseFrontMatter } from '@/types/data'
+import type { BaseFrontMatter } from '~/types/data'
 import { bundleMDX } from 'mdx-bundler'
 import rehypeSlug from 'rehype-slug'
 import rehypeAutolinkHeadings from 'rehype-autolink-headings'

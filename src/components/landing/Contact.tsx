@@ -1,6 +1,6 @@
-import { useTrackFirstEvent } from '@/lib/analytics'
-import { contactLinks } from '@/links'
-import cx from '@/utils/cx'
+import { useTrackFirstEvent } from '~/lib/analytics'
+import { contactLinks } from '~/links'
+import cx from '~/utils/cx'
 import { FormEventHandler, useState } from 'react'
 import LandingSection from './LandingSection'
 

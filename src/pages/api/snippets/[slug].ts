@@ -1,4 +1,4 @@
-import { createGetBySlugHandler } from '@/lib/data-api'
-import { DataType } from '@/types/data'
+import { createGetBySlugHandler } from '~/lib/data-api'
+import { DataType } from '~/types/data'
 
 export default createGetBySlugHandler(DataType.snippets)

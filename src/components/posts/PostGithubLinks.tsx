@@ -1,5 +1,5 @@
-import type { DataType } from '@/types/data'
-import { editUrl, historyUrl } from '@/utils/repo'
+import type { DataType } from '~/types/data'
+import { editUrl, historyUrl } from '~/utils/repo'
 
 interface PostGithubLinksProps {
   dataType: DataType

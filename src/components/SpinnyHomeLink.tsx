@@ -1,9 +1,9 @@
 import Router from 'next/router'
 import Link from 'next/link'
 import { useEffect, useRef, useState } from 'react'
-import { random } from '@/utils/random'
+import { random } from '~/utils/random'
 import Logo from './logo'
-import cx from '@/utils/cx'
+import cx from '~/utils/cx'
 
 const MIN_ROTATION = 0
 const MAX_ROTATION = 360 * 4

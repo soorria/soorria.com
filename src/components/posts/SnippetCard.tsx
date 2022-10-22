@@ -1,7 +1,7 @@
-import type { SnippetFrontMatter } from '@/types/snippet'
-import { ClockIconSolid, EditIcon } from '@/components/icons'
+import type { SnippetFrontMatter } from '~/types/snippet'
+import { ClockIconSolid, EditIcon } from '~/components/icons'
 import { categoryLowerCaseToIcon, defaultCategoryIcon } from '../categories'
-import { formatDate } from '@/utils/date'
+import { formatDate } from '~/utils/date'
 import PostListItemLink from './PostListItemLink'
 
 const SnippetCard: React.FC<{ snippet: SnippetFrontMatter }> = ({

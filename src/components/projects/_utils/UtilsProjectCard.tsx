@@ -1,10 +1,10 @@
-import cx from '@/utils/cx'
+import cx from '~/utils/cx'
 import NextLink from 'next/link'
 import Image, { ImageProps } from 'next/future/image'
 import type { ProjectCardProps } from '../ProjectCard'
 import { COMMON_CLASSNAMES } from '../utils'
 import UtilsTag from './UtilsTag'
-import { CodeIcon, ExternalIcon, InfoIcon } from '@/components/icons'
+import { CodeIcon, ExternalIcon, InfoIcon } from '~/components/icons'
 
 const cardLinkClassName =
   'inline-flex items-center px-3 py-1 ml-2 mt-2 space-x-1 text-sm font-semibold transition-colors border-2 border-current border-white rounded-sm hocus:text-var-bg hocus:bg-white focus-ring'

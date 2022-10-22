@@ -1,5 +1,5 @@
-import { useSkills } from '@/lib/skills'
-import cx from '@/utils/cx'
+import { useSkills } from '~/lib/skills'
+import cx from '~/utils/cx'
 import CustomLink from '../CustomLink'
 import { RefreshIcon } from '../icons'
 import LandingSection from './LandingSection'

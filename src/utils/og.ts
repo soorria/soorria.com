@@ -1,6 +1,6 @@
-import type { DataType } from '@/types/data'
+import type { DataType } from '~/types/data'
 import type { OpenGraphMedia } from 'next-seo/lib/types'
-import { PUBLIC_URL } from '@/constants'
+import { PUBLIC_URL } from '~/constants'
 
 export const getOgUrl = (title: string, subtitle?: string): string => {
   return `${PUBLIC_URL}/api/og?title=${encodeURIComponent(title)}&subtitle=${

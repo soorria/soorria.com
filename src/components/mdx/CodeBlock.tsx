@@ -1,5 +1,5 @@
-import cx from '@/utils/cx'
-import { useHydrated } from '@/utils/use-hydrated'
+import cx from '~/utils/cx'
+import { useHydrated } from '~/utils/use-hydrated'
 import React, { PropsWithChildren, ReactNode, useRef } from 'react'
 import { CodeBlockPre, CodeBlockPreExtraProps } from './CodeBlockPre'
 import {

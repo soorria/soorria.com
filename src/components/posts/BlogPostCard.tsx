@@ -1,6 +1,6 @@
-import type { BlogPostFrontMatter } from '@/types/blog-post'
-import { BookIcon, ClockIconSolid, EditIcon, TextIcon } from '@/components/icons'
-import { formatDate } from '@/utils/date'
+import type { BlogPostFrontMatter } from '~/types/blog-post'
+import { BookIcon, ClockIconSolid, EditIcon, TextIcon } from '~/components/icons'
+import { formatDate } from '~/utils/date'
 import PostListItemLink from './PostListItemLink'
 
 const BlogPostCard: React.FC<{ post: BlogPostFrontMatter }> = ({

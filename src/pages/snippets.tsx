@@ -1,14 +1,14 @@
 import type { GetStaticProps } from 'next'
-import type { SnippetFrontMatter } from '@/types/snippet'
+import type { SnippetFrontMatter } from '~/types/snippet'
 import { NextSeo } from 'next-seo'
-import PostLayout from '@/components/posts/PostLayout'
-import { getAllFilesFrontMatter } from '@/lib/data'
-import { DataType } from '@/types/data'
-import SnippetCard from '@/components/posts/SnippetCard'
-import { getOgImageForData } from '@/utils/og'
-import { sortByCreatedAtField } from '@/utils/content'
-import { PUBLIC_URL } from '@/constants'
-import License from '@/components/License'
+import PostLayout from '~/components/posts/PostLayout'
+import { getAllFilesFrontMatter } from '~/lib/data'
+import { DataType } from '~/types/data'
+import SnippetCard from '~/components/posts/SnippetCard'
+import { getOgImageForData } from '~/utils/og'
+import { sortByCreatedAtField } from '~/utils/content'
+import { PUBLIC_URL } from '~/constants'
+import License from '~/components/License'
 
 interface SnippetsPageProps {
   snippets: SnippetFrontMatter[]

@@ -1,4 +1,4 @@
-import type { BaseData, DataType, FrontMatter, BaseApiData } from '@/types/data'
+import type { BaseData, DataType, FrontMatter, BaseApiData } from '~/types/data'
 import type { PathLike } from 'fs'
 import { promises as fs } from 'fs'
 import readingTime from 'reading-time'

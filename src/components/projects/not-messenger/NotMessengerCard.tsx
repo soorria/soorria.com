@@ -1,6 +1,6 @@
 import type { ProjectCardComponent } from '../ProjectCard'
-import { CodeIcon, ExternalIcon, InfoIcon } from '@/components/icons'
-import cx from '@/utils/cx'
+import { CodeIcon, ExternalIcon, InfoIcon } from '~/components/icons'
+import cx from '~/utils/cx'
 import NextLink from 'next/link'
 import { COMMON_CLASSNAMES } from '../utils'
 

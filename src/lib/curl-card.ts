@@ -1,4 +1,4 @@
-import { links } from '@/links'
+import { links } from '~/links'
 import stringWidth from 'string-width'
 import kleur from 'kleur'
 

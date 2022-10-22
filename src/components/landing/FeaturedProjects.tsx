@@ -1,6 +1,6 @@
-import type { ProjectFrontMatter } from '@/types/project'
+import type { ProjectFrontMatter } from '~/types/project'
 import Link from 'next/link'
-import ProjectCard from '@/components/projects/ProjectCard'
+import ProjectCard from '~/components/projects/ProjectCard'
 import LandingSection from './LandingSection'
 import ProjectsGrid from '../projects/ProjectsGrid'
 

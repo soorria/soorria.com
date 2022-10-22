@@ -1,8 +1,8 @@
-import type { ProjectFrontMatter } from '@/types/project'
+import type { ProjectFrontMatter } from '~/types/project'
 import NextLink from 'next/link'
 import Image from 'next/future/image'
-import { CodeIcon, ExternalIcon, InfoIcon } from '@/components/icons'
-import cx from '@/utils/cx'
+import { CodeIcon, ExternalIcon, InfoIcon } from '~/components/icons'
+import cx from '~/utils/cx'
 import { COMMON_CLASSNAMES } from '../utils'
 import bgImg from './jupyter-js-card.png'
 

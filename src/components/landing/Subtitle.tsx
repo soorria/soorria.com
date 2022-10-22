@@ -1,6 +1,6 @@
-import { useMdxComponents } from '@/lib/mdx'
-import cx from '@/utils/cx'
-import { randomIndex } from '@/utils/random'
+import { useMdxComponents } from '~/lib/mdx'
+import cx from '~/utils/cx'
+import { randomIndex } from '~/utils/random'
 import { useRef, useState } from 'react'
 import { RefreshIcon } from '../icons'
 

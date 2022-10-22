@@ -1,11 +1,11 @@
 import type { GetStaticProps } from 'next'
-import PostLayout from '@/components/posts/PostLayout'
-import { getFileWithMdx } from '@/lib/data'
-import { useMdxComponent } from '@/lib/mdx'
-import { BaseData, DataType } from '@/types/data'
+import PostLayout from '~/components/posts/PostLayout'
+import { getFileWithMdx } from '~/lib/data'
+import { useMdxComponent } from '~/lib/mdx'
+import { BaseData, DataType } from '~/types/data'
 import { NextSeo } from 'next-seo'
-import { PUBLIC_URL } from '@/constants'
-import { getOgImage } from '@/utils/og'
+import { PUBLIC_URL } from '~/constants'
+import { getOgImage } from '~/utils/og'
 
 interface AboutPageProps {
   mdx: string

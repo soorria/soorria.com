@@ -4,9 +4,9 @@ import type { AppProps } from 'next/app'
 import { DefaultSeo } from 'next-seo'
 import PlausibleProvider from 'next-plausible'
 
-import Header from '@/components/Header'
-import Footer from '@/components/Footer'
-import { SEO } from '@/next-seo.config'
+import Header from '~/components/Header'
+import Footer from '~/components/Footer'
+import { SEO } from '~/next-seo.config'
 
 import '../styles/globals.css'
 import '../styles/prose.css'

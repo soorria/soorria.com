@@ -1,8 +1,8 @@
-import NeedsJs from '@/components/NeedsJs'
-import PostLayout from '@/components/posts/PostLayout'
-import { PUBLIC_URL } from '@/constants'
-import { getOgImage } from '@/utils/og'
-import { useLocalStorage } from '@/utils/use-local-storage'
+import NeedsJs from '~/components/NeedsJs'
+import PostLayout from '~/components/posts/PostLayout'
+import { PUBLIC_URL } from '~/constants'
+import { getOgImage } from '~/utils/og'
+import { useLocalStorage } from '~/utils/use-local-storage'
 import { NextSeo } from 'next-seo'
 
 const title = 'Secret Stuff'

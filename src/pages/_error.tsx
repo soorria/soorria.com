@@ -2,8 +2,8 @@ import type { GetServerSideProps } from 'next'
 import Link from 'next/link'
 import { STATUS_CODES } from 'http'
 
-import MainLayout from '@/components/MainLayout'
-import { PostHeading } from '@/components/posts/PostLayout'
+import MainLayout from '~/components/MainLayout'
+import { PostHeading } from '~/components/posts/PostLayout'
 import { useRouter } from 'next/router'
 
 interface ErrorPageProps {

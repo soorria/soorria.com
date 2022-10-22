@@ -1,4 +1,4 @@
-import { baseComponents } from '@/components/mdx/base'
+import { baseComponents } from '~/components/mdx/base'
 import { getMDXComponent, MDXContentProps } from 'mdx-bundler/client'
 import React, { Fragment, useMemo } from 'react'
 

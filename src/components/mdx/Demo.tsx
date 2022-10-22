@@ -1,4 +1,4 @@
-import cx from '@/utils/cx'
+import cx from '~/utils/cx'
 import { ComponentType, useEffect, useState } from 'react'
 import { RefreshIcon } from '../icons'
 import { COMMON_CLASSNAMES } from './utils'

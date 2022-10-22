@@ -1,4 +1,4 @@
-import { useScrollCssVar } from '@/utils/use-scroll-css-var'
+import { useScrollCssVar } from '~/utils/use-scroll-css-var'
 import type { IconComponent } from '../icons'
 
 export const SpinningIconDivider: React.FC<{ icon: IconComponent; scrollVar: string }> = ({

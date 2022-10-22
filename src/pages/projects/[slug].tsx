@@ -1,12 +1,12 @@
 import type { GetStaticPaths, GetStaticProps } from 'next'
-import type { Project, ProjectFrontMatter } from '@/types/project'
-import PostLayout from '@/components/posts/PostLayout'
-import { getFileWithMdx } from '@/lib/data'
-import { DataType } from '@/types/data'
+import type { Project, ProjectFrontMatter } from '~/types/project'
+import PostLayout from '~/components/posts/PostLayout'
+import { getFileWithMdx } from '~/lib/data'
+import { DataType } from '~/types/data'
 import { NextSeo } from 'next-seo'
-import { getOgImageForData } from '@/utils/og'
-import { useMdxComponent } from '@/lib/mdx'
-import { PUBLIC_URL } from '@/constants'
+import { getOgImageForData } from '~/utils/og'
+import { useMdxComponent } from '~/lib/mdx'
+import { PUBLIC_URL } from '~/constants'
 
 interface ProjectPageProps {
   project: ProjectFrontMatter

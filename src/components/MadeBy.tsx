@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import { PUBLIC_URL } from '@/constants'
+import { PUBLIC_URL } from '~/constants'
 import { HeartIcon } from './icons'
 
 interface MadeByProps {}

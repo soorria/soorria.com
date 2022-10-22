@@ -1,14 +1,14 @@
 import type { GetStaticProps } from 'next'
-import type { BlogPostFrontMatter } from '@/types/blog-post'
+import type { BlogPostFrontMatter } from '~/types/blog-post'
 import { NextSeo } from 'next-seo'
-import { PostHeading } from '@/components/posts/PostLayout'
-import { getAllFilesFrontMatter } from '@/lib/data'
-import { DataType } from '@/types/data'
-import PostCard from '@/components/posts/BlogPostCard'
-import MainLayout from '@/components/MainLayout'
-import { getOgImageForData } from '@/utils/og'
-import { blogPostFilter, sortByCreatedAtField } from '@/utils/content'
-import { PUBLIC_URL } from '@/constants'
+import { PostHeading } from '~/components/posts/PostLayout'
+import { getAllFilesFrontMatter } from '~/lib/data'
+import { DataType } from '~/types/data'
+import PostCard from '~/components/posts/BlogPostCard'
+import MainLayout from '~/components/MainLayout'
+import { getOgImageForData } from '~/utils/og'
+import { blogPostFilter, sortByCreatedAtField } from '~/utils/content'
+import { PUBLIC_URL } from '~/constants'
 
 interface PostsPageProps {
   posts: BlogPostFrontMatter[]

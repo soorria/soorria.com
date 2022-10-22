@@ -1,6 +1,6 @@
 import { IconComponent, ReactIcon, SolidJsIcon, TypescriptIcon } from '../icons'
-import cx from '@/utils/cx'
-import { random, randomItem } from '@/utils/random'
+import cx from '~/utils/cx'
+import { random, randomItem } from '~/utils/random'
 import { useEffect, useState } from 'react'
 
 interface SparklesProps {

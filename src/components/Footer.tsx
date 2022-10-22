@@ -1,5 +1,5 @@
 import type { ReactNode } from 'react'
-import { links } from '@/links'
+import { links } from '~/links'
 import Link from 'next/link'
 import Container from './Container'
 import MadeBy from './MadeBy'
