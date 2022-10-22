@@ -336,7 +336,7 @@ const dataAsObject = Object.fromEntries(formData as any)
 <Note variant="warning">
   For at least version `4.8.4` and earlier, TypeScript doesn't recognise the
   required properties on `FormData` even though they're widely implemented so
-  you need to case the object with `as any`.
+  you need to cast the `FormData` object with `as any`.
 </Note>
 
 ## Conclusion
