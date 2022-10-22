@@ -239,12 +239,12 @@ export const ExampleForm: React.FC = () => {
     // if you're handling submissions with JavaScript!
     event.preventDefault()
 
-    const formdata = new FormData(event.currentTarget)
+    const formData = new FormData(event.currentTarget)
 
-    const email = formdata.get('email')
-    const password = formdata.get('password')
+    const email = formData.get('email')
+    const password = formData.get('password')
 
-    const acceptedMailingLists = formdata.getAll('mailing-lists')
+    const acceptedMailingLists = formData.getAll('mailing-lists')
 
     doRegister(email, password, acceptedMailingLists)
   }
@@ -296,6 +296,25 @@ If you use a server-side framework / environment that uses Web API `Request`s
 `FormData` on there too! `Request`s have a `formData` method that parses the
 request body as a `FormData` object, similar to how `Response.json()` parses a
 response's body as JSON.
+
+For example, in Remix your `action`s have access to the request and you can
+access its body as a `FormData` object:
+
+```ts {4,6-7,9}
+import type { ActionArgs } from 'remix'
+
+// This runs on the server!
+export const action = async ({ request }: ActionArgs) => {
+  const formData = await request.formData()
+
+  const email = formdata.get('email')
+  const password = formdata.get('password')
+
+  const acceptedMailingLists = formdata.getAll('mailing-lists')
+
+  db.createAccount(email, password, acceptedMailingLists)
+}
+```
 
 ## A (Sometimes) Nice Hack
 
