@@ -19,7 +19,7 @@ const BlogPostCard: React.FC<{ post: BlogPostFrontMatter }> = ({
           <span>{readingTime}</span>
         </div>
 
-        <div className="tooltip flex items-center space-x-2" aria-label="Word cound">
+        <div className="tooltip flex items-center space-x-2" aria-label="Word count">
           <TextIcon role="presentation" className="inline-block h-3 w-3" />
           <span>{words}</span>
         </div>

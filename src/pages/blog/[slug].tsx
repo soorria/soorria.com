@@ -50,27 +50,28 @@ const PostPage: React.FC<PostPageProps> = ({ post, mdx }) => {
       <SpinningIconDivider scrollVar={SCROLL_VAR} icon={GlobeAuIcon} />
 
       <div className="grid grid-cols-2 items-center justify-items-center gap-4 text-sm sm:grid-cols-4">
-        <div className="flex items-center space-x-2">
+        <div className="tooltip flex items-center space-x-2" aria-label="Reading time">
           <BookIcon className="inline-block h-4 w-4" />
           <span>{post.readingTime}</span>
         </div>
 
-        <div className="flex items-center space-x-2">
+        <div className="tooltip flex items-center space-x-2" aria-label="Word count">
           <TextIcon className="inline-block h-4 w-4" />
           <span>{post.words}</span>
         </div>
 
         <div
           className={cx(
-            'flex items-center space-x-2',
+            'tooltip flex items-center space-x-2',
             post.updatedAt ? '' : 'pointer-events-none opacity-0'
           )}
+          aria-label="Updated at"
         >
           <EditIcon className="inline-block h-3 w-3" />
           <span>{post.updatedAt ? formatDate(post.updatedAt) : 'UNCHANGED'}</span>
         </div>
 
-        <div className="flex items-center space-x-2">
+        <div className="tooltip flex items-center space-x-2" aria-label="Created at">
           <ClockIconSolid className="inline-block h-4 w-4" />
           <span>{post.createdAt ? formatDate(post.createdAt) : 'UNPUBLISHED'}</span>
         </div>
