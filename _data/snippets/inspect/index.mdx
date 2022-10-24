@@ -6,7 +6,7 @@ category: Miscellaneous
 tags:
   - TypeScript
 createdAt: '2022-10-06'
-updatedAt: '2022-10-06'
+updatedAt: '2022-10-24'
 ---
 
 A function that returns the first argument you give it after `console.log`-ing
@@ -15,9 +15,10 @@ without needing to extract out a set of expressions in to a variable. Typed with
 generics so TypeScript doesn't complain ☺.
 
 ```ts
-export const inspect = <T extends unknown>(obj: T, ...args: unknown[]): T => (
-  console.log(...args, obj), obj
-)
+export const inspect = <T extends unknown>(obj: T, ...args: unknown[]): T => {
+  console.log(...args, obj)
+  return obj
+}
 ```
 
 ## Example
@@ -34,4 +35,11 @@ inspect(
   block: 'nearest',
   inline: 'center',
 })
+```
+
+would print the following to the console
+
+```
+container <div class="container">...</div>
+item 2 <li data-index="2">...</li>
 ```
