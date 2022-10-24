@@ -39,11 +39,11 @@ const Subtitle: React.FC<SubtitleProps> = ({ options }) => {
   }
 
   return (
-    <div className="subtitle-wrapper">
+    <div className="[&>p]:inline">
       <Component />
       <button
         onClick={randomise}
-        className="focus-ring group relative inline-flex translate-y-1 items-center rounded text-drac-highlight transition hocus:text-drac-purple"
+        className="focus-ring group relative ml-2 inline-flex translate-y-1 items-center rounded text-drac-highlight transition hocus:text-drac-purple"
         aria-label="refresh subtitle about me"
         title="refresh subtitle about me"
       >

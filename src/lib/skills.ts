@@ -26,12 +26,12 @@ export const SKILLS = [
   'SolidJS',
 ]
 
-type UseSkillsInput = {
+export type UseSkillsInput = {
   defaultIndexes?: number[]
   defaultShowAll?: boolean
 }
 
-type UseSkillsResult = {
+export type UseSkillsResult = {
   skills: string[]
   shuffle: (n?: number) => void
   showAll: boolean

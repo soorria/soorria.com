@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 const { fontFamily } = require('tailwindcss/defaultTheme')
 const hocus = require('tailwindcss-hocus')
+const plugin = require('tailwindcss/plugin')
 
 const drac = {
   'base-light': '#44475a',
@@ -98,5 +99,9 @@ module.exports = {
       },
     },
   },
-  plugins: [require('@tailwindcss/typography'), hocus],
+  plugins: [
+    require('@tailwindcss/typography'),
+    require('tailwindcss-hocus'),
+    require('tailwindcss-nmp'),
+  ],
 }

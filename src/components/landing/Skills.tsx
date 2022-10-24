@@ -30,8 +30,7 @@ const Skills: React.FC<{ random?: number; skillIndexes: number[] }> = ({
   return (
     <LandingSection id="skills" title={title}>
       <p className="mb-8 text-lg">
-        Here are some of the technicals skills during my degree, internships, work, and just out of
-        pure curiosity.
+        Here are some of the technicals skills during my degree, work, and just out of curiosity.
       </p>
       <ul className="mb-8 grid grid-cols-2 gap-x-6 gap-y-8 md:grid-cols-4">
         {skills.map(skill => (

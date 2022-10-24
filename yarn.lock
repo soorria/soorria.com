@@ -5330,6 +5330,11 @@ tailwindcss-hocus@^0.0.1:
   resolved "https://registry.yarnpkg.com/tailwindcss-hocus/-/tailwindcss-hocus-0.0.1.tgz#db0a579a5b95c0f98c2d1f06edf07e1e5bd5d917"
   integrity sha512-wGviwl7f5ahyANPAbKnIQ/9YDx9/vJ3kEr9F/ntpIsBL9hV+v0ewJxYNY2AZbW/AU2UIhgytKfSo8Dv34zMM/g==
 
+tailwindcss-nmp@^0.0.2:
+  version "0.0.2"
+  resolved "https://registry.yarnpkg.com/tailwindcss-nmp/-/tailwindcss-nmp-0.0.2.tgz#5d50ed05fb14e0caa3f2f6d3938ddcafbfd55e43"
+  integrity sha512-ZnmcRZzhApjg/L6TASpyEWrZRWyg9AIlMI+3WQ8IIHzLpUI51OQSF3/kzNfyu6Y6JStbnZRVkTWM+p1kcZp82g==
+
 tailwindcss@^3.0.18:
   version "3.2.1"
   resolved "https://registry.yarnpkg.com/tailwindcss/-/tailwindcss-3.2.1.tgz#1bd828fff3172489962357f8d531c184080a6786"

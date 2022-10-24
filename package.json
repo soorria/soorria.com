@@ -1,6 +1,7 @@
 {
   "name": "soorria.com",
   "version": "1.0.0",
+  "private": true,
   "scripts": {
     "dev": "next",
     "build": "next build",
@@ -48,6 +49,7 @@
     "shiki": "^0.11.1",
     "string-width": "^5.1.2",
     "tailwindcss-hocus": "^0.0.1",
+    "tailwindcss-nmp": "^0.0.2",
     "unified": "^10.1.2",
     "unist-util-visit": "^4.1.0"
   },
