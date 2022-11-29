@@ -6,7 +6,7 @@ category: react
 tags:
   - javascript
 createdAt: '2022-02-20'
-updatedAt: '2022-02-20'
+updatedAt: '2022-11-30'
 ---
 
 ## Input Change Event
@@ -36,8 +36,10 @@ const formWrapper = wrapper.find('form')
 formWrapper.simulate('submit', { preventDefault: noop })
 ```
 
-**NB**:
+<Note variant="warning">
 
 - Unfortunately this does not work properly if you're using `FormData` 😔
 - You can't test submitting a form by clicking a button / input with
   `type="submit"` due to events not working the same in jsdom
+
+</Note>

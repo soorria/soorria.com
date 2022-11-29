@@ -1,0 +1,131 @@
+---
+title: Cypress Stuff
+shortDescription: Miscellaneous snippets for doing things in Cypress
+category: Miscellaneous
+tags:
+  - cypress
+createdAt: '2022-11-30'
+updatedAt:
+---
+
+## Autocomplete / Intellisense
+
+### For JavaScript
+
+Add this to the top of each of your cypress test files:
+
+```js
+/// <reference types="cypress" />
+```
+
+Check if you get any completions after typing `cy.`. If you don't see anything,
+try reloading your VSCode window.
+
+### For TypeScript
+
+If you're using TypeScript, add the following to your `tsconfig.json`:
+
+```json
+{
+  "compilerOptions": {
+    "types": ["cypress"]
+  }
+}
+```
+
+## Testing with Material UI's {'<Select>'} Component
+
+The snippets below test the following markup:
+
+```tsx
+const Example = () => {
+  return (
+    <FormControl>
+      <InputLabel id="number-select-label">Number</InputLabel>
+      <Select
+        data-testid="number-select"
+        defaultValue=""
+        label="Number"
+        labelId="number-select-label"
+        sx={{ width: '16rem' }}
+      >
+        <MenuItem value={10}>Ten</MenuItem>
+        <MenuItem value={20}>Twenty</MenuItem>
+        <MenuItem value={30}>Thirty</MenuItem>
+      </Select>
+    </FormControl>
+  )
+}
+```
+
+### Plain Cypress
+
+<Note variant="warning">
+  This method relies on adding a `data-testid` to the `<Select>`, and doesn't
+  best reflect how an actual user would use it.
+</Note>
+
+```js
+describe('some tests', () => {
+  it('should work', () => {
+    // Find the select using its `testid`
+    cy.get('[data-testid="number-select"]')
+      // alias the input for use later
+      .as('number-select')
+      // Click it
+      .click()
+
+    // Find the listbox that contains the options
+    cy.get('[role="listbox"]')
+      // Find the option with the value you want to click
+      .get('[role="option"][data-value="20"]')
+      // Click it
+      .click()
+
+    // Find the select by its label
+    cy.get('@number-select')
+      // Check that value was selected correctly
+      .contains(/twenty/i)
+  })
+})
+```
+
+### With `@testing-library/cypress`
+
+<Note variant="info">
+  This method requires that the select have a label, where the `id` on the
+  label equals the `labelId` prop on the Select. It's a bit more work, but it's
+  probably what you'd want anyway (having a label for the `<Select>`) and makes
+  your component more accessible.
+</Note>
+
+```js
+describe('some tests', () => {
+  it('should work', () => {
+    // Find the select by its label
+    cy.findByLabelText(/number/i)
+      // alias the input for use later
+      .as('number-select')
+      // Click it
+      .click()
+
+    // Find the listbox that contains the options by its label text
+    cy.findByLabelText(/number/i, { selector: '[role="listbox"]' })
+      // Find the option with the value you want to click by the text that's shown
+      .findByText(/twenty/i, { selector: '[role="option"]' })
+      // Click it
+      .click()
+
+    // Get the select by its alias
+    cy.get('@number-select')
+      // Check that value was selected correctly
+      .contains(/twenty/i)
+  })
+})
+```
+
+<Note variant="info">
+  Remember to add `import '@testing-library/cypress/add-commands'` to
+  `cypress/support/commands.js`. See more details
+  [here](https://testing-library.com/docs/cypress-testing-library/intro).
+</Note>

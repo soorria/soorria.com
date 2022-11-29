@@ -105,7 +105,7 @@ pre code {
   font-variant-ligatures: discretionary-ligatures;
 }
 
-/*
+/**
  * List bullets
  */
 .prose ul > li::before {
@@ -116,32 +116,30 @@ pre code {
   @apply bg-drac-pink/75;
 }
 
+.prose kbd {
+  @apply inline-flex items-center font-mono;
+}
+
+.prose kbd > kbd {
+  padding: 1px 2px 0px;
+  @apply inline-block rounded border border-drac-pink leading-none;
+}
+
 /**
- * Demo Wrapper
+ * <DemoWrapper> in `src/components/mdx/Demo.tsx`
  */
 .prose .demo-wrapper > *:first-child {
   margin-top: 0;
 }
 
 /* Chrome */
-.prose pre::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
-}
-
-.prose pre::-webkit-scrollbar-track {
-  @apply rounded-full bg-transparent;
-}
-
 .prose pre::-webkit-scrollbar-thumb {
-  @apply rounded-full bg-drac-purple;
+  @apply bg-drac-purple;
 }
 
-/* Firefox */
-* {
-  scrollbar-width: thin;
-  scrollbar-color: theme('colors.drac.purple') theme('colors.transparent');
-}
+/**
+ * <Note> in `src/components/mdx/Demo.tsx`
+ */
 
 .prose
   .note
