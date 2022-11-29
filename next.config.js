@@ -133,6 +133,9 @@ const config = {
     legacyBrowsers: false,
     browsersListForSwc: true,
   },
+  eslint: {
+    ignoreDuringBuilds: true,
+  },
 }
 
 module.exports = withPlausibleConfig(withBundleAnalyzer(config))

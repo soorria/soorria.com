@@ -27,7 +27,7 @@
       ]
     },
     "incremental": true,
-    "importsNotUsedAsValues": "error",
+    "importsNotUsedAsValues": "remove",
     "strictNullChecks": true,
     "noUncheckedIndexedAccess": true
   },
