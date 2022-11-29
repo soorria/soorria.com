@@ -22,7 +22,7 @@ export const PostBottomSection: React.FC = ({ children }) => {
 const PostLayout: React.FC<PostLayoutProps> = ({ title, children }) => {
   return (
     <Container>
-      <article className="pt-8 pb-16">
+      <article className="space-y-12 pt-8 pb-16">
         <PostHeading>{title}</PostHeading>
         {children}
       </article>

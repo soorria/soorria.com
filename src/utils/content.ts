@@ -1,3 +1,4 @@
+import { categoryLowerCaseToIcon } from '~/components/categories'
 import type { BlogPostFrontMatter } from '~/types/blog-post'
 
 interface HasCreatedAtField {
@@ -31,3 +32,15 @@ export const composeFilters = <T extends any>(
 }
 
 export const blogPostFilter = composeFilters<BlogPostFrontMatter>(filterPrivate, filterUnpublished)
+
+export const getAllTags = <T extends { category: string; tags: string[] }>(item: T): string[] => [
+  item.category,
+  ...item.tags,
+]
+
+export const itemMatchesTag = <T extends { category?: string; tags?: string[] }>(
+  tag: string,
+  { category, tags = [] }: T
+): boolean => {
+  return category?.toLowerCase() === tag || tags.map(t => t.toLowerCase()).includes(tag)
+}
