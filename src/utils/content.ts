@@ -1,4 +1,3 @@
-import { categoryLowerCaseToIcon } from '~/components/categories'
 import type { BlogPostFrontMatter } from '~/types/blog-post'
 
 interface HasCreatedAtField {
