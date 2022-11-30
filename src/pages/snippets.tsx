@@ -106,35 +106,40 @@ const SnippetsPage: React.FC<SnippetsPageProps> = ({ snippets: _snippets, tags }
       <p className="mt-6 text-center text-lg">{description}</p>
 
       <Collapse summary="Filters">
-        <div className="flex flex-wrap gap-2 text-xs font-bold">
-          {tags.map(tag => (
+        <div className="space-y-4">
+          <div className="flex items-center justify-between">
+            <div className="text-lg font-bold">Tags</div>
             <button
-              key={tag.value}
               className={cx(
-                'focus-ring rounded-full border-2 border-drac-purple px-2.5 py-1 transition hover:border-drac-pink',
-                selected.set.has(tag.value) && 'bg-drac-purple text-drac-base'
+                'focus-ring rounded-full border-2 border-drac-red px-2.5 py-1 text-xs text-drac-red transition hover:border-drac-pink',
+                selected.set.size > 0 ? 'opacity-100' : 'pointer-events-none opacity-0'
               )}
-              onClick={() => {
-                if (selected.set.has(tag.value)) {
-                  selected.set.delete(tag.value)
-                } else {
-                  selected.set.add(tag.value)
-                }
-                setSelected({ set: selected.set })
-              }}
-            >
-              {tag.label}
-            </button>
-          ))}
-
-          {selected.set.size > 0 && (
-            <button
-              className="focus-ring rounded-full border-2 border-drac-red px-2.5 py-1 text-drac-red transition hover:border-drac-pink"
               onClick={() => setSelected({ set: new Set() })}
             >
               Clear tags
             </button>
-          )}
+          </div>
+          <div className="flex flex-wrap gap-2 text-xs font-bold">
+            {tags.map(tag => (
+              <button
+                key={tag.value}
+                className={cx(
+                  'focus-ring rounded-full border-2 border-drac-purple px-2.5 py-1 transition hover:border-drac-pink',
+                  selected.set.has(tag.value) && 'bg-drac-purple text-drac-base'
+                )}
+                onClick={() => {
+                  if (selected.set.has(tag.value)) {
+                    selected.set.delete(tag.value)
+                  } else {
+                    selected.set.add(tag.value)
+                  }
+                  setSelected({ set: selected.set })
+                }}
+              >
+                {tag.label}
+              </button>
+            ))}
+          </div>
         </div>
       </Collapse>
 
