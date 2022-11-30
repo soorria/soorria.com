@@ -115,7 +115,6 @@ const SnippetsPage: React.FC<SnippetsPageProps> = ({ snippets: _snippets, tags }
                 selected.set.has(tag.value) && 'bg-drac-purple text-drac-base'
               )}
               onClick={() => {
-                console.log({ tag })
                 if (selected.set.has(tag.value)) {
                   selected.set.delete(tag.value)
                 } else {
