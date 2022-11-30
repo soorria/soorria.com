@@ -111,7 +111,7 @@ const SnippetsPage: React.FC<SnippetsPageProps> = ({ snippets: _snippets, tags }
             <button
               key={tag.value}
               className={cx(
-                'focus-ring rounded-full border border-drac-purple px-2.5 py-1 transition hover:border-drac-pink',
+                'focus-ring rounded-full border-2 border-drac-purple px-2.5 py-1 transition hover:border-drac-pink',
                 selected.set.has(tag.value) && 'bg-drac-purple text-drac-base'
               )}
               onClick={() => {
@@ -130,7 +130,7 @@ const SnippetsPage: React.FC<SnippetsPageProps> = ({ snippets: _snippets, tags }
 
           {selected.set.size > 0 && (
             <button
-              className="focus-ring rounded-full border border-drac-red px-2.5 py-1 text-drac-red transition hover:border-drac-pink"
+              className="focus-ring rounded-full border-2 border-drac-red px-2.5 py-1 text-drac-red transition hover:border-drac-pink"
               onClick={() => setSelected({ set: new Set() })}
             >
               Clear tags
