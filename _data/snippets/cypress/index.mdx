@@ -71,7 +71,7 @@ const Example = () => {
 ```js
 describe('some tests', () => {
   it('should work', () => {
-    // Find the select using its `testid`
+    // Find the select using its `data-testid`
     cy.get('[data-testid="number-select"]')
       // alias the input for use later
       .as('number-select')
@@ -85,7 +85,7 @@ describe('some tests', () => {
       // Click it
       .click()
 
-    // Find the select by its label
+    // Find the select by its alias
     cy.get('@number-select')
       // Check that value was selected correctly
       .contains(/twenty/i)
