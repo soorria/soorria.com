@@ -12,7 +12,6 @@ import { sortByCreatedAtField } from '~/utils/content'
 import { PUBLIC_URL } from '~/constants'
 import License from '~/components/License'
 import { useMemo, useState } from 'react'
-import { inspect } from '~/utils/misc'
 import cx from '~/utils/cx'
 import { AutoAnimationPlugin, getTransitionSizes } from '@formkit/auto-animate'
 import Collapse from '~/components/Collapse'
@@ -80,12 +79,10 @@ const SnippetsPage: React.FC<SnippetsPageProps> = ({ snippets: _snippets, tags }
   const snippets = useMemo(() => {
     if (!selected.set.size) return _snippets
 
-    return _snippets.filter(s =>
-      inspect(
+    return _snippets.filter(
+      s =>
         selected.set.has(s.category.toLowerCase()) ||
-          s.tags.some(t => selected.set.has(t.toLowerCase())),
-        s
-      )
+        s.tags.some(t => selected.set.has(t.toLowerCase()))
     )
   }, [_snippets, selected])
 
