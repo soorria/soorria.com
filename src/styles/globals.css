@@ -28,7 +28,7 @@
 
 /* Global Styles */
 ::selection {
-  @apply bg-drac-pink  text-drac-base;
+  @apply bg-drac-pink text-drac-base;
 }
 
 :root {

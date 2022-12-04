@@ -23,12 +23,12 @@ const SnippetCard: React.FC<{ snippet: SnippetFrontMatter }> = ({
         <div className="flex items-center justify-between text-sm tabular-nums">
           <div className="tooltip flex items-center space-x-2" aria-label="Created at">
             <ClockIconSolid role="presentation" className="inline-block h-4 w-4" />
-            <span>{formatDate(createdAt)}</span>
+            <span suppressHydrationWarning>{formatDate(createdAt)}</span>
           </div>
           {updatedAt && createdAt !== updatedAt ? (
             <div className="tooltip flex items-center space-x-2" aria-label="Updated at">
               <EditIcon role="presentation" className="inline-block h-4 w-4" />
-              <span>{formatDate(updatedAt)}</span>
+              <span suppressHydrationWarning>{formatDate(updatedAt)}</span>
             </div>
           ) : null}
         </div>

@@ -54,7 +54,11 @@ const SnippetPage: React.FC<SnippetPageProps> = ({ snippet, mdx }) => {
         <PostBottomSection>
           <div suppressHydrationWarning>
             Created {formatDate(snippet.createdAt)}
-            {!!snippet.updatedAt && ` • Updated ${formatDate(snippet.updatedAt)}`}
+            {!!snippet.updatedAt && (
+              <>
+                {' • '}Updated {formatDate(snippet.updatedAt)}
+              </>
+            )}
           </div>
           <PostGithubLinks dataType={DataType.snippets} slug={snippet.slug} />
         </PostBottomSection>

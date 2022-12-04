@@ -9,7 +9,7 @@ tags:
   - react
   - testing
 createdAt: '2022-11-30'
-updatedAt:
+updatedAt: '2022-12-04'
 ---
 
 ## Autocomplete / Intellisense
@@ -70,27 +70,25 @@ const Example = () => {
 </Note>
 
 ```js
-describe('some tests', () => {
-  it('should work', () => {
-    // Find the select using its `data-testid`
-    cy.get('[data-testid="number-select"]')
-      // alias the input for use later
-      .as('number-select')
-      // Click it
-      .click()
+it('should work', () => {
+  // Find the select using its `data-testid`
+  cy.get('[data-testid="number-select"]')
+    // alias the input for use later
+    .as('number-select')
+    // Click it
+    .click()
 
-    // Find the listbox that contains the options
-    cy.get('[role="listbox"]')
-      // Find the option with the value you want to click
-      .get('[role="option"][data-value="20"]')
-      // Click it
-      .click()
+  // Find the listbox that contains the options
+  cy.get('[role="listbox"]')
+    // Find the option with the value you want to click
+    .get('[role="option"][data-value="20"]')
+    // Click it
+    .click()
 
-    // Find the select by its alias
-    cy.get('@number-select')
-      // Check that value was selected correctly
-      .contains(/twenty/i)
-  })
+  // Find the select by its alias
+  cy.get('@number-select')
+    // Check that value was selected correctly
+    .contains(/twenty/i)
 })
 ```
 
@@ -104,27 +102,25 @@ describe('some tests', () => {
 </Note>
 
 ```js
-describe('some tests', () => {
-  it('should work', () => {
-    // Find the select by its label
-    cy.findByLabelText(/number/i)
-      // alias the input for use later
-      .as('number-select')
-      // Click it
-      .click()
+it('should work', () => {
+  // Find the select by its label
+  cy.findByLabelText(/number/i)
+    // alias the input for use later
+    .as('number-select')
+    // Click it
+    .click()
 
-    // Find the listbox that contains the options by its label text
-    cy.findByLabelText(/number/i, { selector: '[role="listbox"]' })
-      // Find the option with the value you want to click by the text that's shown
-      .findByText(/twenty/i, { selector: '[role="option"]' })
-      // Click it
-      .click()
+  // Find the listbox that contains the options by its label text
+  cy.findByLabelText(/number/i, { selector: '[role="listbox"]' })
+    // Find the option with the value you want to click by the text that's shown
+    .findByText(/twenty/i, { selector: '[role="option"]' })
+    // Click it
+    .click()
 
-    // Get the select by its alias
-    cy.get('@number-select')
-      // Check that value was selected correctly
-      .contains(/twenty/i)
-  })
+  // Get the select by its alias
+  cy.get('@number-select')
+    // Check that value was selected correctly
+    .contains(/twenty/i)
 })
 ```
 
@@ -133,3 +129,18 @@ describe('some tests', () => {
   `cypress/support/commands.js`. See more details
   [here](https://testing-library.com/docs/cypress-testing-library/intro).
 </Note>
+
+## Run Commands
+
+You can run any shell command using `cy.exec`. For example, if you want to run a
+command before each test, you can add the following **adjacent** to your
+individual test cases.
+
+```js
+beforeEach(() => {
+  cy.exec('echo "this is from cypress"')
+  cy.visit('http://localhost:3000')
+})
+
+/** Your tests here */
+```

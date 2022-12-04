@@ -68,12 +68,12 @@ const PostPage: React.FC<PostPageProps> = ({ post, mdx }) => {
           aria-label="Updated at"
         >
           <EditIcon className="inline-block h-3 w-3" />
-          <span>{post.updatedAt ? formatDate(post.updatedAt) : 'UNCHANGED'}</span>
+          <span suppressHydrationWarning>{formatDate(post.updatedAt)}</span>
         </div>
 
         <div className="tooltip flex items-center space-x-2" aria-label="Created at">
           <ClockIconSolid className="inline-block h-4 w-4" />
-          <span>{post.createdAt ? formatDate(post.createdAt) : 'UNPUBLISHED'}</span>
+          <span suppressHydrationWarning>{formatDate(post.createdAt)}</span>
         </div>
       </div>
 

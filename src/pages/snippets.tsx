@@ -1,20 +1,21 @@
 import type { GetStaticProps } from 'next'
-import type { SnippetFrontMatter } from '~/types/snippet'
+import { useMemo, useState } from 'react'
 import { NextSeo } from 'next-seo'
 import { useAutoAnimate } from '@formkit/auto-animate/react'
 
+import type { SnippetFrontMatter } from '~/types/snippet'
 import PostLayout from '~/components/posts/PostLayout'
 import { getAllFilesFrontMatter } from '~/lib/data'
 import { DataType } from '~/types/data'
 import SnippetCard from '~/components/posts/SnippetCard'
 import { getOgImageForData } from '~/utils/og'
-import { sortByCreatedAtField } from '~/utils/content'
+import { getAllTags, sortByCreatedAtField } from '~/utils/content'
 import { PUBLIC_URL } from '~/constants'
 import License from '~/components/License'
-import { useMemo, useState } from 'react'
 import cx from '~/utils/cx'
 import { AutoAnimationPlugin, getTransitionSizes } from '@formkit/auto-animate'
 import Collapse from '~/components/Collapse'
+import { intersectionSet } from '~/utils/misc'
 
 interface SnippetsPageProps {
   snippets: SnippetFrontMatter[]
@@ -71,20 +72,29 @@ const description =
 const title = 'Snippets'
 const url = `${PUBLIC_URL}/snippets`
 
+const tagBaseClass = 'focus-ring rounded-full border-2 transition hocus:border-drac-pink'
+
 const SnippetsPage: React.FC<SnippetsPageProps> = ({ snippets: _snippets, tags }) => {
   const [grid] = useAutoAnimate<HTMLDivElement>(autoAnimatePlugin)
 
+  const [matchAll, setMatchAll] = useState(false)
   const [selected, setSelected] = useState({ set: new Set<string>() })
 
   const snippets = useMemo(() => {
     if (!selected.set.size) return _snippets
+
+    if (matchAll) {
+      return _snippets.filter(
+        s => intersectionSet(selected.set, new Set(getAllTags(s))).size === selected.set.size
+      )
+    }
 
     return _snippets.filter(
       s =>
         selected.set.has(s.category.toLowerCase()) ||
         s.tags.some(t => selected.set.has(t.toLowerCase()))
     )
-  }, [_snippets, selected])
+  }, [_snippets, selected, matchAll])
 
   return (
     <PostLayout title="Snippets">
@@ -103,25 +113,42 @@ const SnippetsPage: React.FC<SnippetsPageProps> = ({ snippets: _snippets, tags }
       <p className="mt-6 text-center text-lg">{description}</p>
 
       <Collapse summary="Filters">
-        <div className="space-y-4">
+        <div className="space-y-2">
           <div className="flex items-center justify-between">
             <div className="text-lg font-bold">Tags</div>
-            <button
-              className={cx(
-                'focus-ring rounded-full border-2 border-drac-red px-2.5 py-1 text-xs text-drac-red transition hover:border-drac-pink',
-                selected.set.size > 0 ? 'opacity-100' : 'pointer-events-none opacity-0'
-              )}
-              onClick={() => setSelected({ set: new Set() })}
-            >
-              Clear tags
-            </button>
+            <div className="flex items-center gap-2 text-[11px]">
+              <button
+                className={cx(
+                  tagBaseClass,
+                  'border-drac-purple px-1.5 py-0.5',
+                  selected.set.size > 0 ? 'opacity-100' : 'pointer-events-none opacity-0'
+                )}
+                onClick={() => setMatchAll(!matchAll)}
+              >
+                Match {matchAll ? 'all tags' : 'any tag'}
+              </button>
+              <button
+                className={cx(
+                  tagBaseClass,
+                  'border-drac-red px-1.5 py-0.5 text-drac-red',
+                  selected.set.size > 0 ? 'opacity-100' : 'pointer-events-none opacity-0'
+                )}
+                onClick={() => {
+                  setSelected({ set: new Set() })
+                  setMatchAll(false)
+                }}
+              >
+                Clear tags
+              </button>
+            </div>
           </div>
           <div className="flex flex-wrap gap-2 text-xs font-bold">
             {tags.map(tag => (
               <button
                 key={tag.value}
                 className={cx(
-                  'focus-ring rounded-full border-2 border-drac-purple px-2.5 py-1 transition hover:border-drac-pink',
+                  tagBaseClass,
+                  'border-drac-purple px-2.5 py-1',
                   selected.set.has(tag.value) && 'bg-drac-purple text-drac-base'
                 )}
                 onClick={() => {
@@ -137,6 +164,9 @@ const SnippetsPage: React.FC<SnippetsPageProps> = ({ snippets: _snippets, tags }
               </button>
             ))}
           </div>
+          <p className="text-sm text-drac-highlight">
+            See snippets matching <em>{matchAll ? 'all' : 'any'}</em> of the the selected tags.
+          </p>
         </div>
       </Collapse>
 
@@ -151,13 +181,12 @@ const SnippetsPage: React.FC<SnippetsPageProps> = ({ snippets: _snippets, tags }
           </div>
         ))}
       </div>
-      {snippets.length > 0 && (
-        <div className="text-center">
-          {selected.set.size
-            ? `${snippets.length} snippets matching your filters`
-            : `${snippets.length} snippets total`}
-        </div>
-      )}
+
+      <div className="text-center">
+        {selected.set.size
+          ? `${snippets.length} snippets matching your filters`
+          : `${snippets.length} snippets total`}
+      </div>
       <License summary="License for these snippets" />
     </PostLayout>
   )

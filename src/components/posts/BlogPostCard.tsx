@@ -27,7 +27,7 @@ const BlogPostCard: React.FC<{ post: BlogPostFrontMatter }> = ({
         {updatedAt ? (
           <div className="tooltip flex items-center space-x-2" aria-label="Updated at">
             <EditIcon role="presentation" className="inline-block h-3 w-3" />
-            <span>{formatDate(updatedAt)}</span>
+            <span suppressHydrationWarning>{formatDate(updatedAt)}</span>
           </div>
         ) : null}
 
@@ -37,7 +37,7 @@ const BlogPostCard: React.FC<{ post: BlogPostFrontMatter }> = ({
           aria-label="Created at"
         >
           <ClockIconSolid role="presentation" className="inline-block h-3 w-3" />
-          <span>{createdAt ? formatDate(createdAt) : 'UNPUBLISHED'}</span>
+          <span suppressHydrationWarning>{createdAt ? formatDate(createdAt) : 'UNPUBLISHED'}</span>
         </div>
       </div>
     </div>

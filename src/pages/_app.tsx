@@ -10,6 +10,7 @@ import { SEO } from '~/next-seo.config'
 
 import '../styles/globals.css'
 import '../styles/prose.css'
+import NoJsStyles from '~/styles/NoJsStyles'
 
 const defaultWrapper = (node: ReactNode) => (
   <>
@@ -44,6 +45,7 @@ const MyApp: React.FC<AppProps> = ({ Component, pageProps }) => {
           Rendered at {renderedAtDate.toLocaleTimeString()}, {renderedAtDate.toLocaleDateString()}
         </div>
       ) : null}
+      <NoJsStyles />
     </PlausibleProvider>
   )
 }

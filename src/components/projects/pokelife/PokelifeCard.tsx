@@ -91,7 +91,6 @@ const PokelifeCard: React.FC<PokelifeCardProps> = ({ project }) => {
           />
         )}
         <noscript className="col-span-2 col-start-2 grid items-center justify-end p-12">
-          <style>{'.no-js-hidden{display:none}'}</style>
           <p className="hidden w-48 text-right text-xl sm:block">
             Enable JavaScript to see a demo here!
           </p>

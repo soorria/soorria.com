@@ -52,7 +52,6 @@ const DemoWrapper: React.FC<DemoWrapperProps> = ({ component: Component, init = 
             <div className="grid h-full w-full place-items-center">
               Enable JavaScript to see this demo
             </div>
-            <style>{'.no-js-hidden{display:none}'}</style>
           </noscript>
         </>
       ) : null}

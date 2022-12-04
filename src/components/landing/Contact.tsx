@@ -196,7 +196,7 @@ const Contact: React.FC<ContactProps> = ({ random = 0 }) => {
             <a
               key={href}
               href={href}
-              className="focus-ring group -mx-1 flex items-center rounded px-1 text-drac-pink hocus:text-drac-purple"
+              className="focus-ring group flex items-center rounded py-1 text-drac-pink nmpl-2 hocus:text-drac-purple"
               {...(newTab ? { target: '_blank', rel: 'noopener noreferrer' } : null)}
             >
               <Icon className="mr-3 h-5 w-5 transition-transform group-hocus:-rotate-20" />
@@ -205,11 +205,6 @@ const Contact: React.FC<ContactProps> = ({ random = 0 }) => {
           ))}
         </div>
       </div>
-      <noscript>
-        <style>
-          {'.no-js-block{display:block !important}.no-js-text{color:#f8f8f2 !important}'}
-        </style>
-      </noscript>
     </LandingSection>
   )
 }
