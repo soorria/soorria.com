@@ -13,58 +13,12 @@ import { getAllTags, sortByCreatedAtField } from '~/utils/content'
 import { PUBLIC_URL } from '~/constants'
 import License from '~/components/License'
 import cx from '~/utils/cx'
-import { AutoAnimationPlugin, getTransitionSizes } from '@formkit/auto-animate'
 import Collapse from '~/components/Collapse'
 import { intersectionSet } from '~/utils/misc'
 
 interface SnippetsPageProps {
   snippets: SnippetFrontMatter[]
   tags: Array<{ label: string; value: string }>
-}
-
-const autoAnimatePlugin: AutoAnimationPlugin = (el, action, oldCoords, newCoords) => {
-  let keyframes: Keyframe[] = []
-  // supply a different set of keyframes for each action
-  if (action === 'add') {
-    keyframes = [
-      { transform: 'scale(.98)', opacity: 0 },
-      { transform: 'scale(0.98)', opacity: 0, offset: 0.5 },
-      { transform: 'scale(1)', opacity: 1 },
-    ]
-  }
-  // keyframes can have as many "steps" as you prefer
-  // and you can use the 'offset' key to tune the timing
-  if (action === 'remove') {
-    keyframes = [
-      { transform: 'scale(1)', opacity: 1 },
-      { transform: 'scale(.98)', opacity: 0 },
-    ]
-  }
-  if (action === 'remain') {
-    // for items that remain, calculate the delta
-    // from their old position to their new position
-    const deltaX = oldCoords!.left - newCoords!.left
-    const deltaY = oldCoords!.top - newCoords!.top
-    // use the getTransitionSizes() helper function to
-    // get the old and new widths of the elements
-    const [widthFrom, widthTo] = getTransitionSizes(el, oldCoords!, newCoords!)
-    // set up our steps with our positioning keyframes
-    const start: Keyframe = {
-      transform: `translate(${deltaX}px, ${deltaY}px)`,
-    }
-    const end: Keyframe = {
-      transform: `translate(0, 0)`,
-    }
-    // if the dimensions changed, animate them too.
-    if (widthFrom !== widthTo) {
-      start.width = `${widthFrom!}px`
-      end.width = `${widthTo}px`
-    }
-    keyframes = [start, end]
-  }
-  // return our KeyframeEffect() and pass
-  // it the chosen keyframes.
-  return new KeyframeEffect(el, keyframes, { duration: 250, easing: 'ease-in-out' })
 }
 
 const description =
@@ -75,7 +29,7 @@ const url = `${PUBLIC_URL}/snippets`
 const tagBaseClass = 'focus-ring rounded-full border-2 transition hocus:border-drac-pink'
 
 const SnippetsPage: React.FC<SnippetsPageProps> = ({ snippets: _snippets, tags }) => {
-  const [grid] = useAutoAnimate<HTMLDivElement>(autoAnimatePlugin)
+  const [grid] = useAutoAnimate<HTMLDivElement>()
 
   const [matchAll, setMatchAll] = useState(false)
   const [selected, setSelected] = useState({ set: new Set<string>() })
@@ -173,7 +127,7 @@ const SnippetsPage: React.FC<SnippetsPageProps> = ({ snippets: _snippets, tags }
       <div
         ref={grid}
         style={{ gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))' }}
-        className="grid auto-cols-min grid-cols-1 gap-y-8 gap-x-6 sm:!grid-cols-2 sm:gap-x-8 lg:gap-12"
+        className="grid auto-cols-min grid-cols-1 content-start gap-y-8 gap-x-6 sm:!grid-cols-2 sm:gap-x-8 lg:gap-12"
       >
         {snippets.map(snippet => (
           <div key={snippet.slug} className="grid">
