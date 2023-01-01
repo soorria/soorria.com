@@ -6,7 +6,7 @@ tags:
   - typescript
   - solidjs
 createdAt: '2022-08-27'
-updatedAt: '2022-09-03'
+updatedAt: '2023-01-01'
 ---
 
 Get a signal that lets you know when the mouse has stopped moving.
@@ -27,14 +27,6 @@ interface UseIsMouseInactiveOptions {
 }
 
 export const useIsMouseInactive = (props: UseIsMouseInactiveOptions = {}) => {
-  const timeout = createMemo(() => {
-    if (typeof props.timeout === 'function') return props.timeout()
-    return props.timeout ?? 5000
-  })
-  const root = createMemo(() => {
-    if (typeof props.root === 'function') return props.root()
-    return props.root ?? window
-  })
   const [inactive, setInactive] = createSignal(false)
   let timer: NodeJS.Timeout
 
@@ -43,11 +35,11 @@ export const useIsMouseInactive = (props: UseIsMouseInactiveOptions = {}) => {
     if (timer) clearTimeout(timer)
     timer = setTimeout(() => {
       setInactive(true)
-    }, timeout())
+    }, props.timeout)
   }
 
   createEffect(() => {
-    const el = root()
+    const el = props.root
     if (!el) return
 
     onMount(() => {
@@ -73,7 +65,9 @@ export const Example: VoidComponent = () => {
   const [element, setElement] = createSignal<HTMLElement>()
 
   const isInactive = useIsMouseInactive({
-    root: element,
+    get root() {
+      return element()
+    },
   })
 
   return (
