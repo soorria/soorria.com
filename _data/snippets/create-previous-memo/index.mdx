@@ -1,0 +1,54 @@
+---
+title: createPreviousMemo (SolidJS)
+shortDescription: Get the previous value of a SolidJS signal
+category: SolidJS
+tags:
+  - typescript
+  - solidjs
+createdAt: '2023-01-01'
+updatedAt: '2023-01-01'
+---
+
+Get an accessor for the previous value of the provided signal. Returns
+`undefined` when the provided signal hasn't changed yet.
+
+```ts
+export const createPreviousMemo = <T>(
+  get: Accessor<T>
+): Accessor<T | undefined> => {
+  let currValue: T | undefined = undefined
+  const [prev, setPrev] = createSignal<T | undefined>()
+  createEffect(() => {
+    const nextValue = currValue
+    setPrev(() => nextValue)
+    currValue = get()
+  })
+  return prev
+}
+```
+
+## Usage
+
+```tsx
+import { type VoidComponent, createSignal } from 'solid-js'
+
+const Example = () => {
+  const [count, setCount] = createSignal(0)
+  // Note - we're passing in an accessor / getter function and not the value
+  const previousCount = createPreviousMemo(count)
+
+  return (
+    <>
+      <button onClick={() => setCount(c => c + 1)}>Increment</button>
+      <p>Current count: {count()}</p>
+      <p>Previous count: {previousCount().toString()}</p>
+    </>
+  )
+}
+```
+
+## Example
+
+import { createExample } from './components'
+
+<SolidDemo create={createExample} />

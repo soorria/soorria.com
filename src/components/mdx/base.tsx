@@ -21,6 +21,7 @@ export const baseComponents = {
   ),
   Note: dynamic(() => import('./Note')),
   Demo,
+  SolidDemo: dynamic(() => import('./SolidDemo'), { ssr: false }),
   Sparkles: dynamic(() => import('./Sparkles')),
   TsJsSwitcher,
   Collapse: dynamic(() => import('./MDXCollapse')),

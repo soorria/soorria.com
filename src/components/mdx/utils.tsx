@@ -16,6 +16,14 @@ export const CODE_BLOCK_CLASSNAMES = {
   languageTitle: 'text-sm uppercase text-drac-purple sm:text-sm',
 } as const
 
+export const DEMO_CLASSNAMES = {
+  root: COMMON_CLASSNAMES.codeAndDemoRoot,
+  reload:
+    'focus-ring flex h-full w-full items-center justify-center rounded bg-drac-base text-drac-pink transition hocus:bg-drac-base-dark hocus:text-drac-purple',
+  footer: 'absolute inset-x-0 bottom-0 h-20 bg-drac-purple/50 p-4 md:px-6',
+  spacing: 'h-24',
+} as const
+
 const CODE_LINE_HEIGHT = 28
 export const DEFAULT_TRUNCATE_HEIGHT = 10.5 * CODE_LINE_HEIGHT
 

@@ -11,13 +11,6 @@ import { remarkTypeScriptTransform } from './remark.server'
 import { rehypeRearrangeShikiOutput } from './rehype.server'
 import type { PluggableList } from 'unified'
 
-const STYLE_UTILS = `
-import { createElement } from 'react'
-import { setup, styled, css } from 'goober'
-setup(createElement)
-export { styled, css }
-`
-
 const codeBlockRemarkPlugins: PluggableList = [
   remarkTypeScriptTransform,
   [
@@ -81,7 +74,6 @@ export const render = async <T extends BaseFrontMatter = BaseFrontMatter>(
     source,
     files: {
       './components': components,
-      $styles: STYLE_UTILS,
     },
     mdxOptions(options) {
       options.remarkPlugins = [

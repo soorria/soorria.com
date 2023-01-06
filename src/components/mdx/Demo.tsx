@@ -1,7 +1,7 @@
 import cx from '~/utils/cx'
 import { ComponentType, useEffect, useState } from 'react'
 import { RefreshIcon } from '../icons'
-import { COMMON_CLASSNAMES } from './utils'
+import { COMMON_CLASSNAMES, DEMO_CLASSNAMES } from './utils'
 
 interface DemoWrapperProps {
   component: ComponentType
@@ -22,12 +22,9 @@ const DemoWrapper: React.FC<DemoWrapperProps> = ({ component: Component, init = 
       {started ? (
         <>
           <Component key={key} />
-          <div className="h-24" />
-          <div className="absolute inset-x-0 bottom-0 h-20 bg-drac-purple/50 p-4 md:px-6">
-            <button
-              onClick={() => setKey(p => p + 1)}
-              className="focus-ring flex h-full w-full items-center justify-center rounded bg-drac-base text-drac-pink transition hocus:text-drac-purple"
-            >
+          <div className={DEMO_CLASSNAMES.spacing} />
+          <div className={DEMO_CLASSNAMES.footer}>
+            <button onClick={() => setKey(p => p + 1)} className={DEMO_CLASSNAMES.reload}>
               <RefreshIcon
                 className="mr-1 h-em w-em transition-transform duration-700"
                 style={{ transform: `rotate(-${key * 360}deg)` }}
