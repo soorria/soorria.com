@@ -47,21 +47,21 @@ const SolidDemo: React.FC<SolidDemoProps> = props => {
 
   return (
     <div className={cx('demo-wrapper', DEMO_CLASSNAMES.root)}>
-      {hydrated && (
-        <>
-          <div ref={solidRoot}></div>
-          <div className={DEMO_CLASSNAMES.spacing} />
-          <div className={DEMO_CLASSNAMES.footer}>
-            <button onClick={() => setKey(p => p + 1)} className={DEMO_CLASSNAMES.reload}>
-              <RefreshIcon
-                className="mr-1 h-em w-em transition-transform duration-700"
-                style={{ transform: `rotate(-${key * 360}deg)` }}
-              />{' '}
-              Reload Demo
-            </button>
-          </div>
-        </>
-      )}
+      <div className="absolute left-0 top-0 rounded-br bg-drac-purple py-1 px-2 text-sm font-bold text-drac-base">
+        contains real <code>solid-js</code>!!
+      </div>
+      <div className="h-7" />
+      <div ref={solidRoot}></div>
+      <div className={DEMO_CLASSNAMES.spacing} />
+      <div className={DEMO_CLASSNAMES.footer}>
+        <button onClick={() => setKey(p => p + 1)} className={DEMO_CLASSNAMES.reload}>
+          <RefreshIcon
+            className="mr-1 h-em w-em transition-transform duration-700"
+            style={{ transform: `rotate(-${key * 360}deg)` }}
+          />{' '}
+          Reload Demo
+        </button>
+      </div>
     </div>
   )
 }
