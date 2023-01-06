@@ -48,7 +48,7 @@ const SolidDemo: React.FC<SolidDemoProps> = props => {
   return (
     <div className={cx('demo-wrapper', DEMO_CLASSNAMES.root)}>
       <div className="absolute left-0 top-0 rounded-br bg-drac-purple py-1 px-2 text-sm font-bold text-drac-base">
-        contains real <code>solid-js</code>!!
+        contains real <span className="font-mono">solid-js</span>!!
       </div>
       <div className="h-7" />
       <div ref={solidRoot}></div>
