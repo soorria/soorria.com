@@ -7,7 +7,7 @@ import { render } from 'solid-js/web'
 import cx from '~/utils/cx'
 import { useHydrated } from '~/utils/use-hydrated'
 import { RefreshIcon } from '../icons'
-import { DEMO_CLASSNAMES } from './utils'
+import { CODE_BLOCK_CLASSNAMES, DEMO_CLASSNAMES } from './utils'
 
 type SolidStuff = {
   createSignal: typeof createSignal
@@ -47,10 +47,9 @@ const SolidDemo: React.FC<SolidDemoProps> = props => {
 
   return (
     <div className={cx('demo-wrapper', DEMO_CLASSNAMES.root)}>
-      <div className="absolute left-0 top-0 rounded-br bg-drac-purple py-1 px-2 text-sm font-bold text-drac-base">
-        contains real <span className="font-mono">solid-js</span>!!
+      <div className={CODE_BLOCK_CLASSNAMES.header}>
+        <div className={CODE_BLOCK_CLASSNAMES.languageTitle}>Contains real Solid!!</div>
       </div>
-      <div className="h-7" />
       <div ref={solidRoot}></div>
       <div className={DEMO_CLASSNAMES.spacing} />
       <div className={DEMO_CLASSNAMES.footer}>
