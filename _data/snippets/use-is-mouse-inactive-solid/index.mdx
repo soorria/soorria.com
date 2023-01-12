@@ -6,10 +6,10 @@ tags:
   - typescript
   - solidjs
 createdAt: '2022-08-27'
-updatedAt: '2023-01-01'
+updatedAt: '2023-01-12'
 ---
 
-Get a signal that lets you know when the mouse has stopped moving.
+Get a signal that lets you know when the mouse has stopped moving for some time.
 
 ```ts
 import {
@@ -23,7 +23,7 @@ import {
 
 interface UseIsMouseInactiveOptions {
   timeout?: number | Accessor<number>
-  root?: Element | Accessor<Element | null | undefined>
+  root: Element | Accessor<Element | null | undefined>
 }
 
 export const useIsMouseInactive = (props: UseIsMouseInactiveOptions = {}) => {
@@ -35,7 +35,7 @@ export const useIsMouseInactive = (props: UseIsMouseInactiveOptions = {}) => {
     if (timer) clearTimeout(timer)
     timer = setTimeout(() => {
       setInactive(true)
-    }, props.timeout)
+    }, props.timeout ?? 5000)
   }
 
   createEffect(() => {
@@ -58,7 +58,7 @@ export const useIsMouseInactive = (props: UseIsMouseInactiveOptions = {}) => {
 
 ## Usage
 
-```tsx {3,5-7,15-16}
+```tsx {5-9,16-19}
 import type { VoidComponent } from 'solid-js'
 
 export const Example: VoidComponent = () => {
@@ -84,3 +84,9 @@ export const Example: VoidComponent = () => {
   )
 }
 ```
+
+## Example
+
+import { createExample } from './components'
+
+<SolidDemo create={createExample} />

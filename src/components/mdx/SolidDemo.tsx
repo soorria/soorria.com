@@ -1,6 +1,13 @@
 import { type HyperScript } from 'hyper-dom-expressions'
 import { useEffect, useRef, useState } from 'react'
-import { Component, createComponent, createSignal, createEffect } from 'solid-js'
+import {
+  Component,
+  createComponent,
+  createSignal,
+  createEffect,
+  onMount,
+  onCleanup,
+} from 'solid-js'
 import h from 'solid-js/h'
 import { render } from 'solid-js/web'
 
@@ -12,11 +19,15 @@ import { CODE_BLOCK_CLASSNAMES, DEMO_CLASSNAMES } from './utils'
 type SolidStuff = {
   createSignal: typeof createSignal
   createEffect: typeof createEffect
+  onMount: typeof onMount
+  onCleanup: typeof onCleanup
   h: HyperScript
 }
 
+export type CreateSolidDemo = (stuff: SolidStuff) => { component: Component }
+
 interface SolidDemoProps {
-  create: (stuff: SolidStuff) => { component: Component }
+  create: CreateSolidDemo
 }
 
 const SolidDemo: React.FC<SolidDemoProps> = props => {
@@ -33,6 +44,8 @@ const SolidDemo: React.FC<SolidDemoProps> = props => {
     const demo = createSolidDemo({
       createEffect,
       createSignal,
+      onMount,
+      onCleanup,
       // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
       h,
     })
