@@ -6,7 +6,7 @@ category: Miscellaneous
 tags:
   - TypeScript
 createdAt: '2022-10-06'
-updatedAt: '2022-10-24'
+updatedAt: '2023-01-12'
 ---
 
 A function that returns the first argument you give it after `console.log`-ing
@@ -23,7 +23,7 @@ export const inspect = <T extends unknown>(obj: T, ...args: unknown[]): T => {
 
 ## Example
 
-```ts {0-1,4-5}
+```js {0-1,4-5}
 inspect(
   inspect(document.querySelector('container'), 'container')?.querySelector(
     '[data-index="2"]'
