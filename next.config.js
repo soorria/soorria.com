@@ -91,6 +91,16 @@ const config = {
         destination: '/snippets/:path*',
         permanent: true,
       },
+      {
+        source: '/cypress',
+        destination: '/snippets/cypress',
+        permanent: false,
+      },
+      {
+        source: '/enzyme',
+        destination: '/snippets/enzyme',
+        permanent: false,
+      },
     ]
   },
   async rewrites() {
