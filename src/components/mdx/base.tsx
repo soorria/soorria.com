@@ -1,5 +1,5 @@
 import CustomLink from '../CustomLink'
-import Demo from './Demo'
+import ReactDemo from './ReactDemo'
 import TsJsSwitcher from './TsJsSwitcher'
 import CustomCodeBlock from './CodeBlock'
 import dynamic from 'next/dynamic'
@@ -20,7 +20,7 @@ export const baseComponents = {
     </div>
   ),
   Note: dynamic(() => import('./Note')),
-  Demo,
+  Demo: ReactDemo,
   SolidDemo: dynamic(() => import('./SolidDemo'), { ssr: false }),
   Sparkles: dynamic(() => import('./Sparkles')),
   TsJsSwitcher,

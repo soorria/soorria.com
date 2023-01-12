@@ -3,12 +3,12 @@ import { ComponentType, useEffect, useState } from 'react'
 import { RefreshIcon } from '../icons'
 import { COMMON_CLASSNAMES, DEMO_CLASSNAMES } from './utils'
 
-interface DemoWrapperProps {
+interface ReactDemoProps {
   component: ComponentType
   init?: 'lazy' | 'mount' | 'always'
 }
 
-const DemoWrapper: React.FC<DemoWrapperProps> = ({ component: Component, init = 'mount' }) => {
+const ReactDemo: React.FC<ReactDemoProps> = ({ component: Component, init = 'mount' }) => {
   const [started, setStarted] = useState(init === 'always')
   const [key, setKey] = useState<number>(0)
 
@@ -56,4 +56,4 @@ const DemoWrapper: React.FC<DemoWrapperProps> = ({ component: Component, init = 
   )
 }
 
-export default DemoWrapper
+export default ReactDemo
