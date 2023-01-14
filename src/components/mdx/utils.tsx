@@ -20,7 +20,8 @@ export const DEMO_CLASSNAMES = {
   root: COMMON_CLASSNAMES.codeAndDemoRoot,
   reload:
     'focus-ring flex h-full w-full items-center justify-center rounded bg-drac-base text-drac-pink transition hocus:bg-drac-base-dark hocus:text-drac-purple',
-  footer: 'absolute inset-x-0 bottom-0 h-20 bg-drac-purple/50 p-4 md:px-6',
+  footer: '-m-4 md:-mx-6 h-20 bg-drac-purple/50 p-4 md:px-6 mt-6',
+  // footer: 'absolute inset-x-0 bottom-0 h-20 bg-drac-purple/50 p-4 md:px-6',
   spacing: 'h-24',
 } as const
 

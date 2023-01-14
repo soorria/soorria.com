@@ -1,7 +1,68 @@
 import cx from '~/utils/cx'
-import { ComponentType, useEffect, useState } from 'react'
+import React, {
+  ComponentType,
+  CSSProperties,
+  PropsWithChildren,
+  useEffect,
+  useRef,
+  useState,
+} from 'react'
 import { RefreshIcon } from '../icons'
 import { COMMON_CLASSNAMES, DEMO_CLASSNAMES } from './utils'
+import autoAnimate from '@formkit/auto-animate'
+
+export const DemoComponentWrapper: React.FC<PropsWithChildren> = ({ children }) => {
+  const demoComponentWrapper = useRef<HTMLDivElement>(null)
+  useEffect(() => {
+    const wrapper = demoComponentWrapper.current
+    if (!wrapper) {
+      return
+    }
+
+    const animation = autoAnimate(wrapper, (el, action) => {
+      let keyframes: (Keyframe & CSSProperties)[] = []
+
+      const scaleSmall = 'scale(0.9)'
+      const scaleChangeOffset = 0.3
+      if (action === 'remove') {
+        keyframes = [
+          { transform: `translate3d(0, 0, 0) scale(1)`, opacity: 1 },
+          {
+            transform: `translate3d(0, 0, 0) ${scaleSmall}`,
+            opacity: 1,
+            offset: scaleChangeOffset,
+          },
+          {
+            transform: `translate3d(-100%, 0, 0) ${scaleSmall}`,
+            opacity: 0,
+            easing: 'linear',
+            offset: 1 - scaleChangeOffset,
+          },
+          { transform: `translate3d(-100%, 0, 0) ${scaleSmall}`, opacity: 0, easing: 'linear' },
+        ]
+      } else if (action === 'add') {
+        keyframes = [
+          { transform: `translate3d(100%, 0, 0) ${scaleSmall}`, opacity: 0 },
+          {
+            transform: `translate3d(100%, 0, 0) ${scaleSmall}`,
+            opacity: 0,
+            offset: scaleChangeOffset,
+          },
+          { transform: `translate3d(0, 0, 0) ${scaleSmall}`, opacity: 1, easing: 'linear' },
+          { transform: 'translate3d(0, 0, 0) scale(1)', opacity: 1 },
+        ]
+      }
+
+      return new KeyframeEffect(el, keyframes, { duration: 350 })
+    })
+
+    return () => {
+      animation.disable()
+    }
+  }, [])
+
+  return <div ref={demoComponentWrapper}>{children}</div>
+}
 
 interface ReactDemoProps {
   component: ComponentType
@@ -18,11 +79,14 @@ const ReactDemo: React.FC<ReactDemoProps> = ({ component: Component, init = 'mou
   }, [initOnMount])
 
   return (
-    <div className={cx('demo-wrapper', COMMON_CLASSNAMES.codeAndDemoRoot)}>
+    <div className={cx('demo-wrapper overflow-x-hidden', COMMON_CLASSNAMES.codeAndDemoRoot)}>
       {started ? (
         <>
-          <Component key={key} />
-          <div className={DEMO_CLASSNAMES.spacing} />
+          <DemoComponentWrapper>
+            <div key={key}>
+              <Component />
+            </div>
+          </DemoComponentWrapper>
           <div className={DEMO_CLASSNAMES.footer}>
             <button onClick={() => setKey(p => p + 1)} className={DEMO_CLASSNAMES.reload}>
               <RefreshIcon

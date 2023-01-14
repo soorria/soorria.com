@@ -53,8 +53,8 @@ const SolidDemo: React.FC<SolidDemoProps> = props => {
     const unmount = render(() => createComponent(demo.component, {}), root)
 
     return () => {
-      root.innerHTML = ''
       unmount()
+      root.innerHTML = ''
     }
   }, [key, hydrated, createSolidDemo])
 
@@ -64,7 +64,6 @@ const SolidDemo: React.FC<SolidDemoProps> = props => {
         <div className={CODE_BLOCK_CLASSNAMES.languageTitle}>Contains real Solid!!</div>
       </div>
       <div ref={solidRoot}></div>
-      <div className={DEMO_CLASSNAMES.spacing} />
       <div className={DEMO_CLASSNAMES.footer}>
         <button onClick={() => setKey(p => p + 1)} className={DEMO_CLASSNAMES.reload}>
           <RefreshIcon
