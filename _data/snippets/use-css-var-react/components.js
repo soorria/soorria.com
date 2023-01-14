@@ -18,17 +18,19 @@ export const useCssVar = ({ name, root = document.body }) => {
 const styles = {
   button: {
     padding: '0.5rem 1rem',
-    background: 'var(--pink)',
-    color: 'var(--bg)',
+    background: 'var(--purple)',
+    color: 'var(--base)',
     textAlign: 'center',
     fontWeight: 'bold',
     textDecoration: 'none',
+    borderRadius: '4px',
   },
   input: {
     padding: '0.5rem 1rem',
-    background: 'var(--bg)',
+    background: 'var(--base)',
     color: 'var(--content)',
-    border: '2px solid var(--pink)',
+    border: '2px solid var(--purple)',
+    borderRadius: '4px',
   },
 }
 
@@ -40,6 +42,7 @@ export const EXAMPLE_TRANSFORM = `rotate(calc(var(${EXAMPLE_CSS_VAR}, 45) * 1deg
 export const Example = () => {
   const controls = useCssVar({
     name: EXAMPLE_CSS_VAR,
+    root: document.querySelector('main'),
   })
 
   useEffect(() => {
@@ -56,6 +59,7 @@ export const Example = () => {
     >
       <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
         <input
+          className="focus-ring"
           style={styles.input}
           type="number"
           placeholder="image rotation degrees"
@@ -63,10 +67,14 @@ export const Example = () => {
           onChange={event => {
             const value = event.target.valueAsNumber
             if (!Number.isFinite(value)) return
-            controls.set((value % 360).toFixed(2))
+            controls.set(value.toFixed(2))
           }}
         />
-        <button style={styles.button} onClick={() => controls.remove()}>
+        <button
+          className="focus-ring"
+          style={styles.button}
+          onClick={() => controls.remove()}
+        >
           Remove CSS Var
         </button>
       </div>
