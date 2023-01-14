@@ -5368,10 +5368,10 @@ table@^6.0.9:
     string-width "^4.2.3"
     strip-ansi "^6.0.1"
 
-tailwindcss-hocus@^0.0.1:
-  version "0.0.1"
-  resolved "https://registry.yarnpkg.com/tailwindcss-hocus/-/tailwindcss-hocus-0.0.1.tgz#db0a579a5b95c0f98c2d1f06edf07e1e5bd5d917"
-  integrity sha512-wGviwl7f5ahyANPAbKnIQ/9YDx9/vJ3kEr9F/ntpIsBL9hV+v0ewJxYNY2AZbW/AU2UIhgytKfSo8Dv34zMM/g==
+tailwindcss-hocus@^0.0.7:
+  version "0.0.7"
+  resolved "https://registry.yarnpkg.com/tailwindcss-hocus/-/tailwindcss-hocus-0.0.7.tgz#bd5801deec87765237ed66f676d632365b3c490c"
+  integrity sha512-KY3jLlppAoPkCLRhDqbe503c1Ryq//G1bLQqFCZz1pnB0JFzHa3VK0bXvjTa8n/dwCxgkhi5uJm1d6gp8OzPhw==
 
 tailwindcss-nmp@^0.0.2:
   version "0.0.2"

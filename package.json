@@ -52,7 +52,7 @@
     "shiki": "^0.11.1",
     "solid-js": "^1.6.6",
     "string-width": "^5.1.2",
-    "tailwindcss-hocus": "^0.0.1",
+    "tailwindcss-hocus": "^0.0.7",
     "tailwindcss-nmp": "^0.0.2",
     "unified": "^10.1.2",
     "unist-util-visit": "^4.1.0"
