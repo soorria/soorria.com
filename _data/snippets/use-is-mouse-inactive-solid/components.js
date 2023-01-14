@@ -13,7 +13,6 @@ export const createExample = ({
 
     const onMouseMove = () => {
       setInactive(false)
-      console.log('move')
       if (timer) clearTimeout(timer)
       timer = setTimeout(() => {
         setInactive(true)
