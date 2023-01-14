@@ -1,10 +1,11 @@
+import { PropsWithChildren } from 'react'
 import Container from '../Container'
 
-interface PostLayoutProps {
+type PostLayoutProps = PropsWithChildren<{
   title: string
-}
+}>
 
-export const PostHeading: React.FC = ({ children }) => {
+export const PostHeading: React.FC<PropsWithChildren> = ({ children }) => {
   return (
     <h1
       className="mt-0 mb-20 text-center text-5xl !leading-tight text-drac-pink sm:mt-8 sm:text-6xl md:text-7xl"
@@ -15,7 +16,7 @@ export const PostHeading: React.FC = ({ children }) => {
   )
 }
 
-export const PostBottomSection: React.FC = ({ children }) => {
+export const PostBottomSection: React.FC<PropsWithChildren> = ({ children }) => {
   return <div className="mx-auto mt-24 max-w-xs space-y-8 text-center text-sm">{children}</div>
 }
 

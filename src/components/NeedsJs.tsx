@@ -1,8 +1,8 @@
-import { useEffect, useState } from 'react'
+import { PropsWithChildren, useEffect, useState } from 'react'
 
-interface NeedsJsProps {
+type NeedsJsProps = PropsWithChildren<{
   fallback: React.ReactNode
-}
+}>
 
 const NeedsJs: React.FC<NeedsJsProps> = ({ fallback, children }) => {
   const [mounted, setMounted] = useState(false)

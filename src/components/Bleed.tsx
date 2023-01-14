@@ -1,4 +1,4 @@
-import { CSSProperties, Fragment, HTMLAttributes } from 'react'
+import { CSSProperties, Fragment, HTMLAttributes, PropsWithChildren } from 'react'
 
 type BleedAmount = string | number
 type BleedProps = {
@@ -30,7 +30,7 @@ const getStyle = (bleedAmount: string | number): CSSProperties => {
   }
 }
 
-const ProseContainer: React.FC = ({ children }) => (
+const ProseContainer: React.FC<PropsWithChildren> = ({ children }) => (
   <div className="mx-auto max-w-[65ch]">{children}</div>
 )
 

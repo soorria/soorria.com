@@ -1,10 +1,10 @@
-import type { ElementType, ReactNode } from 'react'
+import type { ElementType, PropsWithChildren, ReactNode } from 'react'
 import { TriangleIcon } from './icons'
 
-export interface CollapseProps {
+export type CollapseProps = PropsWithChildren<{
   summary: ReactNode
   summaryComponent?: ElementType
-}
+}>
 
 const Collapse: React.FC<CollapseProps> = ({
   summary,

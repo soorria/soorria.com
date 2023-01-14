@@ -141,7 +141,6 @@ const config = {
   // swcMinify: true,
   experimental: {
     legacyBrowsers: false,
-    browsersListForSwc: true,
   },
   eslint: {
     ignoreDuringBuilds: true,

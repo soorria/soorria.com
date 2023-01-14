@@ -1,11 +1,11 @@
 import { IconComponent, ReactIcon, SolidJsIcon, TypescriptIcon } from '../icons'
 import cx from '~/utils/cx'
 import { random, randomItem } from '~/utils/random'
-import { useEffect, useState } from 'react'
+import { PropsWithChildren, useEffect, useState } from 'react'
 
-interface SparklesProps {
+type SparklesProps = PropsWithChildren<{
   block?: boolean
-}
+}>
 
 /**
  * Heavily inspired / copied from https://www.joshwcomeau.com/react/animated-sparkles-in-react/

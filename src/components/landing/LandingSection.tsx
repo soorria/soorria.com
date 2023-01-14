@@ -1,10 +1,10 @@
-import type { ReactNode } from 'react'
+import type { PropsWithChildren, ReactNode } from 'react'
 import CustomLink from '../CustomLink'
 
-interface LandingSectionProps {
+type LandingSectionProps = PropsWithChildren<{
   title: ReactNode
   id?: string
-}
+}>
 
 const LandingSection: React.FC<LandingSectionProps> = ({ title, children, id }) => {
   return (

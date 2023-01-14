@@ -1,12 +1,12 @@
 import cx from '~/utils/cx'
-import type { ReactNode } from 'react'
+import type { PropsWithChildren, ReactNode } from 'react'
 
 type Variant = 'success' | 'info' | 'warning'
 
-interface NoteProps {
+type NoteProps = PropsWithChildren<{
   variant?: Variant
   title?: ReactNode
-}
+}>
 
 const VARIANT_COLORS: Record<Variant, string> = {
   success: 'bg-drac-green border-drac-green text-drac-green',

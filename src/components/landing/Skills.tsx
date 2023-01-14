@@ -1,3 +1,4 @@
+import { PropsWithChildren } from 'react'
 import { useSkills } from '~/lib/skills'
 import cx from '~/utils/cx'
 import CustomLink from '../CustomLink'
@@ -6,7 +7,7 @@ import LandingSection from './LandingSection'
 
 const titles = ["What I've Learned", 'Technical Skills', 'Tools I Use']
 
-const SkillListItem: React.FC = ({ children }) => {
+const SkillListItem: React.FC<PropsWithChildren> = ({ children }) => {
   return (
     <li className="group flex items-center space-x-2">
       <span className="h-2 w-2 transform rounded-full border-2 border-drac-content transition group-hover:border-drac-pink" />

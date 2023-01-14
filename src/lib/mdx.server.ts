@@ -65,8 +65,6 @@ export type RenderOptions = {
   hasCodeBlocks?: boolean
 }
 
-type Awaited<T> = T extends PromiseLike<infer TValue> ? Awaited<TValue> : T
-
 export type RenderResult<T> = Awaited<ReturnType<typeof bundleMDX>> & {
   frontmatter: T
 }

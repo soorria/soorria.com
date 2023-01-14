@@ -49,12 +49,14 @@ const ProjectCard: ProjectCardComponent = ({ project }) => {
       </div>
       <div className="flex space-x-4 text-sm">
         {project.hasContent && (
-          <Link href={`/projects/${project.slug}`}>
-            <a aria-label={`See details for ${project.title}`} className={classes.link}>
-              <InfoIcon className="inline-block h-4 w-4" />
-              <span>Details</span>
-              <span className="sr-only"> for {project.title}</span>
-            </a>
+          <Link
+            href={`/projects/${project.slug}`}
+            aria-label={`See details for ${project.title}`}
+            className={classes.link}
+          >
+            <InfoIcon className="inline-block h-4 w-4" />
+            <span>Details</span>
+            <span className="sr-only"> for {project.title}</span>
           </Link>
         )}
 

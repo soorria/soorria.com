@@ -1,27 +1,22 @@
 import cx from '~/utils/cx'
 import NextLink from 'next/link'
-import Image, { ImageProps } from 'next/future/image'
+import Image, { ImageProps } from 'next/image'
 import type { ProjectCardProps } from '../ProjectCard'
 import { COMMON_CLASSNAMES } from '../utils'
 import UtilsTag from './UtilsTag'
 import { CodeIcon, ExternalIcon, InfoIcon } from '~/components/icons'
+import { PropsWithChildren } from 'react'
 
 const cardLinkClassName =
   'inline-flex items-center px-3 py-1 ml-2 mt-2 space-x-1 text-sm font-semibold transition-colors border-2 border-current border-white rounded-sm hocus:text-var-bg hocus:bg-white focus-ring'
 
-type UtilsProjectCardProps = ProjectCardProps &
-  (
-    | {
-        fullWidth: true
-        bgImage?: ImageProps['src']
-        bgAlt: string
-      }
-    | {
-        fullWidth?: false
-        bgImage: never
-        bgAlt: never
-      }
-  )
+type UtilsProjectCardProps = PropsWithChildren<
+  ProjectCardProps &
+    (
+      | { fullWidth: true; bgImage?: ImageProps['src']; bgAlt: string }
+      | { fullWidth?: false; bgImage: never; bgAlt: never }
+    )
+>
 
 const UtilsProjectCard: React.FC<UtilsProjectCardProps> = ({
   project,

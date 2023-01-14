@@ -34,24 +34,22 @@ const SpinnyHomeLink: React.FC<{ href?: string }> = ({ href = '/' }) => {
   }, [])
 
   return (
-    <Link href={href}>
-      <a className="focus-ring group z-10 -m-2 flex items-center rounded p-2">
-        <span
-          className="h-8 w-8 transform transition-transform duration-700 ease-in-out md:h-10 md:w-10"
-          style={{ '--tw-rotate': `${rotation}deg` }}
-        >
-          <Logo />
-        </span>
-        <span
-          className={cx(
-            'spinny-home-link font-display text-2xl font-bold lowercase sm:ml-4 sm:text-3xl'
-          )}
-        >
-          <span className="sr-only sm:not-sr-only">Soorria</span>
-          <span className="sr-only lg:not-sr-only">moorthy</span>
-          <span className="sr-only md:not-sr-only"> Saruva</span>
-        </span>
-      </a>
+    <Link href={href} className="focus-ring group z-10 -m-2 flex items-center rounded p-2">
+      <span
+        className="h-8 w-8 transform transition-transform duration-700 ease-in-out md:h-10 md:w-10"
+        style={{ '--tw-rotate': `${rotation}deg` }}
+      >
+        <Logo />
+      </span>
+      <span
+        className={cx(
+          'spinny-home-link font-display text-2xl font-bold lowercase sm:ml-4 sm:text-3xl'
+        )}
+      >
+        <span className="sr-only sm:not-sr-only">Soorria</span>
+        <span className="sr-only lg:not-sr-only">moorthy</span>
+        <span className="sr-only md:not-sr-only"> Saruva</span>
+      </span>
     </Link>
   )
 }

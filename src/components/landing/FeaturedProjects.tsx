@@ -20,10 +20,12 @@ const FeaturedProjects: React.FC<FeaturedProjectsProps> = ({ projects, random = 
         ))}
       </ProjectsGrid>
       <div className="mt-8 text-center">
-        <Link href="/projects" passHref>
-          <a className="focus-ring rounded px-3 py-2 text-drac-pink transition-colors hocus:bg-drac-base-light hocus:text-drac-purple">
-            <span>See All Projects</span>
-          </a>
+        <Link
+          href="/projects"
+          passHref
+          className="focus-ring rounded px-3 py-2 text-drac-pink transition-colors hocus:bg-drac-base-light hocus:text-drac-purple"
+        >
+          <span>See All Projects</span>
         </Link>
       </div>
     </LandingSection>

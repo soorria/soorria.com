@@ -24,18 +24,18 @@ const ErrorPage: React.FC<ErrorPageProps> = ({ statusCode, statusText, tryAgain 
       </PostHeading>
       {tryAgain && (
         <>
-          <Link href={router.pathname} passHref>
-            <a className="group mx-auto my-8 block max-w-xs text-center text-lg">
-              Click <span className="text-drac-pink group-hover:underline">here</span> to try again.
-            </a>
+          <Link
+            href={router.pathname}
+            passHref
+            className="group mx-auto my-8 block max-w-xs text-center text-lg"
+          >
+            Click <span className="text-drac-pink group-hover:underline">here</span> to try again.
           </Link>
           <p className="text-center italic">or</p>
         </>
       )}
-      <Link href="/" passHref>
-        <a className="group mx-auto my-8 block max-w-xs text-center text-lg">
-          Click <span className="text-drac-pink group-hover:underline">here</span> to go home.
-        </a>
+      <Link href="/" passHref className="group mx-auto my-8 block max-w-xs text-center text-lg">
+        Click <span className="text-drac-pink group-hover:underline">here</span> to go home.
       </Link>
     </MainLayout>
   )

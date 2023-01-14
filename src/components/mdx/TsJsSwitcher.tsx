@@ -1,7 +1,7 @@
 import cx from '~/utils/cx'
 import { useHydrated } from '~/utils/use-hydrated'
 import { useSyncedLocalStorage } from '~/utils/use-synced-local-storage'
-import { Children, isValidElement, ReactElement, useMemo, useRef } from 'react'
+import { Children, isValidElement, PropsWithChildren, ReactElement, useMemo, useRef } from 'react'
 import type { CustomCodeBlockProps } from './CodeBlock'
 import { CodeBlockPre } from './CodeBlockPre'
 import { CodeBlockCopyButton } from './utils'
@@ -13,15 +13,15 @@ import {
 } from './utils'
 
 const TS_LANGUAGES = new Set(['ts', 'tsx', 'typescript'])
-const TsJsSwitcher: React.FC = props => {
+const TsJsSwitcher: React.FC<PropsWithChildren> = props => {
   const [isTs, setIsTs] = useSyncedLocalStorage<boolean>('soorria.com:isTs', true)
   const hydrated = useHydrated()
   const pre = useRef<HTMLPreElement>(null)
 
   const { blocks, names } = useMemo(() => {
-    const children = Children.toArray(props.children).filter(el =>
-      isValidElement(el)
-    ) as ReactElement[]
+    const children = props.children
+      ? Children.toArray(props.children).filter(el => isValidElement(el))
+      : ([] as ReactElement[])
 
     if (children.length <= 1) return { blocks: [], names: {} }
 

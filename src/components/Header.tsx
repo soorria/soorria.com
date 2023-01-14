@@ -30,10 +30,13 @@ const Header: React.FC = () => {
         <SpinnyHomeLink />
         <nav className="flex space-x-1 font-display sm:space-x-3 sm:text-lg">
           {LINKS.map(({ title, href }) => (
-            <Link key={href} href={href} passHref>
-              <a className="focus-ring relative overflow-hidden rounded border-drac-content px-2 py-1 leading-none transition hocus:bg-drac-base-light hocus:text-drac-pink sm:py-2 sm:px-3">
-                {title}
-              </a>
+            <Link
+              key={href}
+              href={href}
+              passHref
+              className="focus-ring relative overflow-hidden rounded border-drac-content px-2 py-1 leading-none transition hocus:bg-drac-base-light hocus:text-drac-pink sm:py-2 sm:px-3"
+            >
+              {title}
             </Link>
           ))}
         </nav>

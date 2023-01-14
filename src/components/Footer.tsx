@@ -101,7 +101,8 @@ const LINKS: LinkType[][] = [
   ],
 ]
 
-const linkClass = 'transition-colors text-drac-pink hocus:text-drac-purple focus-ring rounded'
+const linkClass =
+  'transition-colors text-drac-pink hocus-visible:text-drac-purple focus-ring rounded'
 
 interface FooterProps {}
 
@@ -127,8 +128,8 @@ const Footer: React.FC<FooterProps> = () => {
                     {title}
                   </a>
                 ) : (
-                  <Link href={href} key={key ?? (title as string)}>
-                    <a className={linkClass}>{title}</a>
+                  <Link href={href} key={key ?? (title as string)} className={linkClass}>
+                    {title}
                   </Link>
                 )
               )}

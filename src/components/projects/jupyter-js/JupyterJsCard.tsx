@@ -1,6 +1,6 @@
 import type { ProjectFrontMatter } from '~/types/project'
 import NextLink from 'next/link'
-import Image from 'next/future/image'
+import Image from 'next/image'
 import { CodeIcon, ExternalIcon, InfoIcon } from '~/components/icons'
 import cx from '~/utils/cx'
 import { COMMON_CLASSNAMES } from '../utils'
