@@ -51,14 +51,14 @@ const ProjectsPage: React.FC<ProjectsPageProps> = ({ projects, numMainProjects }
 
 export default ProjectsPage
 
-const aboveFold = [...featuredProjects, 'aqrm', 'wordle-score', 'fight-for-tribeland']
-const projectOrder = [...aboveFold]
-const getProjectIndex = (slug: string): number => {
-  const idx = projectOrder.indexOf(slug)
-  return idx >= 0 ? idx : projectOrder.length + 10
-}
-
 export const getStaticProps: GetStaticProps<ProjectsPageProps> = async () => {
+  const aboveFold = [...featuredProjects, 'aqrm', 'wordle-score', 'slidy', 'fight-for-tribeland']
+  const projectOrder = [...aboveFold]
+  const getProjectIndex = (slug: string): number => {
+    const idx = projectOrder.indexOf(slug)
+    return idx >= 0 ? idx : projectOrder.length + 10
+  }
+
   const projects = (await getAllFilesFrontMatter<ProjectFrontMatter>(DataType.projects)).sort(
     (a, b) => getProjectIndex(a.slug) - getProjectIndex(b.slug)
   )

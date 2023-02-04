@@ -47,7 +47,7 @@ const SpinnyHomeLink: React.FC<{ href?: string }> = ({ href = '/' }) => {
         )}
       >
         <span className="sr-only sm:not-sr-only">Soorria</span>
-        <span className="sr-only lg:not-sr-only">moorthy</span>
+        {/* <span className="sr-only lg:not-sr-only">moorthy</span> */}
         <span className="sr-only md:not-sr-only"> Saruva</span>
       </span>
     </Link>
