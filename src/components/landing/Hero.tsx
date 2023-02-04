@@ -4,7 +4,7 @@ import type { PropsWithChildren, ReactNode } from 'react'
 const classes = {
   secondary:
     'hidden sm:block absolute inset-0 select-none contrast-more:sm:hidden pointer-events-none',
-  main: 'relative cursor-text inset-0 bg-gradient-to-tr from-drac-pink to-drac-purple bg-clip-text text-transparent sm:text-drac-content contrast-more:sm:text-drac-pink',
+  main: 'relative cursor-text inset-0 bg-gradient-to-tr from-drac-pink to-drac-purple bg-clip-text text-transparent sm:text-drac-content contrast-more:sm:text-drac-pink contrast-more:scale-110',
 }
 
 const Hero: React.FC<
