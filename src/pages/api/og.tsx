@@ -3,7 +3,7 @@ import type { PageConfig } from 'next'
 import type { NextRequest } from 'next/server'
 
 export const config: PageConfig = {
-  runtime: 'experimental-edge',
+  runtime: 'edge',
 }
 const BASE_URL = 'https://soorria.com'
 
