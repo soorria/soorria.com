@@ -1,4 +1,4 @@
-import { useMdxComponents } from '~/lib/mdx'
+import { useMdxComponents } from './mdx'
 import cx from '~/utils/cx'
 import { randomIndex } from '~/utils/random'
 import { useRef, useState } from 'react'
