@@ -1,3 +1,4 @@
+import { readdirSync } from 'fs'
 import { globby } from 'globby'
 import { RouteDataArgs, useRouteData } from 'solid-start'
 import { createServerData$ } from 'solid-start/server'
@@ -55,7 +56,7 @@ export const routeData = ({}: RouteDataArgs) => {
 
   const list = createServerData$(async () => {
     const files = await globby(['./*'])
-    console.log(files)
+    console.log('files', files, readdirSync('./'))
     return files
   })
 
