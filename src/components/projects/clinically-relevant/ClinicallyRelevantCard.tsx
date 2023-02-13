@@ -1,6 +1,6 @@
 import type { ProjectCardComponent } from '../ProjectCard'
 import { ExternalIcon, InfoIcon } from '~/components/icons'
-import { useTrackFirstEvent } from '~/lib/analytics'
+import { useTrackFirstEvent } from '~/lib/potato'
 import { COMMON_CLASSNAMES } from '../utils'
 import cx from '~/utils/cx'
 import { createSignal, Show, VoidComponent } from 'solid-js'
@@ -57,14 +57,14 @@ const ClinicallyRelevantCard: ProjectCardComponent = props => {
             <li>Automatically redeploys when MDX content is updated</li>
             <li>
               Light &amp; Dark mode{' '}
-              <button
+              {/* <button
                 type="button"
                 onClick={toggle}
                 class="focus-ring rounded"
                 aria-label="Toggle Clinically Relevant dark mode"
               >
                 {theme() === 'light' ? '&#57113;' : '&#9728;'}
-              </button>
+              </button> */}
             </li>
           </ul>
         </div>

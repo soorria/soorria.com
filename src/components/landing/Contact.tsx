@@ -1,6 +1,6 @@
 import { ComponentProps, createSignal, For, VoidComponent } from 'solid-js'
 import { Dynamic } from 'solid-js/web'
-import { useTrackFirstEvent } from '~/lib/analytics'
+import { useTrackFirstEvent } from '~/lib/potato'
 import { contactLinks } from '~/links'
 import cx from '~/utils/cx'
 import LandingSection from './LandingSection'
