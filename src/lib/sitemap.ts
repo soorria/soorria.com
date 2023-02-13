@@ -1,4 +1,4 @@
-import globby from 'globby'
+import { globby } from 'globby'
 
 const PAGES_DIR = 'src/pages'
 const DATA_DIR = '_data'

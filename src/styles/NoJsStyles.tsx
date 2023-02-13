@@ -1,4 +1,4 @@
-interface NoJsStylesProps {}
+import { VoidComponent } from 'solid-js'
 
 const styles = [
   '.no-js-block{display:block !important}',
@@ -6,7 +6,7 @@ const styles = [
   '.no-js-hidden{display:none}',
 ].join('')
 
-const NoJsStyles: React.FC<NoJsStylesProps> = () => {
+const NoJsStyles: VoidComponent = () => {
   return (
     <noscript>
       <style>{styles}</style>

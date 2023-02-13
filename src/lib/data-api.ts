@@ -1,7 +1,10 @@
 import type { BaseFrontMatter, DataType } from '~/types/data'
-import type { NextApiHandler, NextApiRequest } from 'next'
 import { addCorsHeaders } from './cors'
 import { getAllFilesFrontMatter, getFileWithContent } from './data'
+
+type NextApiRequest = any
+type NextApiResponse = any
+type NextApiHandler = (req: NextApiRequest, res: NextApiResponse) => Promise<void> | void
 
 const getQueryAsPositiveInteger = (req: NextApiRequest, param: string, def = 0): number => {
   const value = req.query[param]

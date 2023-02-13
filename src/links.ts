@@ -1,4 +1,4 @@
-import type { ReactNode } from 'react'
+import { JSXElement } from 'solid-js'
 import {
   DiscordIcon,
   EmailIcon,
@@ -11,11 +11,11 @@ import {
   MessengerIcon,
   TwitterIconSolid,
 } from './components/icons'
-import Logo from './components/logo'
+import Logo from './components/Logo'
 import { GITHUB_URL } from './constants'
 
 interface Link {
-  title: ReactNode
+  title: string | (() => JSXElement)
   href: string
   icon: IconComponent
   iconAlt: string

@@ -1,24 +1,26 @@
-import { baseComponents } from '~/components/mdx/base'
 import { getMDXComponent, MDXContentProps } from 'mdx-bundler/client'
-import React, { Fragment, useMemo } from 'react'
+import { createMemo, VoidComponent, Accessor } from 'solid-js'
+import Fragment from '~/components/Fragment'
 
 // eslint-disable-next-line react/display-name
-const withCommonComponents = (Component: React.FC<MDXContentProps>) => () =>
-  <Component components={baseComponents} />
+const withCommonComponents = (Component: VoidComponent<MDXContentProps>) => () =>
+  <Component components={{}} />
 
-export const useMdxComponent = (code?: string | null | undefined): React.FC => {
-  return useMemo(() => {
-    if (!code) return Fragment
-    return withCommonComponents(getMDXComponent(code))
-  }, [code])
+export const useMdxComponent = (
+  code?: Accessor<string | null | undefined>
+): Accessor<VoidComponent> => {
+  return createMemo(() => {
+    const c = code?.()
+    if (!c) return Fragment
+    return withCommonComponents(getMDXComponent(c))
+  })
 }
 
-export const useMdxComponents = (code?: string[] | null | undefined): React.FC[] => {
-  return useMemo(
+export const useMdxComponents = (code?: string[] | null | undefined): Accessor<VoidComponent[]> => {
+  return createMemo(
     () =>
       code?.map(singleComponentCode =>
         withCommonComponents(getMDXComponent(singleComponentCode))
-      ) ?? [],
-    [code]
+      ) ?? []
   )
 }

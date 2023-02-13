@@ -1,16 +1,14 @@
 import CustomLink from '../CustomLink'
-import ReactDemo from './ReactDemo'
 import TsJsSwitcher from './TsJsSwitcher'
 import CustomCodeBlock from './CodeBlock'
-import dynamic from 'next/dynamic'
-import type { ComponentMap } from 'mdx-bundler/client'
+import { ComponentProps, lazy } from 'solid-js'
 
 export const baseComponents = {
   a: CustomLink,
   pre: CustomCodeBlock,
-  Image: dynamic(() => import('./MDXImage')),
-  Sandbox: props => (
-    <div className="-mx-2 md:-mx-6">
+  Image: lazy(() => import('./MDXImage')),
+  Sandbox: (props: ComponentProps<'iframe'>) => (
+    <div class="-mx-2 md:-mx-6">
       {/* eslint-disable-next-line jsx-a11y/iframe-has-title */}
       <iframe
         allow="accelerometer; ambient-light-sensor; camera; encrypted-media; geolocation; gyroscope; hid; microphone; midi; payment; usb; vr; xr-spatial-tracking"
@@ -19,10 +17,10 @@ export const baseComponents = {
       />
     </div>
   ),
-  Note: dynamic(() => import('./Note')),
-  Demo: ReactDemo,
-  SolidDemo: dynamic(() => import('./SolidDemo'), { ssr: false }),
-  Sparkles: dynamic(() => import('./Sparkles')),
+  Note: lazy(() => import('./Note')),
+  Demo: () => <>TODO: react demo</>,
+  SolidDemo: () => <>TODO: solid demo</>,
+  Sparkles: lazy(() => import('./Sparkles')),
   TsJsSwitcher,
-  Collapse: dynamic(() => import('./MDXCollapse')),
-} as ComponentMap
+  Collapse: lazy(() => import('./MDXCollapse')),
+}

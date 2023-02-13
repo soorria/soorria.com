@@ -1,7 +1,7 @@
-import { useEffect } from 'react'
+import { Accessor, createEffect, onCleanup } from 'solid-js'
 
-export const useScrollCssVar = (name: string): void => {
-  useEffect(() => {
+export const useScrollCssVar = (name: Accessor<string>): void => {
+  createEffect(() => {
     let percent = '0'
     let raf: number
 
@@ -15,7 +15,7 @@ export const useScrollCssVar = (name: string): void => {
     }
 
     const loop = () => {
-      document.body.style.setProperty(name, percent)
+      document.body.style.setProperty(name(), percent)
       raf = requestAnimationFrame(loop)
     }
 
@@ -23,9 +23,10 @@ export const useScrollCssVar = (name: string): void => {
     loop()
 
     window.addEventListener('scroll', handleScroll, { passive: true })
-    return () => {
+
+    onCleanup(() => {
       window.removeEventListener('scroll', handleScroll)
       if (raf) cancelAnimationFrame(raf)
-    }
-  }, [name])
+    })
+  })
 }

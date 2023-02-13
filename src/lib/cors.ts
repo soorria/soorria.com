@@ -1,5 +1,3 @@
-import type { NextApiResponse } from 'next'
-
-export const addCorsHeaders = (res: NextApiResponse): void => {
-  res.setHeader('Access-Control-Allow-Origin', '*')
+export const addCorsHeaders = (res: Response): void => {
+  res.headers.set('Access-Control-Allow-Origin', '*')
 }

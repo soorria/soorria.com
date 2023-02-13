@@ -1,7 +1,6 @@
 import cx from '~/utils/cx'
 import { useHydrated } from '~/utils/use-hydrated'
 import { useSyncedLocalStorage } from '~/utils/use-synced-local-storage'
-import { Children, isValidElement, PropsWithChildren, ReactElement, useMemo, useRef } from 'react'
 import type { CustomCodeBlockProps } from './CodeBlock'
 import { CodeBlockPre } from './CodeBlockPre'
 import { CodeBlockCopyButton } from './utils'
@@ -11,24 +10,24 @@ import {
   getCodeLinesFromPre,
   LANGUAGE_NAME_MAP,
 } from './utils'
+import { createMemo, JSXElement, ParentComponent, children } from 'solid-js'
 
 const TS_LANGUAGES = new Set(['ts', 'tsx', 'typescript'])
-const TsJsSwitcher: React.FC<PropsWithChildren> = props => {
+const TsJsSwitcher: ParentComponent = props => {
   const [isTs, setIsTs] = useSyncedLocalStorage<boolean>('soorria.com:isTs', true)
   const hydrated = useHydrated()
-  const pre = useRef<HTMLPreElement>(null)
+  let pre: HTMLPreElement | undefined
 
-  const { blocks, names } = useMemo(() => {
-    const children = props.children
-      ? Children.toArray(props.children).filter(el => isValidElement(el))
-      : ([] as ReactElement[])
+  const childPres = children(() => props.children)
+
+  return <>{props.children}</>
+
+  const data = createMemo(() => {
+    const children = childPres.toArray()
 
     if (children.length <= 1) return { blocks: [], names: {} }
 
-    const [a, b] = children as [
-      ReactElement<CustomCodeBlockProps>,
-      ReactElement<CustomCodeBlockProps>
-    ]
+    const [a, b] = children as [CustomCodeBlockProps, CustomCodeBlockProps]
 
     const blocks = TS_LANGUAGES.has(a.props.language ?? '') ? ([a, b] as const) : ([b, a] as const)
 
@@ -43,10 +42,10 @@ const TsJsSwitcher: React.FC<PropsWithChildren> = props => {
     } as const
   }, [props.children])
 
-  if (blocks.length <= 1) return <>{props.children}</>
+  if (data().blocks.length <= 1) return <>{props.children}</>
 
   const selectedBlock = blocks[isTs ? 0 : 1]!
-  const { children, className, title, ...rest } = selectedBlock.props
+  // const { children, className, title, ...rest } = selectedBlock.props
 
   return (
     <>

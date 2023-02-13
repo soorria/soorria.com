@@ -1,19 +1,18 @@
-import Link from 'next/link'
-import { PropsWithChildren } from 'react'
+import { ParentComponent } from 'solid-js'
+import { A } from 'solid-start'
 
-type PostListItemLinkProps = PropsWithChildren<{
+type PostListItemLinkProps = {
   href: string
-}>
+}
 
-const PostListItemLink: React.FC<PostListItemLinkProps> = ({ href, children }) => {
+const PostListItemLink: ParentComponent<PostListItemLinkProps> = props => {
   return (
-    <Link
-      href={href}
-      passHref
-      className="group relative overflow-hidden rounded-xl bg-drac-base-light p-4 ring-drac-pink transition-shadow focus:outline-none focus:ring hocus:shadow-2xl md:py-6 md:px-8 md:focus:ring-4"
+    <A
+      href={props.href}
+      class="group relative overflow-hidden rounded-xl bg-drac-base-light p-4 ring-drac-pink transition-shadow focus:outline-none focus:ring hocus:shadow-2xl md:py-6 md:px-8 md:focus:ring-4"
     >
-      {children}
-    </Link>
+      {props.children}
+    </A>
   )
 }
 

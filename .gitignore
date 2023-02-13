@@ -1,22 +1,27 @@
-# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+# Build output
+dist
+.solid
+.output
+.vercel
+.netlify
+netlify
 
 # dependencies
 /node_modules
-/.pnp
-.pnp.js
 
-# testing
-/coverage
+# IDEs and editors
+/.idea
+.project
+.classpath
+*.launch
+.settings/
 
-# next.js
-/.next/
-/out/
+# Temp
+gitignore
 
-# production
-/build
-
-# misc
+# System Files
 .DS_Store
+Thumbs.db
 *.pem
 
 # debug

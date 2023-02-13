@@ -1,19 +1,19 @@
-import type { PropsWithChildren, ReactNode } from 'react'
+import { JSXElement, ParentComponent } from 'solid-js'
 import CustomLink from '../CustomLink'
 
-type LandingSectionProps = PropsWithChildren<{
-  title: ReactNode
+type LandingSectionProps = {
+  title: JSXElement
   id?: string
-}>
+}
 
-const LandingSection: React.FC<LandingSectionProps> = ({ title, children, id }) => {
+const LandingSection: ParentComponent<LandingSectionProps> = props => {
   return (
-    <section id={id} className="mt-8 mb-24" style={{ scrollMarginTop: '1rem' }}>
-      <h3 className="mb-8 text-4xl font-bold">
-        {title}
-        <CustomLink href={`#${id}`} className="heading-anchor" aria-hidden="true" tabIndex={-1} />
+    <section id={props.id} class="mt-8 mb-24 scroll-mt-4">
+      <h3 class="mb-8 text-4xl font-bold">
+        {props.title}
+        <CustomLink href={`#${props.id}`} class="heading-anchor" aria-hidden="true" tabIndex={-1} />
       </h3>
-      {children}
+      {props.children}
     </section>
   )
 }

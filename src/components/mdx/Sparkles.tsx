@@ -1,11 +1,12 @@
 import { IconComponent, ReactIcon, SolidJsIcon, TypescriptIcon } from '../icons'
 import cx from '~/utils/cx'
 import { random, randomItem } from '~/utils/random'
-import { PropsWithChildren, useEffect, useState } from 'react'
+import { Dynamic } from 'solid-js/web'
+import { createSignal, onCleanup, onMount, ParentComponent, VoidComponent } from 'solid-js'
 
-type SparklesProps = PropsWithChildren<{
+type SparklesProps = {
   block?: boolean
-}>
+}
 
 /**
  * Heavily inspired / copied from https://www.joshwcomeau.com/react/animated-sparkles-in-react/
@@ -35,7 +36,7 @@ const SparkleSvg: SparkleComponent = props => {
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
       style={style}
-      className={sparkleClassname}
+      class={sparkleClassname}
     >
       <path
         d="M80 0C80 0 84.2846 41.2925 101.496 58.504C118.707 75.7154 160 80 160 80C160 80 118.707 84.2846 101.496 101.496C84.2846 118.707 80 160 80 160C80 160 75.7154 118.707 58.504 101.496C41.2925 84.2846 0 80 0 80C0 80 41.2925 75.7154 58.504 58.504C75.7154 41.2925 80 0 80 0Z"
@@ -46,8 +47,8 @@ const SparkleSvg: SparkleComponent = props => {
 }
 
 const iconComponentToSparkleComponent = (Icon: IconComponent): SparkleComponent => {
-  const sparkleComponent: SparkleComponent = ({ style }) => (
-    <Icon style={style} className={sparkleClassname} />
+  const sparkleComponent: SparkleComponent = props => (
+    <Dynamic component={Icon} style={props.style} class={sparkleClassname} />
   )
   return sparkleComponent
 }
@@ -80,15 +81,15 @@ const generateSparkleDetails = () => {
 }
 
 type SparkleDetails = ReturnType<typeof generateSparkleDetails>
-type SparkleComponent = React.FC<SparkleDetails>
+type SparkleComponent = VoidComponent<SparkleDetails>
 
 const sparkleClassname = 'animation-sparkle pointer-events-none absolute'
 
-const Sparkles: React.FC<SparklesProps> = ({ children, block }) => {
-  const [sparkles, setSparkles] = useState<SparkleDetails[]>([])
+const Sparkles: ParentComponent<SparklesProps> = props => {
+  const [sparkles, setSparkles] = createSignal<SparkleDetails[]>([])
 
-  useEffect(() => {
-    let timeout: ReturnType<typeof setTimeout> | null
+  let timeout: ReturnType<typeof setTimeout> | undefined
+  onMount(() => {
     const randomInterval = (fn: () => void) => {
       timeout = setTimeout(fn, random(50, 500))
     }
@@ -108,21 +109,20 @@ const Sparkles: React.FC<SparklesProps> = ({ children, block }) => {
     }
 
     randomInterval(loop)
-
-    return () => {
-      if (timeout) {
-        clearInterval(timeout)
-      }
+  })
+  onCleanup(() => {
+    if (timeout) {
+      clearInterval(timeout)
     }
-  }, [])
+  })
 
   return (
-    <span className={cx('relative', block ? 'block' : 'inline-block')}>
-      {sparkles.map(s => (
-        <SparkleSvg key={s.createdAt} {...s} />
+    <span class={cx('relative', props.block ? 'block' : 'inline-block')}>
+      {sparkles().map(s => (
+        <SparkleSvg {...s} />
       ))}
-      <span className="relative" style={{ zIndex: zIndexes.content }}>
-        {children}
+      <span class="relative" style={{ 'z-index': zIndexes.content }}>
+        {props.children}
       </span>
     </span>
   )

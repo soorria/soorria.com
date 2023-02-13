@@ -1,4 +1,4 @@
-import { useState, useCallback, useRef } from 'react'
+import { Accessor, createSignal } from 'solid-js'
 
 export type UseCopyProps = {
   copiedTimeout?: number
@@ -6,22 +6,16 @@ export type UseCopyProps = {
 
 type CopyFn = (text: string) => Promise<void>
 
-export const useCopy = ({ copiedTimeout = 2000 }: UseCopyProps = {}): [
-  copy: CopyFn,
-  copied: boolean
-] => {
-  const [copied, setCopied] = useState(false)
-  const timeoutRef = useRef<NodeJS.Timeout>()
+export const useCopy = (props?: UseCopyProps): [copy: CopyFn, copied: Accessor<boolean>] => {
+  const [copied, setCopied] = createSignal(false)
+  let timeoutRef: ReturnType<typeof setTimeout> | undefined
 
-  const copy: CopyFn = useCallback(
-    async text => {
-      await navigator.clipboard.writeText(text)
-      setCopied(true)
-      if (timeoutRef.current) clearTimeout(timeoutRef.current)
-      timeoutRef.current = setTimeout(() => setCopied(false), copiedTimeout)
-    },
-    [copiedTimeout]
-  )
+  const copy: CopyFn = async text => {
+    await navigator.clipboard.writeText(text)
+    setCopied(true)
+    if (timeoutRef) clearTimeout(timeoutRef)
+    timeoutRef = setTimeout(() => setCopied(false), props?.copiedTimeout ?? 2000)
+  }
 
   return [copy, copied]
 }

@@ -1,8 +1,8 @@
-import { PropsWithChildren } from 'react'
+import { ParentComponent } from 'solid-js'
 
-const ProjectsGrid: React.FC<PropsWithChildren> = ({ children }) => {
+const ProjectsGrid: ParentComponent = props => {
   return (
-    <div className="grid grid-flow-row-dense grid-cols-1 gap-12 sm:grid-cols-2">{children}</div>
+    <div class="grid grid-flow-row-dense grid-cols-1 gap-12 sm:grid-cols-2">{props.children}</div>
   )
 }
 

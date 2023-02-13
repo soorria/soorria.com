@@ -1,4 +1,4 @@
-import { useCallback, useReducer, useState } from 'react'
+import { Accessor, createSignal } from 'solid-js'
 
 export const SKILLS = [
   'TypeScript & JavaScript',
@@ -32,36 +32,34 @@ export type UseSkillsInput = {
 }
 
 export type UseSkillsResult = {
-  skills: string[]
+  skills: Accessor<string[]>
   shuffle: (n?: number) => void
-  showAll: boolean
+  showAll: Accessor<boolean>
   toggleShowAll: (next?: boolean) => void
 }
 
-export const useSkills = ({
-  defaultIndexes,
-  defaultShowAll = false,
-}: UseSkillsInput): UseSkillsResult => {
-  const [indexes, setIndexes] = useState(() => {
-    if (defaultIndexes) return defaultIndexes
-    return getRandomSkillIndexes()
-  })
-  const shuffle = useCallback(
-    (n?: number) => {
-      setIndexes(getRandomSkillIndexes(n ?? indexes.length))
-    },
-    [indexes.length]
+export const useSkills = (props: UseSkillsInput): UseSkillsResult => {
+  const [indexes, setIndexes] = createSignal(
+    (() => {
+      if (props.defaultIndexes) return props.defaultIndexes
+      return getRandomSkillIndexes()
+    })()
   )
+  const shuffle = (n?: number) => {
+    const newIndices = getRandomSkillIndexes(n ?? indexes().length)
+    setIndexes(() => newIndices)
+  }
 
-  const [showAll, toggleShowAll] = useReducer<(v: boolean, next?: boolean) => boolean, boolean>(
-    (v, next) => (typeof next === 'undefined' ? !v : next),
-    defaultShowAll,
-    () => defaultShowAll
-  )
+  const [showAll, setShowAll] = createSignal(props.defaultShowAll ?? false)
 
-  const skills = showAll ? SKILLS : indexes.map(i => SKILLS[i]!)
+  const skills = () => (showAll() ? SKILLS : indexes().map(i => SKILLS[i]!))
 
-  return { skills, shuffle, toggleShowAll, showAll }
+  return {
+    skills,
+    shuffle,
+    toggleShowAll: (v?: boolean) => setShowAll(typeof v === 'undefined' ? curr => !curr : v),
+    showAll,
+  }
 }
 
 export const getRandomSkillIndexes = (n = 8): number[] => {

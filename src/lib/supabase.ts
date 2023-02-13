@@ -1,6 +1,8 @@
 import { createClient } from '@supabase/supabase-js'
 
-const client = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_ANON_KEY)
+const url = import.meta.env.VITE_SUPABASE_URL
+const anonKey = import.meta.env.VITE_SUPABASE_ANON_KEY
+const client = createClient(url, anonKey)
 
 type Singleton = {
   id: number
@@ -10,11 +12,7 @@ type Singleton = {
 }
 
 export const getSingleton = async (slug: string): Promise<Singleton> => {
-  const { data, error } = await client
-    .from<Singleton>('singletons')
-    .select('*')
-    .eq('slug', slug)
-    .maybeSingle()
+  const { data, error } = await client.from('singletons').select('*').eq('slug', slug).maybeSingle()
 
   if (error) {
     throw error

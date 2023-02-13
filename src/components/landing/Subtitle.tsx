@@ -1,57 +1,56 @@
-import { useMdxComponents } from './mdx'
-import cx from '~/utils/cx'
-import { randomIndex } from '~/utils/random'
-import { useRef, useState } from 'react'
 import { RefreshIcon } from '../icons'
+import { createMemo, createSignal, VoidComponent } from 'solid-js'
+import { Dynamic } from 'solid-js/web'
+import { randomIndex } from '~/utils/random'
 
 interface SubtitleProps {
-  options?: string[] | null | undefined
+  options?: string[]
 }
 
 const getDurationMs = (n: number) => 700 + n * 200
 
-const Subtitle: React.FC<SubtitleProps> = ({ options }) => {
-  const [rotations, setRotations] = useState(0)
-  const rotationTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>()
-  const rotationDuration = rotations > 0 ? getDurationMs(rotations) : 0
-  const [index, setIndex] = useState(0)
-  const components = useMdxComponents(options)
-  const Component = components[index]!
+const Subtitle: VoidComponent<SubtitleProps> = props => {
+  const [rotations, setRotations] = createSignal(0)
+  let rotationTimeoutRef: ReturnType<typeof setTimeout> | undefined
+  const rotationDuration = () => (rotations() > 0 ? getDurationMs(rotations()) : 0)
+  const [index, setIndex] = createSignal(0)
+  const components = createMemo(() => props.options?.map(o => () => <p>{o}</p>) ?? [])
+  const getComponent = () => components()[index()]!
 
   const randomise = () => {
-    if (components.length < 1) return
+    if (components().length < 1) return
 
-    let i = index
-    while (i === index) {
-      i = randomIndex(components)
+    let i = index()
+    while (i === index()) {
+      i = randomIndex(components())
     }
 
     setIndex(i)
 
-    if (rotationTimeoutRef.current) {
-      clearTimeout(rotationTimeoutRef.current)
+    if (rotationTimeoutRef) {
+      clearTimeout(rotationTimeoutRef)
     }
-    rotationTimeoutRef.current = setTimeout(() => {
+    rotationTimeoutRef = setTimeout(() => {
       setRotations(0)
-    }, getDurationMs(rotations + 1) + 300)
+    }, getDurationMs(rotations() + 1) + 300)
 
     setRotations(r => r + 1)
   }
 
   return (
-    <div className="[&>p]:inline">
-      <Component />
+    <div class="[&>p]:inline">
+      <Dynamic component={getComponent()} />
       <button
         onClick={randomise}
-        className="focus-ring group relative ml-2 inline-flex translate-y-1 items-center rounded text-drac-highlight transition hocus:text-drac-purple"
+        class="focus-ring group relative ml-2 inline-flex translate-y-1 items-center rounded text-drac-highlight transition hocus:text-drac-purple"
         aria-label="refresh subtitle about me"
         title="refresh subtitle about me"
       >
         <RefreshIcon
-          className={cx('h-em w-em transform transition-transform ease-in-out')}
+          class="h-em w-em transform transition-transform ease-out"
           style={{
-            ['--tw-rotate' as string]: `-${rotations}turn`,
-            transitionDuration: `${rotationDuration}ms`,
+            ['--tw-rotate' as string]: `-${rotations()}turn`,
+            'transition-duration': `${rotationDuration()}ms`,
           }}
         />
       </button>

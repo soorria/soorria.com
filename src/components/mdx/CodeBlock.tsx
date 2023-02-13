@@ -1,6 +1,5 @@
 import cx from '~/utils/cx'
 import { useHydrated } from '~/utils/use-hydrated'
-import React, { PropsWithChildren, ReactNode, useRef } from 'react'
 import { CodeBlockPre, CodeBlockPreExtraProps } from './CodeBlockPre'
 import {
   CodeBlockCopyButton,
@@ -9,45 +8,42 @@ import {
   getCodeLinesFromPre,
   LANGUAGE_NAME_MAP,
 } from './utils'
+import { JSXElement, ParentComponent, Show, splitProps } from 'solid-js'
 
-export type CustomCodeBlockProps = PropsWithChildren<
-  {
-    className: string
-    language?: string
-    title?: ReactNode
-  } & CodeBlockPreExtraProps
->
+export type CustomCodeBlockProps = {
+  class: string
+  language?: string
+  title?: JSXElement
+} & CodeBlockPreExtraProps
 
-const CustomCodeBlock: React.FC<CustomCodeBlockProps> = ({
-  children,
-  className,
-  language: languageFromMdx,
-  title,
-  ...rest
-}) => {
-  const pre = useRef<HTMLPreElement>(null)
+const CustomCodeBlock: ParentComponent<CustomCodeBlockProps> = props => {
+  const [, rest] = splitProps(props, ['children', 'class', 'language', 'title'])
+  let pre: HTMLPreElement | undefined
   const hydrated = useHydrated()
 
-  if (!className?.includes('shiki')) {
-    return <pre className={className}>{children}</pre>
-  }
-
-  const language = (languageFromMdx && LANGUAGE_NAME_MAP[languageFromMdx]) ?? languageFromMdx
+  const language = (props.language && LANGUAGE_NAME_MAP[props.language]) ?? props.language
 
   return (
-    <>
-      {title && <CodeBlockTitle>{title}</CodeBlockTitle>}
-      <div className={cx('shiki', CODE_BLOCK_CLASSNAMES.root)}>
-        <div className={CODE_BLOCK_CLASSNAMES.header}>
-          <div className={CODE_BLOCK_CLASSNAMES.languageTitle}>{language}</div>
-          <div className="flex-1" />
-          {hydrated && <CodeBlockCopyButton getText={() => getCodeLinesFromPre(pre.current)} />}
+    <Show
+      when={props.class?.includes('shiki')}
+      fallback={<pre class={props.class}>{props.children}</pre>}
+    >
+      <Show when={props.title}>
+        <CodeBlockTitle>{props.title}</CodeBlockTitle>
+      </Show>
+      <div class={cx('shiki', CODE_BLOCK_CLASSNAMES.root)}>
+        <div class={CODE_BLOCK_CLASSNAMES.header}>
+          <div class={CODE_BLOCK_CLASSNAMES.languageTitle}>{language}</div>
+          <div class="flex-1" />
+          <Show when={hydrated()}>
+            <CodeBlockCopyButton getText={() => getCodeLinesFromPre(pre)} />
+          </Show>
         </div>
-        <CodeBlockPre ref={pre} className={className} {...rest}>
-          {children}
+        <CodeBlockPre ref={pre} class={props.class} {...rest}>
+          {props.children}
         </CodeBlockPre>
       </div>
-    </>
+    </Show>
   )
 }
 

@@ -1,14 +1,14 @@
-import { useEffect, useState } from 'react'
+import { Accessor, createSignal, onMount } from 'solid-js'
 
 let _hydrated = false
 
-export const useHydrated = (): boolean => {
-  const [hydrated, setHydrated] = useState(_hydrated)
+export const useHydrated = (): Accessor<boolean> => {
+  const [hydrated, setHydrated] = createSignal(_hydrated)
 
-  useEffect(() => {
+  onMount(() => {
     _hydrated = true
     setHydrated(true)
-  }, [])
+  })
 
   return hydrated
 }

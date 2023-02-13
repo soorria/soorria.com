@@ -1,14 +1,13 @@
-import { Children } from 'react'
+import { children, For, ParentComponent, splitProps } from 'solid-js'
 import Collapse, { CollapseProps } from '../Collapse'
 
-const MDXCollapse: React.FC<CollapseProps> = ({ children, ...props }) => {
+const MDXCollapse: ParentComponent<CollapseProps> = props => {
+  const [, rest] = splitProps(props, ['children'])
   return (
-    <Collapse {...props}>
-      {Children.map(children, (child, i) => (
-        <div key={i} className="collapse-child">
-          {child}
-        </div>
-      ))}
+    <Collapse {...rest}>
+      <For each={children(() => props.children).toArray()}>
+        {child => <div class="collapse-child">{child}</div>}
+      </For>
     </Collapse>
   )
 }

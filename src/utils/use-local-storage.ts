@@ -1,28 +1,29 @@
-import type { Dispatch, SetStateAction } from 'react'
-import { useEffect, useState } from 'react'
+import { Accessor, createEffect, createSignal, Setter } from 'solid-js'
 
 export const useLocalStorage = <T>(
   key: string,
   initialValue: T
-): [T, Dispatch<SetStateAction<T>>, () => void] => {
-  const [state, setState] = useState<T>(() => {
-    const cached = localStorage.getItem(key)
+): [Accessor<T>, Setter<T>, () => void] => {
+  const [state, setState] = createSignal<T>(
+    (() => {
+      const cached = localStorage.getItem(key)
 
-    if (!cached) return initialValue
+      if (!cached) return initialValue
 
-    try {
-      return JSON.parse(cached) as T
-    } catch (err) {
-      return initialValue
-    }
-  })
+      try {
+        return JSON.parse(cached) as T
+      } catch (err) {
+        return initialValue
+      }
+    })()
+  )
 
-  useEffect(() => {
-    localStorage.setItem(key, JSON.stringify(state))
+  createEffect(() => {
+    localStorage.setItem(key, JSON.stringify(state()))
   }, [state, key])
 
   const clearState = () => {
-    setState(initialValue)
+    setState(() => initialValue)
   }
 
   return [state, setState, clearState]

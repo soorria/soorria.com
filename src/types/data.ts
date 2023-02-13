@@ -1,10 +1,4 @@
-export enum DataType {
-  snippets = 'snippets',
-  blog = 'blog',
-  projects = 'projects',
-  work = 'work',
-  misc = 'misc',
-}
+export type DataType = 'snippets' | 'blog' | 'projects' | 'work' | 'misc'
 
 export interface BaseData {
   slug: string

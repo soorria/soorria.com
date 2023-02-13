@@ -11,10 +11,10 @@ export const sortByCreatedAtField = <T extends HasCreatedAtField>(arr: T[]): T[]
   arr.sort(createdAtFieldComparator)
 
 export const filterUnpublished = <T extends HasCreatedAtField>(arr: T[]): T[] =>
-  arr.filter(el => process.env.NODE_ENV !== 'production' || !!el.createdAt)
+  arr.filter(el => import.meta.env.DEV || !!el.createdAt)
 
 export const filterPrivate = <T extends { private?: boolean }>(arr: T[]): T[] =>
-  arr.filter(el => process.env.NODE_ENV !== 'production' || !el.private)
+  arr.filter(el => import.meta.env.DEV || !el.private)
 
 export const addRefToUrl = (url: string, ref = 'soorria.com'): string => {
   const u = new URL(url)

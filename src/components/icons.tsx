@@ -1,14 +1,13 @@
-import type { SVGProps } from 'react'
+import { ComponentProps, VoidComponent } from 'solid-js'
 
 export type IconProps = {
-  className?: string
-} & SVGProps<SVGSVGElement>
+  class?: string
+} & ComponentProps<'svg'>
 
-export type IconComponent = React.FC<IconProps>
+export type IconComponent = VoidComponent<IconProps>
 
-export const HeartIcon: IconComponent = ({ className, ...props }) => (
+export const HeartIcon: IconComponent = props => (
   <svg
-    className={className}
     role="presentation"
     xmlns="http://www.w3.org/2000/svg"
     fill="none"
@@ -17,17 +16,16 @@ export const HeartIcon: IconComponent = ({ className, ...props }) => (
     {...props}
   >
     <path
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      strokeWidth={2}
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      stroke-width={2}
       d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"
     />
   </svg>
 )
 
-export const ClockIconSolid: IconComponent = ({ className, ...props }) => (
+export const ClockIconSolid: IconComponent = props => (
   <svg
-    className={className}
     role="presentation"
     xmlns="http://www.w3.org/2000/svg"
     viewBox="0 0 20 20"
@@ -35,34 +33,32 @@ export const ClockIconSolid: IconComponent = ({ className, ...props }) => (
     {...props}
   >
     <path
-      fillRule="evenodd"
+      fill-rule="evenodd"
       d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z"
-      clipRule="evenodd"
+      clip-rule="evenodd"
     />
   </svg>
 )
 
-export const TriangleIcon: IconComponent = ({ className, ...props }) => (
+export const TriangleIcon: IconComponent = props => (
   <svg
-    className={className}
     role="presentation"
     viewBox="0 0 24 24"
     width="24"
     height="24"
     stroke="currentColor"
-    strokeWidth="2"
+    stroke-width="2"
     fill="none"
-    strokeLinecap="round"
-    strokeLinejoin="round"
+    stroke-linecap="round"
+    stroke-linejoin="round"
     {...props}
   >
     <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path>
   </svg>
 )
 
-export const EditIcon: IconComponent = ({ className, ...props }) => (
+export const EditIcon: IconComponent = props => (
   <svg
-    className={className}
     role="presentation"
     xmlns="http://www.w3.org/2000/svg"
     fill="none"
@@ -71,9 +67,9 @@ export const EditIcon: IconComponent = ({ className, ...props }) => (
     {...props}
   >
     <path
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      strokeWidth={2}
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      stroke-width={2}
       d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"
     />
   </svg>
@@ -82,93 +78,70 @@ export const EditIcon: IconComponent = ({ className, ...props }) => (
 export const CodeIcon: IconComponent = props => (
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" {...props}>
     <path
-      fillRule="evenodd"
+      fill-rule="evenodd"
       d="M6.28 5.22a.75.75 0 010 1.06L2.56 10l3.72 3.72a.75.75 0 01-1.06 1.06L.97 10.53a.75.75 0 010-1.06l4.25-4.25a.75.75 0 011.06 0zm7.44 0a.75.75 0 011.06 0l4.25 4.25a.75.75 0 010 1.06l-4.25 4.25a.75.75 0 01-1.06-1.06L17.44 10l-3.72-3.72a.75.75 0 010-1.06zM11.377 2.011a.75.75 0 01.612.867l-2.5 14.5a.75.75 0 01-1.478-.255l2.5-14.5a.75.75 0 01.866-.612z"
-      clipRule="evenodd"
+      clip-rule="evenodd"
     />
   </svg>
 )
 
-export const ExternalIcon: IconComponent = ({ className, ...props }) => (
-  <svg
-    role="presentation"
-    className={className}
-    fill="none"
-    viewBox="0 0 24 24"
-    stroke="currentColor"
-    {...props}
-  >
+export const ExternalIcon: IconComponent = props => (
+  <svg role="presentation" fill="none" viewBox="0 0 24 24" stroke="currentColor" {...props}>
     <path
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      strokeWidth={2}
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      stroke-width={2}
       d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"
     />
   </svg>
 )
 
-export const InfoIcon: IconComponent = ({ className, ...props }) => (
-  <svg
-    aria-label="presentation"
-    className={className}
-    fill="none"
-    viewBox="0 0 24 24"
-    stroke="currentColor"
-    {...props}
-  >
+export const InfoIcon: IconComponent = props => (
+  <svg aria-label="presentation" fill="none" viewBox="0 0 24 24" stroke="currentColor" {...props}>
     <path
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      strokeWidth={2}
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      stroke-width={2}
       d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
     />
   </svg>
 )
 
-export const GithubIconSolid: IconComponent = ({ className, ...props }) => (
+export const GithubIconSolid: IconComponent = props => (
   <svg
-    className={className}
     aria-label="github"
     viewBox="0 0 24 24"
     stroke="currentColor"
-    strokeWidth="2"
+    stroke-width="2"
     fill="currentColor"
-    strokeLinecap="round"
-    strokeLinejoin="round"
+    stroke-linecap="round"
+    stroke-linejoin="round"
     {...props}
   >
     <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
   </svg>
 )
 
-export const EmailIcon: IconComponent = ({ className, ...props }) => (
-  <svg
-    className={className}
-    aria-label="email"
-    fill="none"
-    viewBox="0 0 24 24"
-    stroke="currentColor"
-    {...props}
-  >
+export const EmailIcon: IconComponent = props => (
+  <svg aria-label="email" fill="none" viewBox="0 0 24 24" stroke="currentColor" {...props}>
     <path
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      strokeWidth={2}
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      stroke-width={2}
       d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
     />
   </svg>
 )
 
-export const LinkedinIconSolid: IconComponent = ({ className, ...props }) => (
+export const LinkedinIconSolid: IconComponent = props => (
   <svg
     viewBox="0 0 24 24"
-    className={className}
     aria-label="twitter"
     stroke="currentColor"
-    strokeWidth="2"
+    stroke-width="2"
     fill="currentColor"
-    strokeLinecap="round"
-    strokeLinejoin="round"
+    stroke-linecap="round"
+    stroke-linejoin="round"
     {...props}
   >
     <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path>
@@ -177,46 +150,43 @@ export const LinkedinIconSolid: IconComponent = ({ className, ...props }) => (
   </svg>
 )
 
-export const TwitterIconSolid: IconComponent = ({ className, ...props }) => (
+export const TwitterIconSolid: IconComponent = props => (
   <svg
-    className={className}
     aria-label="twitter"
     viewBox="0 0 24 24"
     width="24"
     height="24"
     stroke="currentColor"
-    strokeWidth="2"
+    stroke-width="2"
     fill="currentColor"
-    strokeLinecap="round"
-    strokeLinejoin="round"
+    stroke-linecap="round"
+    stroke-linejoin="round"
     {...props}
   >
     <path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"></path>
   </svg>
 )
 
-export const FacebookIconSolid: IconComponent = ({ className, ...props }) => (
+export const FacebookIconSolid: IconComponent = props => (
   <svg
-    className={className}
     aria-label="Facebook"
     viewBox="0 0 24 24"
     stroke="currentColor"
-    strokeWidth="2"
+    stroke-width="2"
     fill="currentColor"
-    strokeLinecap="round"
-    strokeLinejoin="round"
+    stroke-linecap="round"
+    stroke-linejoin="round"
     {...props}
   >
     <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path>
   </svg>
 )
 
-export const MALIconSolid: IconComponent = ({ className, ...props }) => (
+export const MALIconSolid: IconComponent = props => (
   <svg
-    className={className}
     aria-label="My Anime List"
     stroke="currentColor"
-    strokeWidth="0"
+    stroke-width="0"
     fill="currentColor"
     viewBox="0 0 24 24"
     height="1em"
@@ -227,12 +197,12 @@ export const MALIconSolid: IconComponent = ({ className, ...props }) => (
   </svg>
 )
 
-export const GlobeIconOutline: IconComponent = ({ className, ...props }) => (
-  <svg className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor" {...props}>
+export const GlobeIconOutline: IconComponent = props => (
+  <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" {...props}>
     <path
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      strokeWidth={2}
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      stroke-width={2}
       d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9"
     />
   </svg>
@@ -259,16 +229,16 @@ export const TypescriptIcon: IconComponent = props => (
 export const ScriptIcon: IconComponent = props => (
   <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" {...props}>
     <path
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      strokeWidth={1.5}
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      stroke-width={1.5}
       d="M8 9l3 3-3 3m5 0h3M5 20h14a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
     />
   </svg>
 )
 
 export const DiscordIcon: IconComponent = props => (
-  <svg stroke="currentColor" fill="currentColor" strokeWidth="0" viewBox="0 0 24 24" {...props}>
+  <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 24 24" {...props}>
     <path d="M20.317 4.3698a19.7913 19.7913 0 00-4.8851-1.5152.0741.0741 0 00-.0785.0371c-.211.3753-.4447.8648-.6083 1.2495-1.8447-.2762-3.68-.2762-5.4868 0-.1636-.3933-.4058-.8742-.6177-1.2495a.077.077 0 00-.0785-.037 19.7363 19.7363 0 00-4.8852 1.515.0699.0699 0 00-.0321.0277C.5334 9.0458-.319 13.5799.0992 18.0578a.0824.0824 0 00.0312.0561c2.0528 1.5076 4.0413 2.4228 5.9929 3.0294a.0777.0777 0 00.0842-.0276c.4616-.6304.8731-1.2952 1.226-1.9942a.076.076 0 00-.0416-.1057c-.6528-.2476-1.2743-.5495-1.8722-.8923a.077.077 0 01-.0076-.1277c.1258-.0943.2517-.1923.3718-.2914a.0743.0743 0 01.0776-.0105c3.9278 1.7933 8.18 1.7933 12.0614 0a.0739.0739 0 01.0785.0095c.1202.099.246.1981.3728.2924a.077.077 0 01-.0066.1276 12.2986 12.2986 0 01-1.873.8914.0766.0766 0 00-.0407.1067c.3604.698.7719 1.3628 1.225 1.9932a.076.076 0 00.0842.0286c1.961-.6067 3.9495-1.5219 6.0023-3.0294a.077.077 0 00.0313-.0552c.5004-5.177-.8382-9.6739-3.5485-13.6604a.061.061 0 00-.0312-.0286zM8.02 15.3312c-1.1825 0-2.1569-1.0857-2.1569-2.419 0-1.3332.9555-2.4189 2.157-2.4189 1.2108 0 2.1757 1.0952 2.1568 2.419 0 1.3332-.9555 2.4189-2.1569 2.4189zm7.9748 0c-1.1825 0-2.1569-1.0857-2.1569-2.419 0-1.3332.9554-2.4189 2.1569-2.4189 1.2108 0 2.1757 1.0952 2.1568 2.419 0 1.3332-.946 2.4189-2.1568 2.4189Z"></path>
   </svg>
 )
@@ -276,30 +246,30 @@ export const DiscordIcon: IconComponent = props => (
 export const LinkIcon: IconComponent = props => (
   <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" {...props}>
     <path
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      strokeWidth={2}
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      stroke-width={2}
       d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"
     />
   </svg>
 )
 
 export const RefreshIcon: IconComponent = props => (
-  <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2} {...props}>
+  <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width={2} {...props}>
     <path
-      strokeLinecap="round"
-      strokeLinejoin="round"
+      stroke-linecap="round"
+      stroke-linejoin="round"
       d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"
     />
   </svg>
 )
 
 export const MessengerIcon: IconComponent = props => (
-  <svg stroke="currentColor" fill="currentColor" strokeWidth={0} viewBox="0 0 24 24" {...props}>
+  <svg stroke="currentColor" fill="currentColor" stroke-width={0} viewBox="0 0 24 24" {...props}>
     <g>
       <path fill="none" d="M0 0h24v24H0z"></path>
       <path
-        fillRule="nonzero"
+        fill-rule="nonzero"
         d="M12 2c5.634 0 10 4.127 10 9.7 0 5.573-4.366 9.7-10 9.7a10.894 10.894 0 0 1-2.895-.384.8.8 0 0 0-.534.039l-1.984.876a.8.8 0 0 1-1.123-.707l-.055-1.78a.797.797 0 0 0-.268-.57C3.195 17.135 2 14.617 2 11.7 2 6.127 6.367 2 12 2zM5.995 14.537c-.282.447.268.951.689.631l3.155-2.394a.6.6 0 0 1 .723 0l2.337 1.75a1.5 1.5 0 0 0 2.169-.4l2.937-4.66c.282-.448-.268-.952-.689-.633l-3.155 2.396a.6.6 0 0 1-.723 0l-2.337-1.75a1.5 1.5 0 0 0-2.169.4l-2.937 4.66z"
       ></path>
     </g>
@@ -317,9 +287,9 @@ export const SolidJsIcon: IconComponent = props => (
         y1="3.451"
         y2="63.891"
       >
-        <stop offset=".118" stopColor="#bbbdbf" />
-        <stop offset=".299" stopColor="#f1f1f2" />
-        <stop offset="1" stopColor="#d0d2d3" />
+        <stop offset=".118" stop-color="#bbbdbf" />
+        <stop offset=".299" stop-color="#f1f1f2" />
+        <stop offset="1" stop-color="#d0d2d3" />
       </linearGradient>
       <linearGradient
         id="b"
@@ -329,9 +299,9 @@ export const SolidJsIcon: IconComponent = props => (
         y1="32.988"
         y2="105.648"
       >
-        <stop offset="0" stopColor="#bbbdbf" />
-        <stop offset=".475" stopColor="#929497" />
-        <stop offset="1" stopColor="#58595b" />
+        <stop offset="0" stop-color="#bbbdbf" />
+        <stop offset=".475" stop-color="#929497" />
+        <stop offset="1" stop-color="#58595b" />
       </linearGradient>
       <linearGradient
         id="c"
@@ -341,9 +311,9 @@ export const SolidJsIcon: IconComponent = props => (
         y1="64.628"
         y2="150.169"
       >
-        <stop offset="0" stopColor="#58595b" />
-        <stop offset=".539" stopColor="#929497" />
-        <stop offset="1" stopColor="#58595b" />
+        <stop offset="0" stop-color="#58595b" />
+        <stop offset=".539" stop-color="#929497" />
+        <stop offset="1" stop-color="#58595b" />
       </linearGradient>
       <linearGradient
         id="d"
@@ -353,10 +323,10 @@ export const SolidJsIcon: IconComponent = props => (
         y1="74.909"
         y2="261.184"
       >
-        <stop offset="0" stopColor="#4377bb" />
-        <stop offset="0" stopColor="#808184" />
-        <stop offset=".475" stopColor="#404041" />
-        <stop offset="1" stopColor="#231f20" />
+        <stop offset="0" stop-color="#4377bb" />
+        <stop offset="0" stop-color="#808184" />
+        <stop offset=".475" stop-color="#404041" />
+        <stop offset="1" stop-color="#231f20" />
       </linearGradient>
     </defs>
     <path
@@ -393,13 +363,13 @@ export const BookIcon: IconComponent = props => (
     xmlns="http://www.w3.org/2000/svg"
     fill="none"
     viewBox="0 0 24 24"
-    strokeWidth={1.5}
+    stroke-width={1.5}
     stroke="currentColor"
     {...props}
   >
     <path
-      strokeLinecap="round"
-      strokeLinejoin="round"
+      stroke-linecap="round"
+      stroke-linejoin="round"
       d="M12 6.042A8.967 8.967 0 006 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 016 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 016-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0018 18a8.967 8.967 0 00-6 2.292m0-14.25v14.25"
     />
   </svg>
@@ -410,13 +380,13 @@ export const TextIcon: IconComponent = props => (
     xmlns="http://www.w3.org/2000/svg"
     fill="none"
     viewBox="0 0 24 24"
-    strokeWidth={1.5}
+    stroke-width={1.5}
     stroke="currentColor"
     {...props}
   >
     <path
-      strokeLinecap="round"
-      strokeLinejoin="round"
+      stroke-linecap="round"
+      stroke-linejoin="round"
       d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z"
     />
   </svg>
@@ -427,13 +397,13 @@ export const GlobeAuIcon: IconComponent = props => (
     xmlns="http://www.w3.org/2000/svg"
     fill="none"
     viewBox="0 0 24 24"
-    strokeWidth={1.5}
+    stroke-width={1.5}
     stroke="currentColor"
     {...props}
   >
     <path
-      strokeLinecap="round"
-      strokeLinejoin="round"
+      stroke-linecap="round"
+      stroke-linejoin="round"
       d="M12.75 3.03v.568c0 .334.148.65.405.864l1.068.89c.442.369.535 1.01.216 1.49l-.51.766a2.25 2.25 0 01-1.161.886l-.143.048a1.107 1.107 0 00-.57 1.664c.369.555.169 1.307-.427 1.605L9 13.125l.423 1.059a.956.956 0 01-1.652.928l-.679-.906a1.125 1.125 0 00-1.906.172L4.5 15.75l-.612.153M12.75 3.031a9 9 0 00-8.862 12.872M12.75 3.031a9 9 0 016.69 14.036m0 0l-.177-.529A2.25 2.25 0 0017.128 15H16.5l-.324-.324a1.453 1.453 0 00-2.328.377l-.036.073a1.586 1.586 0 01-.982.816l-.99.282c-.55.157-.894.702-.8 1.267l.073.438c.08.474.49.821.97.821.846 0 1.598.542 1.865 1.345l.215.643m5.276-3.67a9.012 9.012 0 01-5.276 3.67m0 0a9 9 0 01-10.275-4.835M15.75 9c0 .896-.393 1.7-1.016 2.25"
     />
   </svg>

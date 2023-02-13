@@ -12,7 +12,6 @@ import { rehypeRearrangeShikiOutput } from './rehype.server'
 import type { PluggableList } from 'unified'
 
 const STYLE_UTILS = `
-import { createElement } from 'react'
 import { css } from 'goober'
 export { css }
 `

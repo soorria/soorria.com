@@ -4,13 +4,13 @@ import { promises as fs } from 'fs'
 import readingTime from 'reading-time'
 import matter from 'gray-matter'
 import path from 'path'
-import { render } from './mdx.server'
+// import { render } from './mdx.server'
 import { addRefToUrl } from '../utils/content'
 
 const DATA_ROOT = path.join(process.cwd(), '_data')
 
 const getTypePath = (type: DataType): string => path.join(DATA_ROOT, type)
-const getFilePath = (type: DataType, slug: string, file?: typeof files[number]): string =>
+const getFilePath = (type: DataType, slug: string, file?: (typeof files)[number]): string =>
   path.join(DATA_ROOT, type, slug, file ? file : 'index.mdx')
 const fileToSlug = (file: string): string => file.replace(/\.mdx$/, '')
 
@@ -113,11 +113,15 @@ export const getFileWithMdx = async <TData extends BaseData>(
 ): Promise<TData> => {
   const { mdx, components } = await readFilesForSlug(type, slug)
 
-  const {
-    code,
-    frontmatter: data,
-    matter: { content },
-  } = await render<FrontMatter<TData>>(mdx, components)
+  // const {
+  //   code,
+  //   frontmatter: data,
+  //   matter: { content },
+  // } = await render<FrontMatter<TData>>(mdx, components)
+
+  const code = ''
+  const data = {}
+  const content = ''
 
   if (hasLiveUrlProperty(data)) {
     data.live = addRefToUrl(data.live)

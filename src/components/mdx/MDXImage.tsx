@@ -1,10 +1,9 @@
-import Image, { ImageProps } from 'next/image'
+import { ComponentProps, VoidComponent } from 'solid-js'
 
-const MDXImage: React.FC<ImageProps> = props => {
+const MDXImage: VoidComponent<ComponentProps<'img'>> = props => {
   return (
-    <div className="-mx-2 md:-mx-6">
-      {/* eslint-disable-next-line jsx-a11y/alt-text */}
-      <Image {...props} />
+    <div class="-mx-2 md:-mx-6">
+      <img {...props} />
     </div>
   )
 }

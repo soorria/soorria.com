@@ -1,87 +1,79 @@
 import cx from '~/utils/cx'
-import NextLink from 'next/link'
-import Image, { ImageProps } from 'next/image'
 import type { ProjectCardProps } from '../ProjectCard'
 import { COMMON_CLASSNAMES } from '../utils'
 import UtilsTag from './UtilsTag'
 import { CodeIcon, ExternalIcon, InfoIcon } from '~/components/icons'
-import { PropsWithChildren } from 'react'
+import { ComponentProps, ParentComponent, Show } from 'solid-js'
+import { A } from 'solid-start'
 
 const cardLinkClassName =
   'inline-flex items-center px-3 py-1 ml-2 mt-2 space-x-1 text-sm font-semibold transition-colors border-2 border-current border-white rounded-sm hocus:text-var-bg hocus:bg-white focus-ring'
 
-type UtilsProjectCardProps = PropsWithChildren<
-  ProjectCardProps &
-    (
-      | { fullWidth: true; bgImage?: ImageProps['src']; bgAlt: string }
-      | { fullWidth?: false; bgImage: never; bgAlt: never }
-    )
->
+type UtilsProjectCardProps = ProjectCardProps &
+  (
+    | { fullWidth: true; bgImage?: ComponentProps<'img'>['src']; bgAlt: string }
+    | { fullWidth?: false; bgImage: never; bgAlt: never }
+  )
 
-const UtilsProjectCard: React.FC<UtilsProjectCardProps> = ({
-  project,
-  bgImage,
-  children,
-  fullWidth,
-}) => {
+const UtilsProjectCard: ParentComponent<UtilsProjectCardProps> = props => {
   return (
     <div
-      className={cx(COMMON_CLASSNAMES.specialCardRoot, 'bg-var-bg', fullWidth && 'col-span-full')}
+      class={cx(COMMON_CLASSNAMES.specialCardRoot, 'bg-var-bg', props.fullWidth && 'col-span-full')}
       style={{ ['--bg' as any]: '#414558', ['--col' as any]: '#FF7AC6' }}
     >
-      {fullWidth && bgImage ? (
+      <Show when={props.fullWidth && props.bgImage}>
         <>
-          <div className="absolute inset-y-0 right-0 hidden items-center sm:flex">
+          <div class="absolute inset-y-0 right-0 hidden items-center sm:flex">
             <div>
-              <Image
-                src={bgImage}
+              <img
+                src={props.bgImage}
                 height="356"
                 width="381"
                 alt="flowchart showing file sizes after gzip"
-                placeholder="blur"
+                // placeholder="blur"
               />
             </div>
           </div>
-          <div className="absolute inset-0 bg-gradient-to-r from-var-bg via-var-bg to-transparent"></div>
+          <div class="absolute inset-0 bg-gradient-to-r from-var-bg via-var-bg to-transparent"></div>
         </>
-      ) : null}
-      <div className="relative flex h-full flex-col space-y-4 p-8">
-        <header className="flex items-center space-x-2 font-display text-3xl font-bold text-var-col">
-          <span>{project.title}</span> <UtilsTag />
+      </Show>
+      <div class="relative flex h-full flex-col space-y-4 p-8">
+        <header class="flex items-center space-x-2 font-display text-3xl font-bold text-var-col">
+          <span>{props.project.title}</span> <UtilsTag />
         </header>
-        <div className="flex max-w-[25rem]">
-          <ul className="list-disc space-y-4 pl-6">{children}</ul>
+        <div class="flex max-w-[25rem]">
+          <ul class="list-disc space-y-4 pl-6">{props.children}</ul>
         </div>
-        <div className="-m-2 mb-0">
-          {project.hasContent && (
-            <NextLink href={`/projects/${project.slug}`} passHref>
-              <a className={cardLinkClassName}>
-                <InfoIcon className="inline-block h-4 w-4" />
+        <div class="-m-2 mb-0">
+          <Show when={props.project.hasContent}>
+            <A href={`/projects/${props.project.slug}`}>
+              <a class={cardLinkClassName}>
+                <InfoIcon class="inline-block h-4 w-4" />
                 <span>Details</span>
-                <span className="sr-only"> for {project.title}</span>
+                <span class="sr-only"> for {props.project.title}</span>
               </a>
-            </NextLink>
-          )}
+            </A>
+          </Show>
           <a
-            className={cardLinkClassName}
+            class={cardLinkClassName}
             target="_blank"
             rel="noopener noreferrer"
-            href={project.live}
+            href={props.project.live}
           >
-            <ExternalIcon className="inline-block h-4 w-4" />
+            <ExternalIcon class="inline-block h-4 w-4" />
             <span>
-              See <span className="sr-only">{project.title}</span> Live
+              See <span class="sr-only">{props.project.title}</span> Live
             </span>
           </a>
           <a
-            className={cardLinkClassName}
+            class={cardLinkClassName}
             target="_blank"
             rel="noopener noreferrer"
-            href={project.source}
+            href={props.project.source}
           >
-            <CodeIcon className="inline-block h-4 w-4" />
+            <CodeIcon class="inline-block h-4 w-4" />
             <span>Source</span>
-            <span className="sr-only"> for {project.title}</span>
+            <span class="sr-only"> for {props.project.title}</span>
           </a>
         </div>
       </div>

@@ -1,4 +1,4 @@
-import type React from 'react'
+import { ParentComponent, VoidComponent } from 'solid-js'
 import cx from '~/utils/cx'
 import { useCopy } from '~/utils/use-copy'
 
@@ -29,12 +29,12 @@ export const DEFAULT_TRUNCATE_HEIGHT = 10.5 * CODE_LINE_HEIGHT
 
 export const getTruncationHeight = (
   truncate: string | number | boolean | undefined
-): string | number | undefined => {
-  if (typeof truncate === 'number') return (truncate + 0.5) * CODE_LINE_HEIGHT
+): string | undefined => {
+  if (typeof truncate === 'number') return `${(truncate + 0.5) * CODE_LINE_HEIGHT}px`
   if (!truncate) return undefined
-  if (truncate === true || truncate === 'true') return DEFAULT_TRUNCATE_HEIGHT
+  if (truncate === true || truncate === 'true') return `${DEFAULT_TRUNCATE_HEIGHT}px`
   const asNumber = parseInt(truncate)
-  if (Number.isSafeInteger(asNumber)) return (asNumber + 0.5) * CODE_LINE_HEIGHT
+  if (Number.isSafeInteger(asNumber)) return `${(asNumber + 0.5) * CODE_LINE_HEIGHT}px`
   return truncate
 }
 
@@ -57,32 +57,30 @@ export const LANGUAGE_NAME_MAP: Record<string, string> = {
   md: 'markdown',
 }
 
-export const CodeBlockTitle: React.FC<{ children: React.ReactNode }> = props => (
-  <div className="code-block-title -mb-[1.7rem] rounded rounded-b-none font-display text-sm font-bold text-drac-base">
-    <span className="inline-block rounded rounded-b-none bg-drac-purple px-3 py-0.5">
+export const CodeBlockTitle: ParentComponent = props => (
+  <div class="code-block-title -mb-[1.7rem] rounded rounded-b-none font-display text-sm font-bold text-drac-base">
+    <span class="inline-block rounded rounded-b-none bg-drac-purple px-3 py-0.5">
       {props.children}
     </span>
   </div>
 )
 
-export const CodeBlockCopyButton: React.FC<{ getText(): string }> = ({ getText }) => {
+export const CodeBlockCopyButton: VoidComponent<{ getText(): string }> = ({ getText }) => {
   const [copy, copied] = useCopy()
   return (
-    <button type="button" className={CODE_BLOCK_CLASSNAMES.button} onClick={() => copy(getText())}>
-      <span className="inline-grid overflow-hidden">
+    <button type="button" class={CODE_BLOCK_CLASSNAMES.button} onClick={() => copy(getText())}>
+      <span class="inline-grid overflow-hidden">
         <span
-          className={cx(
-            'col-start-1 row-start-1 transition-transform',
-            copied && '-translate-y-full'
-          )}
+          class={cx('col-start-1 row-start-1 transition-transform')}
+          classList={{
+            '-translate-y-full': copied(),
+          }}
         >
           copy
         </span>
         <span
-          className={cx(
-            'col-start-1 row-start-1 transition-transform',
-            !copied && 'translate-y-full'
-          )}
+          class={'col-start-1 row-start-1 transition-transform'}
+          classList={{ 'translate-y-full': !copied() }}
         >
           copied
         </span>

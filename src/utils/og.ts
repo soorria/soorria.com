@@ -1,5 +1,4 @@
 import type { DataType } from '~/types/data'
-import type { OpenGraphMedia } from 'next-seo/lib/types'
 import { PUBLIC_URL } from '~/constants'
 
 export const getOgUrl = (title: string, subtitle?: string): string => {
@@ -8,11 +7,11 @@ export const getOgUrl = (title: string, subtitle?: string): string => {
   }`
 }
 
-export const getOgImageForData = (type: DataType, title?: string): OpenGraphMedia => {
+export const getOgImageForData = (type: DataType, title?: string) => {
   return getOgImage(title || type, `soorria.com/${type} `)
 }
 
-export const getOgImage = (title: DataType | string, subtitle?: string): OpenGraphMedia => {
+export const getOgImage = (title: DataType | (string & {}), subtitle?: string) => {
   return {
     url: getOgUrl(title, subtitle),
     width: 1200,

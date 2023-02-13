@@ -1,26 +1,29 @@
-import type { AnchorHTMLAttributes } from 'react'
+import { ComponentProps, ParentComponent, splitProps } from 'solid-js'
+import { A } from 'solid-start'
 import cx from '~/utils/cx'
-import Link from 'next/link'
 
 const defaultClassName =
   'text-drac-pink underline hocus:text-drac-purple focus-ring rounded -mx-1 px-1 -mb-0.5 pb-0.5'
 
-const CustomLink: React.FC<{ href: string } & AnchorHTMLAttributes<HTMLAnchorElement>> = ({
-  href,
-  children,
-  className: _className,
-  ...rest
-}) => {
-  const isExternal = href.startsWith('http')
-  const className = cx(defaultClassName, _className)
-  return isExternal ? (
-    <a href={href} rel="noopenner noreferrer" target="_blank" className={className} {...rest}>
-      {children}
-    </a>
-  ) : (
-    <Link href={href} passHref className={className} {...rest}>
-      {children}
-    </Link>
+const CustomLink: ParentComponent<{ href: string } & ComponentProps<'a'>> = props => {
+  const [, rest] = splitProps(props, ['class', 'children'])
+  return (
+    <>
+      {props.href.startsWith('http') ? (
+        <a
+          rel="noopenner noreferrer"
+          target="_blank"
+          class={cx(defaultClassName, props.class)}
+          {...rest}
+        >
+          {props.children}
+        </a>
+      ) : (
+        <A class={props.class} {...rest}>
+          {props.children}
+        </A>
+      )}
+    </>
   )
 }
 

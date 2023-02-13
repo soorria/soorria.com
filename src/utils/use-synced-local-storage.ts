@@ -1,6 +1,5 @@
-import type { Dispatch, SetStateAction } from 'react'
-import { useEffect, useRef, useState } from 'react'
 import mitt from 'mitt'
+import { Accessor, createEffect, createSignal, onCleanup, onMount, Setter } from 'solid-js'
 
 const em = mitt<Record<string, any>>()
 
@@ -43,69 +42,64 @@ type NonNullJsonValue = string | number | boolean | { [key: string]: JsonValue }
 export const useSyncedLocalStorage = <T extends NonNullJsonValue = NonNullJsonValue>(
   key: string,
   initialValue: T
-): [T, Dispatch<SetStateAction<T>>] => {
-  const [state, setState] = useState<T>(initialValue)
-  const initialised = useRef(false)
-  const shouldSync = useRef(false)
-  const emitting = useRef(false)
-  const initialValueRef = useRef(initialValue)
+): [Accessor<T>, Setter<T>] => {
+  const [state, setState] = createSignal<T>(initialValue)
+  let initialised = false
+  let shouldSync = false
+  let emitting = false
 
-  useEffect(() => {
-    initialValueRef.current = initialValue
-  }, [initialValue])
-
-  useEffect(() => {
+  onMount(() => {
     trackedKeys[key] = (trackedKeys[key] ?? 0) + 1
-    return () => {
-      trackedKeys[key]--
-    }
-  }, [key])
+  })
+  onCleanup(() => {
+    trackedKeys[key]--
+  })
 
-  useEffect(() => {
-    if (initialised.current) return
-    initialised.current = true
+  createEffect(() => {
+    if (initialised) return
+    initialised = true
 
     const cached = localStorage.getItem(key)
 
     if (!cached) {
-      setState(initialValueRef.current)
+      setState(() => initialValue)
       return
     }
 
     try {
-      setState(JSON.parse(cached) as T)
+      setState(() => JSON.parse(cached) as T)
     } catch (err) {
-      setState(initialValueRef.current)
+      setState(() => initialValue)
     }
-  }, [key])
+  })
 
-  useEffect(() => {
+  createEffect(() => {
     const handler = (data: T | null) => {
       // If this hook is the one that sent the message, just ignore it
-      if (!emitting.current) {
-        shouldSync.current = false
-        setState(data ?? initialValueRef.current)
+      if (!emitting) {
+        shouldSync = false
+        setState(() => data ?? initialValue)
       }
     }
 
     em.on(key, handler)
 
-    return () => {
+    onCleanup(() => {
       em.off(key, handler)
-    }
-  }, [key])
+    })
+  })
 
-  useEffect(() => {
+  createEffect(() => {
     // Prevents this hook from re-sending an update
-    if (!shouldSync.current) {
-      shouldSync.current = true
+    if (!shouldSync) {
+      shouldSync = true
       return
     }
 
     // Prevents this hook from setting itself again
-    emitting.current = true
+    emitting = true
     em.emit(key, state)
-    emitting.current = false
+    emitting = false
   }, [state, key])
 
   return [state, setState]

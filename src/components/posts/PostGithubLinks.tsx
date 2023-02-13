@@ -1,3 +1,4 @@
+import { VoidComponent } from 'solid-js'
 import type { DataType } from '~/types/data'
 import { editUrl, historyUrl } from '~/utils/repo'
 
@@ -6,13 +7,13 @@ interface PostGithubLinksProps {
   slug: string
 }
 
-const PostGithubLinks: React.FC<PostGithubLinksProps> = ({ dataType, slug }) => {
+const PostGithubLinks: VoidComponent<PostGithubLinksProps> = props => {
   return (
     <div>
       Found a mistake, or want to suggest an improvement? Edit on GitHub{' '}
       <a
-        href={editUrl(dataType, slug)}
-        className="focus-ring -mx-1 rounded px-1"
+        href={editUrl(props.dataType, props.slug)}
+        class="focus-ring -mx-1 rounded px-1"
         rel="noopenner noreferrer"
         target="_blank"
       >
@@ -21,8 +22,8 @@ const PostGithubLinks: React.FC<PostGithubLinksProps> = ({ dataType, slug }) => 
       <br />
       and see edit history{' '}
       <a
-        href={historyUrl(dataType, slug)}
-        className="focus-ring -mx-1 rounded px-1"
+        href={historyUrl(props.dataType, props.slug)}
+        class="focus-ring -mx-1 rounded px-1"
         rel="noopenner noreferrer"
         target="_blank"
       >

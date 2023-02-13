@@ -1,12 +1,12 @@
 import cx from '~/utils/cx'
-import type { PropsWithChildren, ReactNode } from 'react'
+import { JSXElement, ParentComponent } from 'solid-js'
 
 type Variant = 'success' | 'info' | 'warning'
 
-type NoteProps = PropsWithChildren<{
+type NoteProps = {
   variant?: Variant
-  title?: ReactNode
-}>
+  title?: JSXElement
+}
 
 const VARIANT_COLORS: Record<Variant, string> = {
   success: 'bg-drac-green border-drac-green text-drac-green',
@@ -14,23 +14,24 @@ const VARIANT_COLORS: Record<Variant, string> = {
   warning: 'bg-drac-orange border-drac-orange text-drac-orange',
 }
 
-const VARIANT_TITLE: Partial<Record<Variant, ReactNode>> = {
+const VARIANT_TITLE: Partial<Record<Variant, JSXElement>> = {
   info: 'Info',
   warning: 'Warning',
 }
 
-const Note: React.FC<NoteProps> = ({ children, variant = 'info', title: titleProp }) => {
-  const title = titleProp || VARIANT_TITLE[variant]
+const Note: ParentComponent<NoteProps> = props => {
+  const variant = () => props.variant || 'info'
+  const title = () => props.title || VARIANT_TITLE[variant()]
   return (
-    <div className="-mx-0.5">
+    <div class="-mx-0.5">
       <div
-        className={cx(
+        class={cx(
           'note -mx-2 my-7 rounded-xl border-x-2 bg-opacity-10 px-4 py-7 md:-mx-6 md:px-10',
-          VARIANT_COLORS[variant]
+          VARIANT_COLORS[variant()]
         )}
       >
-        {title && <p className="font-display text-lg font-bold">{title}</p>}
-        {children}
+        {title() && <p class="font-display text-lg font-bold">{title()}</p>}
+        {props.children}
       </div>
     </div>
   )
