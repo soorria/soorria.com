@@ -58,7 +58,7 @@ export default function Root() {
       </Head>
       <Body class="h-full min-h-screen bg-drac-base text-drac-content">
         <Suspense>
-          <ErrorBoundary>
+          <ErrorBoundary fallback={() => <div>o no, there is eror</div>}>
             <div class="flex h-full min-h-screen flex-col">
               <Header />
 

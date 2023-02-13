@@ -1,3 +1,4 @@
+import { globby } from 'globby'
 import { RouteDataArgs, useRouteData } from 'solid-start'
 import { createServerData$ } from 'solid-start/server'
 import Contact from '~/components/landing/Contact'
@@ -52,6 +53,11 @@ export const routeData = ({}: RouteDataArgs) => {
     return projects
   })
 
+  const list = createServerData$(async () => {
+    const files = await globby(['./*'])
+    return files
+  })
+
   const randoms = randomArray(0, 100, 5)
 
   const skillIndexes = getRandomSkillIndexes(8)
@@ -62,13 +68,15 @@ export const routeData = ({}: RouteDataArgs) => {
     projects,
     randoms,
     renderedAt: new Date().toISOString(),
+    list,
     heroText,
     skillIndexes,
   }
 }
 
 export default function Home() {
-  const { randoms, skillIndexes, subtitleOptions, now, projects } = useRouteData<typeof routeData>()
+  const { randoms, skillIndexes, subtitleOptions, now, projects, list } =
+    useRouteData<typeof routeData>()
 
   return (
     <Container>
@@ -77,6 +85,8 @@ export default function Home() {
           {now()}
         </div>
       </Hero>
+
+      <pre class="overflow-x-auto">{list()}</pre>
 
       <FeaturedProjects random={randoms[0]} projects={projects()!} />
       <Skills random={randoms[1]} skillIndexes={skillIndexes} />
