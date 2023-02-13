@@ -7,7 +7,7 @@ export default defineConfig({
     solid({
       adapter: vercel({
         // @ts-ignore
-        // prerender: true,
+        prerender: true,
       }),
     }),
   ],
