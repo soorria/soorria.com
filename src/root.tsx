@@ -1,5 +1,5 @@
 // @refresh reload
-import { Suspense } from 'solid-js'
+import { lazy, Suspense } from 'solid-js'
 import {
   Body,
   ErrorBoundary,
@@ -10,12 +10,13 @@ import {
   Meta,
   Routes,
   Scripts,
-  Title,
 } from 'solid-start'
 import Footer from './components/layout/Footer'
 import Header from './components/layout/Header'
 import NoJsStyles from './styles/NoJsStyles'
 import './styles/root.css'
+
+const ErrorPage = lazy(() => import('./routes/error'))
 
 export default function Root() {
   return (
@@ -58,7 +59,12 @@ export default function Root() {
       </Head>
       <Body class="h-full min-h-screen bg-drac-base text-drac-content">
         <Suspense>
-          <ErrorBoundary fallback={() => <div>o no, there is eror</div>}>
+          <ErrorBoundary
+            fallback={(e, reset) => {
+              console.log(e)
+              return <ErrorPage statusCode={500} statusText="o no, there is eror" tryAgain />
+            }}
+          >
             <div class="flex h-full min-h-screen flex-col">
               <Header />
 
