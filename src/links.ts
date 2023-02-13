@@ -11,7 +11,7 @@ import {
   MessengerIcon,
   TwitterIconSolid,
 } from './components/icons'
-import Logo from './components/Logo'
+import Logo from './components/logo'
 import { GITHUB_URL } from './constants'
 
 interface Link {
