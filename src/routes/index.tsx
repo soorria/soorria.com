@@ -54,11 +54,11 @@ export const routeData = ({}: RouteDataArgs) => {
     return projects
   })
 
-  const list = createServerData$(async () => {
-    const files = await globby(['./**/*'], { dot: true, suppressErrors: true, absolute: true })
-    console.log('files', files, readdirSync('./'))
-    return files
-  })
+  // const list = createServerData$(async () => {
+  //   const files = await globby(['./**/*'], { dot: true, suppressErrors: true, absolute: true })
+  //   console.log('files', files, readdirSync('./'))
+  //   return files
+  // })
 
   const randoms = randomArray(0, 100, 5)
 
@@ -70,15 +70,14 @@ export const routeData = ({}: RouteDataArgs) => {
     projects,
     randoms,
     renderedAt: new Date().toISOString(),
-    list,
+    // list,
     heroText,
     skillIndexes,
   }
 }
 
 export default function Home() {
-  const { randoms, skillIndexes, subtitleOptions, now, projects, list } =
-    useRouteData<typeof routeData>()
+  const { randoms, skillIndexes, subtitleOptions, now, projects } = useRouteData<typeof routeData>()
 
   return (
     <Container>
@@ -87,8 +86,6 @@ export default function Home() {
           {now()}
         </div>
       </Hero>
-
-      <pre class="overflow-x-auto">{list()}</pre>
 
       <FeaturedProjects random={randoms[0]} projects={projects()!} />
       <Skills random={randoms[1]} skillIndexes={skillIndexes} />
