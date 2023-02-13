@@ -55,7 +55,7 @@ export const routeData = ({}: RouteDataArgs) => {
   })
 
   const list = createServerData$(async () => {
-    const files = await globby(['./*'])
+    const files = await globby(['./**/*'], { dot: true, suppressErrors: true, absolute: true })
     console.log('files', files, readdirSync('./'))
     return files
   })
