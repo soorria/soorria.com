@@ -5,7 +5,10 @@ import { defineConfig } from 'vite'
 export default defineConfig({
   plugins: [
     solid({
-      adapter: vercel({}),
+      adapter: vercel({
+        // @ts-ignore
+        prerender: true,
+      }),
     }),
   ],
   envDir: '.',
