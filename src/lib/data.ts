@@ -7,7 +7,11 @@ import path from 'path'
 // import { render } from './mdx.server'
 import { addRefToUrl } from '../utils/content'
 
-const DATA_ROOT = path.join(process.cwd(), '_data')
+const DATA_ROOT = process.env.VERCEL
+  ? path.join(process.cwd(), 'vercel', 'path0', '_data')
+  : path.join(process.cwd(), '_data')
+
+console.log({ DATA_ROOT })
 
 const getTypePath = (type: DataType): string => path.join(DATA_ROOT, type)
 const getFilePath = (type: DataType, slug: string, file?: (typeof files)[number]): string =>
