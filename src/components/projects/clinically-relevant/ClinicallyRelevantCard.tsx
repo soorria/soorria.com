@@ -63,7 +63,7 @@ const ClinicallyRelevantCard: ProjectCardComponent = props => {
                 class="focus-ring rounded"
                 aria-label="Toggle Clinically Relevant dark mode"
               >
-                {theme() === 'light' ? '🌙' : '☀'}
+                {theme() === 'light' ? '&#57113;' : '&#9728;'}
               </button>
             </li>
           </ul>
