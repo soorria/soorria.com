@@ -16,6 +16,7 @@ export default defineConfig(async () => ({
       adapter: vercel({
         // @ts-ignore
         // prerender: true,
+        edge: true,
       }),
     }),
   ],
