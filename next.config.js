@@ -126,8 +126,7 @@ const config = {
         // },
         {
           source: '/og.png',
-          destination:
-            'https://og-gen-mooth.vercel.app/api/og?title=Soorria%20Saruva&subtitle=soorria.com',
+          destination: 'https://soorria.com/api/og?title=Soorria%20Saruva&subtitle=soorria.com',
         },
       ],
     }
