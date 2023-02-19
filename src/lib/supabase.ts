@@ -1,8 +1,5 @@
-import { createClient } from '@supabase/supabase-js'
-
 const url = import.meta.env.VITE_SUPABASE_URL as string
 const anonKey = import.meta.env.VITE_SUPABASE_ANON_KEY as string
-const client = createClient(url, anonKey)
 
 type Singleton = {
   id: number
@@ -12,11 +9,28 @@ type Singleton = {
 }
 
 export const getSingleton = async (slug: string): Promise<Singleton> => {
-  const { data, error } = await client.from('singletons').select('*').eq('slug', slug).maybeSingle()
+  const res = await fetch(
+    `${url}/rest/v1/singletons?${new URLSearchParams({
+      slug: `eq.${encodeURIComponent(slug)}`,
+      select: '*',
+    })}`,
+    {
+      headers: {
+        apikey: anonKey,
+        Authorization: `Bearer ${anonKey}`,
+      },
+    }
+  )
 
-  if (error) {
-    throw error
+  const json = await res.json()
+
+  console.log(res.ok, { json })
+  if (!res.ok) {
+    throw new Error('Could not fetch singleton')
   }
+
+  const data = (json as Singleton[])?.[0]
+  console.log(data)
 
   if (!data) {
     throw new Error(`Singleton not found: ${slug}`)
