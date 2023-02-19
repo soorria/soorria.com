@@ -1,11 +1,17 @@
-import type { BlogPostFrontMatter } from '~/types/blog-post'
+import type { BlogPost } from '~/types/blog-post'
 
 interface HasCreatedAtField {
-  createdAt: string
+  createdAt?: string
 }
 
 export const createdAtFieldComparator = <T extends HasCreatedAtField>(a: T, b: T): number =>
-  b.createdAt > a.createdAt ? 1 : b.createdAt < a.createdAt ? -1 : 0
+  !a.createdAt || !b.createdAt
+    ? -1000
+    : b.createdAt > a.createdAt
+    ? 1
+    : b.createdAt < a.createdAt
+    ? -1
+    : 0
 
 export const sortByCreatedAtField = <T extends HasCreatedAtField>(arr: T[]): T[] =>
   arr.sort(createdAtFieldComparator)
@@ -28,7 +34,7 @@ export const composeFilters = <T>(...filters: Array<(arr: T[]) => T[]>): ((arr: 
   }
 }
 
-export const blogPostFilter = composeFilters<BlogPostFrontMatter>(filterPrivate, filterUnpublished)
+export const blogPostFilter = composeFilters<BlogPost>(filterPrivate, filterUnpublished)
 
 export const getAllTags = <T extends { category: string; tags: string[] }>(item: T): string[] => [
   item.category,

@@ -1,6 +1,6 @@
 import { z } from 'zod'
 
-import { BaseDataSchema, FrontMatter } from './data'
+import { BaseDataSchema } from './data'
 
 export const SnippetSchema = BaseDataSchema.merge(
   z.object({
@@ -12,5 +12,3 @@ export const SnippetSchema = BaseDataSchema.merge(
   })
 )
 export type Snippet = z.infer<typeof SnippetSchema>
-
-export type SnippetFrontMatter = FrontMatter<Snippet>

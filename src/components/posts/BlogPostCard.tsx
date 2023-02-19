@@ -1,12 +1,12 @@
 import { Show, VoidComponent } from 'solid-js'
 
 import { BookIcon, ClockIconSolid, EditIcon, TextIcon } from '~/components/icons'
-import type { BlogPostFrontMatter } from '~/types/blog-post'
+import type { BlogPost } from '~/types/blog-post'
 import { formatDate } from '~/utils/date'
 
 import PostListItemLink from './PostListItemLink'
 
-const BlogPostCard: VoidComponent<{ post: BlogPostFrontMatter }> = props => (
+const BlogPostCard: VoidComponent<{ post: BlogPost }> = props => (
   <PostListItemLink href={`/blog/${props.post.slug}`}>
     <div class="relative z-10 flex h-full flex-col space-y-4">
       <div class="font-display text-2xl font-bold text-drac-pink group-hover:underline sm:text-2xl">

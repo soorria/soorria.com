@@ -1,6 +1,6 @@
 import { z } from 'zod'
 
-import { BaseDataSchema, FrontMatter } from './data'
+import { BaseDataSchema } from './data'
 
 export const ProjectSchema = BaseDataSchema.merge(
   z.object({
@@ -12,5 +12,3 @@ export const ProjectSchema = BaseDataSchema.merge(
   })
 )
 export type Project = z.infer<typeof ProjectSchema>
-
-export type ProjectFrontMatter = FrontMatter<Project>

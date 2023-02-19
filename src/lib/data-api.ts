@@ -1,9 +1,9 @@
 import { json } from 'solid-start'
 
-import type { BaseFrontMatter, DataType } from '~/types/data'
+import type { BaseData, DataType } from '~/types/data'
 
 import { addCorsHeaders, corsHeaders } from './cors'
-import { getAllFilesFrontMatter, getFileWithContent } from './data'
+import { dataByType } from './data'
 
 type ApiHandlerArgs = {
   request: Request
@@ -43,15 +43,12 @@ interface GetAllOptions<T> {
 }
 
 export const createGetAllHandler =
-  <T extends BaseFrontMatter>(
-    type: DataType,
-    { compareForSort }: GetAllOptions<T> = {}
-  ): ApiHandler =>
+  <T extends BaseData>(type: DataType, { compareForSort }: GetAllOptions<T> = {}): ApiHandler =>
   async ({ request }) => {
-    let frontMatters = await getAllFilesFrontMatter<T>(type)
+    let frontMatters = dataByType[type].list
 
     if (compareForSort) {
-      frontMatters.sort(compareForSort)
+      frontMatters.sort(compareForSort as GetAllOptions<BaseData>['compareForSort'])
     }
 
     const { page, size } = getPaginationOptions(request)
@@ -90,10 +87,8 @@ export const createGetBySlugHandler =
     } else {
       res = json(
         {
-          [type.endsWith('s') ? type.slice(0, type.length - 1) : type]: await getFileWithContent(
-            type,
-            slug
-          ),
+          [type.endsWith('s') ? type.slice(0, type.length - 1) : type]:
+            dataByType[type].bySlug[slug] ?? null,
         },
         {
           headers: {

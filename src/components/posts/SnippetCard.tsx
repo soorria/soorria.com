@@ -3,12 +3,12 @@ import { Dynamic } from 'solid-js/web'
 
 import { ClockIconSolid, EditIcon } from '~/components/icons'
 import { categoryLowerCaseToIcon, defaultCategoryIcon } from '~/lib/categories'
-import type { SnippetFrontMatter } from '~/types/snippet'
+import type { Snippet } from '~/types/snippet'
 import { formatDate } from '~/utils/date'
 
 import PostListItemLink from './PostListItemLink'
 
-const SnippetCard: VoidComponent<{ snippet: SnippetFrontMatter }> = props => {
+const SnippetCard: VoidComponent<{ snippet: Snippet }> = props => {
   const icon = () =>
     categoryLowerCaseToIcon[props.snippet.category.toLowerCase()] || defaultCategoryIcon
   return (

@@ -1,4 +1,5 @@
-import { ComponentProps, createSignal, For, VoidComponent } from 'solid-js'
+import { createAutoAnimate } from '@formkit/auto-animate/solid'
+import { ComponentProps, createSignal, For, Show, VoidComponent } from 'solid-js'
 import { Dynamic } from 'solid-js/web'
 
 import { useTrackFirstEvent } from '~/lib/potato'
@@ -168,6 +169,7 @@ const ContactForm: VoidComponent = () => {
 const Contact: VoidComponent<ContactProps> = props => {
   const [showForm, setShowForm] = createSignal(false)
   const track = useTrackFirstEvent()
+  const [ref] = createAutoAnimate()
 
   return (
     <LandingSection title={titles[(props.random ?? 0) % titles.length]} id="contact">
@@ -183,20 +185,17 @@ const Contact: VoidComponent<ContactProps> = props => {
                 setShowForm(p => !p)
               }}
               class={cx(
-                'no-js-text break-words focus:outline-none',
+                'no-js-hidden break-words focus:outline-none',
                 showForm() ? 'text-drac-purple' : 'text-drac-base hover:text-drac-purple'
               )}
             >
               or use this <span class={showForm() ? 'line-through' : ''}>secret</span> form
             </button>
           </p>
-          <div
-            class="no-js-block"
-            classList={{
-              hidden: !showForm(),
-            }}
-          >
-            <ContactForm />
+          <div class="no-js-block" ref={ref}>
+            <Show when={showForm()}>
+              <ContactForm />
+            </Show>
           </div>
         </div>
         <div class="flex flex-col space-y-4 text-lg">

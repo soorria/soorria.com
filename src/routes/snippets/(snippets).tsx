@@ -9,8 +9,7 @@ import PostLayout from '~/components/layout/PostLayout'
 import License from '~/components/License'
 import SnippetCard from '~/components/posts/SnippetCard'
 import { PUBLIC_URL } from '~/constants'
-import { getAllFilesFrontMatter } from '~/lib/data'
-import type { SnippetFrontMatter } from '~/types/snippet'
+import { snippetFrontMatters } from '~/lib/data'
 import { getAllTags, sortByCreatedAtField } from '~/utils/content'
 import cx from '~/utils/cx'
 import { intersectionSet } from '~/utils/misc'
@@ -160,9 +159,7 @@ const SnippetsPage: VoidComponent = () => {
 export default SnippetsPage
 
 export const routeData = () => {
-  const snippets = createServerData$(async () =>
-    sortByCreatedAtField(await getAllFilesFrontMatter<SnippetFrontMatter>('snippets'))
-  )
+  const snippets = createServerData$(async () => sortByCreatedAtField(snippetFrontMatters.list))
 
   return {
     snippets,

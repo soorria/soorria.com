@@ -5,12 +5,6 @@ const withBundleAnalyzer = require('@next/bundle-analyzer')({
 
 const { FontaineTransform } = require('fontaine')
 
-const options = {
-  fallbacks: ['BlinkMacSystemFont', 'Segoe UI', 'Helvetica Neue', 'Arial', 'Noto Sans'],
-  // You may need to resolve assets like `/fonts/Roboto.woff2` to a particular directory
-  resolvePath: id => 'file://./public/fonts' + id,
-}
-
 // const withTM = require('next-transpile-modules')(['rehype-raw'])
 
 const { withPlausibleProxy } = require('next-plausible')

@@ -1,11 +1,11 @@
 import { z } from 'zod'
 
-import { BaseDataSchema, FrontMatter } from './data'
+import { BaseDataSchema } from './data'
 
 export const BlogPostSchema = BaseDataSchema.merge(
   z.object({
-    category: z.string(),
-    createdAt: z.string(),
+    category: z.string().optional(),
+    createdAt: z.string().optional(),
     updatedAt: z.string().optional(),
     tags: z.string().array(),
     notMine: z.boolean().optional(),
@@ -13,5 +13,3 @@ export const BlogPostSchema = BaseDataSchema.merge(
   })
 )
 export type BlogPost = z.infer<typeof BlogPostSchema>
-
-export type BlogPostFrontMatter = FrontMatter<BlogPost>

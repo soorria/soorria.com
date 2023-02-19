@@ -47,3 +47,5 @@ yarn-error.log*
 # SItemap
 public/robots.txt
 public/sitemap.xml
+
+*ignored

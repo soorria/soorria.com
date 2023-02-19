@@ -1,4 +1,14 @@
-import { createSignal, For, onCleanup, onMount, ParentComponent, VoidComponent } from 'solid-js'
+import { createAutoAnimate } from '@formkit/auto-animate/solid'
+import {
+  ComponentProps,
+  createSignal,
+  For,
+  onCleanup,
+  onMount,
+  ParentComponent,
+  Show,
+  VoidComponent,
+} from 'solid-js'
 import { Dynamic } from 'solid-js/web'
 
 import cx from '~/utils/cx'
@@ -8,6 +18,7 @@ import { IconComponent, ReactIcon, SolidJsIcon, TypescriptIcon } from '../icons'
 
 type SparklesProps = {
   block?: boolean
+  absolute?: boolean
 }
 
 /**
@@ -25,26 +36,29 @@ const zIndexes = {
 }
 
 const SparkleSvg: SparkleComponent = props => {
-  const { style, kind } = props
-  if (kind && exoticSparkleComponents[kind]) {
-    const Sparkle = exoticSparkleComponents[kind]!
-    return <Sparkle {...props} />
-  }
   return (
-    <svg
-      width="160"
-      height="160"
-      viewBox="0 0 160 160"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-      style={style}
-      class={sparkleClassname}
+    <Show
+      when={props.kind && exoticSparkleComponents[props.kind]}
+      fallback={
+        <svg
+          width="160"
+          height="160"
+          viewBox="0 0 160 160"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+          style={props.style}
+          class={sparkleClassname}
+        >
+          <path
+            d="M80 0C80 0 84.2846 41.2925 101.496 58.504C118.707 75.7154 160 80 160 80C160 80 118.707 84.2846 101.496 101.496C84.2846 118.707 80 160 80 160C80 160 75.7154 118.707 58.504 101.496C41.2925 84.2846 0 80 0 80C0 80 41.2925 75.7154 58.504 58.504C75.7154 41.2925 80 0 80 0Z"
+            fill="currentColor"
+          />
+        </svg>
+      }
+      keyed
     >
-      <path
-        d="M80 0C80 0 84.2846 41.2925 101.496 58.504C118.707 75.7154 160 80 160 80C160 80 118.707 84.2846 101.496 101.496C84.2846 118.707 80 160 80 160C80 160 75.7154 118.707 58.504 101.496C41.2925 84.2846 0 80 0 80C0 80 41.2925 75.7154 58.504 58.504C75.7154 41.2925 80 0 80 0Z"
-        fill="currentColor"
-      />
-    </svg>
+      {component => <Dynamic component={component} style={props.style} />}
+    </Show>
   )
 }
 
@@ -83,9 +97,9 @@ const generateSparkleDetails = () => {
 }
 
 type SparkleDetails = ReturnType<typeof generateSparkleDetails>
-type SparkleComponent = VoidComponent<SparkleDetails>
+type SparkleComponent = VoidComponent<SparkleDetails & ComponentProps<'svg'>>
 
-const sparkleClassname = 'animation-sparkle pointer-events-none absolute'
+const sparkleClassname = 'animation-sparkle pointer-events-none absolute select-none'
 
 const Sparkles: ParentComponent<SparklesProps> = props => {
   const [sparkles, setSparkles] = createSignal<SparkleDetails[]>([])
@@ -119,10 +133,15 @@ const Sparkles: ParentComponent<SparklesProps> = props => {
   })
 
   return (
-    <span class={cx('relative', props.block ? 'block' : 'inline-block')}>
-      <For each={sparkles()}>{s => <SparkleSvg {...s} />}</For>
+    <span
+      class={cx(
+        props.absolute ? 'absolute inset-0' : 'relative',
+        props.block ? 'block' : 'inline-block'
+      )}
+    >
+      <For each={sparkles()}>{s => <SparkleSvg {...s} role="presentation" />}</For>
       <span class="relative" style={{ 'z-index': zIndexes.content }}>
-        {props.children}
+        {props.children || <slot />}
       </span>
     </span>
   )

@@ -1,3 +1,4 @@
+import { createAutoAnimate } from '@formkit/auto-animate/solid'
 import { For, ParentComponent, VoidComponent } from 'solid-js'
 
 import { useSkills } from '~/lib/skills'
@@ -11,8 +12,8 @@ const titles = ["What I've learned", 'Technical skills', 'Tools I use']
 
 const SkillListItem: ParentComponent = props => {
   return (
-    <li class="group flex items-center space-x-2">
-      <span class="h-2 w-2 transform rounded-full border-2 border-drac-content transition group-hover:border-drac-pink" />
+    <li class="group flex items-start space-x-2">
+      <span class="mt-[0.5em] h-2 w-2 transform rounded-full border-2 border-drac-content transition group-hover:border-drac-pink" />
       <span>{props.children}</span>
     </li>
   )
@@ -28,13 +29,14 @@ const Skills: VoidComponent<{ random?: number; skillIndexes: number[] }> = props
     defaultIndexes: props.skillIndexes,
   })
   const title = titles[(props.random ?? 0) % titles.length]
+  const [list] = createAutoAnimate()
 
   return (
     <LandingSection id="skills" title={title}>
       <p class="mb-8 text-lg">
         Here are some of the technicals skills during my degree, work, and just out of curiosity.
       </p>
-      <ul class="mb-8 grid grid-cols-2 gap-x-6 gap-y-8 md:grid-cols-4">
+      <ul ref={list} class="mb-8 grid grid-cols-2 items-start gap-x-6 gap-y-8 md:grid-cols-4">
         <For each={skills()}>{skill => <SkillListItem>{skill}</SkillListItem>}</For>
         {showAll() ? <SkillListItem>Adding random &ldquo;features&rdquo;</SkillListItem> : null}
       </ul>

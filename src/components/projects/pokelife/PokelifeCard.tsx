@@ -11,13 +11,13 @@ import {
 import { A } from 'solid-start'
 
 import { CodeIcon, ExternalIcon, InfoIcon } from '~/components/icons'
-import type { ProjectFrontMatter } from '~/types/project'
+import type { Project } from '~/types/project'
 import cx from '~/utils/cx'
 
 import { COMMON_CLASSNAMES } from '../utils'
 
 interface PokelifeCardProps {
-  project: ProjectFrontMatter
+  project: Project
 }
 
 const cardLinkClassName =
@@ -53,7 +53,7 @@ const PokelifeCard: Component<PokelifeCardProps> = props => {
     if (destroyCpu()) {
       params.size = '1'
     } else {
-      params.delay = delay.toString()
+      params.delay = delay().toString()
       params.types = typesOptions[types()]?.join(',') ?? ''
     }
     return `https://pokelife.soorria.com/?${new URLSearchParams(params)}`

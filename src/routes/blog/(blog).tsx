@@ -6,11 +6,8 @@ import MainLayout from '~/components/layout/MainLayout'
 import { PostHeading } from '~/components/layout/PostLayout'
 import PostCard from '~/components/posts/BlogPostCard'
 import { PUBLIC_URL } from '~/constants'
-import { getAllFilesFrontMatter } from '~/lib/data'
-import type { BlogPostFrontMatter } from '~/types/blog-post'
-import { DataType } from '~/types/data'
+import { blogFrontMatters } from '~/lib/data'
 import { blogPostFilter, sortByCreatedAtField } from '~/utils/content'
-import { getOgImageForData } from '~/utils/og'
 
 const description =
   'Attempts at writing about things that I think are interesting, useful, or just cool'
@@ -33,7 +30,7 @@ const PostsPage = () => {
           images: [getOgImageForData(DataType.blog)],
         }}
       /> */}
-      <PostHeading>Blog</PostHeading>
+      <PostHeading>{title}</PostHeading>
       <p class="mt-6 mb-12 text-center text-lg">{description}</p>
       <div class="grid grid-cols-1 gap-8">
         <For each={posts()}>{post => <PostCard post={post} />}</For>
@@ -47,9 +44,7 @@ export default PostsPage
 
 export const routeData = () => {
   const posts = createServerData$(async () => {
-    return blogPostFilter(
-      sortByCreatedAtField(await getAllFilesFrontMatter<BlogPostFrontMatter>('blog'))
-    )
+    return blogPostFilter(sortByCreatedAtField(blogFrontMatters.list))
   })
 
   return {

@@ -1,12 +1,12 @@
 import { For, lazy, VoidComponent } from 'solid-js'
 import { A } from 'solid-start'
 
-import type { ProjectFrontMatter } from '~/types/project'
+import type { Project } from '~/types/project'
 
 import { CodeIcon, ExternalIcon, InfoIcon } from '../icons'
 
 export interface ProjectCardProps {
-  project: ProjectFrontMatter
+  project: Project
 }
 
 export type ProjectCardComponent = VoidComponent<ProjectCardProps>

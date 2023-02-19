@@ -8,7 +8,7 @@ import remarkGfm from 'remark-gfm'
 import remarkTwoslash from 'remark-shiki-twoslash'
 import type { PluggableList } from 'unified'
 
-import type { BaseFrontMatter } from '~/types/data'
+import { BaseData } from '~/types/data'
 
 import { rehypeRearrangeShikiOutput } from './rehype.server'
 import { remarkTypeScriptTransform } from './remark.server'
@@ -70,7 +70,7 @@ export type RenderResult<T> = Awaited<ReturnType<typeof bundleMDX>> & {
   frontmatter: T
 }
 
-export const render = async <T extends BaseFrontMatter = BaseFrontMatter>(
+export const render = async <T extends BaseData>(
   source: string,
   components = '',
   { hasCodeBlocks = true }: RenderOptions = {}

@@ -100,7 +100,7 @@ export const useSyncedLocalStorage = <T extends NonNullJsonValue = NonNullJsonVa
     emitting = true
     em.emit(key, state)
     emitting = false
-  }, [state, key])
+  })
 
   return [state, setState]
 }

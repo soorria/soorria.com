@@ -20,7 +20,7 @@ export const useLocalStorage = <T>(
 
   createEffect(() => {
     localStorage.setItem(key, JSON.stringify(state()))
-  }, [state, key])
+  })
 
   const clearState = () => {
     setState(() => initialValue)

@@ -2,7 +2,5 @@
 - plausible proxy
 - seo
 - sitemap
-- fontaine
-- solid.js eslint
 - react examples
 - rendered at date

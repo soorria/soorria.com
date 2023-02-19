@@ -1,3 +1,7 @@
+import './index.css'
+
+import { customElement, noShadowDOM } from 'solid-element'
+import { lazy } from 'solid-js'
 import { RouteDataArgs, useRouteData } from 'solid-start'
 import { createServerData$ } from 'solid-start/server'
 
@@ -8,12 +12,23 @@ import Skills from '~/components/landing/Skills'
 import Subtitle from '~/components/landing/Subtitle'
 import Container from '~/components/layout/Container'
 import { featuredProjects } from '~/constants'
-import { getFileFrontMatter } from '~/lib/data'
+// import mod from '~/data/misc/about/index.mdx'
+import { projectFrontMatters } from '~/lib/data'
 import { mdToHtml } from '~/lib/markdown'
 import { getRandomSkillIndexes } from '~/lib/skills'
 import { getSingletonJsonSafe, getSingletonTextSafe } from '~/lib/supabase'
-import { ProjectFrontMatter } from '~/types/project'
+import { Project } from '~/types/project'
 import { randomArray } from '~/utils/random'
+
+if (typeof window !== 'undefined') {
+  const Sparkles = lazy(() => import('~/components/mdx/Sparkles'))
+  customElement('s-sparkles', { children: null }, props => {
+    noShadowDOM()
+    return <Sparkles absolute>{props.children}</Sparkles>
+  })
+}
+
+// console.log('@@mod', typeof mod !== 'undefined' && mod)
 
 export const routeData = ({}: RouteDataArgs) => {
   const subtitleOptions = createServerData$(async () => {
@@ -28,8 +43,6 @@ export const routeData = ({}: RouteDataArgs) => {
         subtitleChunks.map(chunk => mdToHtml(chunk, { inline: true }))
       )
 
-      console.log(subtitles)
-
       return subtitles
     } catch {
       return [
@@ -40,24 +53,23 @@ export const routeData = ({}: RouteDataArgs) => {
 
   const now = createServerData$(async () => {
     const nowText = await getSingletonTextSafe('now')
+
     return nowText ? await mdToHtml(nowText ?? '', { inline: true }) : null
   })
 
-  const indexOptions = createServerData$(
-    () => getSingletonJsonSafe('index-options') as Promise<{ heroText: string }>
+  const heroText = createServerData$(() =>
+    (getSingletonJsonSafe('index-options') as Promise<{ heroText: string }>).then(
+      opt => opt.heroText ?? "Hey, I'm Soorria!"
+    )
   )
-  const heroText = () =>
-    indexOptions.state === 'ready' ? indexOptions()?.heroText ?? "Hey, I'm Soorria!" : null
 
   const projects = createServerData$(async () => {
-    const projects = await Promise.all(
-      featuredProjects.map(async projectSlug => {
-        const frontmatter = await getFileFrontMatter<ProjectFrontMatter>('projects', projectSlug)
-        delete frontmatter.readingTime
-        return frontmatter
+    const fp = featuredProjects
+      .map(slug => {
+        return projectFrontMatters.bySlug[slug]
       })
-    )
-    return projects
+      .filter(Boolean) as Project[]
+    return fp
   })
 
   const randoms = randomArray(0, 100, 5)

@@ -1,2 +1,4 @@
 node_modules
-_data/**/*.js
+src/data/**/*.js
+next.config.js
+

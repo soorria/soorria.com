@@ -7,15 +7,10 @@ import PostLayout from '~/components/layout/PostLayout'
 import ProjectCard from '~/components/projects/ProjectCard'
 import ProjectsGrid from '~/components/projects/ProjectsGrid'
 import { featuredProjects, PUBLIC_URL } from '~/constants'
-import { getAllFilesFrontMatter } from '~/lib/data'
-import type { ProjectFrontMatter } from '~/types/project'
+import { projectFrontMatters } from '~/lib/data'
+import type { Project } from '~/types/project'
 import { getOgImageForData } from '~/utils/og'
 // import { NextSeo } from 'next-seo'
-
-interface ProjectsPageProps {
-  projects: ProjectFrontMatter[]
-  numMainProjects: number
-}
 
 const description = "Things I've made. Some are more useful and cooler than others."
 const title = 'Projects'
@@ -64,13 +59,13 @@ export const routeData = () => {
       'slidy',
       'fight-for-tribeland',
     ]
-    const getProjectIndex = (project: ProjectFrontMatter): number => {
+    const getProjectIndex = (project: Project): number => {
       const idx = projectOrder.indexOf(project.slug)
       return idx >= 0 ? idx : projectOrder.length + 10
     }
 
     const aboveFold = new Set(projectOrder)
-    const projects = await getAllFilesFrontMatter<ProjectFrontMatter>('projects')
+    const projects = projectFrontMatters.list
 
     const mainProjects = projects.filter(p => aboveFold.has(p.slug))
     const otherProjects = projects.filter(p => !aboveFold.has(p.slug))

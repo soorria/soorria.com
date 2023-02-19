@@ -6,12 +6,8 @@ import PostLayout from '~/components/layout/PostLayout'
 import BlogPostCard from '~/components/posts/BlogPostCard'
 import SnippetCard from '~/components/posts/SnippetCard'
 import { PUBLIC_URL } from '~/constants'
-import { getAllFilesFrontMatter } from '~/lib/data'
-import type { BlogPostFrontMatter } from '~/types/blog-post'
-import { DataType } from '~/types/data'
-import type { SnippetFrontMatter } from '~/types/snippet'
+import { blogFrontMatters, snippetFrontMatters } from '~/lib/data'
 import { blogPostFilter, sortByCreatedAtField } from '~/utils/content'
-import { getOgImageForData } from '~/utils/og'
 
 const description = "All the stuff I've written on this site"
 const title = 'All Posts'
@@ -37,8 +33,6 @@ const SnippetsPage: VoidComponent = () => {
       <div class="grid auto-cols-min grid-flow-dense grid-cols-1 gap-y-8 gap-x-6 sm:grid-cols-2 sm:gap-x-8 lg:gap-12">
         <For each={posts()}>
           {p => {
-            const key = `${p.type}/${p.slug}`
-
             return p.type === 'snippets' ? (
               <SnippetCard snippet={p} />
             ) : (
@@ -58,14 +52,9 @@ export default SnippetsPage
 
 export const routeData = () => {
   const posts = createServerData$(async () => {
-    const [snippets, blogPosts] = await Promise.all([
-      getAllFilesFrontMatter<SnippetFrontMatter>('snippets'),
-      getAllFilesFrontMatter<BlogPostFrontMatter>('blog'),
-    ])
-
     const posts = sortByCreatedAtField([
-      ...snippets.map(s => ({ ...s, type: 'snippets' } as const)),
-      ...blogPostFilter(blogPosts).map(p => ({ ...p, type: 'blog' } as const)),
+      ...snippetFrontMatters.list.map(s => ({ ...s, type: 'snippets' } as const)),
+      ...blogPostFilter(blogFrontMatters.list).map(p => ({ ...p, type: 'blog' } as const)),
     ])
 
     return posts

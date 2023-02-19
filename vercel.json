@@ -1,5 +1,87 @@
 {
+  "$schema": "https://openapi.vercel.sh/vercel.json",
   "github": {
     "silent": true
-  }
+  },
+  "headers": [
+    {
+      "source": "/fonts/(.*)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=31536000, s-max-age=31536000, immutable"
+        }
+      ]
+    }
+  ],
+  "redirects": [
+    {
+      "source": "/stats",
+      "destination": "https://plausible.mooth.tech/mooth.tech",
+      "permanent": false
+    },
+    {
+      "source": "/src",
+      "destination": "https://github.com/soorria/soorria.com",
+      "permanent": false
+    },
+    {
+      "source": "/contact",
+      "destination": "https://soorria.com/?ref=%2Fcontact#contact",
+      "permanent": true
+    },
+    {
+      "source": "/blogs/:path*",
+      "destination": "/blog/:path*",
+      "permanent": true
+    },
+    {
+      "source": "/posts/:path*",
+      "destination": "/blog/:path*",
+      "permanent": true
+    },
+    {
+      "source": "/post/:path*",
+      "destination": "/blog/:path*",
+      "permanent": true
+    },
+    {
+      "source": "/p/:path*",
+      "destination": "/blog/:path*",
+      "permanent": true
+    },
+    {
+      "source": "/s/:path*",
+      "destination": "/snippets/:path*",
+      "permanent": true
+    },
+    {
+      "source": "/snippet/:path*",
+      "destination": "/snippets/:path*",
+      "permanent": true
+    },
+    {
+      "source": "/cypress",
+      "destination": "/snippets/cypress",
+      "permanent": false
+    },
+    {
+      "source": "/enzyme",
+      "destination": "/snippets/enzyme",
+      "permanent": false
+    }
+  ],
+  "rewrites": [
+    {
+      "source": "/:path*",
+      "destination": "/api/curl-card",
+      "has": [
+        {
+          "type": "header",
+          "key": "user-agent",
+          "value": "curl/(.*)"
+        }
+      ]
+    }
+  ]
 }

@@ -1,4 +1,4 @@
-import { useMemo, useEffect } from 'react'
+import { useEffect, useMemo } from 'react'
 
 export const useCssVar = ({ name, root = document.body }) => {
   const controls = useMemo(
