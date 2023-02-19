@@ -1,7 +1,7 @@
 // @refresh reload
 import './styles/root.css'
 
-import { lazy, Suspense } from 'solid-js'
+import { lazy, ParentComponent, Suspense } from 'solid-js'
 import {
   Body,
   ErrorBoundary,
@@ -19,6 +19,18 @@ import Header from './components/layout/Header'
 import NoJsStyles from './styles/NoJsStyles'
 
 const ErrorPage = lazy(() => import('./routes/error'))
+
+const Layout: ParentComponent = props => (
+  <div class="flex h-full min-h-screen flex-col">
+    <Header />
+
+    <main role="main" id="main-content" class="grow">
+      {props.children}
+    </main>
+
+    <Footer />
+  </div>
+)
 
 export default function Root() {
   return (
@@ -64,20 +76,18 @@ export default function Root() {
           <ErrorBoundary
             fallback={(e, reset) => {
               console.log(e)
-              return <ErrorPage statusCode={500} statusText="o no, there is eror" tryAgain />
+              return (
+                <Layout>
+                  <ErrorPage statusCode={500} statusText="o no, an eror" tryAgain />
+                </Layout>
+              )
             }}
           >
-            <div class="flex h-full min-h-screen flex-col">
-              <Header />
-
-              <main role="main" id="main-content" class="grow">
-                <Routes>
-                  <FileRoutes />
-                </Routes>
-              </main>
-
-              <Footer />
-            </div>
+            <Layout>
+              <Routes>
+                <FileRoutes />
+              </Routes>
+            </Layout>
 
             <NoJsStyles />
           </ErrorBoundary>
