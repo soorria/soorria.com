@@ -1,7 +1,7 @@
 import './index.css'
 
 import { customElement, noShadowDOM } from 'solid-element'
-import { lazy } from 'solid-js'
+import { createEffect, lazy } from 'solid-js'
 import { RouteDataArgs, useRouteData } from 'solid-start'
 import { createServerData$ } from 'solid-start/server'
 
@@ -22,9 +22,13 @@ import { randomArray } from '~/utils/random'
 
 if (typeof window !== 'undefined') {
   const Sparkles = lazy(() => import('~/components/mdx/Sparkles'))
-  customElement('s-sparkles', { children: null }, props => {
+  customElement('s-sparkles', { children: null as any }, props => {
     noShadowDOM()
-    return <Sparkles absolute>{props.children}</Sparkles>
+    return (
+      <Sparkles absolute>
+        {props.children instanceof HTMLCollection ? Array.from(props.children) : props.children}
+      </Sparkles>
+    )
   })
 }
 

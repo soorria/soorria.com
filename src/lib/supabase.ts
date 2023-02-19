@@ -24,13 +24,11 @@ export const getSingleton = async (slug: string): Promise<Singleton> => {
 
   const json = await res.json()
 
-  console.log(res.ok, { json })
   if (!res.ok) {
     throw new Error('Could not fetch singleton')
   }
 
   const data = (json as Singleton[])?.[0]
-  console.log(data)
 
   if (!data) {
     throw new Error(`Singleton not found: ${slug}`)

@@ -83,7 +83,7 @@ const SnippetsPage: VoidComponent = () => {
                   'border-drac-purple px-1.5 py-0.5',
                   selected().size > 0 ? 'opacity-100' : 'pointer-events-none opacity-0'
                 )}
-                onClick={() => setMatchAll(!matchAll)}
+                onClick={() => setMatchAll(!matchAll())}
               >
                 Match {matchAll() ? 'all tags' : 'any tag'}
               </button>
