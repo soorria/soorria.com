@@ -1,9 +1,11 @@
-import type { BaseData, DataType, FrontMatter, BaseApiData } from '~/types/data'
 import type { PathLike } from 'fs'
 import { promises as fs } from 'fs'
-import readingTime from 'reading-time'
 import matter from 'gray-matter'
 import path from 'path'
+import readingTime from 'reading-time'
+
+import type { BaseApiData, BaseData, DataType, FrontMatter } from '~/types/data'
+
 // import { render } from './mdx.server'
 import { addRefToUrl } from '../utils/content'
 

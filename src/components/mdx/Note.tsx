@@ -1,5 +1,6 @@
-import cx from '~/utils/cx'
 import { JSXElement, ParentComponent } from 'solid-js'
+
+import cx from '~/utils/cx'
 
 type Variant = 'success' | 'info' | 'warning'
 

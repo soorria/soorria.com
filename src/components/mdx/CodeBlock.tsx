@@ -1,14 +1,16 @@
+import { JSXElement, ParentComponent, Show, splitProps } from 'solid-js'
+
 import cx from '~/utils/cx'
 import { useHydrated } from '~/utils/use-hydrated'
+
 import { CodeBlockPre, CodeBlockPreExtraProps } from './CodeBlockPre'
 import {
+  CODE_BLOCK_CLASSNAMES,
   CodeBlockCopyButton,
   CodeBlockTitle,
-  CODE_BLOCK_CLASSNAMES,
   getCodeLinesFromPre,
   LANGUAGE_NAME_MAP,
 } from './utils'
-import { JSXElement, ParentComponent, Show, splitProps } from 'solid-js'
 
 export type CustomCodeBlockProps = {
   class: string

@@ -1,4 +1,5 @@
-import type { ReactNode } from 'react'
+import { JSXElement, Show, VoidComponent } from 'solid-js'
+
 import Collapse from './Collapse'
 import { CodeBlockCopyButton } from './mdx/utils'
 
@@ -28,38 +29,37 @@ const classes = {
   pre: 'rounded whitespace-pre-wrap p-4 ring-2 ring-drac-purple overflow-x-auto',
 }
 
-const License: React.FC<{ summary: ReactNode; attribution?: AttributionOptions }> = ({
-  summary,
-  attribution,
-}) => {
+const License: VoidComponent<{ summary: JSXElement; attribution?: AttributionOptions }> = props => {
   return (
-    <Collapse summary={summary}>
-      {attribution ? (
-        <div className="not-prose space-y-4">
-          <div className="flex items-center justify-between">
-            <h3 className="text-2xl">Attribution</h3>
-            <CodeBlockCopyButton getText={() => getAttributionText(attribution)} />
+    <Collapse summary={props.summary}>
+      <Show when={props.attribution} keyed>
+        {attribution => (
+          <div class="not-prose space-y-4">
+            <div class="flex items-center justify-between">
+              <h3 class="text-2xl">Attribution</h3>
+              <CodeBlockCopyButton getText={() => getAttributionText(attribution)} />
+            </div>
+            <p>
+              You <i>should</i> place the following attribution (and probably the license below it)
+              above your copy of the code, but 🤷‍♂️.
+            </p>
+            <pre class={classes.pre}>
+              <code>{getAttributionText(attribution)}</code>
+            </pre>
           </div>
-          <p>
-            You <i>should</i> place the following attribution (and probably the license below it)
-            above your copy of the code, but 🤷‍♂️.
-          </p>
-          <pre className={classes.pre}>
-            <code>{getAttributionText(attribution)}</code>
-          </pre>
-        </div>
-      ) : null}
+        )}
+      </Show>
 
-      <div className="not-prose space-y-4">
-        <div className="flex items-center justify-between">
-          <h3 className="text-2xl">License</h3>
+      <div class="not-prose space-y-4">
+        <div class="flex items-center justify-between">
+          <h3 class="text-2xl">License</h3>
           <CodeBlockCopyButton getText={() => LICENSE} />
         </div>
         <p>
           If you want, you can (and probably should) include the entire license below. I&apos;m not
           a lawyer, though so idrk.
         </p>
-        <pre className={classes.pre}>{LICENSE}</pre>
+        <pre class={classes.pre}>{LICENSE}</pre>
       </div>
     </Collapse>
   )

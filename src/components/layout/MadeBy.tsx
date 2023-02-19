@@ -1,7 +1,8 @@
 import { VoidComponent } from 'solid-js'
-import { PUBLIC_URL } from '~/constants'
-import { HeartIcon } from '~/components/icons'
 import { A } from 'solid-start'
+
+import { HeartIcon } from '~/components/icons'
+import { PUBLIC_URL } from '~/constants'
 
 const MadeBy: VoidComponent = () => {
   return (

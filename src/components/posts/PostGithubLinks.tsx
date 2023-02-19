@@ -1,4 +1,5 @@
 import { VoidComponent } from 'solid-js'
+
 import type { DataType } from '~/types/data'
 import { editUrl, historyUrl } from '~/utils/repo'
 

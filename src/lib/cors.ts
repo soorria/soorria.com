@@ -1,3 +1,9 @@
+export const corsHeaders = {
+  'Access-Control-Allow-Origin': '*',
+}
+
 export const addCorsHeaders = (res: Response): void => {
-  res.headers.set('Access-Control-Allow-Origin', '*')
+  Object.entries(corsHeaders).forEach(([key, value]) => {
+    res.headers.set(key, value)
+  })
 }

@@ -1,14 +1,15 @@
 // import type { GetStaticProps } from 'next'
-import type { ProjectFrontMatter } from '~/types/project'
+import { VoidComponent } from 'solid-js'
+import { useRouteData } from 'solid-start'
+import { createServerData$ } from 'solid-start/server'
+
 import PostLayout from '~/components/layout/PostLayout'
 import ProjectCard from '~/components/projects/ProjectCard'
 import ProjectsGrid from '~/components/projects/ProjectsGrid'
 import { featuredProjects, PUBLIC_URL } from '~/constants'
 import { getAllFilesFrontMatter } from '~/lib/data'
+import type { ProjectFrontMatter } from '~/types/project'
 import { getOgImageForData } from '~/utils/og'
-import { VoidComponent } from 'solid-js'
-import { createServerData$ } from 'solid-start/server'
-import { useRouteData } from 'solid-start'
 // import { NextSeo } from 'next-seo'
 
 interface ProjectsPageProps {

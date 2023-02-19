@@ -1,6 +1,8 @@
-import cx from '~/utils/cx'
-import { CODE_BLOCK_CLASSNAMES, getTruncationHeight } from './utils'
 import { ComponentProps, createSignal, ParentComponent, Show, splitProps } from 'solid-js'
+
+import cx from '~/utils/cx'
+
+import { CODE_BLOCK_CLASSNAMES, getTruncationHeight } from './utils'
 
 export type CodeBlockPreExtraProps = { truncate?: boolean | number | string }
 export type CodeBlockPreProps = CodeBlockPreExtraProps & ComponentProps<'pre'>

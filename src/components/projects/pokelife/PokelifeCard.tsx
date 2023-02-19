@@ -1,7 +1,3 @@
-import type { ProjectFrontMatter } from '~/types/project'
-import { CodeIcon, ExternalIcon, InfoIcon } from '~/components/icons'
-import cx from '~/utils/cx'
-import { COMMON_CLASSNAMES } from '../utils'
 import {
   Component,
   ComponentProps,
@@ -13,6 +9,12 @@ import {
   Show,
 } from 'solid-js'
 import { A } from 'solid-start'
+
+import { CodeIcon, ExternalIcon, InfoIcon } from '~/components/icons'
+import type { ProjectFrontMatter } from '~/types/project'
+import cx from '~/utils/cx'
+
+import { COMMON_CLASSNAMES } from '../utils'
 
 interface PokelifeCardProps {
   project: ProjectFrontMatter

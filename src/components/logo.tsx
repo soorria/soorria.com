@@ -1,4 +1,5 @@
 import { ComponentProps, VoidComponent } from 'solid-js'
+
 import cx from '~/utils/cx'
 
 const SIZES = {

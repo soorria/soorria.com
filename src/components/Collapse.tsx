@@ -1,5 +1,6 @@
 import { JSXElement, ParentComponent, ValidComponent } from 'solid-js'
 import { Dynamic } from 'solid-js/web'
+
 import { TriangleIcon } from './icons'
 
 export type CollapseProps = {

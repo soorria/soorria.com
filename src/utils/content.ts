@@ -22,9 +22,7 @@ export const addRefToUrl = (url: string, ref = 'soorria.com'): string => {
   return u.toString()
 }
 
-export const composeFilters = <T extends any>(
-  ...filters: Array<(arr: T[]) => T[]>
-): ((arr: T[]) => T[]) => {
+export const composeFilters = <T>(...filters: Array<(arr: T[]) => T[]>): ((arr: T[]) => T[]) => {
   return arr => {
     return filters.reduce((arr, filter) => filter(arr), arr)
   }

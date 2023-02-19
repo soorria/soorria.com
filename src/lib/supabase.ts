@@ -1,7 +1,7 @@
 import { createClient } from '@supabase/supabase-js'
 
-const url = import.meta.env.VITE_SUPABASE_URL
-const anonKey = import.meta.env.VITE_SUPABASE_ANON_KEY
+const url = import.meta.env.VITE_SUPABASE_URL as string
+const anonKey = import.meta.env.VITE_SUPABASE_ANON_KEY as string
 const client = createClient(url, anonKey)
 
 type Singleton = {
@@ -22,7 +22,7 @@ export const getSingleton = async (slug: string): Promise<Singleton> => {
     throw new Error(`Singleton not found: ${slug}`)
   }
 
-  return data
+  return data as Singleton
 }
 
 export const getSingletonText = async (slug: string): Promise<string> => {

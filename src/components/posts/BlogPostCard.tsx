@@ -1,8 +1,10 @@
-import type { BlogPostFrontMatter } from '~/types/blog-post'
-import { BookIcon, ClockIconSolid, EditIcon, TextIcon } from '~/components/icons'
-import { formatDate } from '~/utils/date'
-import PostListItemLink from './PostListItemLink'
 import { Show, VoidComponent } from 'solid-js'
+
+import { BookIcon, ClockIconSolid, EditIcon, TextIcon } from '~/components/icons'
+import type { BlogPostFrontMatter } from '~/types/blog-post'
+import { formatDate } from '~/utils/date'
+
+import PostListItemLink from './PostListItemLink'
 
 const BlogPostCard: VoidComponent<{ post: BlogPostFrontMatter }> = props => (
   <PostListItemLink href={`/blog/${props.post.slug}`}>

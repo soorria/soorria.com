@@ -1,9 +1,11 @@
-import type { ProjectCardComponent } from '../ProjectCard'
+import { Show } from 'solid-js'
+import { A } from 'solid-start'
+
 import { CodeIcon, ExternalIcon, InfoIcon } from '~/components/icons'
 import cx from '~/utils/cx'
+
+import type { ProjectCardComponent } from '../ProjectCard'
 import { COMMON_CLASSNAMES } from '../utils'
-import { A } from 'solid-start'
-import { Show } from 'solid-js'
 
 const cardLinkClassName =
   'inline-flex items-center px-3 py-1 ml-2 mt-2 space-x-1 text-sm font-semibold transition-colors border-2 border-current border-white rounded-sm hocus:text-green-700 hocus:bg-white focus-ring'

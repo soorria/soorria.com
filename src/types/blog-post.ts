@@ -1,12 +1,17 @@
-import type { BaseData, FrontMatter } from './data'
+import { z } from 'zod'
 
-export interface BlogPost extends BaseData {
-  category: string
-  createdAt: string
-  updatedAt: string
-  tags: string[]
-  summary?: string
-  private?: boolean
-}
+import { BaseDataSchema, FrontMatter } from './data'
+
+export const BlogPostSchema = BaseDataSchema.merge(
+  z.object({
+    category: z.string(),
+    createdAt: z.string(),
+    updatedAt: z.string().optional(),
+    tags: z.string().array(),
+    notMine: z.boolean().optional(),
+    private: z.boolean().optional(),
+  })
+)
+export type BlogPost = z.infer<typeof BlogPostSchema>
 
 export type BlogPostFrontMatter = FrontMatter<BlogPost>

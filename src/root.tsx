@@ -1,4 +1,6 @@
 // @refresh reload
+import './styles/root.css'
+
 import { lazy, Suspense } from 'solid-js'
 import {
   Body,
@@ -11,10 +13,10 @@ import {
   Routes,
   Scripts,
 } from 'solid-start'
+
 import Footer from './components/layout/Footer'
 import Header from './components/layout/Header'
 import NoJsStyles from './styles/NoJsStyles'
-import './styles/root.css'
 
 const ErrorPage = lazy(() => import('./routes/error'))
 

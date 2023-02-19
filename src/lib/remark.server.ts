@@ -1,10 +1,11 @@
-import { Parent, visit } from 'unist-util-visit'
 import { transformSync } from '@babel/core'
 // @ts-expect-error no types
 import tsPreset from '@babel/preset-typescript'
+import type { Code } from 'mdast'
 import { format } from 'prettier'
 import type { Transformer } from 'unified'
-import type { Code } from 'mdast'
+import { visit } from 'unist-util-visit'
+import { Parent } from 'unist-util-visit/lib'
 
 const isTypescriptCodeBlock = (lang: string) => ['ts', 'tsx', 'typescript'].includes(lang)
 const getJavascriptType = (lang: string) => (lang === 'tsx' ? 'jsx' : 'js')

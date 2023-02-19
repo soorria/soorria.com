@@ -1,7 +1,8 @@
-import { RefreshIcon } from '../icons'
-import { createMemo, createSignal, VoidComponent } from 'solid-js'
-import { Dynamic } from 'solid-js/web'
+import { createSignal, VoidComponent } from 'solid-js'
+
 import { randomIndex } from '~/utils/random'
+
+import { RefreshIcon } from '../icons'
 
 interface SubtitleProps {
   options?: string[]
@@ -14,15 +15,19 @@ const Subtitle: VoidComponent<SubtitleProps> = props => {
   let rotationTimeoutRef: ReturnType<typeof setTimeout> | undefined
   const rotationDuration = () => (rotations() > 0 ? getDurationMs(rotations()) : 0)
   const [index, setIndex] = createSignal(0)
-  const components = createMemo(() => props.options?.map(o => () => <p>{o}</p>) ?? [])
-  const getComponent = () => components()[index()]!
+
+  const selectedOption = () => (
+    // eslint-disable-next-line solid/no-innerhtml
+    <p class="md inline" innerHTML={props.options?.[index()] ?? ''} />
+  )
 
   const randomise = () => {
-    if (components().length < 1) return
+    const options = props.options || []
+    if (options.length < 1) return
 
     let i = index()
     while (i === index()) {
-      i = randomIndex(components())
+      i = randomIndex(options)
     }
 
     setIndex(i)
@@ -38,8 +43,8 @@ const Subtitle: VoidComponent<SubtitleProps> = props => {
   }
 
   return (
-    <div class="[&>p]:inline">
-      <Dynamic component={getComponent()} />
+    <div>
+      {selectedOption}
       <button
         onClick={randomise}
         class="focus-ring group relative ml-2 inline-flex translate-y-1 items-center rounded text-drac-highlight transition hocus:text-drac-purple"
@@ -49,9 +54,10 @@ const Subtitle: VoidComponent<SubtitleProps> = props => {
         <RefreshIcon
           class="h-em w-em transform transition-transform ease-out"
           style={{
-            ['--tw-rotate' as string]: `-${rotations()}turn`,
+            '--tw-rotate': `-${rotations()}turn`,
             'transition-duration': `${rotationDuration()}ms`,
           }}
+          onTransitionEnd={() => setRotations(0)}
         />
       </button>
     </div>

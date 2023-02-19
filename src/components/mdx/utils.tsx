@@ -1,4 +1,5 @@
 import { ParentComponent, VoidComponent } from 'solid-js'
+
 import cx from '~/utils/cx'
 import { useCopy } from '~/utils/use-copy'
 
@@ -65,10 +66,14 @@ export const CodeBlockTitle: ParentComponent = props => (
   </div>
 )
 
-export const CodeBlockCopyButton: VoidComponent<{ getText(): string }> = ({ getText }) => {
+export const CodeBlockCopyButton: VoidComponent<{ getText(): string }> = props => {
   const [copy, copied] = useCopy()
   return (
-    <button type="button" class={CODE_BLOCK_CLASSNAMES.button} onClick={() => copy(getText())}>
+    <button
+      type="button"
+      class={CODE_BLOCK_CLASSNAMES.button}
+      onClick={() => copy(props.getText())}
+    >
       <span class="inline-grid overflow-hidden">
         <span
           class={cx('col-start-1 row-start-1 transition-transform')}

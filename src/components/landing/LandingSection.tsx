@@ -1,4 +1,5 @@
 import { JSXElement, ParentComponent } from 'solid-js'
+
 import CustomLink from '../CustomLink'
 
 type LandingSectionProps = {

@@ -1,4 +1,5 @@
 import { children, For, ParentComponent, splitProps } from 'solid-js'
+
 import Collapse, { CollapseProps } from '../Collapse'
 
 const MDXCollapse: ParentComponent<CollapseProps> = props => {

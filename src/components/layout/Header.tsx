@@ -1,5 +1,6 @@
 import { For, VoidComponent } from 'solid-js'
 import { A } from 'solid-start'
+
 import SpinnyHomeLink from '../SpinnyHomeLink'
 import Container from './Container'
 
@@ -34,7 +35,8 @@ const Header: VoidComponent = () => {
             {({ title, href }) => (
               <A
                 href={href}
-                class="focus-ring relative overflow-hidden rounded border-drac-content px-2 py-1 leading-none transition hocus:bg-drac-base-light hocus:text-drac-pink sm:py-2 sm:px-3"
+                class="focus-ring relative overflow-hidden rounded border-drac-content px-2 py-1 leading-none transition hocus-visible:bg-drac-base-light hocus-visible:text-drac-pink sm:py-2 sm:px-3"
+                activeClass="bg-drac-base-light text-drac-pink"
               >
                 {title}
               </A>

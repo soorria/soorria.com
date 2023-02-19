@@ -1,7 +1,8 @@
-import CustomLink from '../CustomLink'
-import TsJsSwitcher from './TsJsSwitcher'
-import CustomCodeBlock from './CodeBlock'
 import { ComponentProps, lazy } from 'solid-js'
+
+import CustomLink from '../CustomLink'
+import CustomCodeBlock from './CodeBlock'
+import TsJsSwitcher from './TsJsSwitcher'
 
 export const baseComponents = {
   a: CustomLink,

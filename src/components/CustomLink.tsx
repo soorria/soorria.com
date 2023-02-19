@@ -1,25 +1,19 @@
 import { ComponentProps, ParentComponent, splitProps } from 'solid-js'
 import { A } from 'solid-start'
-import cx from '~/utils/cx'
 
-const defaultClassName =
-  'text-drac-pink underline hocus:text-drac-purple focus-ring rounded -mx-1 px-1 -mb-0.5 pb-0.5'
+import cx from '~/utils/cx'
 
 const CustomLink: ParentComponent<{ href: string } & ComponentProps<'a'>> = props => {
   const [, rest] = splitProps(props, ['class', 'children'])
+  const c = () => cx('link', props.class)
   return (
     <>
       {props.href.startsWith('http') ? (
-        <a
-          rel="noopenner noreferrer"
-          target="_blank"
-          class={cx(defaultClassName, props.class)}
-          {...rest}
-        >
+        <a rel="noopenner noreferrer" target="_blank" class={c()} {...rest}>
           {props.children}
         </a>
       ) : (
-        <A class={props.class} {...rest}>
+        <A class={c()} {...rest}>
           {props.children}
         </A>
       )}

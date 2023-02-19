@@ -1,12 +1,12 @@
+import UtilsProjectCard from '../_utils/UtilsProjectCard'
 import type { ProjectCardComponent } from '../ProjectCard'
 import bgImg from './sizes.png'
-import UtilsProjectCard from '../_utils/UtilsProjectCard'
 
-const SizesCard: ProjectCardComponent = ({ project }) => {
+const SizesCard: ProjectCardComponent = props => {
   return (
     <UtilsProjectCard
       fullWidth
-      project={project}
+      project={props.project}
       bgImage={bgImg}
       bgAlt="flowchart showing simulated usage of the sizes utility with text, html and png files compressed with gzip coming resulting in a size of 2830 bytes"
     >

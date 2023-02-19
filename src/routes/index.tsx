@@ -1,7 +1,6 @@
-import { readdirSync } from 'fs'
-import { globby } from 'globby'
 import { RouteDataArgs, useRouteData } from 'solid-start'
 import { createServerData$ } from 'solid-start/server'
+
 import Contact from '~/components/landing/Contact'
 import FeaturedProjects from '~/components/landing/FeaturedProjects'
 import Hero from '~/components/landing/Hero'
@@ -10,31 +9,38 @@ import Subtitle from '~/components/landing/Subtitle'
 import Container from '~/components/layout/Container'
 import { featuredProjects } from '~/constants'
 import { getFileFrontMatter } from '~/lib/data'
+import { mdToHtml } from '~/lib/markdown'
 import { getRandomSkillIndexes } from '~/lib/skills'
 import { getSingletonJsonSafe, getSingletonTextSafe } from '~/lib/supabase'
 import { ProjectFrontMatter } from '~/types/project'
 import { randomArray } from '~/utils/random'
 
 export const routeData = ({}: RouteDataArgs) => {
-  // const renderText = (text: string) =>
-  //   render(text, undefined, { hasCodeBlocks: false }).then(result => result.code)
-
   const subtitleOptions = createServerData$(async () => {
-    const subtitleText = (await getSingletonTextSafe('subtitle')) ?? ''
-    const subtitleChunks = subtitleText
-      .split('---')
-      .map(chunk => chunk.trim())
-      .filter(Boolean)
+    try {
+      const subtitleText = (await getSingletonTextSafe('subtitle')) ?? ''
+      const subtitleChunks = subtitleText
+        .split('---')
+        .map(chunk => chunk.trim())
+        .filter(Boolean)
 
-    //   return await Promise.all(subtitleChunks.map(chunk => renderText(chunk)))
+      const subtitles = await Promise.all(
+        subtitleChunks.map(chunk => mdToHtml(chunk, { inline: true }))
+      )
 
-    return subtitleChunks
+      console.log(subtitles)
+
+      return subtitles
+    } catch {
+      return [
+        `I'm a full stack software engineer passionate about creating performant and <Sparkles>fun</Sparkles> software that enables users to do more with less`,
+      ]
+    }
   })
 
   const now = createServerData$(async () => {
     const nowText = await getSingletonTextSafe('now')
-    return nowText ?? null
-    // return nowText ? await renderText(nowText ?? '') : null
+    return nowText ? await mdToHtml(nowText ?? '', { inline: true }) : null
   })
 
   const indexOptions = createServerData$(
@@ -53,12 +59,6 @@ export const routeData = ({}: RouteDataArgs) => {
     )
     return projects
   })
-
-  // const list = createServerData$(async () => {
-  //   const files = await globby(['./**/*'], { dot: true, suppressErrors: true, absolute: true })
-  //   console.log('files', files, readdirSync('./'))
-  //   return files
-  // })
 
   const randoms = randomArray(0, 100, 5)
 
@@ -82,9 +82,8 @@ export default function Home() {
   return (
     <Container>
       <Hero title="Hey, I'm Soorria!" subtitle={<Subtitle options={subtitleOptions()} />}>
-        <div class="text-lg" id="now">
-          {now()}
-        </div>
+        {/* eslint-disable-next-line solid/no-innerhtml */}
+        <div class="md text-lg" id="now" innerHTML={now() || ''} />
       </Hero>
 
       <FeaturedProjects random={randoms[0]} projects={projects()!} />

@@ -1,4 +1,5 @@
 import { ParentComponent } from 'solid-js'
+
 import Container from './Container'
 
 type PostLayoutProps = {
@@ -13,16 +14,16 @@ export const PostHeading: ParentComponent = props => {
   )
 }
 
-export const PostBottomSection: ParentComponent = ({ children }) => {
-  return <div class="mx-auto mt-24 max-w-xs space-y-8 text-center text-sm">{children}</div>
+export const PostBottomSection: ParentComponent = props => {
+  return <div class="mx-auto mt-24 max-w-xs space-y-8 text-center text-sm">{props.children}</div>
 }
 
-const PostLayout: ParentComponent<PostLayoutProps> = ({ title, children }) => {
+const PostLayout: ParentComponent<PostLayoutProps> = props => {
   return (
     <Container>
       <article class="space-y-12 pt-8 pb-16">
-        <PostHeading>{title}</PostHeading>
-        {children}
+        <PostHeading>{props.title}</PostHeading>
+        {props.children}
       </article>
     </Container>
   )

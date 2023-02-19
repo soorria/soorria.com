@@ -1,7 +1,7 @@
+import type { Element, ElementContent, Node } from 'hast'
 import type { Plugin } from 'unified'
 import type { Node as UnistNode } from 'unist'
 import { visit, Visitor } from 'unist-util-visit'
-import type { Element, ElementContent, Node } from 'hast'
 
 const isPreElement = (n: Node): n is Element => (n as Element).tagName === 'pre'
 

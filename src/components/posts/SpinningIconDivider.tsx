@@ -1,6 +1,8 @@
 import { VoidComponent } from 'solid-js'
 import { Dynamic } from 'solid-js/web'
+
 import { useScrollCssVar } from '~/utils/use-scroll-css-var'
+
 import type { IconComponent } from '../icons'
 
 export const SpinningIconDivider: VoidComponent<{

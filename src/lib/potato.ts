@@ -10,7 +10,9 @@ export const useTrackEvent = () => {
   return <Event extends keyof AnalyticsCustomEvents, Props extends AnalyticsCustomEvents[Event]>(
     e: Event,
     p: { props: Props }
-  ) => {}
+  ) => {
+    //
+  }
 }
 
 export const useTrackFirstEvent = (): ReturnType<typeof useTrackEvent> => {

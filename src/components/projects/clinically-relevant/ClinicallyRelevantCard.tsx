@@ -1,10 +1,12 @@
-import type { ProjectCardComponent } from '../ProjectCard'
-import { ExternalIcon, InfoIcon } from '~/components/icons'
-import { useTrackFirstEvent } from '~/lib/potato'
-import { COMMON_CLASSNAMES } from '../utils'
-import cx from '~/utils/cx'
 import { createSignal, Show, VoidComponent } from 'solid-js'
 import { A } from 'solid-start'
+
+import { ExternalIcon, InfoIcon } from '~/components/icons'
+import { useTrackFirstEvent } from '~/lib/potato'
+import cx from '~/utils/cx'
+
+import type { ProjectCardComponent } from '../ProjectCard'
+import { COMMON_CLASSNAMES } from '../utils'
 
 const ClinicallyRelevantLogo: VoidComponent<{ class?: string }> = props => (
   <svg

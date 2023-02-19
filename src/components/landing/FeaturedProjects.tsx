@@ -1,9 +1,11 @@
-import type { ProjectFrontMatter } from '~/types/project'
-import ProjectCard from '~/components/projects/ProjectCard'
-import LandingSection from './LandingSection'
-import ProjectsGrid from '../projects/ProjectsGrid'
 import { For, VoidComponent } from 'solid-js'
 import { A } from 'solid-start'
+
+import ProjectCard from '~/components/projects/ProjectCard'
+import type { ProjectFrontMatter } from '~/types/project'
+
+import ProjectsGrid from '../projects/ProjectsGrid'
+import LandingSection from './LandingSection'
 
 interface FeaturedProjectsProps {
   projects: ProjectFrontMatter[]

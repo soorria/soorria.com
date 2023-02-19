@@ -1,10 +1,12 @@
+import { ComponentProps, ParentComponent, Show } from 'solid-js'
+import { A } from 'solid-start'
+
+import { CodeIcon, ExternalIcon, InfoIcon } from '~/components/icons'
 import cx from '~/utils/cx'
+
 import type { ProjectCardProps } from '../ProjectCard'
 import { COMMON_CLASSNAMES } from '../utils'
 import UtilsTag from './UtilsTag'
-import { CodeIcon, ExternalIcon, InfoIcon } from '~/components/icons'
-import { ComponentProps, ParentComponent, Show } from 'solid-js'
-import { A } from 'solid-start'
 
 const cardLinkClassName =
   'inline-flex items-center px-3 py-1 ml-2 mt-2 space-x-1 text-sm font-semibold transition-colors border-2 border-current border-white rounded-sm hocus:text-var-bg hocus:bg-white focus-ring'
@@ -34,7 +36,7 @@ const UtilsProjectCard: ParentComponent<UtilsProjectCardProps> = props => {
               />
             </div>
           </div>
-          <div class="absolute inset-0 bg-gradient-to-r from-var-bg via-var-bg to-transparent"></div>
+          <div class="absolute inset-0 bg-gradient-to-r from-var-bg via-var-bg to-transparent" />
         </>
       </Show>
       <div class="relative flex h-full flex-col space-y-4 p-8">

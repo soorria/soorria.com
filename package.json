@@ -3,12 +3,20 @@
   "scripts": {
     "dev": "solid-start dev",
     "build": "solid-start build",
-    "start": "solid-start start"
+    "start": "solid-start start",
+    "lint": "eslint --fix src",
+    "format": "run-s format:*",
+    "format:code": "prettier -w src ./**/*.js",
+    "format:mdx": "prettier --config './_data/.prettierrc' -w _data/**/*.mdx",
+    "type-check": "tsc --noEmit",
+    "husky:install": "husky install",
+    "prepare": "is-ci-cli \"\" \"husky:install\""
   },
   "type": "module",
   "devDependencies": {
     "@tailwindcss/typography": "^0.5.9",
     "@types/babel__core": "^7.20.0",
+    "@types/marked": "^4.0.8",
     "@types/node": "^18.13.0",
     "@types/prettier": "^2.7.2",
     "@typescript-eslint/eslint-plugin": "^5.51.0",
@@ -16,8 +24,11 @@
     "autoprefixer": "^10.4.13",
     "eslint": "^8.34.0",
     "eslint-config-prettier": "^8.6.0",
+    "eslint-plugin-import": "^2.27.5",
     "eslint-plugin-jsx-a11y": "^6.7.1",
     "eslint-plugin-prettier": "^4.2.1",
+    "eslint-plugin-simple-import-sort": "^10.0.0",
+    "eslint-plugin-solid": "^0.9.4",
     "husky": "^8.0.3",
     "is-ci-cli": "^2.2.0",
     "lint-staged": "^13.1.1",
@@ -48,6 +59,7 @@
     "gray-matter": "^4.0.3",
     "hast": "^1.0.0",
     "kleur": "^4.1.5",
+    "marked": "^4.2.12",
     "mdast": "^3.0.0",
     "mdx-bundler": "^9.2.1",
     "mitt": "^3.0.0",
@@ -69,9 +81,19 @@
     "string-width": "^5.1.2",
     "undici": "^5.15.1",
     "unified": "^10.1.2",
-    "unist-util-visit": "^4.1.2"
+    "unist-util-visit": "^4.1.2",
+    "zod": "^3.20.6"
   },
   "engines": {
     "node": ">=16"
+  },
+  "lint-staged": {
+    "*.{ts,js,tsx}": [
+      "prettier -w",
+      "eslint --fix --cache"
+    ],
+    "_data/**/*.mdx": [
+      "prettier --config './_data/.prettierrc' --parser mdx -w"
+    ]
   }
 }

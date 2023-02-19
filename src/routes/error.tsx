@@ -1,5 +1,6 @@
 import { VoidComponent } from 'solid-js'
 import { A, useLocation } from 'solid-start'
+
 import MainLayout from '~/components/layout/MainLayout'
 import { PostHeading } from '~/components/layout/PostLayout'
 

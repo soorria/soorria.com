@@ -1,10 +1,12 @@
-import type { SnippetFrontMatter } from '~/types/snippet'
-import { ClockIconSolid, EditIcon } from '~/components/icons'
-import { categoryLowerCaseToIcon, defaultCategoryIcon } from '~/lib/categories'
-import { formatDate } from '~/utils/date'
-import PostListItemLink from './PostListItemLink'
 import { Show, VoidComponent } from 'solid-js'
 import { Dynamic } from 'solid-js/web'
+
+import { ClockIconSolid, EditIcon } from '~/components/icons'
+import { categoryLowerCaseToIcon, defaultCategoryIcon } from '~/lib/categories'
+import type { SnippetFrontMatter } from '~/types/snippet'
+import { formatDate } from '~/utils/date'
+
+import PostListItemLink from './PostListItemLink'
 
 const SnippetCard: VoidComponent<{ snippet: SnippetFrontMatter }> = props => {
   const icon = () =>

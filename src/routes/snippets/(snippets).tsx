@@ -1,19 +1,19 @@
 // import { NextSeo } from 'next-seo'
 import { createAutoAnimate } from '@formkit/auto-animate/solid'
-
-import type { SnippetFrontMatter } from '~/types/snippet'
-import PostLayout from '~/components/layout/PostLayout'
-import { getAllFilesFrontMatter } from '~/lib/data'
-import SnippetCard from '~/components/posts/SnippetCard'
-import { getAllTags, sortByCreatedAtField } from '~/utils/content'
-import { PUBLIC_URL } from '~/constants'
-import License from '~/components/License'
-import cx from '~/utils/cx'
-import { intersectionSet } from '~/utils/misc'
 import { createMemo, createSignal, For, VoidComponent } from 'solid-js'
-import Collapse from '~/components/Collapse'
 import { useRouteData } from 'solid-start'
 import { createServerData$ } from 'solid-start/server'
+
+import Collapse from '~/components/Collapse'
+import PostLayout from '~/components/layout/PostLayout'
+import License from '~/components/License'
+import SnippetCard from '~/components/posts/SnippetCard'
+import { PUBLIC_URL } from '~/constants'
+import { getAllFilesFrontMatter } from '~/lib/data'
+import type { SnippetFrontMatter } from '~/types/snippet'
+import { getAllTags, sortByCreatedAtField } from '~/utils/content'
+import cx from '~/utils/cx'
+import { intersectionSet } from '~/utils/misc'
 
 const filterableTags: Array<{ label: string; value: string }> = [
   { value: 'react', label: 'React' },

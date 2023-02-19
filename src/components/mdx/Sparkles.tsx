@@ -1,8 +1,10 @@
-import { IconComponent, ReactIcon, SolidJsIcon, TypescriptIcon } from '../icons'
+import { createSignal, For, onCleanup, onMount, ParentComponent, VoidComponent } from 'solid-js'
+import { Dynamic } from 'solid-js/web'
+
 import cx from '~/utils/cx'
 import { random, randomItem } from '~/utils/random'
-import { Dynamic } from 'solid-js/web'
-import { createSignal, onCleanup, onMount, ParentComponent, VoidComponent } from 'solid-js'
+
+import { IconComponent, ReactIcon, SolidJsIcon, TypescriptIcon } from '../icons'
 
 type SparklesProps = {
   block?: boolean
@@ -118,9 +120,7 @@ const Sparkles: ParentComponent<SparklesProps> = props => {
 
   return (
     <span class={cx('relative', props.block ? 'block' : 'inline-block')}>
-      {sparkles().map(s => (
-        <SparkleSvg {...s} />
-      ))}
+      <For each={sparkles()}>{s => <SparkleSvg {...s} />}</For>
       <span class="relative" style={{ 'z-index': zIndexes.content }}>
         {props.children}
       </span>

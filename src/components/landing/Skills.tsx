@@ -1,6 +1,8 @@
-import { ParentComponent, VoidComponent } from 'solid-js'
+import { For, ParentComponent, VoidComponent } from 'solid-js'
+
 import { useSkills } from '~/lib/skills'
 import cx from '~/utils/cx'
+
 import CustomLink from '../CustomLink'
 import { RefreshIcon } from '../icons'
 import LandingSection from './LandingSection'
@@ -33,15 +35,13 @@ const Skills: VoidComponent<{ random?: number; skillIndexes: number[] }> = props
         Here are some of the technicals skills during my degree, work, and just out of curiosity.
       </p>
       <ul class="mb-8 grid grid-cols-2 gap-x-6 gap-y-8 md:grid-cols-4">
-        {skills().map(skill => (
-          <SkillListItem>{skill}</SkillListItem>
-        ))}
+        <For each={skills()}>{skill => <SkillListItem>{skill}</SkillListItem>}</For>
         {showAll() ? <SkillListItem>Adding random &ldquo;features&rdquo;</SkillListItem> : null}
       </ul>
       <div class="space-y-4 text-center text-sm">
         <div class="flex items-center justify-center space-x-1">
           <button onClick={() => toggleShowAll()} class={classes.buttonCommon}>
-            {showAll() ? 'Show a random set of my skills' : "Show all the tech I've learned"}
+            {showAll() ? 'Show random' : 'Show all'}
           </button>
           <span>&nbsp;/&nbsp;</span>
           <button
@@ -51,7 +51,7 @@ const Skills: VoidComponent<{ random?: number; skillIndexes: number[] }> = props
             }}
             class={cx('flex items-center', classes.buttonCommon)}
           >
-            <RefreshIcon class="mr-1 inline-block h-em w-em" /> Randomise skills
+            <RefreshIcon class="mr-1 inline-block h-em w-em" /> Randomise
           </button>
         </div>
         <p>

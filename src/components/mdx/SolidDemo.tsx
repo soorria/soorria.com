@@ -1,18 +1,19 @@
-import { type HyperScript } from 'hyper-dom-expressions'
-import { useEffect, useRef, useState } from 'react'
+// import { type HyperScript } from 'hyper-dom-expressions'
 import {
   Component,
   createComponent,
-  createSignal,
   createEffect,
-  onMount,
+  createSignal,
   onCleanup,
+  onMount,
+  VoidComponent,
 } from 'solid-js'
 import h from 'solid-js/h'
 import { render } from 'solid-js/web'
 
 import cx from '~/utils/cx'
 import { useHydrated } from '~/utils/use-hydrated'
+
 import { RefreshIcon } from '../icons'
 import { CODE_BLOCK_CLASSNAMES, DEMO_CLASSNAMES } from './utils'
 
@@ -21,7 +22,8 @@ type SolidStuff = {
   createEffect: typeof createEffect
   onMount: typeof onMount
   onCleanup: typeof onCleanup
-  h: HyperScript
+  // h: HyperScript
+  h: () => HTMLElement
 }
 
 export type CreateSolidDemo = (stuff: SolidStuff) => { component: Component }
@@ -30,15 +32,15 @@ interface SolidDemoProps {
   create: CreateSolidDemo
 }
 
-const SolidDemo: React.FC<SolidDemoProps> = props => {
+const SolidDemo: VoidComponent<SolidDemoProps> = props => {
   const hydrated = useHydrated()
 
-  const [key, setKey] = useState<number>(0)
-  const solidRoot = useRef<HTMLDivElement>(null)
+  const [key, setKey] = createSignal<number>(0)
+  let solidRoot: HTMLDivElement | undefined
   const createSolidDemo = props.create
 
-  useEffect(() => {
-    const root = solidRoot.current
+  createEffect(() => {
+    const root = solidRoot
     if (!root || !hydrated) return
 
     const demo = createSolidDemo({
@@ -52,24 +54,24 @@ const SolidDemo: React.FC<SolidDemoProps> = props => {
 
     const unmount = render(() => createComponent(demo.component, {}), root)
 
-    return () => {
+    onCleanup(() => {
       root.innerHTML = ''
       unmount()
-    }
-  }, [key, hydrated, createSolidDemo])
+    })
+  })
 
   return (
-    <div className={cx('demo-wrapper', DEMO_CLASSNAMES.root)}>
-      <div className={CODE_BLOCK_CLASSNAMES.header}>
-        <div className={CODE_BLOCK_CLASSNAMES.languageTitle}>Contains real Solid!!</div>
+    <div class={cx('demo-wrapper', DEMO_CLASSNAMES.root)}>
+      <div class={CODE_BLOCK_CLASSNAMES.header}>
+        <div class={CODE_BLOCK_CLASSNAMES.languageTitle}>Contains real Solid!!</div>
       </div>
-      <div ref={solidRoot}></div>
-      <div className={DEMO_CLASSNAMES.spacing} />
-      <div className={DEMO_CLASSNAMES.footer}>
-        <button onClick={() => setKey(p => p + 1)} className={DEMO_CLASSNAMES.reload}>
+      <div ref={solidRoot} />
+      <div class={DEMO_CLASSNAMES.spacing} />
+      <div class={DEMO_CLASSNAMES.footer}>
+        <button onClick={() => setKey(p => p + 1)} class={DEMO_CLASSNAMES.reload}>
           <RefreshIcon
-            className="mr-1 h-em w-em transition-transform duration-700"
-            style={{ transform: `rotate(-${key * 360}deg)` }}
+            class="mr-1 h-em w-em transition-transform duration-700"
+            style={{ transform: `rotate(-${key() * 360}deg)` }}
           />{' '}
           Reload Demo
         </button>
