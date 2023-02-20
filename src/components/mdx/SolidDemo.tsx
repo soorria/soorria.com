@@ -41,7 +41,7 @@ const SolidDemo: VoidComponent<SolidDemoProps> = props => {
 
   createEffect(() => {
     const root = solidRoot
-    if (!root || !hydrated) return
+    if (!root || !hydrated()) return
 
     const demo = createSolidDemo({
       createEffect,

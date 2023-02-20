@@ -33,8 +33,8 @@ export const Example = () => {
     <div
       style={{
         display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'space-between',
+        'align-items': 'center',
+        'justify-content': 'space-between',
         gap: '1rem',
       }}
     >
@@ -44,7 +44,7 @@ export const Example = () => {
           background: 'var(--base)',
           flex: '1 1',
           border: '2px solid var(--pink)',
-          borderRadius: '0.25rem',
+          'border-radius': '0.25rem',
           padding: '0.5rem 1rem',
         }}
         value={input ?? ''}
@@ -54,7 +54,7 @@ export const Example = () => {
         style={{
           padding: '0.5rem 1rem',
           background: 'var(--base-light)',
-          borderRadius: '0.25rem',
+          'border-radius': '0.25rem',
         }}
         type="button"
         onClick={() => reset()}

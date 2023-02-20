@@ -19,8 +19,10 @@
     "@types/marked": "^4.0.8",
     "@types/node": "^18.13.0",
     "@types/prettier": "^2.7.2",
+    "@types/react": "^18.0.28",
     "@typescript-eslint/eslint-plugin": "^5.51.0",
     "@typescript-eslint/parser": "^5.51.0",
+    "@vitejs/plugin-react": "^3.1.0",
     "autoprefixer": "^10.4.13",
     "eslint": "^8.34.0",
     "eslint-config-prettier": "^8.6.0",
@@ -95,7 +97,7 @@
       "eslint --fix --cache --quiet"
     ],
     "_data/**/*.mdx": [
-      "prettier --config './_data/.prettierrc' --parser mdx -w"
+      "prettier --config './src/data/.prettierrc' --parser mdx -w"
     ]
   }
 }

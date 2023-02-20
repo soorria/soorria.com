@@ -1,4 +1,5 @@
 import solid from 'solid-start/vite'
+import react from '@vitejs/plugin-react'
 import vercel from 'solid-start-vercel'
 import { mdx } from './src/vite/mdx'
 import { defineConfig } from 'vite'
@@ -12,13 +13,20 @@ export default defineConfig(async () => ({
       // You may need to resolve assets like `/fonts/Roboto.woff2` to a particular directory
       resolvePath: id => 'file://./public/fonts' + id,
     }),
+    react({
+      include: '**/*.react.{ts,tsx,js,jsx}',
+    }),
     solid({
       adapter: vercel({
         // @ts-ignore
         // prerender: true,
         edge: true,
       }),
+      extensions: ['.mdx', '.md'],
     }),
   ],
+  optimizeDeps: {
+    entries: [],
+  },
   envDir: '.',
 }))

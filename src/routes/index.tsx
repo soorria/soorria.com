@@ -1,7 +1,7 @@
 import './index.css'
 
 import { customElement, noShadowDOM } from 'solid-element'
-import { createEffect, lazy } from 'solid-js'
+import { lazy } from 'solid-js'
 import { RouteDataArgs, useRouteData } from 'solid-start'
 import { createServerData$ } from 'solid-start/server'
 
@@ -12,7 +12,6 @@ import Skills from '~/components/landing/Skills'
 import Subtitle from '~/components/landing/Subtitle'
 import Container from '~/components/layout/Container'
 import { featuredProjects } from '~/constants'
-// import mod from '~/data/misc/about/index.mdx'
 import { projectFrontMatters } from '~/lib/data'
 import { mdToHtml } from '~/lib/markdown'
 import { getRandomSkillIndexes } from '~/lib/skills'
@@ -31,8 +30,6 @@ if (typeof window !== 'undefined') {
     )
   })
 }
-
-// console.log('@@mod', typeof mod !== 'undefined' && mod)
 
 export const routeData = ({}: RouteDataArgs) => {
   const subtitleOptions = createServerData$(async () => {

@@ -1,5 +1,6 @@
 // @refresh reload
 import './styles/root.css'
+import './styles/prose.css'
 
 import { lazy, ParentComponent, Suspense } from 'solid-js'
 import {

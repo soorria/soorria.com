@@ -14,6 +14,7 @@ import {
 
 export type CustomCodeBlockProps = {
   class: string
+  className: string
   language?: string
   title?: JSXElement
 } & CodeBlockPreExtraProps
@@ -23,11 +24,12 @@ const CustomCodeBlock: ParentComponent<CustomCodeBlockProps> = props => {
   let pre: HTMLPreElement | undefined
   const hydrated = useHydrated()
 
-  const language = (props.language && LANGUAGE_NAME_MAP[props.language]) ?? props.language
+  const language = () => (props.language && LANGUAGE_NAME_MAP[props.language]) ?? props.language
+  const className = () => props.class || props.className
 
   return (
     <Show
-      when={props.class?.includes('shiki')}
+      when={className().includes('shiki')}
       fallback={<pre class={props.class}>{props.children}</pre>}
     >
       <Show when={props.title}>
@@ -35,13 +37,13 @@ const CustomCodeBlock: ParentComponent<CustomCodeBlockProps> = props => {
       </Show>
       <div class={cx('shiki', CODE_BLOCK_CLASSNAMES.root)}>
         <div class={CODE_BLOCK_CLASSNAMES.header}>
-          <div class={CODE_BLOCK_CLASSNAMES.languageTitle}>{language}</div>
+          <div class={CODE_BLOCK_CLASSNAMES.languageTitle}>{language()}</div>
           <div class="flex-1" />
           <Show when={hydrated()}>
             <CodeBlockCopyButton getText={() => getCodeLinesFromPre(pre)} />
           </Show>
         </div>
-        <CodeBlockPre ref={pre} class={props.class} {...rest}>
+        <CodeBlockPre ref={pre} class={className()} {...rest}>
           {props.children}
         </CodeBlockPre>
       </div>

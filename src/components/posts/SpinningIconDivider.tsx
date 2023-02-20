@@ -11,7 +11,7 @@ export const SpinningIconDivider: VoidComponent<{
 }> = props => {
   useScrollCssVar(() => props.scrollVar)
 
-  const line = (
+  const line = () => (
     <div role="presentation" class="flex items-center opacity-50">
       <div class="h-px flex-1 bg-current" />
     </div>
@@ -24,7 +24,7 @@ export const SpinningIconDivider: VoidComponent<{
       aria-hidden="true"
       style={{ 'grid-template-columns': '1fr auto 1fr' }}
     >
-      {line}
+      {line()}
       <Dynamic
         component={props.icon}
         class="inline-block h-6 w-6 transition-transform ease-linear"
@@ -32,7 +32,7 @@ export const SpinningIconDivider: VoidComponent<{
           transform: `rotate(calc(var(${props.scrollVar}) * 2 * 360deg))`,
         }}
       />
-      {line}
+      {line()}
     </div>
   )
 }

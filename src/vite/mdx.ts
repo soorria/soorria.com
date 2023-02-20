@@ -1,6 +1,5 @@
 import { nodeTypes } from '@mdx-js/mdx'
 import mdxRollup from '@mdx-js/rollup'
-import fs from 'fs'
 import matter from 'gray-matter'
 import readingTime from 'reading-time'
 import { rehypeAccessibleEmojis } from 'rehype-accessible-emojis'
@@ -103,12 +102,6 @@ export const mdx = (): PluginOption => {
       name: 'mdx-content',
       enforce: 'pre',
       async transform(code, id) {
-        if (id.match(/\.mdx?$/)) {
-          console.log({
-            id: id.split('/').slice(-3).join('/'),
-            ext: id.endsWith('.mdx') || id.endsWith('.md'),
-          })
-        }
         if (!id.endsWith('.mdx') && !id.endsWith('.md')) return
 
         code = getMatter(id, code).content

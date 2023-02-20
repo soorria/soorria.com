@@ -41,6 +41,10 @@
   @apply -mx-2 pb-3 md:-mx-6;
 }
 
+.shiki pre.shiki {
+  @apply !my-0;
+}
+
 .prose code {
   @apply rounded bg-drac-base-light py-1 px-1.5 leading-none text-drac-pink;
 }

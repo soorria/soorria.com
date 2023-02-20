@@ -1,5 +1,5 @@
-import { createEffect, createSignal, For, VoidComponent } from 'solid-js'
-import { A, useLocation } from 'solid-start'
+import { createEffect, createSignal, For, on, VoidComponent } from 'solid-js'
+import { A, useIsRouting, useLocation } from 'solid-start'
 
 import SpinnyHomeLink from '../SpinnyHomeLink'
 import Container from './Container'
@@ -24,9 +24,9 @@ const Header: VoidComponent = () => {
   let bg: HTMLDivElement | undefined
   const location = useLocation()
   const [showBg, setShowBg] = createSignal(false)
+  const isRouting = useIsRouting()
 
   const handleAnchorHover = (event: MouseEvent & { currentTarget: HTMLAnchorElement }) => {
-    console.log(event.type, event.currentTarget.href)
     if (event.type === 'mouseenter') {
       event.currentTarget.dataset.hover = 'true'
     } else {
@@ -41,9 +41,12 @@ const Header: VoidComponent = () => {
     const currentA =
       nav.querySelector<HTMLAnchorElement>('a[data-hover]') ??
       nav.querySelector<HTMLAnchorElement>('a[aria-current="page"]')
-    if (!currentA || !bg || !nav) return
-
     nav.querySelectorAll('a').forEach(a => a.removeAttribute('data-highlight'))
+    if (!currentA || !bg || !nav) {
+      setShowBg(false)
+      return
+    }
+
     currentA.dataset.highlight = 'true'
 
     const navRect = nav.getBoundingClientRect()
@@ -60,10 +63,11 @@ const Header: VoidComponent = () => {
     setShowBg(true)
   }
 
-  createEffect(() => {
-    const _ = location.pathname
-    positionBg()
-  })
+  createEffect(
+    on([isRouting, () => location.pathname], () => {
+      positionBg()
+    })
+  )
 
   return (
     <Container>

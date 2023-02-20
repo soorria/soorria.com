@@ -1,6 +1,5 @@
+import { css } from 'goober'
 import { useState } from 'react'
-
-import { css } from '$styles'
 
 const layer = css({
   display: 'grid',
@@ -69,14 +68,14 @@ export const BubblingDemo = () => {
         background: 'mediumaquamarine',
         cursor: clicked ? 'not-allowed' : undefined,
       }}
-      className={layer}
+      class={layer}
       onClick={handleClick}
     >
       <div
         data-layer={2}
         data-el="div"
-        style={{ background: 'lightcoral', minWidth: '75%' }}
-        className={layer}
+        style={{ background: 'lightcoral', 'min-width': '75%' }}
+        class={layer}
         onClick={handleClick}
       >
         <p
@@ -85,9 +84,9 @@ export const BubblingDemo = () => {
           style={{
             background: 'lightblue',
             margin: 0,
-            minWidth: '50%',
+            'min-width': '50%',
           }}
-          className={layer}
+          class={layer}
           onClick={handleClick}
         >
           <button
@@ -98,7 +97,7 @@ export const BubblingDemo = () => {
               color: 'var(--base)',
               display: 'grid',
             }}
-            className={layer}
+            class={layer}
             onClick={handleClick}
           >
             Click me!
@@ -111,9 +110,9 @@ export const BubblingDemo = () => {
                 right: 0,
                 top: 0,
                 bottom: 0,
-                placeItems: 'center',
+                'place-items': 'center',
                 cursor: 'not-allowed',
-                zIndex: 1,
+                'z-index': 1,
               }}
             >
               Clicked!

@@ -1,8 +1,10 @@
-import { ComponentProps, lazy } from 'solid-js'
+import { ComponentProps, lazy, ValidComponent, VoidComponent } from 'solid-js'
 
 import CustomLink from '../CustomLink'
 import CustomCodeBlock from './CodeBlock'
 import TsJsSwitcher from './TsJsSwitcher'
+
+export type RenderedMdxComponent = VoidComponent<{ components: Record<string, ValidComponent> }>
 
 export const baseComponents = {
   a: CustomLink,
@@ -19,7 +21,7 @@ export const baseComponents = {
     </div>
   ),
   Note: lazy(() => import('./Note')),
-  Demo: () => <>TODO: react demo</>,
+  Demo: lazy(() => import('./ReactDemo')),
   SolidDemo: () => <>TODO: solid demo</>,
   Sparkles: lazy(() => import('./Sparkles')),
   TsJsSwitcher,

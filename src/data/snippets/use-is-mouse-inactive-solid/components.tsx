@@ -1,15 +1,21 @@
-// @ts-check
-/** @type {import('../../../src/components/mdx/SolidDemo').CreateSolidDemo} */
-export const createExample = ({
-  h,
-  createSignal,
+import {
   createEffect,
+  createSignal,
   onCleanup,
   onMount,
-}) => {
-  const useIsMouseInactive = (props = {}) => {
+  ParentComponent,
+} from 'solid-js'
+
+interface UseIsMouseInactiveOptions {
+  timeout?: number
+  root: Element
+}
+
+// @ts-check
+export const createExample = () => {
+  const useIsMouseInactive = (props: UseIsMouseInactiveOptions) => {
     const [inactive, setInactive] = createSignal(false)
-    let timer
+    let timer: NodeJS.Timeout
 
     const onMouseMove = () => {
       setInactive(false)
@@ -48,12 +54,12 @@ export const createExample = ({
     'place-items': 'center',
   }
 
-  const Content = props => {
-    return h(
-      'p',
-      'Your mouse',
-      () => props.children,
-      `over the viewport in the last ${TIMEOUT_SECONDS} seconds`
+  const Content: ParentComponent = props => {
+    return (
+      <p>
+        Your mouse {props.children} over the viewport in the last{' '}
+        {TIMEOUT_SECONDS} seconds
+      </p>
     )
   }
 
@@ -64,35 +70,32 @@ export const createExample = ({
         root: window,
       })
 
-      return h(
-        'div',
-        {
-          style: {
+      return (
+        <div
+          style={{
             display: 'grid',
             'place-items': 'center',
             position: 'relative',
             height: '64px',
-          },
-        },
-
-        h(
-          'div',
-          {
-            style: CONTENT_WRAPPER_STYLE,
-          },
-          h(Content, h('b', { style: 'color: var(--purple)' }, ' has moved '))
-        ),
-        h(
-          'div',
-          {
-            style: () => ({
+          }}
+        >
+          <div style={CONTENT_WRAPPER_STYLE}>
+            <Content>
+              <b style={{ color: 'var(--purple)' }}> has moved</b>
+            </Content>
+          </div>
+          <div
+            style={{
               ...CONTENT_WRAPPER_STYLE,
               transition: '50ms opacity ease-in-out',
               opacity: isMouseInactive() ? 1 : 0,
-            }),
-          },
-          h(Content, h('b', { style: 'color: var(--pink)' }, " hasn't moved "))
-        )
+            }}
+          >
+            <Content>
+              <b style={{ color: 'var(--purple)' }}> hasn't moved</b>
+            </Content>
+          </div>
+        </div>
       )
     },
   }

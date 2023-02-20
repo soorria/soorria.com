@@ -1,8 +1,27 @@
-// export default () => <>hi</>
+import { Component } from 'solid-js'
 
-import { json } from 'solid-start'
+import PostLayout from '~/components/layout/PostLayout'
+import ProseWrapper from '~/components/layout/ProseWrapper'
+import Logo from '~/components/logo'
+import { baseComponents } from '~/components/mdx/base'
+import { SpinningIconDivider } from '~/components/posts/SpinningIconDivider'
+import { PUBLIC_URL } from '~/constants'
+import About from '~/data/misc/about/index.mdx'
+// import About from '~/data/snippets/use-local-storage/index.mdx'
 
-export const GET = (ctx: any) => {
-  console.log(ctx)
-  return json({ a: true })
+const title = 'About Me'
+const url = `${PUBLIC_URL}/about`
+const shortDescription = 'Who I am and what I do'
+
+const AboutPage: Component = () => {
+  return (
+    <PostLayout title={title}>
+      <SpinningIconDivider scrollVar="--scroll" icon={Logo} />
+      <ProseWrapper>
+        <About components={baseComponents} />
+      </ProseWrapper>
+    </PostLayout>
+  )
 }
+
+export default AboutPage
