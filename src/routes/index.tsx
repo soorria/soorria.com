@@ -1,7 +1,7 @@
 import './index.css'
 
-import { customElement, noShadowDOM } from 'solid-element'
-import { lazy } from 'solid-js'
+import { createSignal, JSXElement } from 'solid-js'
+import { render } from 'solid-js/web'
 import { RouteDataArgs, useRouteData } from 'solid-start'
 import { createServerData$ } from 'solid-start/server'
 
@@ -11,6 +11,7 @@ import Hero from '~/components/landing/Hero'
 import Skills from '~/components/landing/Skills'
 import Subtitle from '~/components/landing/Subtitle'
 import Container from '~/components/layout/Container'
+import Sparkles from '~/components/mdx/Sparkles'
 import { featuredProjects } from '~/constants'
 import { projectFrontMatters } from '~/lib/data'
 import { mdToHtml } from '~/lib/markdown'
@@ -20,14 +21,20 @@ import { Project } from '~/types/project'
 import { randomArray } from '~/utils/random'
 
 if (typeof window !== 'undefined') {
-  const Sparkles = lazy(() => import('~/components/mdx/Sparkles'))
-  customElement('s-sparkles', { children: null as any }, props => {
-    noShadowDOM()
-    return (
-      <Sparkles absolute>
-        {props.children instanceof HTMLCollection ? Array.from(props.children) : props.children}
-      </Sparkles>
-    )
+  import('component-register').then(({ register }) => {
+    register('s-sparkles')((_, { element }) => {
+      const childNodes = Array.from(element.childNodes as Node[])
+      element.innerHTML = ''
+      let children: () => JSXElement
+      let setChildren: undefined | ((children: () => JSXElement) => void) = undefined
+      const cleanup = render(() => {
+        // eslint-disable-next-line
+        ;[children, setChildren] = createSignal(null as JSXElement)
+        return <Sparkles>{children()}</Sparkles>
+      }, element as unknown as HTMLElement)
+      setChildren!(() => childNodes)
+      element.addReleaseCallback(cleanup)
+    })
   })
 }
 
@@ -47,7 +54,10 @@ export const routeData = ({}: RouteDataArgs) => {
       return subtitles
     } catch {
       return [
-        `I'm a full stack software engineer passionate about creating performant and <Sparkles>fun</Sparkles> software that enables users to do more with less`,
+        await mdToHtml(
+          `I'm a full stack software engineer passionate about creating performant and <Sparkles>fun</Sparkles> software that enables users to do more with less`,
+          { inline: true }
+        ),
       ]
     }
   })

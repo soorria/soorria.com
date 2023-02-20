@@ -1,4 +1,3 @@
-import { createAutoAnimate } from '@formkit/auto-animate/solid'
 import {
   ComponentProps,
   createSignal,
@@ -141,7 +140,7 @@ const Sparkles: ParentComponent<SparklesProps> = props => {
     >
       <For each={sparkles()}>{s => <SparkleSvg {...s} role="presentation" />}</For>
       <span class="relative" style={{ 'z-index': zIndexes.content }}>
-        {props.children || <slot />}
+        {props.children}
       </span>
     </span>
   )

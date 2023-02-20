@@ -8,13 +8,8 @@ import { FontaineTransform } from 'fontaine'
 export default defineConfig(async () => ({
   plugins: [
     await mdx(),
-    FontaineTransform.vite({
-      fallbacks: ['BlinkMacSystemFont', 'Segoe UI', 'Helvetica Neue', 'Arial', 'Noto Sans'],
-      // You may need to resolve assets like `/fonts/Roboto.woff2` to a particular directory
-      resolvePath: id => 'file://./public/fonts' + id,
-    }),
     react({
-      include: '**/*.react.{ts,tsx,js,jsx}',
+      include: '**/*.react.{tsx,jsx}',
     }),
     solid({
       adapter: vercel({
@@ -23,6 +18,11 @@ export default defineConfig(async () => ({
         edge: true,
       }),
       extensions: ['.mdx', '.md'],
+    }),
+    FontaineTransform.vite({
+      fallbacks: ['BlinkMacSystemFont', 'Segoe UI', 'Helvetica Neue', 'Arial', 'Noto Sans'],
+      // You may need to resolve assets like `/fonts/Roboto.woff2` to a particular directory
+      resolvePath: id => 'file://./public/fonts' + id,
     }),
   ],
   optimizeDeps: {

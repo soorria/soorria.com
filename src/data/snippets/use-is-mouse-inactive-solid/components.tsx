@@ -1,19 +1,20 @@
 import {
   createEffect,
   createSignal,
+  JSX,
   onCleanup,
   onMount,
   ParentComponent,
 } from 'solid-js'
 
-interface UseIsMouseInactiveOptions {
-  timeout?: number
-  root: Element
-}
-
 // @ts-check
 export const createExample = () => {
-  const useIsMouseInactive = (props: UseIsMouseInactiveOptions) => {
+  interface UseIsMouseInactiveOptions {
+    timeout?: number
+    root?: Element | Window | null
+  }
+
+  const useIsMouseInactive = (props: UseIsMouseInactiveOptions = {}) => {
     const [inactive, setInactive] = createSignal(false)
     let timer: NodeJS.Timeout
 
@@ -22,11 +23,11 @@ export const createExample = () => {
       if (timer) clearTimeout(timer)
       timer = setTimeout(() => {
         setInactive(true)
-      }, props.timeout ?? 5000)
+      }, props.timeout ?? 2500)
     }
 
     createEffect(() => {
-      const el = props.root
+      const el = props.root === undefined ? window : props.root
       if (!el) return
 
       onMount(() => {
@@ -43,12 +44,12 @@ export const createExample = () => {
   }
 
   const TIMEOUT_SECONDS = 2
-  const CONTENT_WRAPPER_STYLE = {
+  const CONTENT_WRAPPER_STYLE: JSX.CSSProperties = {
     position: 'absolute',
-    top: 0,
-    left: 0,
-    right: 0,
-    bottom: 0,
+    top: '0px',
+    left: '0px',
+    right: '0px',
+    bottom: '0px',
     background: 'var(--base)',
     display: 'grid',
     'place-items': 'center',

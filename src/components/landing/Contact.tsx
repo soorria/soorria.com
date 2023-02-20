@@ -1,6 +1,6 @@
 import { createAutoAnimate } from '@formkit/auto-animate/solid'
 import { ComponentProps, createSignal, For, Show, VoidComponent } from 'solid-js'
-import { Dynamic } from 'solid-js/web'
+import { Dynamic, NoHydration } from 'solid-js/web'
 
 import { useTrackFirstEvent } from '~/lib/potato'
 import { contactLinks } from '~/links'
@@ -198,24 +198,26 @@ const Contact: VoidComponent<ContactProps> = props => {
             </Show>
           </div>
         </div>
-        <div class="flex flex-col space-y-4 text-lg">
-          <For each={contactLinks}>
-            {({ href, title, icon }) => (
-              <a
-                href={href}
-                class="focus-ring group flex items-center rounded py-1 text-drac-pink nmpl-2 hocus:text-drac-purple"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <Dynamic
-                  component={icon}
-                  class="mr-3 h-5 w-5 transition-transform group-hocus:-rotate-20"
-                />
-                <span>{title}</span>
-              </a>
-            )}
-          </For>
-        </div>
+        <NoHydration>
+          <div class="flex flex-col space-y-4 text-lg">
+            <For each={contactLinks}>
+              {({ href, title, icon }) => (
+                <a
+                  href={href}
+                  class="focus-ring group flex items-center rounded py-1 text-drac-pink nmpl-2 hocus:text-drac-purple"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <Dynamic
+                    component={icon}
+                    class="mr-3 h-5 w-5 transition-transform group-hocus:-rotate-20"
+                  />
+                  <span>{title}</span>
+                </a>
+              )}
+            </For>
+          </div>
+        </NoHydration>
       </div>
     </LandingSection>
   )

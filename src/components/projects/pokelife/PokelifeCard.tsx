@@ -92,7 +92,7 @@ const PokelifeCard: Component<PokelifeCardProps> = props => {
       class={cx('bg-[#272933] sm:col-span-2', COMMON_CLASSNAMES.specialCardRoot)}
     >
       <div class="absolute -inset-4 grid grid-cols-3 overflow-hidden rounded-xl">
-        <Show when={!isDataSaver && showDemo}>
+        <Show when={!isDataSaver && showDemo()}>
           <iframe
             title="Pokelife"
             tabIndex={-1}

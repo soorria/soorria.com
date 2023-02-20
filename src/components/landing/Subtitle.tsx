@@ -1,4 +1,4 @@
-import { createSignal, VoidComponent } from 'solid-js'
+import { createSignal, Show, VoidComponent } from 'solid-js'
 
 import { randomIndex } from '~/utils/random'
 
@@ -45,21 +45,23 @@ const Subtitle: VoidComponent<SubtitleProps> = props => {
   return (
     <div>
       {selectedOption}
-      <button
-        onClick={randomise}
-        class="focus-ring group relative ml-2 inline-flex translate-y-1 items-center rounded text-drac-highlight transition hocus:text-drac-purple"
-        aria-label="refresh subtitle about me"
-        title="refresh subtitle about me"
-      >
-        <RefreshIcon
-          class="h-em w-em transform transition-transform ease-out"
-          style={{
-            '--tw-rotate': `-${rotations()}turn`,
-            'transition-duration': `${rotationDuration()}ms`,
-          }}
-          onTransitionEnd={() => setRotations(0)}
-        />
-      </button>
+      <Show when={props.options?.length && props.options.length > 1}>
+        <button
+          onClick={randomise}
+          class="focus-ring group relative ml-2 inline-flex translate-y-1 items-center rounded text-drac-highlight transition hocus:text-drac-purple"
+          aria-label="refresh subtitle about me"
+          title="refresh subtitle about me"
+        >
+          <RefreshIcon
+            class="h-em w-em transform transition-transform ease-out"
+            style={{
+              '--tw-rotate': `-${rotations()}turn`,
+              'transition-duration': `${rotationDuration()}ms`,
+            }}
+            onTransitionEnd={() => setRotations(0)}
+          />
+        </button>
+      </Show>
     </div>
   )
 }

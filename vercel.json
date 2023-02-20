@@ -82,6 +82,14 @@
           "value": "curl/(.*)"
         }
       ]
+    },
+    {
+      "source": "/js/potato.js",
+      "destination": "https://plausible.mooth.tech/js/plausible.js"
+    },
+    {
+      "source": "/proxy/api/event",
+      "destination": "https://plausible.mooth.tech/api/event"
     }
   ]
 }

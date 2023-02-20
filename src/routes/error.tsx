@@ -22,9 +22,9 @@ const ErrorPage: VoidComponent<ErrorPageProps> = props => {
       </PostHeading>
       {props.tryAgain && (
         <>
-          <A href={location.pathname} class="group mx-auto my-8 block max-w-xs text-center text-lg">
+          <a href={location.pathname} class="group mx-auto my-8 block max-w-xs text-center text-lg">
             Click <span class="text-drac-pink group-hover:underline">here</span> to try again.
-          </A>
+          </a>
           <p class="text-center italic">or</p>
         </>
       )}

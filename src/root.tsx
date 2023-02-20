@@ -3,6 +3,7 @@ import './styles/root.css'
 import './styles/prose.css'
 
 import { lazy, ParentComponent, Suspense } from 'solid-js'
+import { NoHydration } from 'solid-js/web'
 import {
   Body,
   ErrorBoundary,
@@ -17,6 +18,7 @@ import {
 
 import Footer from './components/layout/Footer'
 import Header from './components/layout/Header'
+import { PlausibleScript } from './lib/potato'
 import NoJsStyles from './styles/NoJsStyles'
 
 const ErrorPage = lazy(() => import('./routes/error'))
@@ -29,7 +31,9 @@ const Layout: ParentComponent = props => (
       {props.children}
     </main>
 
-    <Footer />
+    <NoHydration>
+      <Footer />
+    </NoHydration>
   </div>
 )
 
@@ -71,6 +75,7 @@ export default function Root() {
           type="font/woff2"
           crossOrigin="anonymous"
         />
+        <PlausibleScript />
       </Head>
       <Body class="h-full min-h-screen bg-drac-base text-drac-content">
         <Suspense>
@@ -90,7 +95,9 @@ export default function Root() {
               </Routes>
             </Layout>
 
-            <NoJsStyles />
+            <NoHydration>
+              <NoJsStyles />
+            </NoHydration>
           </ErrorBoundary>
         </Suspense>
         <Scripts />
