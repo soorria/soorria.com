@@ -1,5 +1,4 @@
 - mdx rendering
-- plausible proxy
 - seo
 - sitemap
 - react examples

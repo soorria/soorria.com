@@ -1,6 +1,7 @@
 import solid from 'solid-start/vite'
 import react from '@vitejs/plugin-react'
 import vercel from 'solid-start-vercel'
+import viteVercel from 'vite-vercel'
 import { mdx } from './src/vite/mdx'
 import { defineConfig } from 'vite'
 import { FontaineTransform } from 'fontaine'

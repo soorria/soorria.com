@@ -1,9 +1,11 @@
 declare module '*.mdx?meta' {
-  const meta: {
-    frontmatter: unknown
-    [k: string]: unknown
+  export const frontMatter: {
+    title?: string
+    hasContent: boolean
+    readingTime: string
+    words: string
+    [key: string]: unknown
   }
-  export default meta
 }
 
 declare module '*.mdx' {

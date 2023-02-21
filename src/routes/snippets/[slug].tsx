@@ -1,4 +1,4 @@
-import { createMemo, lazy, Show, ValidComponent, VoidComponent } from 'solid-js'
+import { createMemo, lazy, Show, VoidComponent } from 'solid-js'
 import { Dynamic } from 'solid-js/web'
 import { RouteDataArgs, useParams, useRouteData } from 'solid-start'
 import { createServerData$ } from 'solid-start/server'

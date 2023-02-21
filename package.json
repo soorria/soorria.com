@@ -2,7 +2,9 @@
   "name": "solid--soorria.com",
   "scripts": {
     "dev": "solid-start dev",
-    "build": "solid-start build",
+    "build": "npm run build:solid && npm run build:vc",
+    "build:solid": "solid-start build",
+    "build:vc": "tsx scripts/vercel-config-middleware.ts",
     "start": "solid-start start",
     "lint": "eslint --fix src",
     "format": "run-s format:*",
@@ -38,11 +40,14 @@
     "npm-run-all": "^4.1.5",
     "postcss": "^8.4.21",
     "prettier-plugin-tailwindcss": "^0.2.2",
+    "remark-twemoji": "^0.1.1",
     "solid-start-node": "^0.2.19",
     "solid-start-vercel": "^0.2.20",
     "tailwindcss": "^3.2.4",
     "tailwindcss-hocus": "^0.0.7",
     "tailwindcss-nmp": "^0.0.2",
+    "tsx": "^3.12.3",
+    "twemoji": "^14.0.2",
     "typescript": "^4.9.4",
     "vite": "^3.2.5"
   },
@@ -87,6 +92,7 @@
     "undici": "^5.15.1",
     "unified": "^10.1.2",
     "unist-util-visit": "^4.1.2",
+    "vite-vercel": "^0.1.15",
     "zod": "^3.20.6"
   },
   "engines": {

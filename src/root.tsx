@@ -14,6 +14,7 @@ import {
   Meta,
   Routes,
   Scripts,
+  useLocation,
 } from 'solid-start'
 
 import Footer from './components/layout/Footer'
@@ -38,6 +39,8 @@ const Layout: ParentComponent = props => (
 )
 
 export default function Root() {
+  // const location = useLocation()
+
   return (
     <Html lang="en">
       <Head>

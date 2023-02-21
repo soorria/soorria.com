@@ -118,14 +118,14 @@ const PokelifeCard: Component<PokelifeCardProps> = props => {
               Configurable settings for a{' '}
               <SettingButton
                 disabled={delay() === 0}
-                onClick={() => setDelay(Math.max(delay() - 50, 0))}
+                onClick={() => setDelay(d => Math.max(d - 50, 0))}
               >
                 faster
               </SettingButton>{' '}
               or{' '}
               <SettingButton
                 disabled={delay() === 5000}
-                onClick={() => setDelay(Math.min(delay() + 50, 5000))}
+                onClick={() => setDelay(d => Math.min(d + 50, 5000))}
               >
                 slower
               </SettingButton>{' '}
@@ -134,7 +134,7 @@ const PokelifeCard: Component<PokelifeCardProps> = props => {
                 {destroyCpu() ? 'protect' : 'destroy'} your cpu
               </SettingButton>{' '}
               or{' '}
-              <SettingButton onClick={() => setTypes((types() + 1) % typesOptions.length)}>
+              <SettingButton onClick={() => setTypes(t => (t + 1) % typesOptions.length)}>
                 remove types you don&apos;t like
               </SettingButton>
               . <small>(click underlined words!)</small>
