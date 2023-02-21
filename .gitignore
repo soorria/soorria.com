@@ -49,3 +49,5 @@ public/robots.txt
 public/sitemap.xml
 
 *ignored
+
+.cache

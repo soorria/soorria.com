@@ -1,4 +1,5 @@
 import { VoidComponent } from 'solid-js'
+import { NoHydration } from 'solid-js/web'
 
 import CustomLink from '~/components/CustomLink'
 import PostLayout, { PostBottomSection } from '~/components/layout/PostLayout'
@@ -32,13 +33,15 @@ const UsesPage: VoidComponent = () => {
           images: [getOgImage('Uses')],
         }}
       /> */}
-      <ProseWrapper>
-        <Uses />
-        <PostBottomSection>
-          Check out other <code>uses</code> pages{' '}
-          <CustomLink href="https://uses.tech">here</CustomLink>
-        </PostBottomSection>
-      </ProseWrapper>
+      <NoHydration>
+        <ProseWrapper>
+          <Uses />
+          <PostBottomSection>
+            Check out other <code>uses</code> pages{' '}
+            <CustomLink href="https://uses.tech">here</CustomLink>
+          </PostBottomSection>
+        </ProseWrapper>
+      </NoHydration>
     </PostLayout>
   )
 }

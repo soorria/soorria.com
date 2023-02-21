@@ -1,9 +1,9 @@
 import { Component } from 'solid-js'
+import { NoHydration } from 'solid-js/web'
 
 import PostLayout from '~/components/layout/PostLayout'
 import ProseWrapper from '~/components/layout/ProseWrapper'
 import Logo from '~/components/logo'
-import { baseComponents } from '~/components/mdx/base'
 import { SpinningIconDivider } from '~/components/posts/SpinningIconDivider'
 import { PUBLIC_URL } from '~/constants'
 import About from '~/data/misc/about/index.mdx'
@@ -17,9 +17,11 @@ const AboutPage: Component = () => {
   return (
     <PostLayout title={title}>
       <SpinningIconDivider scrollVar="--scroll" icon={Logo} />
-      <ProseWrapper>
-        <About components={baseComponents} />
-      </ProseWrapper>
+      <NoHydration>
+        <ProseWrapper>
+          <About />
+        </ProseWrapper>
+      </NoHydration>
     </PostLayout>
   )
 }

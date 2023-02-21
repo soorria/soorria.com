@@ -73,16 +73,13 @@ const Header: VoidComponent = () => {
     <Container>
       <a
         href="#main-content"
-        class="focus-ring fixed left-1/2 z-50 mx-auto block -translate-y-full -translate-x-1/2 rounded bg-drac-base px-4 py-2 font-display font-bold text-drac-pink transition-transform focus:translate-y-2 focus:ring-2 hocus:shadow-xl"
+        class="focus-ring fixed left-1/2 -top-10 z-50 mx-auto block translate-x-1/2 rounded bg-drac-base px-4 py-2 font-display font-bold text-drac-pink transition-transform focus:translate-y-16 focus:ring-2 hocus:shadow-xl"
       >
         Skip to Main Content
       </a>
       <header class="flex items-center justify-between py-8">
         <SpinnyHomeLink />
-        <nav
-          ref={nav}
-          class="group relative flex space-x-1 overflow-hidden font-display sm:space-x-3 sm:text-lg"
-        >
+        <nav ref={nav} class="group relative flex space-x-1 font-display sm:space-x-3 sm:text-lg">
           <For each={LINKS}>
             {({ title, href }) => (
               <A

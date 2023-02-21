@@ -135,8 +135,13 @@ const run = async () => {
     })
   }
 
+  const setupBuildCache = () => {
+    config.cache = ['.cache/**', 'node_modules/**']
+  }
+
   setupImages()
   setupMiddleware()
+  setupBuildCache()
 
   fs.writeFileSync(configPath, JSON.stringify(config, null, 2))
 }
