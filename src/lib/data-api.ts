@@ -53,6 +53,10 @@ export const createGetAllHandler =
         frontMatters = frontMatters.slice(offset, offset + size)
       }
 
+      if (req.query.content) {
+        frontMatters = await Promise.all(frontMatters.map(f => getFileWithContent(type, f.slug) as any))
+      }
+
       res.setHeader('Cache-Control', 'public, s-max-age=31536000')
 
       res.json({ [type]: frontMatters })
