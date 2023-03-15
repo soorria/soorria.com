@@ -57,6 +57,8 @@ export const createGetAllHandler =
         frontMatters = await Promise.all(frontMatters.map(f => getFileWithContent(type, f.slug) as any))
       }
 
+      frontMatters = frontMatters.map(f => ({...f, url: `https://soorria.com/${type}/${f.slug}`}))
+
       res.setHeader('Cache-Control', 'public, s-max-age=31536000')
 
       res.json({ [type]: frontMatters })
