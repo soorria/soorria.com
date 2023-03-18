@@ -4,6 +4,7 @@ import TsJsSwitcher from './TsJsSwitcher'
 import CustomCodeBlock from './CodeBlock'
 import dynamic from 'next/dynamic'
 import type { ComponentMap } from 'mdx-bundler/client'
+import { OnlyIsTs, TsJsToggle } from '../TsJsToggle'
 
 const Sparkles = dynamic(() => import('./Sparkles'))
 
@@ -28,5 +29,7 @@ export const baseComponents = {
   sparkles: Sparkles,
   's-sparkles': Sparkles,
   TsJsSwitcher,
+  TsJsToggle,
+  OnlyIsTs: OnlyIsTs,
   Collapse: dynamic(() => import('./MDXCollapse')),
 } as ComponentMap

@@ -13,6 +13,7 @@ import { BookIcon, ClockIconSolid, EditIcon, GlobeAuIcon, TextIcon } from '~/com
 import { formatDate } from '~/utils/date'
 import cx from '~/utils/cx'
 import PostGithubLinks from '~/components/posts/PostGithubLinks'
+import { categoryLowerCaseToIcon } from '~/components/categories'
 
 interface PostPageProps {
   post: BlogPostFrontMatter
@@ -24,6 +25,9 @@ const PostPage: React.FC<PostPageProps> = ({ post, mdx }) => {
   const url = `${PUBLIC_URL}/posts/${post.slug}`
   const SEOTitle = `${post.title} | Blog`
   const Content = useMdxComponent(mdx)
+
+  const icon =
+    (post.category && categoryLowerCaseToIcon[post.category.toLowerCase()]) || GlobeAuIcon
 
   return (
     <PostLayout title={post.title}>
@@ -47,7 +51,7 @@ const PostPage: React.FC<PostPageProps> = ({ post, mdx }) => {
         }}
       />
 
-      <SpinningIconDivider scrollVar={SCROLL_VAR} icon={GlobeAuIcon} />
+      <SpinningIconDivider scrollVar={SCROLL_VAR} icon={icon} />
 
       <div className="grid grid-cols-2 items-center justify-items-center gap-4 text-sm tabular-nums sm:grid-cols-4">
         <div className="tooltip flex items-center space-x-2" aria-label="Reading time">

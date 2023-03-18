@@ -17,7 +17,7 @@ export const PostHeading: React.FC<PropsWithChildren> = ({ children }) => {
 }
 
 export const PostBottomSection: React.FC<PropsWithChildren> = ({ children }) => {
-  return <div className="mx-auto mt-24 max-w-xs space-y-8 text-center text-sm">{children}</div>
+  return <div className="mx-auto !mt-24 max-w-xs space-y-8 text-center text-sm">{children}</div>
 }
 
 const PostLayout: React.FC<PostLayoutProps> = ({ title, children }) => {

@@ -1,6 +1,5 @@
 import cx from '~/utils/cx'
 import { useHydrated } from '~/utils/use-hydrated'
-import { useSyncedLocalStorage } from '~/utils/use-synced-local-storage'
 import { Children, isValidElement, PropsWithChildren, ReactElement, useMemo, useRef } from 'react'
 import type { CustomCodeBlockProps } from './CodeBlock'
 import { CodeBlockPre } from './CodeBlockPre'
@@ -11,10 +10,11 @@ import {
   getCodeLinesFromPre,
   LANGUAGE_NAME_MAP,
 } from './utils'
+import { TsJsToggle, useIsTs } from '../TsJsToggle'
 
 const TS_LANGUAGES = new Set(['ts', 'tsx', 'typescript'])
 const TsJsSwitcher: React.FC<PropsWithChildren> = props => {
-  const [isTs, setIsTs] = useSyncedLocalStorage<boolean>('soorria.com:isTs', true)
+  const [isTs] = useIsTs()
   const hydrated = useHydrated()
   const pre = useRef<HTMLPreElement>(null)
 
@@ -76,40 +76,7 @@ const TsJsSwitcher: React.FC<PropsWithChildren> = props => {
           <div className="flex-1" />
           {hydrated && (
             <>
-              <button
-                type="button"
-                className={CODE_BLOCK_CLASSNAMES.button}
-                onClick={() => setIsTs(t => !t)}
-              >
-                {/**
-                 * What should get shown here:
-                 *
-                 *              < sm => 'to js'
-                 * sm <= screen < md => 'switch to js'
-                 * md <= screen      => 'switch to javascript'
-                 */}
-                <span className="hidden sm:inline">switch</span> to{' '}
-                <span className="inline-grid overflow-y-hidden">
-                  <span
-                    className={cx(
-                      'col-start-1 row-start-1 transition-transform',
-                      isTs && '-translate-y-full'
-                    )}
-                  >
-                    <span className="hidden md:inline">typescript</span>
-                    <span className="md:hidden">ts</span>
-                  </span>
-                  <span
-                    className={cx(
-                      'col-start-1 row-start-1 transition-transform',
-                      !isTs && 'translate-y-full'
-                    )}
-                  >
-                    <span className="hidden md:inline">javascript</span>
-                    <span className="md:hidden">js</span>
-                  </span>
-                </span>
-              </button>
+              <TsJsToggle />
               <CodeBlockCopyButton getText={() => getCodeLinesFromPre(pre.current)} />
             </>
           )}
