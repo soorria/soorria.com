@@ -5,6 +5,8 @@ import CustomCodeBlock from './CodeBlock'
 import dynamic from 'next/dynamic'
 import type { ComponentMap } from 'mdx-bundler/client'
 
+const Sparkles = dynamic(() => import('./Sparkles'))
+
 export const baseComponents = {
   a: CustomLink,
   pre: CustomCodeBlock,
@@ -22,7 +24,9 @@ export const baseComponents = {
   Note: dynamic(() => import('./Note')),
   Demo: ReactDemo,
   SolidDemo: dynamic(() => import('./SolidDemo'), { ssr: false }),
-  Sparkles: dynamic(() => import('./Sparkles')),
+  Sparkles,
+  sparkles: Sparkles,
+  's-sparkles': Sparkles,
   TsJsSwitcher,
   Collapse: dynamic(() => import('./MDXCollapse')),
 } as ComponentMap
