@@ -1,4 +1,4 @@
-import { Dispatch, PropsWithChildren, SetStateAction } from 'react'
+import { Dispatch, SetStateAction } from 'react'
 import cx from '~/utils/cx'
 import { useSyncedLocalStorage } from '~/utils/use-synced-local-storage'
 import { CODE_BLOCK_CLASSNAMES } from './mdx/utils'
