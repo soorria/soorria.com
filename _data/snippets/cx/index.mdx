@@ -5,7 +5,7 @@ category: TypeScript
 tags:
   - typescript
 createdAt: '2021-05-09'
-updatedAt: '2022-09-03'
+updatedAt: '2023-03-18'
 ---
 
 A tiny helper function to conditionally join classnames. Simplified version of
@@ -19,7 +19,7 @@ export const cx = (...classes: (string | boolean | null | undefined)[]) =>
 
 ## Usage
 
-```tsx {3-4}
+```tsx {3-4} jsKeepLines
 const Button: React.FC<{ disabled?: boolean }> = ({ disabled, children }) => (
   <button
     // When rendered, the button will have class="button button--disabled"

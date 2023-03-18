@@ -34,9 +34,24 @@ export const remarkTypeScriptTransform = (): Transformer => {
         }).trim()
       : transformedCode
 
+    let jsMeta = meta
+    const hasJsLines = meta?.match(/\bjsLines="(?<lines>[^"]+)"/)
+    const removeTsLines = !meta?.match(/\bjsKeepLines\b/) || hasJsLines
+
+    if (removeTsLines) {
+      jsMeta = jsMeta?.replace(/{[^}]*}/g, '')
+
+      if (hasJsLines) {
+        const jsLines = hasJsLines.groups?.lines
+        if (jsLines) {
+          jsMeta += `{${jsLines}}`
+        }
+      }
+    }
+
     const jsNode: Code = {
       type,
-      meta: meta?.replace(/{[^}]*}/g, ''),
+      meta: jsMeta,
       // meta,
       data,
       lang: transformedLang,
