@@ -102,7 +102,7 @@ const config = {
         permanent: false,
       },
       {
-        source: 'diy-promise-all',
+        source: '/diy-promise-all',
         destination: '/blog/promise-all',
         permanent: false,
       },
