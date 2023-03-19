@@ -6,7 +6,10 @@ import PostLayout, { PostBottomSection } from '~/components/layout/PostLayout'
 import ProseWrapper from '~/components/layout/ProseWrapper'
 import { PUBLIC_URL } from '~/constants'
 import Uses from '~/data/misc/uses/index.mdx'
+import usesMeta from '~/data/misc/uses/index.mdx?meta'
 import { frontMatter } from '~/data/misc/uses/index.mdx?meta'
+import { Seo } from '~/lib/seo'
+import { getOgImage } from '~/utils/og'
 
 const title = frontMatter.title || 'What I Use'
 const url = `${PUBLIC_URL}/uses`
@@ -15,7 +18,7 @@ const shortDescription = 'Stuff I use'
 const UsesPage: VoidComponent = () => {
   return (
     <PostLayout title={title}>
-      {/* <NextSeo
+      <Seo
         title={title}
         description={shortDescription}
         canonical={url}
@@ -27,12 +30,16 @@ const UsesPage: VoidComponent = () => {
           article: {
             section: 'Blog',
             authors: ['Soorria Saruva'],
-            modifiedTime: new Date(updatedAt).toISOString(),
-            publishedTime: new Date(updatedAt).toISOString(),
+            modifiedTime: new Date(
+              (usesMeta as unknown as { updatedAt: string }).updatedAt as string
+            ).toISOString(),
+            publishedTime: new Date(
+              (usesMeta as unknown as { updatedAt: string }).updatedAt as string
+            ).toISOString(),
           },
           images: [getOgImage('Uses')],
         }}
-      /> */}
+      />
       <NoHydration>
         <ProseWrapper>
           <Uses />

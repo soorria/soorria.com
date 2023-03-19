@@ -7,7 +7,9 @@ import { PostHeading } from '~/components/layout/PostLayout'
 import PostCard from '~/components/posts/BlogPostCard'
 import { PUBLIC_URL } from '~/constants'
 import { blogFrontMatters } from '~/lib/data'
+import { Seo } from '~/lib/seo'
 import { blogPostFilter, sortByCreatedAtField } from '~/utils/content'
+import { getOgImageForData } from '~/utils/og'
 
 const description =
   'Attempts at writing about things that I think are interesting, useful, or just cool'
@@ -18,7 +20,7 @@ const PostsPage = () => {
   const { posts } = useRouteData<typeof routeData>()
   return (
     <MainLayout>
-      {/* <NextSeo
+      <Seo
         title={title}
         description={description}
         canonical={url}
@@ -27,9 +29,9 @@ const PostsPage = () => {
           description,
           type: 'website',
           url,
-          images: [getOgImageForData(DataType.blog)],
+          images: [getOgImageForData('blog')],
         }}
-      /> */}
+      />
       <PostHeading>{title}</PostHeading>
       <p class="mt-6 mb-12 text-center text-lg">{description}</p>
       <div class="grid grid-cols-1 gap-8">

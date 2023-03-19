@@ -5,14 +5,15 @@ import { createServerData$ } from 'solid-start/server'
 
 import Fragment from '~/components/Fragment'
 import PostLayout, { PostBottomSection } from '~/components/layout/PostLayout'
-import License from '~/components/License'
 import { baseComponents, RenderedMdxComponent } from '~/components/mdx/base'
 import PostGithubLinks from '~/components/posts/PostGithubLinks'
 import { SpinningIconDivider } from '~/components/posts/SpinningIconDivider'
 import { PUBLIC_URL } from '~/constants'
 import { categoryLowerCaseToIcon, defaultCategoryIcon } from '~/lib/categories'
 import { snippetFrontMatters } from '~/lib/data'
+import { Seo } from '~/lib/seo'
 import { formatDate } from '~/utils/date'
+import { getOgImageForData } from '~/utils/og'
 
 const SCROLL_VAR = '--scroll'
 
@@ -52,13 +53,13 @@ const SnippetPage: VoidComponent = () => {
     <Show when={snippet()} keyed>
       {snippet => (
         <PostLayout title={snippet.title ?? ''}>
-          {/* <NextSeo
-            title={SEOTitle}
+          <Seo
+            title={SEOTitle()}
             description={snippet.shortDescription}
-            canonical={url}
+            canonical={url()}
             openGraph={{
-              url,
-              title: SEOTitle,
+              url: url(),
+              title: SEOTitle(),
               description: snippet.shortDescription,
               type: 'article',
               article: {
@@ -68,9 +69,9 @@ const SnippetPage: VoidComponent = () => {
                 publishedTime: new Date(snippet.createdAt).toISOString(),
                 modifiedTime: new Date(snippet.updatedAt || snippet.createdAt).toISOString(),
               },
-              images: [getOgImageForData(DataType.snippets, snippet.title)],
+              images: [getOgImageForData('snippets', snippet.title)],
             }}
-          /> */}
+          />
           <SpinningIconDivider
             scrollVar={SCROLL_VAR}
             icon={
@@ -91,7 +92,7 @@ const SnippetPage: VoidComponent = () => {
               <PostGithubLinks dataType="snippets" slug={snippet.slug} />
             </PostBottomSection>
           </div>
-          {snippet.notMine || (
+          {/* {snippet.notMine || (
             <License
               summary="License &amp; Attribution"
               attribution={{
@@ -99,7 +100,7 @@ const SnippetPage: VoidComponent = () => {
                 title: snippet.title,
               }}
             />
-          )}
+          )} */}
         </PostLayout>
       )}
     </Show>

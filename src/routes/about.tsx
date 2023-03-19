@@ -7,6 +7,9 @@ import Logo from '~/components/logo'
 import { SpinningIconDivider } from '~/components/posts/SpinningIconDivider'
 import { PUBLIC_URL } from '~/constants'
 import About from '~/data/misc/about/index.mdx'
+import aboutMeta from '~/data/misc/about/index.mdx?meta'
+import { Seo } from '~/lib/seo'
+import { getOgImage } from '~/utils/og'
 // import About from '~/data/snippets/use-local-storage/index.mdx'
 
 const title = 'About Me'
@@ -16,6 +19,28 @@ const shortDescription = 'Who I am and what I do'
 const AboutPage: Component = () => {
   return (
     <PostLayout title={title}>
+      <Seo
+        title={title}
+        description={shortDescription}
+        canonical={url}
+        openGraph={{
+          url,
+          title,
+          description: shortDescription,
+          type: 'article',
+          article: {
+            section: 'Blog',
+            authors: ['Soorria Saruva'],
+            modifiedTime: new Date(
+              (aboutMeta as unknown as { updatedAt: string }).updatedAt as string
+            ).toISOString(),
+            publishedTime: new Date(
+              (aboutMeta as unknown as { updatedAt: string }).updatedAt as string
+            ).toISOString(),
+          },
+          images: [getOgImage('About Me', 'soorria.com')],
+        }}
+      />
       <SpinningIconDivider scrollVar="--scroll" icon={Logo} />
       <NoHydration>
         <ProseWrapper>

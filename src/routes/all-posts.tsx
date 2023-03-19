@@ -7,7 +7,9 @@ import BlogPostCard from '~/components/posts/BlogPostCard'
 import SnippetCard from '~/components/posts/SnippetCard'
 import { PUBLIC_URL } from '~/constants'
 import { blogFrontMatters, snippetFrontMatters } from '~/lib/data'
+import { Seo } from '~/lib/seo'
 import { blogPostFilter, sortByCreatedAtField } from '~/utils/content'
+import { getOgImageForData } from '~/utils/og'
 
 const description = "All the stuff I've written on this site"
 const title = 'All Posts'
@@ -17,7 +19,7 @@ const SnippetsPage: VoidComponent = () => {
   const { posts } = useRouteData<typeof routeData>()
   return (
     <PostLayout title="All Posts">
-      {/* <NextSeo
+      <Seo
         title={title}
         description={description}
         canonical={url}
@@ -26,9 +28,9 @@ const SnippetsPage: VoidComponent = () => {
           description,
           type: 'website',
           url,
-          images: [getOgImageForData(DataType.snippets)],
+          images: [getOgImageForData('snippets')],
         }}
-      /> */}
+      />
       <p class="mt-6 mb-12 text-center text-lg">{description}</p>
       <div class="grid auto-cols-min grid-flow-dense grid-cols-1 gap-y-8 gap-x-6 sm:grid-cols-2 sm:gap-x-8 lg:gap-12">
         <For each={posts()}>

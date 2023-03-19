@@ -8,6 +8,7 @@ import ProjectCard from '~/components/projects/ProjectCard'
 import ProjectsGrid from '~/components/projects/ProjectsGrid'
 import { featuredProjects, PUBLIC_URL } from '~/constants'
 import { projectFrontMatters } from '~/lib/data'
+import { Seo } from '~/lib/seo'
 import type { Project } from '~/types/project'
 import { getOgImageForData } from '~/utils/og'
 // import { NextSeo } from 'next-seo'
@@ -20,7 +21,7 @@ const ProjectsPage: VoidComponent = () => {
   const { projects } = useRouteData<typeof routeData>()
   return (
     <PostLayout title="Projects">
-      {/* <NextSeo
+      <Seo
         description={description}
         title={title}
         canonical={url}
@@ -29,9 +30,9 @@ const ProjectsPage: VoidComponent = () => {
           description,
           type: 'website',
           url,
-          images: [getOgImageForData(DataType.projects)],
+          images: [getOgImageForData('snippets')],
         }}
-      /> */}
+      />
       <p class="mt-6 mb-12 text-center text-lg">{description}</p>
       <ProjectsGrid>
         {projects()?.main.map(project => (

@@ -1,4 +1,3 @@
-// import { NextSeo } from 'next-seo'
 import { createAutoAnimate } from '@formkit/auto-animate/solid'
 import { createMemo, createSignal, For, VoidComponent } from 'solid-js'
 import { useRouteData } from 'solid-start'
@@ -6,13 +5,14 @@ import { createServerData$ } from 'solid-start/server'
 
 import Collapse from '~/components/Collapse'
 import PostLayout from '~/components/layout/PostLayout'
-import License from '~/components/License'
 import SnippetCard from '~/components/posts/SnippetCard'
 import { PUBLIC_URL } from '~/constants'
 import { snippetFrontMatters } from '~/lib/data'
+import { Seo } from '~/lib/seo'
 import { getAllTags, sortByCreatedAtField } from '~/utils/content'
 import cx from '~/utils/cx'
 import { intersectionSet } from '~/utils/misc'
+import { getOgImageForData } from '~/utils/og'
 
 const filterableTags: Array<{ label: string; value: string }> = [
   { value: 'react', label: 'React' },
@@ -58,7 +58,7 @@ const SnippetsPage: VoidComponent = () => {
 
   return (
     <PostLayout title="Snippets">
-      {/* <NextSeo
+      <Seo
         title={title}
         description={description}
         canonical={url}
@@ -67,9 +67,9 @@ const SnippetsPage: VoidComponent = () => {
           description,
           type: 'website',
           url,
-          images: [getOgImageForData(DataType.snippets)],
+          images: [getOgImageForData('snippets')],
         }}
-      /> */}
+      />
       <p class="mt-6 text-center text-lg">{description}</p>
 
       <Collapse summary="Filters">
@@ -151,7 +151,7 @@ const SnippetsPage: VoidComponent = () => {
           ? `${snippets().length} snippets matching your filters`
           : `${snippets().length} snippets total`}
       </div>
-      <License summary="License for these snippets" />
+      {/* <License summary="License for these snippets" /> */}
     </PostLayout>
   )
 }

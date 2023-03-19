@@ -1,4 +1,5 @@
 // @refresh reload
+import '@total-typescript/ts-reset'
 import './styles/root.css'
 import './styles/prose.css'
 
@@ -14,12 +15,12 @@ import {
   Meta,
   Routes,
   Scripts,
-  useLocation,
 } from 'solid-start'
 
 import Footer from './components/layout/Footer'
 import Header from './components/layout/Header'
 import { PlausibleScript } from './lib/potato'
+import { DefaultSeo } from './lib/seo'
 import NoJsStyles from './styles/NoJsStyles'
 
 const ErrorPage = lazy(() => import('./routes/error'))
@@ -78,12 +79,13 @@ export default function Root() {
           type="font/woff2"
           crossOrigin="anonymous"
         />
+        <DefaultSeo />
         <PlausibleScript />
       </Head>
       <Body class="h-full min-h-screen bg-drac-base text-drac-content">
         <Suspense>
           <ErrorBoundary
-            fallback={(e, reset) => {
+            fallback={(e, _reset) => {
               console.log(e)
               return (
                 <Layout>

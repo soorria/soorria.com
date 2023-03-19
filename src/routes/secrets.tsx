@@ -4,6 +4,7 @@ import { VoidComponent } from 'solid-js'
 import PostLayout from '~/components/layout/PostLayout'
 import NeedsJs from '~/components/NeedsJs'
 import { PUBLIC_URL } from '~/constants'
+import { Seo } from '~/lib/seo'
 import { getOgImage } from '~/utils/og'
 import { useLocalStorage } from '~/utils/use-local-storage'
 
@@ -36,13 +37,13 @@ const Settings: VoidComponent = () => {
 const SecretsPage: VoidComponent = () => {
   return (
     <PostLayout title={title}>
-      {/* <NextSeo
+      <Seo
         title={title}
-        noindex
+        // noindex
         openGraph={{ url, description, images: [getOgImage(title, 'soorria.com')] }}
         canonical={url}
         description={description}
-      /> */}
+      />
       <NeedsJs fallback={<p>This page needs JavaScript!</p>}>
         <Settings />
       </NeedsJs>

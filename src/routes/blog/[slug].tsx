@@ -12,8 +12,10 @@ import PostGithubLinks from '~/components/posts/PostGithubLinks'
 import { SpinningIconDivider } from '~/components/posts/SpinningIconDivider'
 import { PUBLIC_URL } from '~/constants'
 import { blogFrontMatters } from '~/lib/data'
+import { Seo } from '~/lib/seo'
 import cx from '~/utils/cx'
 import { formatDate } from '~/utils/date'
+import { getOgImageForData } from '~/utils/og'
 
 const SCROLL_VAR = '--scroll'
 export const routeData = ({ params }: RouteDataArgs) => {
@@ -40,7 +42,7 @@ const PostPage = () => {
   const { post } = useRouteData<typeof routeData>()
   const params = useParams()
   const url = () => `${PUBLIC_URL}/posts/${post()?.slug}`
-  const SEOTitle = `${post()?.title} | Blog`
+  const SEOTitle = () => `${post()?.title} | Blog`
 
   const component = createMemo(() => {
     const load = posts[params.slug || '']
@@ -52,25 +54,25 @@ const PostPage = () => {
     <Show when={post()} keyed>
       {post => (
         <PostLayout title={post.title}>
-          {/* <NextSeo
-            title={SEOTitle}
+          <Seo
+            title={SEOTitle()}
             description={post.shortDescription}
-            canonical={url}
+            canonical={url()}
             openGraph={{
-              url,
-              title: SEOTitle,
+              url: url(),
+              title: SEOTitle(),
               description: post.shortDescription,
               type: 'article',
               article: {
-                tags: [post.category, ...post.tags],
+                tags: [post.category, ...post.tags].filter(Boolean),
                 section: 'Blog',
                 authors: ['Soorria Saruva'],
                 publishedTime: post.createdAt ? new Date(post.createdAt).toISOString() : 'N/A',
                 modifiedTime: post.updatedAt ? new Date(post.updatedAt).toISOString() : 'N/A',
               },
-              images: [getOgImageForData(DataType.blog, post.title)],
+              images: [getOgImageForData('blog', post.title)],
             }}
-          /> */}
+          />
 
           <SpinningIconDivider scrollVar={SCROLL_VAR} icon={GlobeAuIcon} />
 
