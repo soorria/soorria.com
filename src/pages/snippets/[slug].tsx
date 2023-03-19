@@ -63,7 +63,7 @@ const SnippetPage: React.FC<SnippetPageProps> = ({ snippet, mdx }) => {
           <PostGithubLinks dataType={DataType.snippets} slug={snippet.slug} />
         </PostBottomSection>
       </div>
-      {snippet.notMine || (
+      {/* {snippet.notMine || (
         <License
           summary="License &amp; Attribution"
           attribution={{
@@ -71,7 +71,7 @@ const SnippetPage: React.FC<SnippetPageProps> = ({ snippet, mdx }) => {
             title: snippet.title,
           }}
         />
-      )}
+      )} */}
     </PostLayout>
   )
 }
