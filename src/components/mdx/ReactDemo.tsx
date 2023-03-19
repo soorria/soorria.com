@@ -26,7 +26,7 @@ const ReactDemo: React.FC<ReactDemoProps> = ({ component: Component, init = 'mou
           <div className={DEMO_CLASSNAMES.footer}>
             <button onClick={() => setKey(p => p + 1)} className={DEMO_CLASSNAMES.reload}>
               <RefreshIcon
-                className="mr-1 h-em w-em transition-transform duration-700"
+                className="mr-1 h-em w-em transition-transform duration-700 ease-out"
                 style={{ transform: `rotate(-${key * 360}deg)` }}
               />{' '}
               Reload Demo

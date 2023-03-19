@@ -35,9 +35,10 @@ runs the promises concurrently.
 To get started, we need a function that matches the signature of `Promise.all`,
 i.e. one that accepts a list of promises and returns a promise. We're using the
 `Promise` constructor here as it allows us to manually resolve the promise
-whenever we want with its executor function. For now, we'll resolve the promise
-immediately with an empty array and for the majority of the article we'll be
-working out of the executor function.
+whenever we want with its executor function (the function argument that you pass
+to `new Promise`). For now, we'll resolve the promise immediately with an empty
+array and for the majority of the article we'll be working out of the executor
+function.
 
 ```ts
 type PromiseAllResult<Promises extends readonly unknown[] | []> = Promise<{
@@ -103,7 +104,13 @@ resolve(results)
 
 This has a very big problem however. Promises are _asynchronous_, so the
 function we pass to `.then` will not be called immediately and calling `resolve`
-right after the for-loop means the promise gets resolved with an empty array.
+right after the for-loop means the promise gets resolved with an empty array. In
+the demo below you probably won't even see the `Loading...` text due to how
+immediately `myPromiseAll` resolves.
+
+import { NaiveExample } from './components'
+
+<Demo component={NaiveExample} />
 
 Instead, we need some way of knowing when all the promises are complete and only
 then `resolve`-ing the promise.
@@ -173,9 +180,9 @@ for (let i = 0; i < promises.length; i++) {
 We can now see that the order of results of our `myPromiseAll` function is
 consistently the same as `Promise.all`:
 
-import { WaitingInOrderExample } from './components'
+import { InOrderExample } from './components'
 
-<Demo component={WaitingInOrderExample} />
+<Demo component={InOrderExample} />
 
 ## Handling errors
 
