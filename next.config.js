@@ -101,6 +101,11 @@ const config = {
         destination: '/snippets/enzyme',
         permanent: false,
       },
+      {
+        source: 'diy-promise-all',
+        destination: '/blog/promise-all',
+        permanent: false,
+      },
     ]
   },
   async rewrites() {
