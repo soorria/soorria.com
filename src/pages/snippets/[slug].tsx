@@ -9,7 +9,6 @@ import { useMdxComponent } from '~/lib/mdx'
 import { categoryLowerCaseToIcon, defaultCategoryIcon } from '~/components/categories'
 import { formatDate } from '~/utils/date'
 import { PUBLIC_URL } from '~/constants'
-import License from '~/components/License'
 import { SpinningIconDivider } from '~/components/posts/SpinningIconDivider'
 import PostGithubLinks from '~/components/posts/PostGithubLinks'
 
