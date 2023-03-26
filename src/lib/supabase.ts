@@ -47,6 +47,7 @@ export const getSingletonTextSafe = async (slug: string): Promise<string | null>
     const singleton = await getSingleton(slug)
     return singleton.content
   } catch (err) {
+    console.log(err)
     return null
   }
 }

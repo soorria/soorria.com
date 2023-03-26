@@ -31,6 +31,7 @@ export default defineConfig(async () => ({
   envDir: '.',
   resolve: {
     alias: {
+      '~': './src',
       '~public': './public',
     },
   },

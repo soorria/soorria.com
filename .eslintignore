@@ -1,4 +1,5 @@
 node_modules
-src/data/**/*.js
+src/**/*.react.jsx
+src/**/*.react.js
 next.config.js
 

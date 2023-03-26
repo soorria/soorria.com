@@ -19,7 +19,8 @@
     },
     "importsNotUsedAsValues": "remove",
     "strictNullChecks": true,
-    "noUncheckedIndexedAccess": true
+    "noUncheckedIndexedAccess": true,
+    "checkJs": false
   },
   "exclude": [
     "node_modules"
@@ -30,6 +31,7 @@
     "src/**/*.js",
     "src/**/*.jsx",
     "./scripts/*.ts", 
-    "_og.tsx"  
+    "_og.tsx",
+    "!src/**/*.react.jsx"
   ]
 }

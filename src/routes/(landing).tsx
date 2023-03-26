@@ -1,6 +1,6 @@
 import './index.css'
 
-import { createSignal, JSXElement } from 'solid-js'
+import { createEffect, createSignal, JSXElement, Show, Suspense } from 'solid-js'
 import { render } from 'solid-js/web'
 import { RouteDataArgs, useRouteData } from 'solid-start'
 import { createServerData$ } from 'solid-start/server'
@@ -64,8 +64,8 @@ export const routeData = ({}: RouteDataArgs) => {
 
   const now = createServerData$(async () => {
     const nowText = await getSingletonTextSafe('now')
-
-    return nowText ? await mdToHtml(nowText ?? '', { inline: true }) : null
+    const html = nowText ? await mdToHtml(nowText ?? '', { inline: true }) : ''
+    return html
   })
 
   const heroText = createServerData$(() =>
@@ -106,7 +106,7 @@ export default function Home() {
     <Container>
       <Hero title="Hey, I'm Soorria!" subtitle={<Subtitle options={subtitleOptions()} />}>
         {/* eslint-disable-next-line solid/no-innerhtml */}
-        <div class="md text-lg" id="now" innerHTML={now() || ''} />
+        <div class="md text-lg" id="now" innerHTML={now()} />
       </Hero>
 
       <FeaturedProjects random={randoms[0]} projects={projects()!} />

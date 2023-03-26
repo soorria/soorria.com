@@ -26,15 +26,6 @@ const Header: VoidComponent = () => {
   const [showBg, setShowBg] = createSignal(false)
   const isRouting = useIsRouting()
 
-  const handleAnchorHover = (event: MouseEvent & { currentTarget: HTMLAnchorElement }) => {
-    if (event.type === 'mouseenter') {
-      event.currentTarget.dataset.hover = 'true'
-    } else {
-      event.currentTarget.removeAttribute('data-hover')
-    }
-    positionBg()
-  }
-
   const positionBg = () => {
     if (!nav) return
 
@@ -85,16 +76,8 @@ const Header: VoidComponent = () => {
               <A
                 href={href}
                 class="focus-ring relative rounded border-drac-content px-2 py-1 leading-none transition focus-visible:text-drac-pink data-[highlight]:text-drac-pink sm:py-2 sm:px-3"
-                onMouseEnter={handleAnchorHover}
-                onMouseLeave={handleAnchorHover}
               >
                 {title}
-                {/* <span
-                  class={cx(
-                    ['bg-red-600/50', 'bg-green-600/50', 'bg-blue-600/50'][i()],
-                    'absolute inset-y-0 -left-1 z-[-5] hidden w-[calc(100%_+_2*_theme(spacing.1))] rounded sm:-left-3 sm:w-[calc(100%_+_2_*_theme(spacing.3))] [[data-highlight]_&]:block'
-                  )}
-                /> */}
               </A>
             )}
           </For>

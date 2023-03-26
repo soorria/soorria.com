@@ -1,5 +1,5 @@
 // @refresh reload
-import '@total-typescript/ts-reset'
+// import '@total-typescript/ts-reset'
 import './styles/root.css'
 import './styles/prose.css'
 
@@ -46,7 +46,8 @@ export default function Root() {
     <Html lang="en">
       <Head>
         <Meta charset="utf-8" />
-        <Meta httpEquiv="X-UA-Compatible" content="IE=edge" />
+        {/* Until https://github.com/solidjs/solid-meta/issues/22 is resolved */}
+        {/* <Meta httpEquiv="X-UA-Compatible" content="IE=edge" id="hi" /> */}
         <Meta
           name="google-site-verification"
           content="Cl0BjsWegjV0EoEmhPMVdyI9qWoAdOwh5S-h37tEaao"
@@ -82,6 +83,7 @@ export default function Root() {
         <DefaultSeo />
         <PlausibleScript />
       </Head>
+      {/* <Body> */}
       <Body class="h-full min-h-screen bg-drac-base text-drac-content">
         <Suspense>
           <ErrorBoundary
