@@ -4,7 +4,7 @@ import './styles/root.css'
 import './styles/prose.css'
 
 import { lazy, ParentComponent, Suspense } from 'solid-js'
-import { Dynamic, NoHydration } from 'solid-js/web'
+import { Dynamic, isServer, NoHydration } from 'solid-js/web'
 import {
   Body,
   ErrorBoundary,
@@ -17,6 +17,7 @@ import {
   Scripts,
   useLocation,
 } from 'solid-start'
+import { useRequest } from 'solid-start/server'
 
 import Fragment from './components/Fragment'
 import Footer from './components/layout/Footer'
@@ -42,19 +43,23 @@ const Layout: ParentComponent = props => (
 )
 
 export default function Root() {
-  const location = useLocation()
+  let shouldUseNoLayout = false
+  if (isServer) {
+    const req = useRequest()
+    const url = new URL(req.request.url)
+    shouldUseNoLayout = url.hostname.startsWith('links.')
+  } else {
+    shouldUseNoLayout = window.location.hostname.startsWith('links.')
+  }
 
-  const layout = () =>
-    location.pathname === '/links' || window.location.hostname.startsWith('links.')
-      ? Fragment
-      : Layout
+  const layout = shouldUseNoLayout ? Fragment : Layout
 
   return (
     <Html lang="en">
       <Head>
-        <Meta charset="utf-8" />
+        <Meta name="charset" charset="utf-8" />
         {/* Until https://github.com/solidjs/solid-meta/issues/22 is resolved */}
-        {/* <Meta httpEquiv="X-UA-Compatible" content="IE=edge" id="hi" /> */}
+        <Meta name="ie-thing" httpEquiv="X-UA-Compatible" content="IE=edge" id="hi" />
         <Meta
           name="google-site-verification"
           content="Cl0BjsWegjV0EoEmhPMVdyI9qWoAdOwh5S-h37tEaao"
@@ -103,7 +108,7 @@ export default function Root() {
               )
             }}
           >
-            <Dynamic component={layout()}>
+            <Dynamic component={layout}>
               <Routes>
                 <FileRoutes />
               </Routes>

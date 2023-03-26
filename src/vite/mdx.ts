@@ -92,6 +92,7 @@ export const mdx = (): PluginOption => {
   }
 
   fs.mkdirSync(CACHE_ROOT, { recursive: true })
+  console.log('cache keys', fs.readdirSync(CACHE_ROOT))
 
   return [
     {
@@ -149,12 +150,11 @@ export const mdx = (): PluginOption => {
       enforce: 'post',
       buildEnd() {
         Object.entries(timings).forEach(([key, { taken: [s, ns] = [0, 0], hit }]) => {
-          console.log(
-            key,
-            s || ns
-              ? `${hit ? '[HIT] ' : '[MISS]'} mdx transform ${s}.${Math.round(ns / 1000)}s`
-              : 'FAILED'
-          )
+          if (s || ns) {
+            console.log(
+              `${hit ? '[HIT] ' : '[MISS]'} mdx transform ${key} ${s}.${Math.round(ns / 1000)}s`
+            )
+          }
         })
       },
     },
