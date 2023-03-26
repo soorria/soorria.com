@@ -4,7 +4,7 @@ import './styles/root.css'
 import './styles/prose.css'
 
 import { lazy, ParentComponent, Suspense } from 'solid-js'
-import { NoHydration } from 'solid-js/web'
+import { Dynamic, NoHydration } from 'solid-js/web'
 import {
   Body,
   ErrorBoundary,
@@ -15,8 +15,10 @@ import {
   Meta,
   Routes,
   Scripts,
+  useLocation,
 } from 'solid-start'
 
+import Fragment from './components/Fragment'
 import Footer from './components/layout/Footer'
 import Header from './components/layout/Header'
 import { PlausibleScript } from './lib/potato'
@@ -40,7 +42,12 @@ const Layout: ParentComponent = props => (
 )
 
 export default function Root() {
-  // const location = useLocation()
+  const location = useLocation()
+
+  const layout = () =>
+    location.pathname === '/links' || window.location.hostname.startsWith('links.')
+      ? Fragment
+      : Layout
 
   return (
     <Html lang="en">
@@ -96,11 +103,11 @@ export default function Root() {
               )
             }}
           >
-            <Layout>
+            <Dynamic component={layout()}>
               <Routes>
                 <FileRoutes />
               </Routes>
-            </Layout>
+            </Dynamic>
 
             <NoHydration>
               <NoJsStyles />

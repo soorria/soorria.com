@@ -71,7 +71,7 @@ export const mdx = (): PluginOption => {
   type Matter = { content: string; data: Record<string, unknown> }
 
   type HrTime = [number, number]
-  const timings: Record<string, { start: HrTime; taken?: HrTime }> = {}
+  const timings: Record<string, { start: HrTime; taken?: HrTime; hit?: boolean }> = {}
 
   const frontMatterCache = new Map<string, Matter>()
   const getMatter = (id: string, code: string): Matter => {
@@ -81,15 +81,17 @@ export const mdx = (): PluginOption => {
     return { data, content }
   }
 
+  const CACHE_ROOT = './.cache/mdx'
+
   const codeCache = {
     key: (code: string) => crypto.createHash('md5').update(code).digest('hex'),
-    has: (code: string) => fs.existsSync(`./.cache/mdx/${codeCache.key(code)}`),
-    get: (code: string) => fs.readFileSync(`./.cache/mdx/${codeCache.key(code)}`, 'utf8'),
+    has: (code: string) => fs.existsSync(`${CACHE_ROOT}/${codeCache.key(code)}`),
+    get: (code: string) => fs.readFileSync(`${CACHE_ROOT}/${codeCache.key(code)}`, 'utf8'),
     set: (code: string, value: string) =>
-      fs.writeFileSync(`./.cache/mdx/${codeCache.key(code)}`, value),
+      fs.writeFileSync(`${CACHE_ROOT}/${codeCache.key(code)}`, value),
   }
 
-  fs.mkdirSync('./.cache/mdx', { recursive: true })
+  fs.mkdirSync(CACHE_ROOT, { recursive: true })
 
   return [
     {
@@ -117,22 +119,27 @@ export const mdx = (): PluginOption => {
       enforce: 'pre',
       async transform(code, id) {
         if (!id.endsWith('.mdx') && !id.endsWith('.md')) return
+        const dataPath = id.split('/').slice(-3).join('/')
 
         code = getMatter(id, code).content
 
         const getCode = async () => {
-          if (codeCache.has(code)) return codeCache.get(code)
+          if (codeCache.has(code)) {
+            if (timings[dataPath]) {
+              timings[dataPath]!.hit = true
+            }
+            return codeCache.get(code)
+          }
           const result = await mdxPlugin.transform.call(this, code, id)
           codeCache.set(code, result.code)
           return result.code
         }
 
-        const key = `mdx transform ${id.split('/').slice(-3).join('/')}`
-        timings[key] = {
+        timings[dataPath] = {
           start: process.hrtime(),
         }
         const transformed = await getCode()
-        timings[key]!.taken = process.hrtime(timings[key]!.start)
+        timings[dataPath]!.taken = process.hrtime(timings[dataPath]!.start)
 
         return transformed
       },
@@ -141,8 +148,13 @@ export const mdx = (): PluginOption => {
       name: 'time-reporter',
       enforce: 'post',
       buildEnd() {
-        Object.entries(timings).forEach(([key, { taken: [s, ns] = [0, 0] }]) => {
-          console.log(key, s || ns ? `${s}.${Math.round(ns / 1000)}s` : 'FAILED')
+        Object.entries(timings).forEach(([key, { taken: [s, ns] = [0, 0], hit }]) => {
+          console.log(
+            key,
+            s || ns
+              ? `${hit ? '[HIT] ' : '[MISS]'} mdx transform ${s}.${Math.round(ns / 1000)}s`
+              : 'FAILED'
+          )
         })
       },
     },
