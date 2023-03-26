@@ -3,7 +3,7 @@ import './index.css'
 import { createEffect, createSignal, JSXElement, Show, Suspense } from 'solid-js'
 import { render } from 'solid-js/web'
 import { RouteDataArgs, useRouteData } from 'solid-start'
-import { createServerData$ } from 'solid-start/server'
+import { createServerData$, HttpHeader } from 'solid-start/server'
 
 import Contact from '~/components/landing/Contact'
 import FeaturedProjects from '~/components/landing/FeaturedProjects'
@@ -104,6 +104,10 @@ export default function Home() {
 
   return (
     <Container>
+      <HttpHeader
+        name="Cache-Control"
+        value="public, s-max-age=10, stale-while-revalidate, stale-if-error"
+      />
       <Hero title="Hey, I'm Soorria!" subtitle={<Subtitle options={subtitleOptions()} />}>
         {/* eslint-disable-next-line solid/no-innerhtml */}
         <div class="md text-lg" id="now" innerHTML={now()} />
