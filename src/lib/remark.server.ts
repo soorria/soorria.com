@@ -1,4 +1,5 @@
-import { Parent, visit } from 'unist-util-visit'
+import { visit } from 'unist-util-visit'
+import type { Parent } from 'unist'
 import { transformSync } from '@babel/core'
 // @ts-expect-error no types
 import tsPreset from '@babel/preset-typescript'
