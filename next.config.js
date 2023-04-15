@@ -141,6 +141,9 @@ const config = {
     config.plugins.push(FontaineTransform.webpack(options))
     return config
   },
+  images: {
+    domains: process.env.NODE_ENV === 'development' ? ['localhost'] : undefined,
+  },
   reactStrictMode: true,
   // swcMinify: true,
   experimental: {

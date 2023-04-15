@@ -9,6 +9,7 @@ export enum DataType {
 export interface BaseData {
   slug: string
   title: string
+  ogImageTitleParts?: string[]
   shortDescription: string
   code: string
   readingTime?: string

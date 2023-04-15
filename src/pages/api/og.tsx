@@ -29,7 +29,12 @@ const filterBoolean = <T extends any = any, TArray extends Array<T | Falsy> = Ar
 
 const handler = async (req: NextRequest): Promise<ImageResponse> => {
   const [regular, bold] = await Promise.all([poppinsRegular, poppinsBold])
-  const title = req.nextUrl.searchParams.get('title') ?? '404'
+  const titleParts = req.nextUrl.searchParams.getAll('titleParts')
+  const title = titleParts.length ? (
+    titleParts.slice(0, 2).map((part, i) => <span key={i}>{part}</span>)
+  ) : (
+    <span>{req.nextUrl.searchParams.get('title') ?? '404'}</span>
+  )
   const subtitle = req.nextUrl.searchParams.get('subtitle')
   const fonts = filterBoolean([
     bold && {
@@ -116,6 +121,8 @@ const handler = async (req: NextRequest): Promise<ImageResponse> => {
                 whiteSpace: 'pre-wrap',
                 wordBreak: 'break-word',
                 margin: 0,
+                flexDirection: 'column',
+                alignItems: 'center',
               }}
             >
               {title}

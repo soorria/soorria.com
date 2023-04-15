@@ -4,7 +4,7 @@ import PostLayout, { PostBottomSection } from '~/components/posts/PostLayout'
 import { getAllFilesFrontMatter, getFileWithMdx } from '~/lib/data'
 import { DataType } from '~/types/data'
 import { NextSeo } from 'next-seo'
-import { getOgImageForData } from '~/utils/og'
+import { getOgImageForData, getOgUrl } from '~/utils/og'
 import { filterUnpublished } from '~/utils/content'
 import { useMdxComponent } from '~/lib/mdx'
 import { PUBLIC_URL } from '~/constants'
@@ -14,6 +14,7 @@ import { formatDate } from '~/utils/date'
 import cx from '~/utils/cx'
 import PostGithubLinks from '~/components/posts/PostGithubLinks'
 import { categoryLowerCaseToIcon } from '~/components/categories'
+import Image from 'next/image'
 
 interface PostPageProps {
   post: BlogPostFrontMatter
@@ -28,6 +29,8 @@ const PostPage: React.FC<PostPageProps> = ({ post, mdx }) => {
 
   const icon =
     (post.category && categoryLowerCaseToIcon[post.category.toLowerCase()]) || GlobeAuIcon
+
+  const ogImageData = getOgImageForData(DataType.blog, post.title, post.ogImageTitleParts)
 
   return (
     <PostLayout title={post.title}>
@@ -47,7 +50,7 @@ const PostPage: React.FC<PostPageProps> = ({ post, mdx }) => {
             publishedTime: post.createdAt ? new Date(post.createdAt).toISOString() : 'N/A',
             modifiedTime: post.updatedAt ? new Date(post.updatedAt).toISOString() : 'N/A',
           },
-          images: [getOgImageForData(DataType.blog, post.title)],
+          images: [ogImageData],
         }}
       />
 
@@ -82,6 +85,19 @@ const PostPage: React.FC<PostPageProps> = ({ post, mdx }) => {
       </div>
 
       <div className="prose mx-auto mt-6 md:mt-16 md:prose-lg">
+        {process.env.NODE_ENV !== 'production' && (
+          <details>
+            <summary>OG Image</summary>
+            <Image
+              src={ogImageData.url.replace('https://soorria.com', 'http://localhost:3000')}
+              width={1200}
+              height={630}
+              alt=""
+              id="__dev_og_image__"
+            />
+          </details>
+        )}
+
         <Content />
         <PostBottomSection>
           <PostGithubLinks dataType={DataType.blog} slug={post.slug} />
