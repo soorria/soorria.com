@@ -15,6 +15,7 @@ const Subtitle: React.FC<SubtitleProps> = ({ options }) => {
   const rotationTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>()
   const rotationDuration = rotations > 0 ? getDurationMs(rotations) : 0
   const [index, setIndex] = useState(0)
+  const previousIndexes = useRef<number[]>([])
   const components = useMdxComponents(options)
   const Component = components[index]!
 
@@ -22,7 +23,8 @@ const Subtitle: React.FC<SubtitleProps> = ({ options }) => {
     if (components.length < 1) return
 
     let i = index
-    while (i === index) {
+    previousIndexes.current = [i, ...previousIndexes.current].slice(0, 5)
+    while (previousIndexes.current.includes(i)) {
       i = randomIndex(components)
     }
 

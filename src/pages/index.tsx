@@ -61,7 +61,7 @@ export const getStaticProps: GetStaticProps<IndexProps> = async () => {
     const subtitleText = (await getSingletonTextSafe('subtitle')) ?? ''
     const subtitleChunks = subtitleText
       .split('---')
-      .map(chunk => chunk.trim())
+      .map(chunk => chunk.trim().replace(/\.$/, ''))
       .filter(Boolean)
     return await Promise.all(subtitleChunks.map(chunk => renderText(chunk)))
   })()
