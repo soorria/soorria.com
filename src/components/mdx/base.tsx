@@ -1,3 +1,5 @@
+'use client'
+
 import CustomLink from '../CustomLink'
 import ReactDemo from './ReactDemo'
 import TsJsSwitcher from './TsJsSwitcher'

@@ -1,4 +1,3 @@
-import type { GetStaticProps } from 'next'
 import type { ProjectFrontMatter } from '~/types/project'
 
 import Container from '~/components/Container'
@@ -11,49 +10,14 @@ import { featuredProjects } from '~/constants'
 import Skills from '~/components/landing/Skills'
 import { randomArray } from '~/utils/random'
 import { getSingletonJsonSafe, getSingletonTextSafe } from '~/lib/supabase'
-import { useMdxComponent } from '~/components/landing/mdx'
 import { render } from '~/lib/mdx.server'
 import { getRandomSkillIndexes } from '~/lib/skills'
 import Subtitle from '~/components/landing/Subtitle'
+import { Mdx } from '~/components/landing/mdx'
 
-interface IndexProps {
-  subtitleOptions: string[] | null
-  now: string | null
-  projects: ProjectFrontMatter[]
-  randoms: number[]
-  renderedAt: string
-  heroText: string
-  skillIndexes: number[]
-}
+export const revalidate = 10
 
-const IndexPage: React.FC<IndexProps> = ({
-  subtitleOptions,
-  now,
-  projects,
-  randoms,
-  heroText,
-  skillIndexes,
-}) => {
-  const Now = useMdxComponent(now)
-
-  return (
-    <Container>
-      <Hero subtitle={<Subtitle options={subtitleOptions} />} title={heroText}>
-        <div className="text-lg" id="now">
-          <Now />
-        </div>
-      </Hero>
-      <FeaturedProjects random={randoms[0]} projects={projects} />
-      <Skills random={randoms[1]} skillIndexes={skillIndexes} />
-      <Contact random={randoms[2]} />
-      <div className="py-10" />
-    </Container>
-  )
-}
-
-export default IndexPage
-
-export const getStaticProps: GetStaticProps<IndexProps> = async () => {
+const IndexPage = async () => {
   const renderText = (text: string) =>
     render(text, undefined, { hasCodeBlocks: false }).then(result => result.code)
 
@@ -71,7 +35,7 @@ export const getStaticProps: GetStaticProps<IndexProps> = async () => {
     return nowText ? await renderText(nowText ?? '') : null
   })()
 
-  const indexOptionsPromise = getSingletonJsonSafe('index-options')
+  const indexOptionsPromise = getSingletonJsonSafe<{ heroText: string }>('index-options')
 
   const projectsPromise: Promise<ProjectFrontMatter[]> = Promise.all(
     featuredProjects.map(async projectSlug => {
@@ -84,8 +48,6 @@ export const getStaticProps: GetStaticProps<IndexProps> = async () => {
     })
   )
 
-  const REVALIDATE = 10
-
   const randoms = randomArray(0, 100, 5)
 
   const skillIndexes = getRandomSkillIndexes(8)
@@ -97,22 +59,19 @@ export const getStaticProps: GetStaticProps<IndexProps> = async () => {
     indexOptionsPromise,
   ])
 
-  console.log({
-    randoms,
-    skillIndexes,
-    heroText,
-  })
-
-  return {
-    props: {
-      subtitleOptions,
-      now,
-      projects,
-      randoms,
-      renderedAt: new Date().toISOString(),
-      heroText: typeof heroText === 'string' ? heroText : "Hey, I'm Soorria",
-      skillIndexes,
-    },
-    revalidate: REVALIDATE,
-  }
+  return (
+    <Container>
+      <Hero subtitle={<Subtitle options={subtitleOptions} />} title={heroText}>
+        <div className="text-lg" id="now">
+          <Mdx code={now} />
+        </div>
+      </Hero>
+      <FeaturedProjects random={randoms[0]} projects={projects} />
+      <Skills random={randoms[1]} skillIndexes={skillIndexes} />
+      <Contact random={randoms[2]} />
+      <div className="py-10" />
+    </Container>
+  )
 }
+
+export default IndexPage

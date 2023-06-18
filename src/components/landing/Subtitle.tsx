@@ -1,3 +1,5 @@
+'use client'
+
 import { useMdxComponents } from './mdx'
 import cx from '~/utils/cx'
 import { randomIndex } from '~/utils/random'

@@ -1,3 +1,5 @@
+'use client'
+
 import type { ProjectFrontMatter } from '~/types/project'
 import NextLink from 'next/link'
 import { CodeIcon, ExternalIcon, InfoIcon } from '~/components/icons'

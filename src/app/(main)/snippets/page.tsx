@@ -1,4 +1,5 @@
-import type { GetStaticProps } from 'next'
+'use client'
+
 import { useMemo, useState } from 'react'
 import { NextSeo } from 'next-seo'
 import { useAutoAnimate } from '@formkit/auto-animate/react'
@@ -16,11 +17,6 @@ import cx from '~/utils/cx'
 import Collapse from '~/components/Collapse'
 import { intersectionSet } from '~/utils/misc'
 
-interface SnippetsPageProps {
-  snippets: SnippetFrontMatter[]
-  tags: Array<{ label: string; value: string }>
-}
-
 const description =
   'Little bits of code that I find useful and you might too! Mostly written in TypeScript (with a transpiled JavaScript version available) and often for React and SolidJS.'
 const title = 'Snippets'
@@ -28,8 +24,26 @@ const url = `${PUBLIC_URL}/snippets`
 
 const tagBaseClass = 'focus-ring rounded-full border-2 transition hocus:border-drac-pink'
 
-const SnippetsPage: React.FC<SnippetsPageProps> = ({ snippets: _snippets, tags }) => {
-  const [grid] = useAutoAnimate<HTMLDivElement>()
+const SnippetsPage = async () => {
+  const _snippets = sortByCreatedAtField(
+    await getAllFilesFrontMatter<SnippetFrontMatter>(DataType.snippets)
+  )
+
+  // const filterableTags = arrayUnique(
+  //   snippets.flatMap(snippet => getAllTags(snippet)).map(tag => tag.toLowerCase())
+  // )
+
+  const tags: Array<{ label: string; value: string }> = [
+    { value: 'react', label: 'React' },
+    { value: 'solidjs', label: 'SolidJS' },
+    { value: 'typescript', label: 'TypeScript' },
+    { value: 'javascript', label: 'JavaScript' },
+    { value: 'miscellaneous', label: 'Miscellaneous' },
+    { value: 'tailwindcss', label: 'Tailwind CSS' },
+    { value: 'testing', label: 'Testing' },
+  ]
+
+  const grid = useAutoAnimate({})
 
   const [matchAll, setMatchAll] = useState(false)
   const [selected, setSelected] = useState({ set: new Set<string>() })
@@ -127,7 +141,7 @@ const SnippetsPage: React.FC<SnippetsPageProps> = ({ snippets: _snippets, tags }
       <div
         ref={grid}
         style={{ gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))' }}
-        className="grid auto-cols-min grid-cols-1 content-start gap-y-8 gap-x-6 sm:!grid-cols-2 sm:gap-x-8 lg:gap-12"
+        className="grid auto-cols-min grid-cols-1 content-start gap-x-6 gap-y-8 sm:!grid-cols-2 sm:gap-x-8 lg:gap-12"
       >
         {snippets.map(snippet => (
           <div key={snippet.slug} className="grid">
@@ -147,27 +161,3 @@ const SnippetsPage: React.FC<SnippetsPageProps> = ({ snippets: _snippets, tags }
 }
 
 export default SnippetsPage
-
-export const getStaticProps: GetStaticProps<SnippetsPageProps> = async () => {
-  const snippets = sortByCreatedAtField(
-    await getAllFilesFrontMatter<SnippetFrontMatter>(DataType.snippets)
-  )
-
-  // const filterableTags = arrayUnique(
-  //   snippets.flatMap(snippet => getAllTags(snippet)).map(tag => tag.toLowerCase())
-  // )
-
-  const filterableTags: Array<{ label: string; value: string }> = [
-    { value: 'react', label: 'React' },
-    { value: 'solidjs', label: 'SolidJS' },
-    { value: 'typescript', label: 'TypeScript' },
-    { value: 'javascript', label: 'JavaScript' },
-    { value: 'miscellaneous', label: 'Miscellaneous' },
-    { value: 'tailwindcss', label: 'Tailwind CSS' },
-    { value: 'testing', label: 'Testing' },
-  ]
-
-  return {
-    props: { snippets, tags: filterableTags },
-  }
-}

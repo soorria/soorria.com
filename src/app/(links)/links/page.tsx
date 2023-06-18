@@ -1,4 +1,3 @@
-import type { GetStaticProps } from 'next'
 import Container from '~/components/Container'
 import Hero from '~/components/landing/Hero'
 import MadeBy from '~/components/MadeBy'
@@ -6,8 +5,7 @@ import Sparkles from '~/components/mdx/Sparkles'
 import { links } from '~/links'
 import cx from '~/utils/cx'
 import { getSingletonJsonSafe } from '~/lib/supabase'
-import { useTrackEvent } from '~/lib/analytics'
-import { useEffect } from 'react'
+import { Track } from '~/components/ClientTrack'
 
 const classes = {
   anchor: cx(
@@ -27,23 +25,21 @@ const orderedLinks = [
   links.linkedin,
 ]
 
-type LinksPageProps = {
-  heroText: string
-}
+type LinksPageProps = {}
 
-const LinksPage: React.FC<LinksPageProps> = ({ heroText }) => {
-  const track = useTrackEvent()
-
-  useEffect(() => {
-    track('Links Page', { props: {} })
-  }, [track])
+const LinksPage = async (_props: LinksPageProps) => {
+  const { heroText, linksHeroText } = await getSingletonJsonSafe<{
+    heroText: string
+    linksHeroText: string
+  }>('index-options')
 
   return (
     <>
       <Container>
+        <Track event="Links Page" params={{}} />
         <div className="h-8 sm:h-20" />
         <div className="relative">
-          <Hero title={heroText} isStatic={true}>
+          <Hero title={linksHeroText || heroText || "Hey, I'm Soorria"}>
             <main className="relative mx-auto mt-8 max-w-md space-y-8 text-lg sm:mt-24 sm:text-xl">
               {orderedLinks.map(({ title, href, icon: Icon, iconAlt }) => (
                 <a
@@ -78,7 +74,7 @@ const LinksPage: React.FC<LinksPageProps> = ({ heroText }) => {
             </main>
           </Hero>
         </div>
-        <footer className="pt-8 pb-10 text-lg">
+        <footer className="pb-10 pt-8 text-lg">
           <MadeBy />
         </footer>
       </Container>
@@ -87,14 +83,3 @@ const LinksPage: React.FC<LinksPageProps> = ({ heroText }) => {
 }
 
 export default LinksPage
-
-export const getStaticProps: GetStaticProps = async () => {
-  const { heroText, linksHeroText } = await getSingletonJsonSafe('index-options')
-  return {
-    props: {
-      layout: 'nah',
-      heroText: linksHeroText || heroText || "Hey, I'm Soorria",
-    },
-    revalidate: 10,
-  }
-}

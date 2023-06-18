@@ -1,3 +1,4 @@
+'use client'
 import cx from '~/utils/cx'
 import { ComponentType, useEffect, useState } from 'react'
 import { RefreshIcon } from '../icons'

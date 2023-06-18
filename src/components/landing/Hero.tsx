@@ -7,13 +7,14 @@ const classes = {
   main: 'relative cursor-text inset-0 bg-gradient-to-tr from-drac-pink to-drac-purple bg-clip-text text-transparent sm:text-drac-content contrast-more:sm:text-drac-pink contrast-more:scale-110',
 }
 
-const Hero: React.FC<
-  PropsWithChildren<{
-    subtitle?: ReactNode | null
-    title: ReactNode
-    isStatic?: boolean
-  }>
-> = ({ subtitle, title, children }) => {
+const Hero = ({
+  subtitle,
+  title,
+  children,
+}: PropsWithChildren<{
+  subtitle?: ReactNode | null
+  title: ReactNode
+}>) => {
   return (
     <div
       id="hero"

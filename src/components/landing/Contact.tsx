@@ -1,3 +1,5 @@
+'use client'
+
 import { useTrackFirstEvent } from '~/lib/analytics'
 import { contactLinks } from '~/links'
 import cx from '~/utils/cx'
@@ -168,7 +170,7 @@ const Contact: React.FC<ContactProps> = ({ random = 0 }) => {
 
   return (
     <LandingSection title={titles[random % titles.length]} id="contact">
-      <div className="grid grid-flow-row-dense grid-cols-1 gap-y-8 gap-x-16 sm:grid-cols-2">
+      <div className="grid grid-flow-row-dense grid-cols-1 gap-x-16 gap-y-8 sm:grid-cols-2">
         <div className="row-start space-y-4 sm:row-start-1">
           <p className="text-lg">
             Want to work with me, or just want to chat? Shoot me an email or a message on Messenger{' '}

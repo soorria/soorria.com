@@ -1,3 +1,4 @@
+'use client'
 import cx from '~/utils/cx'
 import { useHydrated } from '~/utils/use-hydrated'
 import { Children, isValidElement, PropsWithChildren, ReactElement, useMemo, useRef } from 'react'

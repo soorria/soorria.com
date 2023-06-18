@@ -22,7 +22,7 @@ const Header: React.FC = () => {
     <Container>
       <a
         href="#main-content"
-        className="focus-ring fixed left-1/2 z-50 mx-auto block -translate-y-full -translate-x-1/2 transform rounded bg-drac-base px-4 py-2 font-display font-bold text-drac-pink transition-transform focus:translate-y-2 focus:ring-2 hocus:shadow-xl"
+        className="focus-ring fixed left-1/2 z-50 mx-auto block -translate-x-1/2 -translate-y-full transform rounded bg-drac-base px-4 py-2 font-display font-bold text-drac-pink transition-transform focus:translate-y-2 focus:ring-2 hocus:shadow-xl"
       >
         Skip to Main Content
       </a>
@@ -34,7 +34,7 @@ const Header: React.FC = () => {
               key={href}
               href={href}
               passHref
-              className="focus-ring relative overflow-hidden rounded border-drac-content px-2 py-1 leading-none transition hocus:bg-drac-base-light hocus:text-drac-pink sm:py-2 sm:px-3"
+              className="focus-ring relative overflow-hidden rounded border-drac-content px-2 py-1 leading-none transition hocus:bg-drac-base-light hocus:text-drac-pink sm:px-3 sm:py-2"
             >
               {title}
             </Link>
