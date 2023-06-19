@@ -8,8 +8,12 @@ type PostLayoutProps = PropsWithChildren<{
 export const PostHeading: React.FC<PropsWithChildren> = ({ children }) => {
   return (
     <h1
-      className="mt-0 mb-20 text-center text-5xl !leading-tight text-drac-pink sm:mt-8 sm:text-6xl md:text-7xl"
-      style={{ overflowWrap: 'break-word' }}
+      className="mb-20 mt-0 text-center text-5xl !leading-tight text-drac-pink sm:mt-8 sm:text-6xl md:text-7xl"
+      style={{
+        overflowWrap: 'break-word',
+        // @ts-expect-error types haven't caught up yet
+        textWrap: 'balance',
+      }}
     >
       {children}
     </h1>
@@ -23,7 +27,7 @@ export const PostBottomSection: React.FC<PropsWithChildren> = ({ children }) => 
 const PostLayout: React.FC<PostLayoutProps> = ({ title, children }) => {
   return (
     <Container>
-      <article className="space-y-12 pt-8 pb-16">
+      <article className="space-y-12 pb-16 pt-8">
         <PostHeading>{title}</PostHeading>
         {children}
       </article>

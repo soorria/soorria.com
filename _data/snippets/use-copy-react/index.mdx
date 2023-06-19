@@ -6,7 +6,7 @@ tags:
   - typescript
   - react
 createdAt: '2022-05-02'
-updatedAt: '2022-10-13'
+updatedAt: '2023-06-19'
 ---
 
 Copy text to your clipboard, and know when it's done so you can change the
@@ -26,7 +26,7 @@ export const useCopy = ({ copiedTimeout = 2000 }: UseCopyProps = {}): [
   copied: boolean
 ] => {
   const [copied, setCopied] = useState(false)
-  const timeoutRef = useRef<NodeJS.Timeout>()
+  const timeoutRef = useRef<ReturnType<typeof setTimeout>>()
 
   const copy: CopyFn = useCallback(
     async text => {
@@ -49,6 +49,37 @@ export const useCopy = ({ copiedTimeout = 2000 }: UseCopyProps = {}): [
   (re-)running unnecessarily.
 
 </Note>
+
+<Collapse summary={<>
+useCopy implemented with <a href="/snippets/use-temporary-state-react">useTemporaryState</a>
+</>}>
+
+```typescript
+export type UseCopyProps = {
+  copiedTimeout?: number
+}
+
+type CopyFn = (text: string) => Promise<void>
+
+export const useCopy = ({ copiedTimeout = 2000 }: UseCopyProps = {}): [
+  copy: CopyFn,
+  copied: boolean
+] => {
+  const [copied, setCopied] = useTemporaryState(false, copiedTimeout)
+
+  const copy: CopyFn = useCallback(
+    async text => {
+      await navigator.clipboard.writeText(text)
+      setCopied(true)
+    },
+    [setCopied]
+  )
+
+  return [copy, copied]
+}
+```
+
+</Collapse>
 
 ---
 
