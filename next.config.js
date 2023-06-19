@@ -155,6 +155,14 @@ const config = {
   // swcMinify: true,
   experimental: {
     legacyBrowsers: false,
+    esmExternals: 'loose',
+    serverComponentsExternalPackages: [
+      'esbuild',
+      '@mdx-js/esbuild',
+      'shiki',
+      'mdx-bundler',
+      '@babel/core',
+    ],
   },
   eslint: {
     ignoreDuringBuilds: true,

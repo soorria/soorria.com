@@ -1,6 +1,9 @@
+import '@total-typescript/ts-reset'
 import { ReactNode } from 'react'
 
 import '~/styles/globals.css'
+import NoJsStyles from '~/styles/NoJsStyles'
+import '~/styles/prose.css'
 
 const title = 'Soorria Saruva - Full Stack Software Engineer'
 const description = 'Full Stack Software Engineer'
@@ -80,7 +83,10 @@ const RootLayout = ({ children }: { children: ReactNode }) => {
           crossOrigin="anonymous"
         />
       </head>
-      <body className="h-full min-h-screen bg-drac-base text-drac-content">{children}</body>
+      <body className="h-full min-h-screen bg-drac-base text-drac-content">
+        {children}
+        <NoJsStyles />
+      </body>
     </html>
   )
 }

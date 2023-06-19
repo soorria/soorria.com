@@ -3,12 +3,10 @@ import { bundleMDX } from 'mdx-bundler'
 import rehypeSlug from 'rehype-slug'
 import rehypeAutolinkHeadings from 'rehype-autolink-headings'
 import { rehypeAccessibleEmojis } from 'rehype-accessible-emojis'
-import remarkTwoslash from 'remark-shiki-twoslash'
 import remarkGfm from 'remark-gfm'
 import rehypeRaw from 'rehype-raw'
 import { nodeTypes } from '@mdx-js/mdx'
 import { remarkTypeScriptTransform } from './remark.server'
-import { rehypeRearrangeShikiOutput } from './rehype.server'
 import type { PluggableList } from 'unified'
 
 const STYLE_UTILS = `
@@ -17,49 +15,9 @@ import { css } from 'goober'
 export { css }
 `
 
-const codeBlockRemarkPlugins: PluggableList = [
-  remarkTypeScriptTransform,
-  [
-    remarkTwoslash,
-    {
-      theme: 'dracula',
-      langs: [
-        'html',
-        'css',
-        'javascript',
-        'typescript',
-        'jsx',
-        'tsx',
-        'bash',
-        'yaml',
-        'toml',
-        'latex',
-        'r',
-        'haskell',
-        'csharp',
-        'astro',
-        'c',
-        'cpp',
-        'go',
-        'java',
-        'kotlin',
-        'markdown',
-        'matlab',
-        'mdx',
-        'perl',
-        'python',
-        'rust',
-        'bash',
-        'sql',
-        'svelte',
-        'vue',
-        'json',
-      ],
-    },
-  ],
-]
+const codeBlockRemarkPlugins: PluggableList = [remarkTypeScriptTransform]
 
-const codeBlockRehypePlugins: PluggableList = [rehypeRearrangeShikiOutput]
+const codeBlockRehypePlugins: PluggableList = []
 
 export type RenderOptions = {
   hasCodeBlocks?: boolean

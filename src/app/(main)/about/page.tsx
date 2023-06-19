@@ -28,7 +28,7 @@ export const metadata = {
 }
 
 const AboutPage = async () => {
-  const { code, updatedAt } = await getFileWithMdx<BaseData & { updatedAt: string }>(
+  const { code, updatedAt: _updatedAt } = await getFileWithMdx<BaseData & { updatedAt: string }>(
     DataType.misc,
     'about'
   )

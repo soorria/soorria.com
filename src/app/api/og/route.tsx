@@ -1,10 +1,8 @@
 import { ImageResponse } from '@vercel/og'
-import type { PageConfig } from 'next'
 import type { NextRequest } from 'next/server'
 
-export const config: PageConfig = {
-  runtime: 'edge',
-}
+export const runtime = 'edge'
+
 const BASE_URL = 'https://soorria.com'
 
 const getFont = async (name: string) => {
@@ -21,13 +19,7 @@ const getFont = async (name: string) => {
 const poppinsRegular = getFont('poppins-regular')
 const poppinsBold = getFont('poppins-bold')
 
-type Falsy = null | undefined | false | 0 | ''
-
-const filterBoolean = <T extends any = any, TArray extends Array<T | Falsy> = Array<T | Falsy>>(
-  array: TArray
-): Array<T> => array.filter(Boolean) as Array<T>
-
-const handler = async (req: NextRequest): Promise<ImageResponse> => {
+export const GET = async (req: NextRequest): Promise<ImageResponse> => {
   const [regular, bold] = await Promise.all([poppinsRegular, poppinsBold])
   const titleParts = req.nextUrl.searchParams.getAll('titleParts')
   const title = titleParts.length ? (
@@ -36,20 +28,20 @@ const handler = async (req: NextRequest): Promise<ImageResponse> => {
     <span>{req.nextUrl.searchParams.get('title') ?? '404'}</span>
   )
   const subtitle = req.nextUrl.searchParams.get('subtitle')
-  const fonts = filterBoolean([
-    bold && {
+  const fonts = [
+    bold?.data && {
       data: bold.data,
       name: 'PoppinsBold',
-      style: 'normal',
-      weight: 400,
+      style: 'normal' as const,
+      weight: 400 as const,
     },
-    regular && {
+    regular?.data && {
       data: regular.data,
       name: 'PoppinsRegular',
-      style: 'normal',
-      weight: 400,
+      style: 'normal' as const,
+      weight: 400 as const,
     },
-  ])
+  ].filter(Boolean)
 
   return new ImageResponse(
     (
@@ -144,7 +136,7 @@ const handler = async (req: NextRequest): Promise<ImageResponse> => {
       </div>
     ),
     {
-      fonts: fonts.length ? fonts : undefined,
+      fonts,
       debug: req.nextUrl.searchParams.has('debug'),
       headers: {
         'x-font-urls': [regular.url, bold.url].join(','),
@@ -152,5 +144,3 @@ const handler = async (req: NextRequest): Promise<ImageResponse> => {
     }
   )
 }
-
-export default handler
