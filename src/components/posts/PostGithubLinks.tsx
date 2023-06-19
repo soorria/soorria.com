@@ -1,5 +1,5 @@
 import type { DataType } from '~/types/data'
-import { editUrl, historyUrl } from '~/utils/repo'
+import { sourceUrl, historyUrl } from '~/utils/repo'
 
 interface PostGithubLinksProps {
   dataType: DataType
@@ -9,9 +9,9 @@ interface PostGithubLinksProps {
 const PostGithubLinks: React.FC<PostGithubLinksProps> = ({ dataType, slug }) => {
   return (
     <div>
-      Found a mistake, or want to suggest an improvement? Edit on GitHub{' '}
+      Found a mistake, or want to suggest an improvement? Source on GitHub{' '}
       <a
-        href={editUrl(dataType, slug)}
+        href={sourceUrl(dataType, slug)}
         className="focus-ring -mx-1 rounded px-1"
         rel="noopenner noreferrer"
         target="_blank"
