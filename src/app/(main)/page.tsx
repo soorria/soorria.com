@@ -9,33 +9,40 @@ import { DataType } from '~/types/data'
 import { featuredProjects } from '~/constants'
 import Skills from '~/components/landing/Skills'
 import { randomArray } from '~/utils/random'
-import { getSingletonJsonSafe, getSingletonTextSafe } from '~/lib/supabase'
+import { getCachedSingletonJsonSafe, getCachedSingletonTextSafe } from '~/lib/supabase'
 import { render } from '~/lib/mdx.server'
 import { getRandomSkillIndexes } from '~/lib/skills'
 import Subtitle from '~/components/landing/Subtitle'
 import { Mdx } from '~/components/landing/mdx'
+import { unstable_cache } from 'next/cache'
 
 export const revalidate = 10
 
-const IndexPage = async () => {
-  const renderText = (text: string) =>
+const renderText = unstable_cache(
+  (text: string): Promise<string> =>
     render(text, undefined, { hasCodeBlocks: false }).then(result => result.code)
+)
 
-  const subtitleOptionsPromise = (async () => {
-    const subtitleText = (await getSingletonTextSafe('subtitle')) ?? ''
-    const subtitleChunks = subtitleText
-      .split('---')
-      .map(chunk => chunk.trim().replace(/\.$/, ''))
-      .filter(Boolean)
-    return await Promise.all(subtitleChunks.map(chunk => renderText(chunk)))
-  })()
+const getSubtitleOptions = unstable_cache(async () => {
+  const subtitleText = (await getCachedSingletonTextSafe('subtitle')) ?? ''
+  const subtitleChunks = subtitleText
+    .split('---')
+    .map(chunk => chunk.trim().replace(/\.$/, ''))
+    .filter(Boolean)
+  return await Promise.all(subtitleChunks.map(chunk => renderText(chunk)))
+})
 
-  const nowPromise = (async () => {
-    const nowText = await getSingletonTextSafe('now')
-    return nowText ? await renderText(nowText ?? '') : null
-  })()
+const getNow = unstable_cache(async () => {
+  const nowText = await getCachedSingletonTextSafe('now')
+  return nowText ? await renderText(nowText ?? '') : null
+})
 
-  const indexOptionsPromise = getSingletonJsonSafe<{ heroText: string }>('index-options')
+const IndexPage = async () => {
+  const subtitleOptionsPromise = getSubtitleOptions()
+
+  const nowPromise = getNow()
+
+  const indexOptionsPromise = getCachedSingletonJsonSafe<{ heroText: string }>('index-options')
 
   const projectsPromise: Promise<ProjectFrontMatter[]> = Promise.all(
     featuredProjects.map(async projectSlug => {

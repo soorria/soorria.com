@@ -1,3 +1,5 @@
+'use client'
+
 import { useScrollCssVar } from '~/utils/use-scroll-css-var'
 import type { IconComponent } from '../icons'
 

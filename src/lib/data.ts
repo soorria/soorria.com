@@ -6,6 +6,7 @@ import matter from 'gray-matter'
 import path from 'path'
 import { render } from './mdx.server'
 import { addRefToUrl } from '../utils/content'
+import { unstable_cache } from 'next/cache'
 
 const DATA_ROOT = path.join(process.cwd(), '_data')
 
@@ -52,82 +53,79 @@ const readFilesForSlug = async (
   return { mdx, components }
 }
 
-export const getAllFilesFrontMatter = async <TFrontMatter>(
-  type: DataType
-): Promise<TFrontMatter[]> => {
-  const files = await getFiles(type)
+export const getAllFilesFrontMatter = unstable_cache(
+  async <TFrontMatter>(type: DataType): Promise<TFrontMatter[]> => {
+    const files = await getFiles(type)
 
-  return Promise.all(
-    files.map(async slug => {
-      const source = await fs.readFile(getFilePath(type, slug))
-      const { data, content } = matter(source)
+    return Promise.all(
+      files.map(async slug => {
+        const source = await fs.readFile(getFilePath(type, slug))
+        const { data, content } = matter(source)
 
-      return {
-        ...(data as TFrontMatter),
-        slug: fileToSlug(slug),
-        hasContent: content.trim().length !== 0,
-        ...getContentMetrics(content),
-      } as TFrontMatter
-    })
-  )
-}
+        return {
+          ...(data as TFrontMatter),
+          slug: fileToSlug(slug),
+          hasContent: content.trim().length !== 0,
+          ...getContentMetrics(content),
+        } as TFrontMatter
+      })
+    )
+  }
+)
 
-export const getFileFrontMatter = async <TFrontMatter>(
-  type: DataType,
-  slug: string
-): Promise<TFrontMatter> => {
-  const source = await fs.readFile(getFilePath(type, slug), 'utf-8')
-  const { data, content } = matter(source)
+export const getFileFrontMatter = unstable_cache(
+  async <TFrontMatter>(type: DataType, slug: string): Promise<TFrontMatter> => {
+    const source = await fs.readFile(getFilePath(type, slug), 'utf-8')
+    const { data, content } = matter(source)
 
-  return {
-    ...(data as TFrontMatter),
-    slug,
-    hasContent: content.trim().length !== 0,
-    ...getContentMetrics(content),
-  } as TFrontMatter
-}
+    return {
+      ...(data as TFrontMatter),
+      slug,
+      hasContent: content.trim().length !== 0,
+      ...getContentMetrics(content),
+    } as TFrontMatter
+  }
+)
 
-export const getFileWithContent = async <TApiData extends BaseApiData>(
-  type: DataType,
-  slug: string
-): Promise<TApiData> => {
-  const { mdx, components } = await readFilesForSlug(type, slug)
-  const { data, content } = matter(mdx)
+export const getFileWithContent = unstable_cache(
+  async <TApiData extends BaseApiData>(type: DataType, slug: string): Promise<TApiData> => {
+    const { mdx, components } = await readFilesForSlug(type, slug)
+    const { data, content } = matter(mdx)
 
-  return {
-    ...(data as any),
-    slug,
-    content,
-    components,
-    hasContent: content.trim().length !== 0,
-    ...getContentMetrics(content),
-  } as TApiData
-}
+    return {
+      ...(data as any),
+      slug,
+      content,
+      components,
+      hasContent: content.trim().length !== 0,
+      ...getContentMetrics(content),
+    } as TApiData
+  }
+)
 
 const hasLiveUrlProperty = (obj: unknown): obj is { live: string } =>
   Boolean(obj) && typeof (obj as { live: unknown }).live === 'string'
 
-export const getFileWithMdx = async <TData extends BaseData>(
-  type: DataType,
-  slug: string
-): Promise<TData> => {
-  const { mdx, components } = await readFilesForSlug(type, slug)
+export const getFileWithMdx = unstable_cache(
+  async <TData extends BaseData>(type: DataType, slug: string): Promise<TData> => {
+    const { mdx, components } = await readFilesForSlug(type, slug)
 
-  const {
-    code,
-    frontmatter: data,
-    matter: { content },
-  } = await render<FrontMatter<TData>>(mdx, components)
+    const {
+      code,
+      frontmatter: data,
+      matter: { content },
+    } = await render<FrontMatter<TData>>(mdx, components)
 
-  if (hasLiveUrlProperty(data)) {
-    data.live = addRefToUrl(data.live)
+    if (hasLiveUrlProperty(data)) {
+      data.live = addRefToUrl(data.live)
+    }
+
+    return {
+      ...(data as FrontMatter<TData>),
+      slug,
+      code,
+      hasContent: content.trim().length !== 0,
+      ...getContentMetrics(content),
+    } as TData
   }
-
-  return {
-    ...(data as FrontMatter<TData>),
-    slug,
-    code,
-    hasContent: content.trim().length !== 0,
-    ...getContentMetrics(content),
-  } as TData
-}
+)

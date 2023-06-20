@@ -1,4 +1,5 @@
 import { createClient } from '@supabase/supabase-js'
+import { unstable_cache } from 'next/cache'
 
 const client = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_ANON_KEY)
 
@@ -41,6 +42,8 @@ export const getSingletonTextSafe = async (slug: string): Promise<string | null>
   }
 }
 
+export const getCachedSingletonTextSafe = unstable_cache(getSingletonTextSafe)
+
 export const getSingletonJsonSafe = async <T extends Record<string, unknown>>(
   slug: string
 ): Promise<Partial<T>> => {
@@ -53,3 +56,5 @@ export const getSingletonJsonSafe = async <T extends Record<string, unknown>>(
     return {}
   }
 }
+
+export const getCachedSingletonJsonSafe = unstable_cache(getSingletonJsonSafe)
