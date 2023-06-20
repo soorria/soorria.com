@@ -6,7 +6,7 @@ import { Mdx } from '~/lib/mdx'
 import { categoryLowerCaseToIcon, defaultCategoryIcon } from '~/components/categories'
 import { formatDate } from '~/utils/date'
 import { PUBLIC_URL } from '~/constants'
-import { SpinningIconDivider } from '~/components/posts/SpinningIconDivider'
+import { SpinningIconDivider, renderIcon } from '~/components/posts/SpinningIconDivider'
 import PostGithubLinks from '~/components/posts/PostGithubLinks'
 import { Metadata } from 'next'
 import { getOgImageForData } from '~/utils/og'
@@ -63,7 +63,10 @@ const SnippetPage = async ({ params }: SnippetPageProps) => {
     <PostLayout title={snippet.title}>
       <SpinningIconDivider
         scrollVar={SCROLL_VAR}
-        icon={categoryLowerCaseToIcon[snippet.category.toLowerCase()] || defaultCategoryIcon}
+        icon={renderIcon(
+          categoryLowerCaseToIcon[snippet.category.toLowerCase()] || defaultCategoryIcon,
+          SCROLL_VAR
+        )}
       />
       <div className="prose mx-auto mb-12 mt-6 md:prose-lg">
         <Mdx code={code} />

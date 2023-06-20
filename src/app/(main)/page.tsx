@@ -14,28 +14,25 @@ import { render } from '~/lib/mdx.server'
 import { getRandomSkillIndexes } from '~/lib/skills'
 import Subtitle from '~/components/landing/Subtitle'
 import { Mdx } from '~/components/landing/mdx'
-import { unstable_cache } from 'next/cache'
 
 export const revalidate = 10
 
-const renderText = unstable_cache(
-  (text: string): Promise<string> =>
-    render(text, undefined, { hasCodeBlocks: false }).then(result => result.code)
-)
+const renderText = (text: string): Promise<string> =>
+  render(text, undefined, { hasCodeBlocks: false }).then(result => result.code)
 
-const getSubtitleOptions = unstable_cache(async () => {
+const getSubtitleOptions = async () => {
   const subtitleText = (await getCachedSingletonTextSafe('subtitle')) ?? ''
   const subtitleChunks = subtitleText
     .split('---')
     .map(chunk => chunk.trim().replace(/\.$/, ''))
     .filter(Boolean)
   return await Promise.all(subtitleChunks.map(chunk => renderText(chunk)))
-})
+}
 
-const getNow = unstable_cache(async () => {
+const getNow = async () => {
   const nowText = await getCachedSingletonTextSafe('now')
   return nowText ? await renderText(nowText ?? '') : null
-})
+}
 
 const IndexPage = async () => {
   const subtitleOptionsPromise = getSubtitleOptions()

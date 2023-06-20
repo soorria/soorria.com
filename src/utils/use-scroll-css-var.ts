@@ -1,6 +1,7 @@
 import { useEffect } from 'react'
 
-export const useScrollCssVar = (name: string): void => {
+export type ScrollVar = `--${string}`
+export const useScrollCssVar = (name: ScrollVar): void => {
   useEffect(() => {
     let percent = '0'
     let raf: number
