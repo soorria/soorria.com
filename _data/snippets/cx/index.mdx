@@ -16,3 +16,17 @@ JedWatson's [classnames](https://github.com/JedWatson/classnames) and lukeed's
 export const cx = (...classes: (string | boolean | null | undefined)[]) =>
   classes.filter(cls => typeof cls === 'string').join(' ')
 ```
+
+## Usage
+
+```tsx {3-4} jsKeepLines
+const Button: React.FC<{ disabled?: boolean }> = ({ disabled, children }) => (
+  <button
+    // When rendered, the button will have class="button button--disabled"
+    className={cx('button', disabled && 'button--disabled')}
+    disabled={disabled}
+  >
+    {children}
+  </button>
+)
+```
