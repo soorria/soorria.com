@@ -38,7 +38,7 @@ const LinksPage = async (_props: LinksPageProps) => {
       <Container>
         <Track event="Links Page" params={{}} />
         <div className="h-8 sm:h-20" />
-        <Hero title={linksHeroText || heroText || "Hey, I'm Soorria"}>
+        <Hero title={linksHeroText || heroText || "Hey, I'm Soorria"} overflowHidden>
           <div>
             <main
               className="slide-in relative mx-auto mt-8 max-w-md space-y-8 text-lg sm:mt-24 sm:text-xl"

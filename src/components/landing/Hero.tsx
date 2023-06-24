@@ -11,14 +11,19 @@ const Hero = ({
   subtitle,
   title,
   children,
+  overflowHidden,
 }: PropsWithChildren<{
   subtitle?: ReactNode | null
   title: ReactNode
+  overflowHidden?: boolean
 }>) => {
   return (
     <div
       id="hero"
-      className="circuit-bg slide-in overflow-x-hidden pb-12 nmp-4 nmpt-36 nmpx-4 md:nmpx-8 lg:nmpx-20 xl:nmpx-32 2xl:nmpx-40"
+      className={cx(
+        'circuit-bg slide-in overflow-x-hidden pb-12 nmp-4 nmpt-36 nmpx-4 md:nmpx-8 lg:nmpx-20 xl:nmpx-32 2xl:nmpx-40',
+        overflowHidden && 'overflow-hidden'
+      )}
     >
       <div className="mx-auto my-4 cursor-default py-16 text-center font-display text-6xl font-bold leading-tight outline-none sm:my-8 sm:text-[4rem] md:text-[5rem] lg:text-8xl">
         <div className="relative">
