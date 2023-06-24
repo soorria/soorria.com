@@ -26,7 +26,7 @@ const Header: React.FC = () => {
       >
         Skip to Main Content
       </a>
-      <header className="flex items-center justify-between py-8">
+      <header className="slide-in-direct flex items-center justify-between py-8">
         <SpinnyHomeLink />
         <nav className="flex space-x-1 font-display sm:space-x-3 sm:text-lg">
           {LINKS.map(({ title, href }) => (

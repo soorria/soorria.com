@@ -225,6 +225,7 @@ input {
 }
 
 @media (prefers-reduced-motion: no-preference) {
+  .slide-in-direct,
   .slide-in > * {
     --step-num: 0;
     --_initial-step: var(--initial-step, 0);
