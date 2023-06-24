@@ -12,21 +12,7 @@ A tiny helper function to conditionally join classnames. Simplified version of
 JedWatson's [classnames](https://github.com/JedWatson/classnames) and lukeed's
 [clsx](https://github.com/lukeed/clsx).
 
-```ts
+```typescript title="cx.ts" caption="yo"
 export const cx = (...classes: (string | boolean | null | undefined)[]) =>
   classes.filter(cls => typeof cls === 'string').join(' ')
-```
-
-## Usage
-
-```tsx {3-4} jsKeepLines
-const Button: React.FC<{ disabled?: boolean }> = ({ disabled, children }) => (
-  <button
-    // When rendered, the button will have class="button button--disabled"
-    className={cx('button', disabled && 'button--disabled')}
-    disabled={disabled}
-  >
-    {children}
-  </button>
-)
 ```

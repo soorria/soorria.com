@@ -1,3 +1,4 @@
+'use client'
 import { Dispatch, SetStateAction } from 'react'
 import cx from '~/utils/cx'
 import { useSyncedLocalStorage } from '~/utils/use-synced-local-storage'

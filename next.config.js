@@ -57,11 +57,6 @@ const config = {
         permanent: false,
       },
       {
-        source: '/contact',
-        destination: 'https://soorria.com/?ref=%2Fcontact#contact',
-        permanent: true,
-      },
-      {
         source: '/blogs/:path*',
         destination: '/blog/:path*',
         permanent: true,
@@ -136,9 +131,21 @@ const config = {
       ],
     }
   },
-  webpack(config) {
+  webpack(config, { isServer }) {
     config.plugins = config.plugins || []
     config.plugins.push(FontaineTransform.webpack(options))
+
+    if (!isServer) {
+      config.resolve = {
+        ...config.resolve,
+        fallback: {
+          ...config.resolve.fallback,
+          'builtin-modules': false,
+          fs: false,
+        },
+      }
+    }
+
     return config
   },
   images: {
@@ -148,6 +155,14 @@ const config = {
   // swcMinify: true,
   experimental: {
     legacyBrowsers: false,
+    esmExternals: 'loose',
+    serverComponentsExternalPackages: [
+      'esbuild',
+      '@mdx-js/esbuild',
+      'shiki',
+      'mdx-bundler',
+      '@babel/core',
+    ],
   },
   eslint: {
     ignoreDuringBuilds: true,

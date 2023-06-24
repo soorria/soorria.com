@@ -7,17 +7,18 @@ const classes = {
   main: 'relative cursor-text inset-0 bg-gradient-to-tr from-drac-pink to-drac-purple bg-clip-text text-transparent sm:text-drac-content contrast-more:sm:text-drac-pink contrast-more:scale-110',
 }
 
-const Hero: React.FC<
-  PropsWithChildren<{
-    subtitle?: ReactNode | null
-    title: ReactNode
-    isStatic?: boolean
-  }>
-> = ({ subtitle, title, children }) => {
+const Hero = ({
+  subtitle,
+  title,
+  children,
+}: PropsWithChildren<{
+  subtitle?: ReactNode | null
+  title: ReactNode
+}>) => {
   return (
     <div
       id="hero"
-      className="circuit-bg overflow-x-hidden pb-12 nmp-4 nmpt-36 nmpx-4 md:nmpx-8 lg:nmpx-20 xl:nmpx-32 2xl:nmpx-40"
+      className="circuit-bg slide-in overflow-x-hidden pb-12 nmp-4 nmpt-36 nmpx-4 md:nmpx-8 lg:nmpx-20 xl:nmpx-32 2xl:nmpx-40"
     >
       <div className="mx-auto my-4 cursor-default py-16 text-center font-display text-6xl font-bold leading-tight outline-none sm:my-8 sm:text-[4rem] md:text-[5rem] lg:text-8xl">
         <div className="relative">

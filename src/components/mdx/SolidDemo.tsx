@@ -1,3 +1,5 @@
+'use client'
+
 import { type HyperScript } from 'hyper-dom-expressions'
 import { useEffect, useRef, useState } from 'react'
 import {

@@ -1,7 +1,9 @@
+'use client'
+
 import CustomLink from '../CustomLink'
 import ReactDemo from './ReactDemo'
 import TsJsSwitcher from './TsJsSwitcher'
-import CustomCodeBlock from './CodeBlock'
+import CodeBlock from './CodeBlock'
 import dynamic from 'next/dynamic'
 import type { MDXContentProps } from 'mdx-bundler/client'
 import { OnlyIsTs, TsJsToggle } from '../TsJsToggle'
@@ -10,7 +12,7 @@ const Sparkles = dynamic(() => import('./Sparkles'))
 
 export const baseComponents = {
   a: CustomLink,
-  pre: CustomCodeBlock,
+  pre: CodeBlock,
   Image: dynamic(() => import('./MDXImage')),
   Sandbox: props => (
     <div className="-mx-2 md:-mx-6">

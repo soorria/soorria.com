@@ -1,57 +1,33 @@
+'use client'
+
 import cx from '~/utils/cx'
-import { useHydrated } from '~/utils/use-hydrated'
-import { Children, isValidElement, PropsWithChildren, ReactElement, useMemo, useRef } from 'react'
-import type { CustomCodeBlockProps } from './CodeBlock'
-import { CodeBlockPre } from './CodeBlockPre'
-import { CodeBlockCopyButton } from './utils'
-import {
-  CodeBlockTitle,
-  CODE_BLOCK_CLASSNAMES,
-  getCodeLinesFromPre,
-  LANGUAGE_NAME_MAP,
-} from './utils'
+import { PropsWithChildren } from 'react'
+import { CodeBlockTitle, CODE_BLOCK_CLASSNAMES, LANGUAGE_NAME_MAP } from './utils'
 import { TsJsToggle, useIsTs } from '../TsJsToggle'
+import { CodeBlockCopyButton } from './CodeBlockCopyButton'
 
-const TS_LANGUAGES = new Set(['ts', 'tsx', 'typescript'])
-const TsJsSwitcher: React.FC<PropsWithChildren> = props => {
+const TsJsSwitcher = ({
+  'data-title': title,
+  'data-jsx': isJsx,
+  children,
+}: PropsWithChildren<{
+  'data-title'?: string
+  'data-caption'?: string
+  'data-jsx'?: 'true' | 'false'
+}>) => {
   const [isTs] = useIsTs()
-  const hydrated = useHydrated()
-  const pre = useRef<HTMLPreElement>(null)
 
-  const { blocks, names } = useMemo(() => {
-    const children = props.children
-      ? Children.toArray(props.children).filter(el => isValidElement(el))
-      : ([] as ReactElement[])
-
-    if (children.length <= 1) return { blocks: [], names: {} }
-
-    const [a, b] = children as [
-      ReactElement<CustomCodeBlockProps>,
-      ReactElement<CustomCodeBlockProps>
-    ]
-
-    const blocks = TS_LANGUAGES.has(a.props.language ?? '') ? ([a, b] as const) : ([b, a] as const)
-
-    const isTsx = blocks[0].props.language === 'tsx'
-
-    return {
-      blocks: blocks,
-      names: {
-        ts: LANGUAGE_NAME_MAP[isTsx ? 'tsx' : 'ts'],
-        js: LANGUAGE_NAME_MAP[isTsx ? 'jsx' : 'js'],
-      },
-    } as const
-  }, [props.children])
-
-  if (blocks.length <= 1) return <>{props.children}</>
-
-  const selectedBlock = blocks[isTs ? 0 : 1]!
-  const { children, className, title, ...rest } = selectedBlock.props
+  const names =
+    isJsx === 'true'
+      ? { ts: LANGUAGE_NAME_MAP.tsx, js: LANGUAGE_NAME_MAP.jsx }
+      : { ts: LANGUAGE_NAME_MAP.ts, js: LANGUAGE_NAME_MAP.js }
 
   return (
     <>
       {title && <CodeBlockTitle>{title}</CodeBlockTitle>}
-      <div className={cx('shiki', CODE_BLOCK_CLASSNAMES.root)}>
+      <div
+        className={cx('code-block ts-js-switcher', isTs || 'show-js', CODE_BLOCK_CLASSNAMES.root)}
+      >
         <div className={CODE_BLOCK_CLASSNAMES.header}>
           <div className={CODE_BLOCK_CLASSNAMES.languageTitle}>
             <span className="inline-grid overflow-y-hidden">
@@ -74,16 +50,10 @@ const TsJsSwitcher: React.FC<PropsWithChildren> = props => {
             </span>
           </div>
           <div className="flex-1" />
-          {hydrated && (
-            <>
-              <TsJsToggle />
-              <CodeBlockCopyButton getText={() => getCodeLinesFromPre(pre.current)} />
-            </>
-          )}
+          <TsJsToggle />
+          <CodeBlockCopyButton parentSelector=".code-block" />
         </div>
-        <CodeBlockPre ref={pre} className={className} {...rest}>
-          {children}
-        </CodeBlockPre>
+        {children}
       </div>
     </>
   )

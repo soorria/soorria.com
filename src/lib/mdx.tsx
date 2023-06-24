@@ -1,24 +1,5 @@
+'use client'
 import { baseComponents } from '~/components/mdx/base'
-import { getMDXComponent, MDXContentProps } from 'mdx-bundler/client'
-import React, { Fragment, useMemo } from 'react'
+import { createMdxUtils } from '~/components/mdx/factory'
 
-// eslint-disable-next-line react/display-name
-const withCommonComponents = (Component: React.FC<MDXContentProps>) => () =>
-  <Component components={baseComponents} />
-
-export const useMdxComponent = (code?: string | null | undefined): React.FC => {
-  return useMemo(() => {
-    if (!code) return Fragment
-    return withCommonComponents(getMDXComponent(code))
-  }, [code])
-}
-
-export const useMdxComponents = (code?: string[] | null | undefined): React.FC[] => {
-  return useMemo(
-    () =>
-      code?.map(singleComponentCode =>
-        withCommonComponents(getMDXComponent(singleComponentCode))
-      ) ?? [],
-    [code]
-  )
-}
+export const { Mdx, useMdxComponent, useMdxComponents } = createMdxUtils(baseComponents)

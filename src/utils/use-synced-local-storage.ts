@@ -1,4 +1,6 @@
-import type { Dispatch, SetStateAction } from 'react'
+'use client'
+
+import { Dispatch, SetStateAction } from 'react'
 import { useEffect, useRef, useState } from 'react'
 import mitt from 'mitt'
 
@@ -40,6 +42,14 @@ type JsonValue = NonNullJsonValue | null
 
 type NonNullJsonValue = string | number | boolean | { [key: string]: JsonValue } | JsonValue[]
 
+const useStableValueRef = <T>(value: T) => {
+  const ref = useRef(value)
+  useEffect(() => {
+    ref.current = value
+  }, [value])
+  return ref
+}
+
 export const useSyncedLocalStorage = <T extends NonNullJsonValue = NonNullJsonValue>(
   key: string,
   initialValue: T
@@ -48,11 +58,7 @@ export const useSyncedLocalStorage = <T extends NonNullJsonValue = NonNullJsonVa
   const initialised = useRef(false)
   const shouldSync = useRef(false)
   const emitting = useRef(false)
-  const initialValueRef = useRef(initialValue)
-
-  useEffect(() => {
-    initialValueRef.current = initialValue
-  }, [initialValue])
+  const initialValueRef = useStableValueRef(initialValue)
 
   useEffect(() => {
     trackedKeys[key] = (trackedKeys[key] ?? 0) + 1
@@ -77,7 +83,7 @@ export const useSyncedLocalStorage = <T extends NonNullJsonValue = NonNullJsonVa
     } catch (err) {
       setState(initialValueRef.current)
     }
-  }, [key])
+  }, [key, initialValueRef])
 
   useEffect(() => {
     const handler = (data: T | null) => {
@@ -93,7 +99,7 @@ export const useSyncedLocalStorage = <T extends NonNullJsonValue = NonNullJsonVa
     return () => {
       em.off(key, handler)
     }
-  }, [key])
+  }, [key, initialValueRef])
 
   useEffect(() => {
     // Prevents this hook from re-sending an update

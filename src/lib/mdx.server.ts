@@ -3,13 +3,14 @@ import { bundleMDX } from 'mdx-bundler'
 import rehypeSlug from 'rehype-slug'
 import rehypeAutolinkHeadings from 'rehype-autolink-headings'
 import { rehypeAccessibleEmojis } from 'rehype-accessible-emojis'
-import remarkTwoslash from 'remark-shiki-twoslash'
 import remarkGfm from 'remark-gfm'
 import rehypeRaw from 'rehype-raw'
 import { nodeTypes } from '@mdx-js/mdx'
 import { remarkTypeScriptTransform } from './remark.server'
-import { rehypeRearrangeShikiOutput } from './rehype.server'
+import rehypePrettyCode, { Options } from 'rehype-pretty-code'
 import type { PluggableList } from 'unified'
+import { Element } from 'hast'
+import { rehypeRearrangePrettyCodeOutput } from './rehype.server'
 
 const STYLE_UTILS = `
 import { createElement } from 'react'
@@ -17,49 +18,56 @@ import { css } from 'goober'
 export { css }
 `
 
-const codeBlockRemarkPlugins: PluggableList = [
-  remarkTypeScriptTransform,
-  [
-    remarkTwoslash,
-    {
-      theme: 'dracula',
-      langs: [
-        'html',
-        'css',
-        'javascript',
-        'typescript',
-        'jsx',
-        'tsx',
-        'bash',
-        'yaml',
-        'toml',
-        'latex',
-        'r',
-        'haskell',
-        'csharp',
-        'astro',
-        'c',
-        'cpp',
-        'go',
-        'java',
-        'kotlin',
-        'markdown',
-        'matlab',
-        'mdx',
-        'perl',
-        'python',
-        'rust',
-        'bash',
-        'sql',
-        'svelte',
-        'vue',
-        'json',
-      ],
-    },
-  ],
-]
+const codeBlockRemarkPlugins: PluggableList = [remarkTypeScriptTransform]
 
-const codeBlockRehypePlugins: PluggableList = [rehypeRearrangeShikiOutput]
+const codeBlockRehypePlugins: PluggableList = [
+  [
+    rehypePrettyCode,
+    {
+      theme: 'dracula', // Keep the background or use a custom background color?
+      keepBackground: false,
+
+      // Callback hooks to add custom logic to elements when visiting
+      // them.
+      onVisitLine(element: Element) {
+        // Prevent lines from collapsing in `display: grid` mode, and
+        // allow empty lines to be copy/pasted
+        if (element.children.length === 0) {
+          element.children = [{ type: 'text', value: ' ' }]
+        }
+      },
+      onVisitHighlightedLine(element: Element) {
+        // Each line element by default has `class="line"`.
+        // @ts-expect-error cbs handling thss
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-call
+        element.properties?.className.push('line--highlighted')
+      },
+      onVisitHighlightedWord(element: Element, id) {
+        // @ts-expect-error - cbs handling this
+        element.properties.className = ['word']
+
+        if (id) {
+          // If the word spans across syntax boundaries (e.g. punctuation), remove
+          // colors from the child elements.
+          // @ts-expect-error - cbs handling this
+          if (element.properties['data-rehype-pretty-code-wrapper']) {
+            element.children.forEach(child => {
+              // @ts-expect-error - cbs handling this
+              // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+              child.properties.style = ''
+            })
+          }
+
+          // @ts-expect-error - cbs handling this
+          element.properties.style = ''
+          // @ts-expect-error - cbs handling this
+          element.properties['data-word-id'] = id
+        }
+      },
+    } satisfies Options,
+  ],
+  rehypeRearrangePrettyCodeOutput,
+]
 
 export type RenderOptions = {
   hasCodeBlocks?: boolean
@@ -88,9 +96,9 @@ export const render = async <T extends BaseFrontMatter = BaseFrontMatter>(
       ]
       options.rehypePlugins = [
         ...(options.rehypePlugins ?? []),
+        ...(hasCodeBlocks ? codeBlockRehypePlugins : []),
         [rehypeRaw, { passThrough: nodeTypes }],
         rehypeSlug,
-        ...(hasCodeBlocks ? codeBlockRehypePlugins : []),
         [
           rehypeAutolinkHeadings,
           {

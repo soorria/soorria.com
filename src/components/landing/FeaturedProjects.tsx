@@ -13,7 +13,14 @@ const titles = ["What I've Built", "Stuff I've Made", 'Projects']
 
 const FeaturedProjects: React.FC<FeaturedProjectsProps> = ({ projects, random = 0 }) => {
   return (
-    <LandingSection id="projects" title={titles[random % titles.length]}>
+    <LandingSection
+      className="slide-in [--a]:text-red-100"
+      style={{
+        '--initial-step': '3',
+      }}
+      id="projects"
+      title={titles[random % titles.length]}
+    >
       <ProjectsGrid>
         {projects.map(project => (
           <ProjectCard key={project.slug} project={project} />

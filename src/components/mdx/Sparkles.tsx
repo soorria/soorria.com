@@ -1,3 +1,5 @@
+'use client'
+
 import { IconComponent, ReactIcon, SolidJsIcon, TypescriptIcon } from '../icons'
 import cx from '~/utils/cx'
 import { random, randomItem } from '~/utils/random'

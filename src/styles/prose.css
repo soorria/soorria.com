@@ -2,7 +2,7 @@
   @apply max-w-none;
 }
 
-.prose *:not(.shiki) code {
+.prose code:not([data-language]) {
   @apply rounded bg-drac-base-light p-1 leading-none text-drac-pink;
 }
 
@@ -11,7 +11,7 @@
 }
 
 .prose a:has(code) {
-  @apply -mt-1 -mb-1.5 pt-1 pb-1.5;
+  @apply -mb-1.5 -mt-1 pb-1.5 pt-1;
 }
 
 .prose img,
@@ -35,21 +35,25 @@
 /*
  * Code Snippets
  */
-.prose pre.shiki {
+.prose pre[data-language] {
   @apply rounded-none bg-transparent;
   @apply px-0 pt-0;
   @apply -mx-2 pb-3 md:-mx-6;
 }
 
-.prose code {
-  @apply rounded bg-drac-base-light py-1 px-1.5 leading-none text-drac-pink;
+.prose pre[data-language] .line {
+  display: block;
 }
 
-.prose .shiki code {
+.prose code {
+  @apply rounded bg-drac-base-light px-1.5 py-1 leading-none text-drac-pink;
+}
+
+pre[data-language] code {
   @apply float-left min-w-full rounded-none bg-transparent p-0;
 }
 
-.prose .shiki .line {
+pre[data-language] .line {
   @apply relative block px-2 md:px-6;
   @apply rounded-none bg-transparent text-base text-drac-content;
   line-height: 1.75;
@@ -62,20 +66,20 @@
   content: none;
 }
 
-.prose .shiki .dim {
+pre[data-language]:has(.line--highlighted) .line {
   opacity: 0.5;
 }
-.prose .shiki:hover .dim {
+pre[data-language]:has(.line--highlighted):hover .line {
   opacity: 1;
 }
-.prose .shiki .highlight {
-  opacity: 1;
+pre[data-language] .line--highlighted {
+  opacity: 1 !important;
 }
-.prose .shiki .highlight {
-  background-color: theme('colors.drac.base-dark');
+pre[data-language] .line--highlighted {
+  background-color: theme('colors.drac.base-dark') !important;
 }
-.prose .shiki:hover .highlight {
-  box-shadow: inset 0.25rem 0 0 0 theme('colors.drac.purple');
+pre[data-language]:hover .line--highlighted {
+  box-shadow: inset 0.25rem 0 0 0 theme('colors.drac.purple') !important;
 }
 
 /* Visually differentiates twoslash code samples  */
@@ -103,6 +107,7 @@ pre code {
   white-space: pre;
   -webkit-overflow-scrolling: touch;
   font-variant-ligatures: discretionary-ligatures;
+  display: grid;
 }
 
 /**
@@ -153,4 +158,16 @@ pre code {
 
 .prose .note > *:last-child {
   margin-bottom: 0;
+}
+
+/**
+ * <TsJsSwitcher> in `src/components/mdx/TsJsSwitcher.tsx`
+ */
+
+.ts-js-switcher:not(.show-js) pre:is([data-language='js'], [data-language='jsx']) {
+  display: none;
+}
+
+.ts-js-switcher.show-js pre:is([data-language='ts'], [data-language='tsx']) {
+  display: none;
 }

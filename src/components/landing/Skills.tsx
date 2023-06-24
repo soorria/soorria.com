@@ -1,11 +1,48 @@
-import { PropsWithChildren } from 'react'
-import { useSkills } from '~/lib/skills'
+'use client'
+
+import { PropsWithChildren, useCallback, useReducer, useState } from 'react'
+import { getRandomSkillIndexes, SKILLS } from '~/lib/skills'
 import cx from '~/utils/cx'
 import CustomLink from '../CustomLink'
 import { RefreshIcon } from '../icons'
 import LandingSection from './LandingSection'
 
 const titles = ["What I've Learned", 'Technical Skills', 'Tools I Use']
+
+export type UseSkillsInput = {
+  defaultIndexes?: number[]
+  defaultShowAll?: boolean
+}
+
+export type UseSkillsResult = {
+  skills: string[]
+  shuffle: (n?: number) => void
+  showAll: boolean
+  toggleShowAll: (next?: boolean) => void
+}
+
+const useSkills = ({ defaultIndexes, defaultShowAll = false }: UseSkillsInput): UseSkillsResult => {
+  const [indexes, setIndexes] = useState(() => {
+    if (defaultIndexes) return defaultIndexes
+    return getRandomSkillIndexes()
+  })
+  const shuffle = useCallback(
+    (n?: number) => {
+      setIndexes(getRandomSkillIndexes(n ?? indexes.length))
+    },
+    [indexes.length]
+  )
+
+  const [showAll, toggleShowAll] = useReducer<(v: boolean, next?: boolean) => boolean, boolean>(
+    (v, next) => (typeof next === 'undefined' ? !v : next),
+    defaultShowAll,
+    () => defaultShowAll
+  )
+
+  const skills = showAll ? SKILLS : indexes.map(i => SKILLS[i]!)
+
+  return { skills, shuffle, toggleShowAll, showAll }
+}
 
 const SkillListItem: React.FC<PropsWithChildren> = ({ children }) => {
   return (

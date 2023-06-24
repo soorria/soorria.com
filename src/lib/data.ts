@@ -10,7 +10,7 @@ import { addRefToUrl } from '../utils/content'
 const DATA_ROOT = path.join(process.cwd(), '_data')
 
 const getTypePath = (type: DataType): string => path.join(DATA_ROOT, type)
-const getFilePath = (type: DataType, slug: string, file?: typeof files[number]): string =>
+const getFilePath = (type: DataType, slug: string, file?: (typeof files)[number]): string =>
   path.join(DATA_ROOT, type, slug, file ? file : 'index.mdx')
 const fileToSlug = (file: string): string => file.replace(/\.mdx$/, '')
 

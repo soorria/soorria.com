@@ -13,7 +13,14 @@ const getJavascriptType = (lang: string) => (lang === 'tsx' ? 'jsx' : 'js')
 export const remarkTypeScriptTransform = (): Transformer => {
   const visitor = (node: Code, index: number, parent: Parent) => {
     const { lang, value, meta, data, type } = node
-    if (!lang || !isTypescriptCodeBlock(lang) || meta?.match(/\bnojs\b/)) return
+    if (!lang) {
+      node.lang = 'text'
+      return
+    }
+    if (!isTypescriptCodeBlock(lang) || meta?.match(/\bnojs\b/)) {
+      node.meta = meta?.replace(/\bnojs\b/, '')
+      return
+    }
 
     const transformedLang = getJavascriptType(lang)
     const transformedCode =
@@ -54,16 +61,24 @@ export const remarkTypeScriptTransform = (): Transformer => {
       type,
       meta: jsMeta,
       // meta,
-      data,
+      data: data,
       lang: transformedLang,
       value: formattedCode,
     }
+    node.lang = node.lang === 'tsx' ? 'tsx' : 'ts'
 
     const wrapper = {
       type: 'mdxJsxFlowElement',
       name: 'TsJsSwitcher',
-      attributes: [],
+      attributes: [
+        {
+          type: 'mdxJsxAttribute',
+          name: 'data-jsx',
+          value: (node.lang === 'jsx').toString(),
+        },
+      ],
       children: [node, jsNode],
+      properties: { a: true },
     }
 
     parent.children.splice(index, 1, wrapper)

@@ -1,3 +1,5 @@
+'use client'
+
 import type { ProjectCardComponent } from '../ProjectCard'
 import NextLink from 'next/link'
 import { ExternalIcon, InfoIcon } from '~/components/icons'
