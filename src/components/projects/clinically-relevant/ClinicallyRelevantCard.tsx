@@ -49,50 +49,52 @@ const ClinicallyRelevantCard: ProjectCardComponent = ({ project }) => {
   )
 
   return (
-    <div className={cx(themeClasses[theme], COMMON_CLASSNAMES.specialCardRoot)}>
-      <div className="flex h-full flex-col space-y-4 p-8">
-        <header className="flex items-center font-display text-3xl font-bold">
-          <ClinicallyRelevantLogo className="mr-2 inline-block h-6 w-6" />
-          Clinically Relevant
-        </header>
-        <div className="flex-1">
-          <ul className="list-disc space-y-2 pl-6">
-            <li>PWA to allow users to install the website &amp; access it offline.</li>
-            <li>Automatically redeploys when MDX content is updated</li>
-            <li>
-              Light &amp; Dark mode{' '}
-              <button
-                type="button"
-                onClick={toggle}
-                className="focus-ring rounded"
-                aria-label="Toggle Clinically Relevant dark mode"
-              >
-                {theme === 'light' ? '🌙' : '☀'}
-              </button>
-            </li>
-          </ul>
-        </div>
-        <div className="-m-2 mb-0">
-          {project.hasContent && (
-            <NextLink href={`/projects/${project.slug}`} passHref>
-              <a className={cardLinkClassName(theme)}>
-                <InfoIcon className="inline-block h-4 w-4" />
-                <span>Details</span>
-                <span className="sr-only"> for {project.title}</span>
-              </a>
-            </NextLink>
-          )}
-          <a
-            className={cardLinkClassName(theme)}
-            target="_blank"
-            rel="noopener noreferrer"
-            href={project.live}
-          >
-            <ExternalIcon className="inline-block h-4 w-4" />
-            <span>
-              See <span className="sr-only">{project.title}</span> Live
-            </span>
-          </a>
+    <div>
+      <div className={cx(COMMON_CLASSNAMES.specialCardRoot, themeClasses[theme])}>
+        <div className="flex h-full flex-col space-y-4 p-8">
+          <header className="flex items-center font-display text-3xl font-bold">
+            <ClinicallyRelevantLogo className="mr-2 inline-block h-6 w-6" />
+            Clinically Relevant
+          </header>
+          <div className="flex-1">
+            <ul className="list-disc space-y-2 pl-6">
+              <li>PWA to allow users to install the website &amp; access it offline.</li>
+              <li>Automatically redeploys when MDX content is updated</li>
+              <li>
+                Light &amp; Dark mode{' '}
+                <button
+                  type="button"
+                  onClick={toggle}
+                  className="focus-ring rounded"
+                  aria-label="Toggle Clinically Relevant dark mode"
+                >
+                  {theme === 'light' ? '🌙' : '☀'}
+                </button>
+              </li>
+            </ul>
+          </div>
+          <div className="-m-2 mb-0">
+            {project.hasContent && (
+              <NextLink href={`/projects/${project.slug}`} passHref>
+                <a className={cardLinkClassName(theme)}>
+                  <InfoIcon className="inline-block h-4 w-4" />
+                  <span>Details</span>
+                  <span className="sr-only"> for {project.title}</span>
+                </a>
+              </NextLink>
+            )}
+            <a
+              className={cardLinkClassName(theme)}
+              target="_blank"
+              rel="noopener noreferrer"
+              href={project.live}
+            >
+              <ExternalIcon className="inline-block h-4 w-4" />
+              <span>
+                See <span className="sr-only">{project.title}</span> Live
+              </span>
+            </a>
+          </div>
         </div>
       </div>
     </div>

@@ -242,9 +242,9 @@ input {
   --step-num: 0;
   --_initial-step: var(--initial-step, 0);
   /* --step-delay: 500ms; */
-  --step-delay: 150ms;
-  animation: slide-in 1s both 1;
-  animation-delay: calc((var(--step-num) + var(--_initial-step)) * var(--step-delay));
+  --_step-delay: var(--step-delay, 150ms);
+  animation: slide-in var(--slide-duration, 1s) both 1;
+  animation-delay: calc((var(--step-num) + var(--_initial-step)) * var(--_step-delay));
 
   @media (prefers-reduced-motion: reduce) {
     animation-name: fade-in;
