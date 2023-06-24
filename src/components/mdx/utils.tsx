@@ -1,6 +1,5 @@
 import type React from 'react'
 import cx from '~/utils/cx'
-import { useCopy } from '~/utils/use-copy'
 
 export const COMMON_CLASSNAMES = {
   codeAndDemoRoot:
@@ -38,17 +37,6 @@ export const getTruncationHeight = (
   return truncate
 }
 
-export const getCodeLinesFromPre = (pre: HTMLPreElement | undefined | null): string => {
-  if (!pre) return ''
-
-  const firstCodeChild = Array.from(pre.children).find((el: Element) => el.tagName === 'CODE')
-  if (!firstCodeChild) return pre.innerText
-
-  return Array.from(firstCodeChild.children)
-    .map(line => (line as HTMLElement).innerText || '')
-    .join('\n')
-}
-
 export const LANGUAGE_NAME_MAP: Record<string, string> = {
   js: 'javascript',
   jsx: 'jsx',
@@ -64,29 +52,3 @@ export const CodeBlockTitle: React.FC<{ children: React.ReactNode }> = props => 
     </span>
   </div>
 )
-
-export const CodeBlockCopyButton: React.FC<{ getText(): string }> = ({ getText }) => {
-  const [copy, copied] = useCopy()
-  return (
-    <button type="button" className={CODE_BLOCK_CLASSNAMES.button} onClick={() => copy(getText())}>
-      <span className="inline-grid overflow-hidden">
-        <span
-          className={cx(
-            'col-start-1 row-start-1 transition-transform',
-            copied && '-translate-y-full'
-          )}
-        >
-          copy
-        </span>
-        <span
-          className={cx(
-            'col-start-1 row-start-1 transition-transform',
-            !copied && 'translate-y-full'
-          )}
-        >
-          copied
-        </span>
-      </span>
-    </button>
-  )
-}

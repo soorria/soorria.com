@@ -1,6 +1,6 @@
 import type { ReactNode } from 'react'
 import Collapse from './Collapse'
-import { CodeBlockCopyButton } from './mdx/utils'
+import { CodeBlockCopyButton } from './mdx/CodeBlockCopyButton'
 
 const LICENSE = `
 MIT License Copyright (c) 2022 Soorria Saruva
@@ -38,7 +38,7 @@ const License: React.FC<{ summary: ReactNode; attribution?: AttributionOptions }
         <div className="not-prose space-y-4">
           <div className="flex items-center justify-between">
             <h3 className="text-2xl">Attribution</h3>
-            <CodeBlockCopyButton getText={() => getAttributionText(attribution)} />
+            <CodeBlockCopyButton parentSelector="not-prose" />
           </div>
           <p>
             You <i>should</i> place the following attribution (and probably the license below it)
@@ -53,7 +53,7 @@ const License: React.FC<{ summary: ReactNode; attribution?: AttributionOptions }
       <div className="not-prose space-y-4">
         <div className="flex items-center justify-between">
           <h3 className="text-2xl">License</h3>
-          <CodeBlockCopyButton getText={() => LICENSE} />
+          <CodeBlockCopyButton parentSelector="not-prose" />
         </div>
         <p>
           If you want, you can (and probably should) include the entire license below. I&apos;m not

@@ -17,7 +17,7 @@ export const SpinningIconDivider: React.FC<{ icon: ReactNode; scrollVar: ScrollV
 
   return (
     <div
-      className="grid gap-4 text-center text-drac-highlight"
+      className="grid gap-4 px-4 text-center text-drac-highlight"
       role="presentation"
       aria-hidden="true"
       style={{ gridTemplateColumns: '1fr auto 1fr' }}
