@@ -207,8 +207,22 @@ input {
   @apply pointer-events-auto translate-y-0 opacity-100;
 }
 
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 100;
+  }
+}
+
+.fade-in-direct {
+  animation: fade-in 1s both 1;
+}
+
 /**
- * Slide-in animation from https://antfu.me/posts/sliding-enter-animation and
+ * Slide-in adapted animation from https://antfu.me/posts/sliding-enter-animation and
  * https://github.com/antfu/antfu.me/blob/b9f54c9421ae94e37d4cd598c20e02c4f3ed8db4/src/styles/main.css#L87
  */
 
@@ -223,76 +237,77 @@ input {
     opacity: 100;
   }
 }
+.slide-in-direct,
+.slide-in > * {
+  --step-num: 0;
+  --_initial-step: var(--initial-step, 0);
+  /* --step-delay: 500ms; */
+  --step-delay: 150ms;
+  animation: slide-in 1s both 1;
+  animation-delay: calc((var(--step-num) + var(--_initial-step)) * var(--step-delay));
 
-@media (prefers-reduced-motion: no-preference) {
-  .slide-in-direct,
-  .slide-in > * {
-    --step-num: 0;
-    --_initial-step: var(--initial-step, 0);
-    /* --step-delay: 500ms; */
-    --step-delay: 150ms;
-    animation: slide-in 1s both 1;
-    animation-delay: calc((var(--step-num) + var(--_initial-step)) * var(--step-delay));
+  @media (prefers-reduced-motion: reduce) {
+    animation-name: fade-in;
   }
+}
 
-  .slide-in > *:nth-child(1) {
-    --step-num: 1;
-  }
-  .slide-in > *:nth-child(2) {
-    --step-num: 2;
-  }
-  .slide-in > *:nth-child(3) {
-    --step-num: 3;
-  }
-  .slide-in > *:nth-child(4) {
-    --step-num: 4;
-  }
-  .slide-in > *:nth-child(5) {
-    --step-num: 5;
-  }
-  .slide-in > *:nth-child(6) {
-    --step-num: 6;
-  }
-  .slide-in > *:nth-child(7) {
-    --step-num: 7;
-  }
-  .slide-in > *:nth-child(8) {
-    --step-num: 8;
-  }
-  .slide-in > *:nth-child(9) {
-    --step-num: 9;
-  }
-  .slide-in > *:nth-child(10) {
-    --step-num: 10;
-  }
-  .slide-in > *:nth-child(11) {
-    --step-num: 11;
-  }
-  .slide-in > *:nth-child(12) {
-    --step-num: 12;
-  }
-  .slide-in > *:nth-child(13) {
-    --step-num: 13;
-  }
-  .slide-in > *:nth-child(14) {
-    --step-num: 14;
-  }
-  .slide-in > *:nth-child(15) {
-    --step-num: 15;
-  }
-  .slide-in > *:nth-child(16) {
-    --step-num: 16;
-  }
-  .slide-in > *:nth-child(17) {
-    --step-num: 17;
-  }
-  .slide-in > *:nth-child(18) {
-    --step-num: 18;
-  }
-  .slide-in > *:nth-child(19) {
-    --step-num: 19;
-  }
-  .slide-in > *:nth-child(20) {
-    --step-num: 20;
-  }
+.slide-in > *:nth-child(1) {
+  --step-num: 1;
+}
+.slide-in > *:nth-child(2) {
+  --step-num: 2;
+}
+.slide-in > *:nth-child(3) {
+  --step-num: 3;
+}
+.slide-in > *:nth-child(4) {
+  --step-num: 4;
+}
+.slide-in > *:nth-child(5) {
+  --step-num: 5;
+}
+.slide-in > *:nth-child(6) {
+  --step-num: 6;
+}
+.slide-in > *:nth-child(7) {
+  --step-num: 7;
+}
+.slide-in > *:nth-child(8) {
+  --step-num: 8;
+}
+.slide-in > *:nth-child(9) {
+  --step-num: 9;
+}
+.slide-in > *:nth-child(10) {
+  --step-num: 10;
+}
+.slide-in > *:nth-child(11) {
+  --step-num: 11;
+}
+.slide-in > *:nth-child(12) {
+  --step-num: 12;
+}
+.slide-in > *:nth-child(13) {
+  --step-num: 13;
+}
+.slide-in > *:nth-child(14) {
+  --step-num: 14;
+}
+.slide-in > *:nth-child(15) {
+  --step-num: 15;
+}
+.slide-in > *:nth-child(16) {
+  --step-num: 16;
+}
+.slide-in > *:nth-child(17) {
+  --step-num: 17;
+}
+.slide-in > *:nth-child(18) {
+  --step-num: 18;
+}
+.slide-in > *:nth-child(19) {
+  --step-num: 19;
+}
+.slide-in > *:nth-child(20) {
+  --step-num: 20;
 }
