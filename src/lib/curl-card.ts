@@ -42,7 +42,7 @@ const LINKS: Array<{ text: string; title: string; color?: (title: string) => str
 
 const longestLength = Math.max(...LINKS.map(link => link.title.length))
 
-const printLinkTitle = (link: typeof LINKS[0]): string => {
+const printLinkTitle = (link: (typeof LINKS)[0]): string => {
   const titleText = ` ${link.title} `
   return kleur.bold(link.color?.(titleText) ?? titleText)
 }
@@ -97,7 +97,8 @@ ${LINKS.map(
       link.text
     )}`
 ).join('\n')}
-`,
+
+${kleur.dim("To get this page's HTML, add '?card=no' to the URL.")}`,
       62,
       `== ${kleur.bold('Soorria Saruva')} ==`
     ) + '\n'
