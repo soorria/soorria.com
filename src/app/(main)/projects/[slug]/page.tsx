@@ -6,6 +6,7 @@ import { getOgImageForData } from '~/utils/og'
 import { Mdx } from '~/lib/mdx'
 import { PUBLIC_URL } from '~/constants'
 import { notFound } from 'next/navigation'
+import ProseWrapper from '~/components/posts/ProseWrapper'
 
 type ProjectPageProps = {
   params: { slug: string }
@@ -54,13 +55,13 @@ const ProjectPage = async (props: ProjectPageProps) => {
 
   return (
     <PostLayout title={project.title}>
-      <div className="prose mx-auto mt-6 md:prose-lg md:mt-16">
+      <ProseWrapper>
         {code ? (
           <Mdx code={code} />
         ) : (
           <h2>Unfortunately, I&apos;m not done with this page yet ☹</h2>
         )}
-      </div>
+      </ProseWrapper>
     </PostLayout>
   )
 }

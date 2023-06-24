@@ -43,11 +43,15 @@ const ProjectsPage = async () => {
   return (
     <PostLayout title="Projects">
       <p className="mb-12 mt-6 text-center text-lg">{description}</p>
-      <ProjectsGrid>
-        {projects.slice(0, numMainProjects).map(project => (
-          <ProjectCard key={project.slug} project={project} />
-        ))}
-      </ProjectsGrid>
+
+      <div>
+        <ProjectsGrid initialStep="2">
+          {projects.slice(0, numMainProjects).map(project => (
+            <ProjectCard key={project.slug} project={project} />
+          ))}
+        </ProjectsGrid>
+      </div>
+
       <h2 className="mb-8 mt-16 text-4xl">Other Projects</h2>
       <ProjectsGrid>
         {projects.slice(numMainProjects).map(project => (

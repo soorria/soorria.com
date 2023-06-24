@@ -42,18 +42,23 @@ const SnippetsPage = async () => {
   return (
     <PostLayout title="All Posts">
       <p className="mb-12 mt-6 text-center text-lg">{description}</p>
-      <div className="grid auto-cols-min grid-flow-dense grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-2 sm:gap-x-8 lg:gap-12">
-        {posts.map(p => {
-          const key = `${p.type}/${p.slug}`
+      <div>
+        <div
+          style={{ '--initial-step': '2' }}
+          className="slide-in grid auto-cols-min grid-flow-dense grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-2 sm:gap-x-8 lg:gap-12"
+        >
+          {posts.map(p => {
+            const key = `${p.type}/${p.slug}`
 
-          return p.type === DataType.snippets ? (
-            <SnippetCard key={key} snippet={p} />
-          ) : (
-            <div className="grid sm:col-span-2" key={key}>
-              <BlogPostCard post={p} />
-            </div>
-          )
-        })}
+            return p.type === DataType.snippets ? (
+              <SnippetCard key={key} snippet={p} />
+            ) : (
+              <div className="grid sm:col-span-2" key={key}>
+                <BlogPostCard post={p} />
+              </div>
+            )
+          })}
+        </div>
       </div>
       <div className="my-12 text-center">{posts.length} posts total</div>
     </PostLayout>

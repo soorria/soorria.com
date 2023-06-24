@@ -9,7 +9,7 @@ import { Track } from '~/components/ClientTrack'
 
 const classes = {
   anchor: cx(
-    'group flex items-center justify-between rounded-lg bg-drac-base/70 py-6 px-8 text-drac-pink transition',
+    'group flex items-center justify-between rounded-lg bg-drac-base/75 py-6 px-8 text-drac-pink transition',
     'hocus:bg-drac-base hocus:text-drac-purple hocus:shadow-xl',
     'focus:outline-none focus:ring focus:ring-drac-purple'
   ),
@@ -38,9 +38,12 @@ const LinksPage = async (_props: LinksPageProps) => {
       <Container>
         <Track event="Links Page" params={{}} />
         <div className="h-8 sm:h-20" />
-        <div className="relative">
-          <Hero title={linksHeroText || heroText || "Hey, I'm Soorria"}>
-            <main className="relative mx-auto mt-8 max-w-md space-y-8 text-lg sm:mt-24 sm:text-xl">
+        <Hero title={linksHeroText || heroText || "Hey, I'm Soorria"}>
+          <div>
+            <main
+              className="slide-in relative mx-auto mt-8 max-w-md space-y-8 text-lg sm:mt-24 sm:text-xl"
+              style={{ '--initial-step': '1' }}
+            >
               {orderedLinks.map(({ title, href, icon: Icon, iconAlt }) => (
                 <a
                   key={href}
@@ -72,8 +75,9 @@ const LinksPage = async (_props: LinksPageProps) => {
               </div>
               <div className="h-16" />
             </main>
-          </Hero>
-        </div>
+          </div>
+        </Hero>
+
         <footer className="pb-10 pt-8 text-lg">
           <MadeBy />
         </footer>

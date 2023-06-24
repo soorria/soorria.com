@@ -1,5 +1,5 @@
 import type { BlogPostFrontMatter } from '~/types/blog-post'
-import { PostHeading } from '~/components/posts/PostLayout'
+import PostLayout, { PostHeading } from '~/components/posts/PostLayout'
 import { getAllFilesFrontMatter } from '~/lib/data'
 import { DataType } from '~/types/data'
 import PostCard from '~/components/posts/BlogPostCard'
@@ -34,16 +34,17 @@ const PostsPage = async () => {
     sortByCreatedAtField(await getAllFilesFrontMatter<BlogPostFrontMatter>(DataType.blog))
   )
   return (
-    <MainLayout>
-      <PostHeading>Blog</PostHeading>
+    <PostLayout title="Blog">
       <p className="mb-12 mt-6 text-center text-lg">{description}</p>
-      <div className="grid grid-cols-1 gap-8">
-        {posts.map(post => (
-          <PostCard key={post.slug} post={post} />
-        ))}
+      <div>
+        <div className="slide-in grid grid-cols-1 gap-8" style={{ '--initial-step': '2' }}>
+          {posts.map(post => (
+            <PostCard key={post.slug} post={post} />
+          ))}
+        </div>
       </div>
       <div className="my-12 text-center">{posts.length} ramblings total</div>
-    </MainLayout>
+    </PostLayout>
   )
 }
 

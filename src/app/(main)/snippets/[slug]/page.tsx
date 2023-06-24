@@ -10,6 +10,7 @@ import { SpinningIconDivider, renderIcon } from '~/components/posts/SpinningIcon
 import PostGithubLinks from '~/components/posts/PostGithubLinks'
 import { Metadata } from 'next'
 import { getOgImageForData } from '~/utils/og'
+import ProseWrapper from '~/components/posts/ProseWrapper'
 
 const SCROLL_VAR = '--scroll'
 type SnippetPageProps = {
@@ -68,7 +69,7 @@ const SnippetPage = async ({ params }: SnippetPageProps) => {
           SCROLL_VAR
         )}
       />
-      <div className="prose mx-auto mb-12 mt-6 md:prose-lg">
+      <ProseWrapper>
         <Mdx code={code} />
         <PostBottomSection>
           <div suppressHydrationWarning>
@@ -81,7 +82,7 @@ const SnippetPage = async ({ params }: SnippetPageProps) => {
           </div>
           <PostGithubLinks dataType={DataType.snippets} slug={snippet.slug} />
         </PostBottomSection>
-      </div>
+      </ProseWrapper>
     </PostLayout>
   )
 }

@@ -1,7 +1,8 @@
 import { PropsWithChildren } from 'react'
+import cx from '~/utils/cx'
 
-const Container: React.FC<PropsWithChildren> = ({ children }) => {
-  return <div className="container mx-auto max-w-4xl px-4 md:px-8">{children}</div>
+const Container = ({ children, className }: PropsWithChildren<{ className?: string }>) => {
+  return <div className={cx('container mx-auto max-w-4xl px-4 md:px-8', className)}>{children}</div>
 }
 
 export default Container

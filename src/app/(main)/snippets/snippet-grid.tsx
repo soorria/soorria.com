@@ -107,16 +107,21 @@ const SnippetGrid = ({ snippets: _snippets }: SnippetGridProps) => {
         </div>
       </Collapse>
 
-      <div
-        ref={grid}
-        style={{ gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))' }}
-        className="grid auto-cols-min grid-cols-1 content-start gap-x-6 gap-y-8 sm:!grid-cols-2 sm:gap-x-8 lg:gap-12"
-      >
-        {snippets.map(snippet => (
-          <div key={snippet.slug} className="grid">
-            <SnippetCard key={snippet.slug} snippet={snippet} />
-          </div>
-        ))}
+      <div>
+        <div
+          ref={grid}
+          style={{
+            gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))',
+            '--initial-step': '3',
+          }}
+          className="slide-in grid auto-cols-min grid-cols-1 content-start gap-x-6 gap-y-8 sm:!grid-cols-2 sm:gap-x-8 lg:gap-12"
+        >
+          {snippets.map(snippet => (
+            <div key={snippet.slug} className="grid">
+              <SnippetCard key={snippet.slug} snippet={snippet} />
+            </div>
+          ))}
+        </div>
       </div>
 
       <div className="text-center">

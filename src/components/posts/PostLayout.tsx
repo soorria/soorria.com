@@ -27,7 +27,7 @@ export const PostBottomSection: React.FC<PropsWithChildren> = ({ children }) => 
 const PostLayout: React.FC<PostLayoutProps> = ({ title, children }) => {
   return (
     <Container>
-      <article className="space-y-12 pb-16 pt-8">
+      <article className="slide-in space-y-12 pb-16 pt-8">
         <PostHeading>{title}</PostHeading>
         {children}
       </article>

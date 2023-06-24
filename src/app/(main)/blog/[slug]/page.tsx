@@ -13,6 +13,7 @@ import PostGithubLinks from '~/components/posts/PostGithubLinks'
 import { categoryLowerCaseToIcon } from '~/components/categories'
 import Image from 'next/image'
 import { Metadata } from 'next'
+import ProseWrapper from '~/components/posts/ProseWrapper'
 
 type PostPageProps = {
   params: { slug: string }
@@ -99,7 +100,7 @@ const PostPage = async (props: PostPageProps) => {
         </div>
       </div>
 
-      <div className="prose mx-auto mt-6 md:prose-lg md:mt-16">
+      <ProseWrapper>
         {process.env.NODE_ENV !== 'production' && (
           <details>
             <summary>OG Image</summary>
@@ -118,7 +119,7 @@ const PostPage = async (props: PostPageProps) => {
         <PostBottomSection>
           <PostGithubLinks dataType={DataType.blog} slug={post.slug} />
         </PostBottomSection>
-      </div>
+      </ProseWrapper>
     </PostLayout>
   )
 }

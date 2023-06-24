@@ -5,6 +5,7 @@ import { Mdx } from '~/lib/mdx'
 import { BaseData, DataType } from '~/types/data'
 import { getOgImage } from '~/utils/og'
 import { PUBLIC_URL } from '~/constants'
+import ProseWrapper from '~/components/posts/ProseWrapper'
 
 const title = 'What I Use'
 const url = `${PUBLIC_URL}/uses`
@@ -35,13 +36,13 @@ const UsesPage = async () => {
 
   return (
     <PostLayout title={title}>
-      <div className="prose mx-auto mt-6 md:prose-lg md:mt-16">
+      <ProseWrapper>
         <Mdx code={code} />
         <PostBottomSection>
           Check out other <code>uses</code> pages{' '}
           <CustomLink href="https://uses.tech">here</CustomLink>
         </PostBottomSection>
-      </div>
+      </ProseWrapper>
     </PostLayout>
   )
 }
