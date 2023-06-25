@@ -6,13 +6,13 @@ category: TypeScript
 tags:
   - typescript
 createdAt: '2023-06-20'
-# updatedAt: '2022-10-13'
+updatedAt: '2023-06-25'
 ---
 
 Create a promise that you can resolve outside the Promise's executor function
-(i.e. the callback argument passed to `new Promise`). This is mostly just useful
-for making your code 1 level less nested, or if you're allergic to `async` and
-`await` syntax.
+(i.e. the callback argument passed to `new Promise(){:js}`). This is mostly just
+useful for making your code 1 level less nested, or if you're allergic to
+`async` and `await` syntax.
 
 ```typescript
 export type ManualPromise<T> = {
@@ -105,7 +105,7 @@ export const waitUntilClicked = (selector: string): Promise<void> => {
 }
 ```
 
-### Simple `fetch` wrapper, but bad
+### Simple `fetch{:js}` wrapper, but bad
 
 ```ts
 // Post from https://jsonplaceholder.typicode.com/

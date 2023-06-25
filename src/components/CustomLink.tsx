@@ -1,4 +1,4 @@
-import type { AnchorHTMLAttributes } from 'react'
+import { AnchorHTMLAttributes } from 'react'
 import cx from '~/utils/cx'
 import Link from 'next/link'
 
@@ -11,10 +11,21 @@ const CustomLink: React.FC<{ href: string } & AnchorHTMLAttributes<HTMLAnchorEle
   className: _className,
   ...rest
 }) => {
+  const usePlainLink = href.startsWith('#') || !href.startsWith('/')
   const isExternal = href.startsWith('http')
   const className = cx(defaultClassName, _className)
-  return isExternal ? (
-    <a href={href} rel="noopenner noreferrer" target="_blank" className={className} {...rest}>
+  return usePlainLink ? (
+    <a
+      href={href}
+      className={className}
+      {...rest}
+      {...(isExternal
+        ? {
+            rel: 'noopener noreferrer',
+            target: '_blank',
+          }
+        : {})}
+    >
       {children}
     </a>
   ) : (
