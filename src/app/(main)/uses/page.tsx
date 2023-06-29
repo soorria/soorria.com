@@ -1,11 +1,11 @@
 import CustomLink from '~/components/CustomLink'
 import PostLayout, { PostBottomSection } from '~/components/posts/PostLayout'
-import { getFileWithMdx } from '~/lib/data'
-import { Mdx } from '~/lib/mdx'
-import { BaseData, DataType } from '~/types/data'
+import { getFileForMdx } from '~/lib/data'
+import { BaseData } from '~/types/data'
 import { getOgImage } from '~/utils/og'
 import { PUBLIC_URL } from '~/constants'
 import ProseWrapper from '~/components/posts/ProseWrapper'
+import MdxRenderer from '~/components/mdx/MdxRenderer'
 
 const title = 'What I Use'
 const url = `${PUBLIC_URL}/uses`
@@ -29,15 +29,14 @@ export const metadata = {
 }
 
 const UsesPage = async () => {
-  const { code, updatedAt: _updatedAt } = await getFileWithMdx<BaseData & { updatedAt: string }>(
-    DataType.misc,
-    'uses'
-  )
+  const { code: code, updatedAt: _updatedAt } = await getFileForMdx<
+    BaseData & { updatedAt: string }
+  >('misc', 'uses')
 
   return (
     <PostLayout title={title}>
       <ProseWrapper>
-        <Mdx code={code} />
+        <MdxRenderer code={code} />
         <PostBottomSection>
           Check out other <code>uses</code> pages{' '}
           <CustomLink href="https://uses.tech">here</CustomLink>

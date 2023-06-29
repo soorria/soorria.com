@@ -24,6 +24,12 @@
     "paths": {
       "~/*": [
         "src/*"
+      ],
+      "~data/*": [
+        "_data/*"
+      ],
+      "$styles": [
+        "src/mdx/styles.ts"
       ]
     },
     "incremental": true,
@@ -41,6 +47,7 @@
   ],
   "include": [
     "src/**/*.ts",
+    "src/**/*.js",
     "src/**/*.tsx",
     ".next/types/**/*.ts"
   ]

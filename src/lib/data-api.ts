@@ -54,10 +54,12 @@ export const createGetAllHandler =
       }
 
       if (req.query.content) {
-        frontMatters = await Promise.all(frontMatters.map(f => getFileWithContent(type, f.slug) as any))
+        frontMatters = await Promise.all(
+          frontMatters.map(f => getFileWithContent(type, f.slug) as unknown as T)
+        )
       }
 
-      frontMatters = frontMatters.map(f => ({...f, url: `https://soorria.com/${type}/${f.slug}`}))
+      frontMatters = frontMatters.map(f => ({ ...f, url: `https://soorria.com/${type}/${f.slug}` }))
 
       res.setHeader('Cache-Control', 'public, s-max-age=31536000')
 

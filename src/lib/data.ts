@@ -4,7 +4,6 @@ import { promises as fs } from 'fs'
 import readingTime from 'reading-time'
 import matter from 'gray-matter'
 import path from 'path'
-import { render } from './mdx.server'
 import { addRefToUrl } from '../utils/content'
 
 const DATA_ROOT = path.join(process.cwd(), '_data')
@@ -97,7 +96,7 @@ export const getFileWithContent = async <TApiData extends BaseApiData>(
   return {
     ...(data as any),
     slug,
-    content,
+    code: content,
     components,
     hasContent: content.trim().length !== 0,
     ...getContentMetrics(content),
@@ -107,17 +106,13 @@ export const getFileWithContent = async <TApiData extends BaseApiData>(
 const hasLiveUrlProperty = (obj: unknown): obj is { live: string } =>
   Boolean(obj) && typeof (obj as { live: unknown }).live === 'string'
 
-export const getFileWithMdx = async <TData extends BaseData>(
+export const getFileForMdx = async <TData extends BaseData>(
   type: DataType,
   slug: string
 ): Promise<TData> => {
-  const { mdx, components } = await readFilesForSlug(type, slug)
+  const { mdx } = await readFilesForSlug(type, slug)
 
-  const {
-    code,
-    frontmatter: data,
-    matter: { content },
-  } = await render<FrontMatter<TData>>(mdx, components)
+  const { data, content } = matter(mdx)
 
   if (hasLiveUrlProperty(data)) {
     data.live = addRefToUrl(data.live)
@@ -126,7 +121,10 @@ export const getFileWithMdx = async <TData extends BaseData>(
   return {
     ...(data as FrontMatter<TData>),
     slug,
-    code,
+    /**
+     * Unrendered MDX
+     */
+    code: content,
     hasContent: content.trim().length !== 0,
     ...getContentMetrics(content),
   } as TData

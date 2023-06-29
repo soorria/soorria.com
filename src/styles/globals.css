@@ -242,8 +242,8 @@ input {
   --step-num: 0;
   --_initial-step: var(--initial-step, 0);
   /* --step-delay: 500ms; */
-  --_step-delay: var(--step-delay, 150ms);
-  animation: slide-in var(--slide-duration, 1s) both 1;
+  --_step-delay: var(--step-delay, 100ms);
+  animation: slide-in var(--slide-duration, 0.5s) both 1;
   animation-delay: calc((var(--step-num) + var(--_initial-step)) * var(--_step-delay));
 
   @media (prefers-reduced-motion: reduce) {
@@ -310,4 +310,34 @@ input {
 }
 .slide-in > *:nth-child(20) {
   --step-num: 20;
+}
+.slide-in > *:nth-child(21) {
+  --step-num: 21;
+}
+.slide-in > *:nth-child(22) {
+  --step-num: 22;
+}
+.slide-in > *:nth-child(23) {
+  --step-num: 23;
+}
+.slide-in > *:nth-child(24) {
+  --step-num: 24;
+}
+.slide-in > *:nth-child(25) {
+  --step-num: 25;
+}
+.slide-in > *:nth-child(26) {
+  --step-num: 26;
+}
+.slide-in > *:nth-child(27) {
+  --step-num: 27;
+}
+.slide-in > *:nth-child(28) {
+  --step-num: 28;
+}
+.slide-in > *:nth-child(29) {
+  --step-num: 29;
+}
+.slide-in > *:nth-child(30) {
+  --step-num: 30;
 }

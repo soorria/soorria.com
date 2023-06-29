@@ -1,3 +1,4 @@
+'use client'
 import { useState, useCallback, useRef, useEffect } from 'react'
 
 export const useTemporaryState = (initial, timeout = 2000) => {

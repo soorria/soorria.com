@@ -1,5 +1,8 @@
+'use client'
+
 const download = (content, fileName, type) => {
-  const blob = typeof content === 'string' ? new Blob([content], { type }) : content
+  const blob =
+    typeof content === 'string' ? new Blob([content], { type }) : content
   const a = document.createElement('a')
   a.href = URL.createObjectURL(blob)
   a.download = fileName
@@ -30,7 +33,11 @@ export const Example = () => {
       <button
         style={styles.button}
         onClick={() =>
-          download(document.documentElement.outerHTML, 'file-download-js.html', 'text/html')
+          download(
+            document.documentElement.outerHTML,
+            'file-download-js.html',
+            'text/html'
+          )
         }
       >
         Download Page HTML (JS)

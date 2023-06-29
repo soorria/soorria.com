@@ -1,5 +1,3 @@
-import type { BaseFrontMatter } from '~/types/data'
-import { bundleMDX } from 'mdx-bundler'
 import rehypeSlug from 'rehype-slug'
 import rehypeAutolinkHeadings from 'rehype-autolink-headings'
 import { rehypeAccessibleEmojis } from 'rehype-accessible-emojis'
@@ -11,12 +9,7 @@ import rehypePrettyCode, { Options } from 'rehype-pretty-code'
 import type { PluggableList } from 'unified'
 import { Element } from 'hast'
 import { rehypeRearrangePrettyCodeOutput } from './rehype.server'
-
-const STYLE_UTILS = `
-import { createElement } from 'react'
-import { css } from 'goober'
-export { css }
-`
+import { SerializeOptions } from 'next-mdx-remote/dist/types'
 
 const codeBlockRemarkPlugins: PluggableList = [remarkTypeScriptTransform]
 
@@ -76,43 +69,24 @@ export type RenderOptions = {
   hasCodeBlocks?: boolean
 }
 
-export type RenderResult<T> = Awaited<ReturnType<typeof bundleMDX>> & {
-  frontmatter: T
-}
-
-export const render = async <T extends BaseFrontMatter = BaseFrontMatter>(
-  source: string,
-  components = '',
-  { hasCodeBlocks = true }: RenderOptions = {}
-): Promise<RenderResult<T>> => {
-  return bundleMDX<T>({
-    source,
-    files: {
-      './components': components,
-      $styles: STYLE_UTILS,
-    },
-    mdxOptions(options) {
-      options.remarkPlugins = [
-        ...(options.remarkPlugins ?? []),
-        remarkGfm,
-        ...(hasCodeBlocks ? codeBlockRemarkPlugins : []),
-      ]
-      options.rehypePlugins = [
-        ...(options.rehypePlugins ?? []),
-        ...(hasCodeBlocks ? codeBlockRehypePlugins : []),
-        [rehypeRaw, { passThrough: nodeTypes }],
-        rehypeSlug,
-        [
-          rehypeAutolinkHeadings,
-          {
-            behaviour: 'append',
-            properties: { className: 'heading-anchor', ariaHidden: true, tabIndex: -1 },
-            content: [],
-          },
-        ],
-        rehypeAccessibleEmojis,
-      ]
-      return options
-    },
-  })
+export const getMdxOptions = ({ hasCodeBlocks = true }: RenderOptions = {}) => {
+  const remarkPlugins = [remarkGfm, ...(hasCodeBlocks ? codeBlockRemarkPlugins : [])]
+  const rehypePlugins = [
+    ...(hasCodeBlocks ? codeBlockRehypePlugins : []),
+    [rehypeRaw, { passThrough: nodeTypes }],
+    rehypeSlug,
+    [
+      rehypeAutolinkHeadings,
+      {
+        behaviour: 'append',
+        properties: { className: 'heading-anchor', ariaHidden: true, tabIndex: -1 },
+        content: [],
+      },
+    ],
+    rehypeAccessibleEmojis,
+  ]
+  return {
+    remarkPlugins,
+    rehypePlugins,
+  } as SerializeOptions['mdxOptions']
 }

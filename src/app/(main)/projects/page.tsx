@@ -4,7 +4,6 @@ import ProjectCard from '~/components/projects/ProjectCard'
 import ProjectsGrid from '~/components/projects/ProjectsGrid'
 import { featuredProjects, PUBLIC_URL } from '~/constants'
 import { getAllFilesFrontMatter } from '~/lib/data'
-import { DataType } from '~/types/data'
 import { getOgImageForData } from '~/utils/og'
 
 const description = "Things I've made. Some are more useful and cooler than others."
@@ -23,7 +22,7 @@ export const metadata = {
     description,
     type: 'website',
     url,
-    images: [getOgImageForData(DataType.projects)],
+    images: [getOgImageForData('projects')],
   },
 }
 
@@ -35,7 +34,7 @@ const ProjectsPage = async () => {
     return idx >= 0 ? idx : projectOrder.length + 10
   }
 
-  const projects = (await getAllFilesFrontMatter<ProjectFrontMatter>(DataType.projects)).sort(
+  const projects = (await getAllFilesFrontMatter<ProjectFrontMatter>('projects')).sort(
     (a, b) => getProjectIndex(a.slug) - getProjectIndex(b.slug)
   )
   const numMainProjects = aboveFold.length

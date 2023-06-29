@@ -1,12 +1,11 @@
 import type { Project } from '~/types/project'
 import PostLayout from '~/components/posts/PostLayout'
-import { getFileWithMdx } from '~/lib/data'
-import { DataType } from '~/types/data'
+import { getFileForMdx } from '~/lib/data'
 import { getOgImageForData } from '~/utils/og'
-import { Mdx } from '~/lib/mdx'
 import { PUBLIC_URL } from '~/constants'
 import { notFound } from 'next/navigation'
 import ProseWrapper from '~/components/posts/ProseWrapper'
+import MdxRenderer from '~/components/mdx/MdxRenderer'
 
 type ProjectPageProps = {
   params: { slug: string }
@@ -15,7 +14,7 @@ type ProjectPageProps = {
 export const generateStaticParams = async () => []
 
 export const generateMetadata = async (props: ProjectPageProps) => {
-  const project = await getFileWithMdx<Project>(DataType.projects, props.params.slug)
+  const project = await getFileForMdx<Project>('projects', props.params.slug)
 
   const url = `${PUBLIC_URL}/projects/${project.slug}`
   const title = `${project.title} | Projects`
@@ -33,7 +32,7 @@ export const generateMetadata = async (props: ProjectPageProps) => {
       type: 'article',
       section: 'projects',
       authors: ['Soorria Saruva'],
-      images: [getOgImageForData(DataType.projects, project.title)],
+      images: [getOgImageForData('projects', project.title)],
     },
     twitter: {
       card: 'summary_large_image',
@@ -41,13 +40,13 @@ export const generateMetadata = async (props: ProjectPageProps) => {
       description: project.shortDescription,
       title,
       site: '@soorria',
-      images: [getOgImageForData(DataType.projects, project.title)],
+      images: [getOgImageForData('projects', project.title)],
     },
   }
 }
 
 const ProjectPage = async (props: ProjectPageProps) => {
-  const { code, ...project } = await getFileWithMdx<Project>(DataType.projects, props.params.slug)
+  const { code: code, ...project } = await getFileForMdx<Project>('projects', props.params.slug)
 
   if (!code) {
     return notFound()
@@ -57,7 +56,7 @@ const ProjectPage = async (props: ProjectPageProps) => {
     <PostLayout title={project.title}>
       <ProseWrapper>
         {code ? (
-          <Mdx code={code} />
+          <MdxRenderer code={code} />
         ) : (
           <h2>Unfortunately, I&apos;m not done with this page yet ☹</h2>
         )}

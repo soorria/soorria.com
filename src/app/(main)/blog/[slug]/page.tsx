@@ -1,11 +1,9 @@
 import type { BlogPost, BlogPostFrontMatter } from '~/types/blog-post'
 import PostLayout, { PostBottomSection } from '~/components/posts/PostLayout'
-import { getAllFilesFrontMatter, getFileWithMdx } from '~/lib/data'
-import { DataType } from '~/types/data'
+import { getAllFilesFrontMatter, getFileForMdx } from '~/lib/data'
 import { getOgImageForData } from '~/utils/og'
-import { Mdx } from '~/lib/mdx'
 import { PUBLIC_URL } from '~/constants'
-import { renderIcon, SpinningIconDivider } from '~/components/posts/SpinningIconDivider'
+import { SpinningIconDivider } from '~/components/posts/SpinningIconDivider'
 import { BookIcon, ClockIconSolid, EditIcon, GlobeAuIcon, TextIcon } from '~/components/icons'
 import { formatDate } from '~/utils/date'
 import cx from '~/utils/cx'
@@ -14,19 +12,20 @@ import { categoryLowerCaseToIcon } from '~/components/categories'
 import Image from 'next/image'
 import { Metadata } from 'next'
 import ProseWrapper from '~/components/posts/ProseWrapper'
+import MdxRenderer from '~/components/mdx/MdxRenderer'
 
 type PostPageProps = {
   params: { slug: string }
 }
 
 export const generateStaticParams = async () => {
-  const posts = await getAllFilesFrontMatter<BlogPostFrontMatter>(DataType.blog)
+  const posts = await getAllFilesFrontMatter<BlogPostFrontMatter>('blog')
 
   return posts.map(({ slug }) => ({ slug }))
 }
 
 export const generateMetadata = async ({ params }: PostPageProps): Promise<Metadata> => {
-  const post = await getFileWithMdx<BlogPost>(DataType.blog, params.slug)
+  const post = await getFileForMdx<BlogPost>('blog', params.slug)
 
   const url = `${PUBLIC_URL}/posts/${post.slug}`
   const title = `${post.title} | Blog`
@@ -46,7 +45,7 @@ export const generateMetadata = async ({ params }: PostPageProps): Promise<Metad
       authors: ['Soorria Saruva'],
       publishedTime: new Date(post.createdAt).toISOString(),
       modifiedTime: new Date(post.updatedAt || post.createdAt).toISOString(),
-      images: [getOgImageForData(DataType.blog, post.title)],
+      images: [getOgImageForData('blog', post.title)],
     },
     twitter: {
       card: 'summary_large_image',
@@ -54,23 +53,23 @@ export const generateMetadata = async ({ params }: PostPageProps): Promise<Metad
       description: post.shortDescription,
       title,
       site: '@soorria',
-      images: [getOgImageForData(DataType.blog, post.title)],
+      images: [getOgImageForData('blog', post.title)],
     },
   }
 }
 
 const SCROLL_VAR = '--scroll'
 const PostPage = async (props: PostPageProps) => {
-  const { code, ...post } = await getFileWithMdx<BlogPost>(DataType.blog, props.params.slug)
+  const { code: code, ...post } = await getFileForMdx<BlogPost>('blog', props.params.slug)
 
   const icon =
     (post.category && categoryLowerCaseToIcon[post.category.toLowerCase()]) || GlobeAuIcon
 
-  const ogImageData = getOgImageForData(DataType.blog, post.title, post.ogImageTitleParts)
+  const ogImageData = getOgImageForData('blog', post.title, post.ogImageTitleParts)
 
   return (
     <PostLayout title={post.title}>
-      <SpinningIconDivider scrollVar={SCROLL_VAR} icon={renderIcon(icon, SCROLL_VAR)} />
+      <SpinningIconDivider scrollVar={SCROLL_VAR} icon={icon} />
 
       <div className="grid grid-cols-2 items-center justify-items-center gap-4 text-sm tabular-nums sm:grid-cols-4">
         <div className="tooltip flex items-center space-x-2" aria-label="Reading time">
@@ -114,10 +113,10 @@ const PostPage = async (props: PostPageProps) => {
           </details>
         )}
 
-        <Mdx code={code} />
+        <MdxRenderer code={code} />
 
         <PostBottomSection>
-          <PostGithubLinks dataType={DataType.blog} slug={post.slug} />
+          <PostGithubLinks dataType={'blog'} slug={post.slug} />
         </PostBottomSection>
       </ProseWrapper>
     </PostLayout>

@@ -3,7 +3,7 @@
 import { ReactNode } from 'react'
 import { useScrollCssVar, ScrollVar } from '~/utils/use-scroll-css-var'
 
-export const SpinningIconDivider: React.FC<{ icon: ReactNode; scrollVar: ScrollVar }> = ({
+export const SpinningIconDividerClient: React.FC<{ icon: ReactNode; scrollVar: ScrollVar }> = ({
   icon,
   scrollVar,
 }) => {
