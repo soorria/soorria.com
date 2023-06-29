@@ -1,7 +1,6 @@
 import type { SnippetFrontMatter } from '~/types/snippet'
 import PostLayout from '~/components/posts/PostLayout'
 import { getAllFilesFrontMatter } from '~/lib/data'
-import { DataType } from '~/types/data'
 import { getOgImageForData } from '~/utils/og'
 import { sortByCreatedAtField } from '~/utils/content'
 import { PUBLIC_URL } from '~/constants'
@@ -23,13 +22,13 @@ export const metadata = {
     description,
     url,
     type: 'website',
-    images: [getOgImageForData(DataType.snippets)],
+    images: [getOgImageForData('snippets')],
   },
 }
 
 const SnippetsPage = async () => {
   const snippets = sortByCreatedAtField(
-    await getAllFilesFrontMatter<SnippetFrontMatter>(DataType.snippets)
+    await getAllFilesFrontMatter<SnippetFrontMatter>('snippets')
   )
 
   // const filterableTags = arrayUnique(

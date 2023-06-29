@@ -1,7 +1,6 @@
 import type { BlogPostFrontMatter } from '~/types/blog-post'
 import PostLayout from '~/components/posts/PostLayout'
 import { getAllFilesFrontMatter } from '~/lib/data'
-import { DataType } from '~/types/data'
 import PostCard from '~/components/posts/BlogPostCard'
 import { getOgImageForData } from '~/utils/og'
 import { blogPostFilter, sortByCreatedAtField } from '~/utils/content'
@@ -24,13 +23,13 @@ export const metadata = {
     type: 'website',
     url,
 
-    images: [getOgImageForData(DataType.blog)],
+    images: [getOgImageForData('blog')],
   },
 }
 
 const PostsPage = async () => {
   const posts = blogPostFilter(
-    sortByCreatedAtField(await getAllFilesFrontMatter<BlogPostFrontMatter>(DataType.blog))
+    sortByCreatedAtField(await getAllFilesFrontMatter<BlogPostFrontMatter>('blog'))
   )
   return (
     <PostLayout title="Blog">

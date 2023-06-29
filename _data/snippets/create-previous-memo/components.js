@@ -1,3 +1,5 @@
+'use client'
+
 // @ts-check
 
 import { css } from 'goober'

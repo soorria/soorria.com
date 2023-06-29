@@ -1,16 +1,16 @@
 import type { Snippet, SnippetFrontMatter } from '~/types/snippet'
 import PostLayout, { PostBottomSection } from '~/components/posts/PostLayout'
-import { getAllFilesFrontMatter, getFileWithMdx } from '~/lib/data'
-import { DataType } from '~/types/data'
-import { Mdx } from '~/lib/mdx'
+import { getAllFilesFrontMatter, getFileForMdx } from '~/lib/data'
 import { categoryLowerCaseToIcon, defaultCategoryIcon } from '~/components/categories'
 import { formatDate } from '~/utils/date'
 import { PUBLIC_URL } from '~/constants'
-import { SpinningIconDivider, renderIcon } from '~/components/posts/SpinningIconDivider'
+import { SpinningIconDivider } from '~/components/posts/SpinningIconDivider'
 import PostGithubLinks from '~/components/posts/PostGithubLinks'
 import { Metadata } from 'next'
 import { getOgImageForData } from '~/utils/og'
 import ProseWrapper from '~/components/posts/ProseWrapper'
+import MdxRenderer from '~/components/mdx/MdxRenderer'
+import Image from 'next/image'
 
 const SCROLL_VAR = '--scroll'
 type SnippetPageProps = {
@@ -18,13 +18,13 @@ type SnippetPageProps = {
 }
 
 export const generateStaticParams = async () => {
-  const snippets = await getAllFilesFrontMatter<SnippetFrontMatter>(DataType.snippets)
+  const snippets = await getAllFilesFrontMatter<SnippetFrontMatter>('snippets')
 
   return snippets.map(({ slug }) => ({ slug }))
 }
 
 export const generateMetadata = async ({ params }: SnippetPageProps): Promise<Metadata> => {
-  const snippet = await getFileWithMdx<Snippet>(DataType.snippets, params.slug)
+  const snippet = await getFileForMdx<Snippet>('snippets', params.slug)
 
   const url = `${PUBLIC_URL}/snippets/${snippet.slug}`
   const title = `${snippet.title} | Snippets`
@@ -44,7 +44,7 @@ export const generateMetadata = async ({ params }: SnippetPageProps): Promise<Me
       authors: ['Soorria Saruva'],
       publishedTime: new Date(snippet.createdAt).toISOString(),
       modifiedTime: new Date(snippet.updatedAt || snippet.createdAt).toISOString(),
-      images: [getOgImageForData(DataType.snippets, snippet.title)],
+      images: [getOgImageForData('snippets', snippet.title)],
     },
     twitter: {
       card: 'summary_large_image',
@@ -52,25 +52,35 @@ export const generateMetadata = async ({ params }: SnippetPageProps): Promise<Me
       description: snippet.shortDescription,
       title,
       site: '@soorria',
-      images: [getOgImageForData(DataType.snippets, snippet.title)],
+      images: [getOgImageForData('snippets', snippet.title)],
     },
   }
 }
 
 const SnippetPage = async ({ params }: SnippetPageProps) => {
-  const { code, ...snippet } = await getFileWithMdx<Snippet>(DataType.snippets, params.slug)
+  const { code, ...snippet } = await getFileForMdx<Snippet>('snippets', params.slug)
 
+  const ogImageData = getOgImageForData('snippets', snippet.title, snippet.ogImageTitleParts)
   return (
     <PostLayout title={snippet.title}>
       <SpinningIconDivider
         scrollVar={SCROLL_VAR}
-        icon={renderIcon(
-          categoryLowerCaseToIcon[snippet.category.toLowerCase()] || defaultCategoryIcon,
-          SCROLL_VAR
-        )}
+        icon={categoryLowerCaseToIcon[snippet.category.toLowerCase()] || defaultCategoryIcon}
       />
       <ProseWrapper>
-        <Mdx code={code} />
+        {process.env.NODE_ENV !== 'production' && (
+          <details>
+            <summary>OG Image</summary>
+            <Image
+              src={ogImageData.url.replace('https://soorria.com', 'http://localhost:3000')}
+              width={1200}
+              height={630}
+              alt=""
+              id="__dev_og_image__"
+            />
+          </details>
+        )}
+        <MdxRenderer code={code} type="snippets" slug={snippet.slug} />
         <PostBottomSection>
           <div suppressHydrationWarning>
             Created {formatDate(snippet.createdAt)}
@@ -80,7 +90,7 @@ const SnippetPage = async ({ params }: SnippetPageProps) => {
               </>
             )}
           </div>
-          <PostGithubLinks dataType={DataType.snippets} slug={snippet.slug} />
+          <PostGithubLinks dataType={'snippets'} slug={snippet.slug} />
         </PostBottomSection>
       </ProseWrapper>
     </PostLayout>

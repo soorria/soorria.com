@@ -1,3 +1,5 @@
+'use client'
+
 import { useMemo, useEffect } from 'react'
 
 export const useCssVar = ({ name, root = document.body }) => {

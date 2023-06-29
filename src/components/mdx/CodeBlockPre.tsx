@@ -1,3 +1,4 @@
+'use client'
 import cx from '~/utils/cx'
 import { forwardRef, HTMLAttributes, PropsWithChildren, useState } from 'react'
 import { CODE_BLOCK_CLASSNAMES, getTruncationHeight } from './utils'

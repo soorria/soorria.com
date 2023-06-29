@@ -5,20 +5,15 @@ import Contact from '~/components/landing/Contact'
 import FeaturedProjects from '~/components/landing/FeaturedProjects'
 import Hero from '~/components/landing/Hero'
 import { getFileFrontMatter } from '~/lib/data'
-import { DataType } from '~/types/data'
 import { featuredProjects } from '~/constants'
 import Skills from '~/components/landing/Skills'
 import { randomArray } from '~/utils/random'
 import { getCachedSingletonJsonSafe, getCachedSingletonTextSafe } from '~/lib/supabase'
-import { render } from '~/lib/mdx.server'
 import { getRandomSkillIndexes } from '~/lib/skills'
 import Subtitle from '~/components/landing/Subtitle'
-import { Mdx } from '~/components/landing/mdx'
+import MdxRenderer from '~/components/mdx/MdxRenderer'
 
 export const revalidate = 10
-
-const renderText = (text: string): Promise<string> =>
-  render(text, undefined, { hasCodeBlocks: false }).then(result => result.code)
 
 const getSubtitleOptions = async () => {
   const subtitleText = (await getCachedSingletonTextSafe('subtitle')) ?? ''
@@ -26,12 +21,12 @@ const getSubtitleOptions = async () => {
     .split('---')
     .map(chunk => chunk.trim().replace(/\.$/, ''))
     .filter(Boolean)
-  return await Promise.all(subtitleChunks.map(chunk => renderText(chunk)))
+  return subtitleChunks
 }
 
 const getNow = async () => {
   const nowText = await getCachedSingletonTextSafe('now')
-  return nowText ? await renderText(nowText ?? '') : null
+  return nowText || null
 }
 
 const IndexPage = async () => {
@@ -43,10 +38,7 @@ const IndexPage = async () => {
 
   const projectsPromise: Promise<ProjectFrontMatter[]> = Promise.all(
     featuredProjects.map(async projectSlug => {
-      const frontmatter = await getFileFrontMatter<ProjectFrontMatter>(
-        DataType.projects,
-        projectSlug
-      )
+      const frontmatter = await getFileFrontMatter<ProjectFrontMatter>('projects', projectSlug)
       delete frontmatter.readingTime
       return frontmatter
     })
@@ -65,10 +57,21 @@ const IndexPage = async () => {
 
   return (
     <Container>
-      <Hero subtitle={<Subtitle options={subtitleOptions} />} title={heroText}>
-        <div className="text-lg" id="now">
-          <Mdx code={now} />
-        </div>
+      <Hero
+        subtitle={
+          <Subtitle
+            options={subtitleOptions.map((code, i) => (
+              <MdxRenderer key={i} code={code} />
+            ))}
+          />
+        }
+        title={heroText}
+      >
+        {now ? (
+          <div className="text-lg" id="now">
+            <MdxRenderer code={now} />
+          </div>
+        ) : null}
       </Hero>
       <FeaturedProjects random={randoms[0]} projects={projects} />
       <Skills random={randoms[1]} skillIndexes={skillIndexes} />

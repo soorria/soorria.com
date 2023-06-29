@@ -1,7 +1,6 @@
 import type { SnippetFrontMatter } from '~/types/snippet'
 import PostLayout from '~/components/posts/PostLayout'
 import { getAllFilesFrontMatter } from '~/lib/data'
-import { DataType } from '~/types/data'
 import SnippetCard from '~/components/posts/SnippetCard'
 import BlogPostCard from '~/components/posts/BlogPostCard'
 import { getOgImageForData } from '~/utils/og'
@@ -24,19 +23,19 @@ export const metadata = {
     description,
     type: 'website',
     url,
-    images: [getOgImageForData(DataType.snippets)],
+    images: [getOgImageForData('snippets')],
   },
 }
 
 const SnippetsPage = async () => {
   const [snippets, blogPosts] = await Promise.all([
-    getAllFilesFrontMatter<SnippetFrontMatter>(DataType.snippets),
-    getAllFilesFrontMatter<BlogPostFrontMatter>(DataType.blog),
+    getAllFilesFrontMatter<SnippetFrontMatter>('snippets'),
+    getAllFilesFrontMatter<BlogPostFrontMatter>('blog'),
   ])
 
   const posts = sortByCreatedAtField([
-    ...snippets.map(s => ({ ...s, type: DataType.snippets as const })),
-    ...blogPostFilter(blogPosts).map(p => ({ ...p, type: DataType.blog as const })),
+    ...snippets.map(s => ({ ...s, type: 'snippets' as const })),
+    ...blogPostFilter(blogPosts).map(p => ({ ...p, type: 'blog' as const })),
   ])
 
   return (
@@ -50,7 +49,7 @@ const SnippetsPage = async () => {
           {posts.map(p => {
             const key = `${p.type}/${p.slug}`
 
-            return p.type === DataType.snippets ? (
+            return p.type === 'snippets' ? (
               <SnippetCard key={key} snippet={p} />
             ) : (
               <div className="grid sm:col-span-2" key={key}>

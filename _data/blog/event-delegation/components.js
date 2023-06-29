@@ -1,5 +1,7 @@
+'use client'
+
 import { useState } from 'react'
-import { css } from '$styles'
+import { css } from '~/components/mdx/styles'
 
 const layer = css({
   display: 'grid',

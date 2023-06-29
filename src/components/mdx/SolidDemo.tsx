@@ -2,31 +2,23 @@
 
 import { type HyperScript } from 'hyper-dom-expressions'
 import { useEffect, useRef, useState } from 'react'
-import {
-  Component,
-  createComponent,
-  createSignal,
-  createEffect,
-  onMount,
-  onCleanup,
-} from 'solid-js'
-import h from 'solid-js/h'
-import { render } from 'solid-js/web'
 
 import cx from '~/utils/cx'
 import { useHydrated } from '~/utils/use-hydrated'
 import { RefreshIcon } from '../icons'
 import { CODE_BLOCK_CLASSNAMES, DEMO_CLASSNAMES } from './utils'
 
+type SolidJS = typeof import('solid-js')
+
 type SolidStuff = {
-  createSignal: typeof createSignal
-  createEffect: typeof createEffect
-  onMount: typeof onMount
-  onCleanup: typeof onCleanup
+  createSignal: SolidJS['createSignal']
+  createEffect: SolidJS['createEffect']
+  onMount: SolidJS['onMount']
+  onCleanup: SolidJS['onCleanup']
   h: HyperScript
 }
 
-export type CreateSolidDemo = (stuff: SolidStuff) => { component: Component }
+export type CreateSolidDemo = (stuff: SolidStuff) => { component: import('solid-js').Component }
 
 interface SolidDemoProps {
   create: CreateSolidDemo
@@ -43,16 +35,28 @@ const SolidDemo: React.FC<SolidDemoProps> = props => {
     const root = solidRoot.current
     if (!root || !hydrated) return
 
-    const demo = createSolidDemo({
-      createEffect,
-      createSignal,
-      onMount,
-      onCleanup,
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-      h,
-    })
+    const unmount: () => void = () => {
+      /**/
+    }
 
-    const unmount = render(() => createComponent(demo.component, {}), root)
+    const go = async () => {
+      // const { createEffect, createSignal, onMount, onCleanup, createComponent } = await import(
+      //   'solid-js'
+      // )
+      // const { render } = await import('solid-js/web')
+      // const { default: h } = await import('solid-js/h')
+      // const demo = createSolidDemo({
+      //   createEffect,
+      //   createSignal,
+      //   onMount,
+      //   onCleanup,
+      //   // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+      //   h,
+      // })
+      // unmount = render(() => createComponent(demo.component, {}), root)
+    }
+
+    go()
 
     return () => {
       root.innerHTML = ''

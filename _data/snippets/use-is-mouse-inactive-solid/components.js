@@ -1,3 +1,5 @@
+'use client'
+
 // @ts-check
 /** @type {import('../../../src/components/mdx/SolidDemo').CreateSolidDemo} */
 export const createExample = ({

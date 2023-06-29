@@ -1,12 +1,10 @@
-'use client'
-
 import CustomLink from '../CustomLink'
 import ReactDemo from './ReactDemo'
 import TsJsSwitcher from './TsJsSwitcher'
 import CodeBlock from './CodeBlock'
 import dynamic from 'next/dynamic'
-import type { MDXContentProps } from 'mdx-bundler/client'
 import { OnlyIsTs, TsJsToggle } from '../TsJsToggle'
+import { MDXRemoteProps } from 'next-mdx-remote'
 
 const Sparkles = dynamic(() => import('./Sparkles'))
 
@@ -34,4 +32,4 @@ export const baseComponents = {
   TsJsToggle,
   OnlyIsTs: OnlyIsTs,
   Collapse: dynamic(() => import('./MDXCollapse')),
-} as MDXContentProps['components']
+} as MDXRemoteProps['components']
