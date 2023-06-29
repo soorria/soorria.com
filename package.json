@@ -85,6 +85,7 @@
     "next-transpile-modules": "^9.1.0",
     "npm-run-all": "^4.1.5",
     "postcss": "^8.4.24",
+    "postcss-nesting": "^11.3.0",
     "prettier-plugin-tailwindcss": "^0.1.13",
     "rehype": "^11.0.0",
     "tailwindcss": "^3.3.2",

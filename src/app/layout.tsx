@@ -1,5 +1,6 @@
 import '@total-typescript/ts-reset'
 import { ReactNode } from 'react'
+import { TailwindIndicator } from '~/components/TailwindIndicator'
 
 import '~/styles/globals.css'
 import NoJsStyles from '~/styles/NoJsStyles'
@@ -86,6 +87,7 @@ const RootLayout = ({ children }: { children: ReactNode }) => {
       <body className="h-full min-h-screen bg-drac-base text-drac-content">
         {children}
         <NoJsStyles />
+        <TailwindIndicator />
       </body>
     </html>
   )

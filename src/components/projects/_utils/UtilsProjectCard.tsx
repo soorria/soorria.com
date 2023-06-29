@@ -25,64 +25,66 @@ const UtilsProjectCard: React.FC<UtilsProjectCardProps> = ({
   fullWidth,
 }) => {
   return (
-    <div
-      className={cx(COMMON_CLASSNAMES.specialCardRoot, 'bg-var-bg', fullWidth && 'col-span-full')}
-      style={{ ['--bg' as any]: '#414558', ['--col' as any]: '#FF7AC6' }}
-    >
-      {fullWidth && bgImage ? (
-        <>
-          <div className="absolute inset-y-0 right-0 hidden items-center sm:flex">
-            <div>
-              <Image
-                src={bgImage}
-                height="356"
-                width="381"
-                alt="flowchart showing file sizes after gzip"
-                placeholder="blur"
-              />
+    <div className={fullWidth ? 'col-span-full' : ''}>
+      <div
+        className={cx(COMMON_CLASSNAMES.specialCardRoot, 'bg-var-bg')}
+        style={{ ['--bg' as any]: '#414558', ['--col' as any]: '#FF7AC6' }}
+      >
+        {fullWidth && bgImage ? (
+          <>
+            <div className="absolute inset-y-0 right-0 hidden items-center sm:flex">
+              <div>
+                <Image
+                  src={bgImage}
+                  height="356"
+                  width="381"
+                  alt="flowchart showing file sizes after gzip"
+                  placeholder="blur"
+                />
+              </div>
             </div>
+            <div className="absolute inset-0 bg-gradient-to-r from-var-bg via-var-bg to-transparent"></div>
+          </>
+        ) : null}
+        <div className="relative flex h-full flex-col space-y-4 p-8">
+          <header className="flex items-center space-x-2 font-display text-3xl font-bold text-var-col">
+            <span>{project.title}</span> <UtilsTag />
+          </header>
+          <div className="flex max-w-[25rem]">
+            <ul className="list-disc space-y-4 pl-6">{children}</ul>
           </div>
-          <div className="absolute inset-0 bg-gradient-to-r from-var-bg via-var-bg to-transparent"></div>
-        </>
-      ) : null}
-      <div className="relative flex h-full flex-col space-y-4 p-8">
-        <header className="flex items-center space-x-2 font-display text-3xl font-bold text-var-col">
-          <span>{project.title}</span> <UtilsTag />
-        </header>
-        <div className="flex max-w-[25rem]">
-          <ul className="list-disc space-y-4 pl-6">{children}</ul>
-        </div>
-        <div className="-m-2 mb-0">
-          {project.hasContent && (
-            <NextLink href={`/projects/${project.slug}`} passHref>
-              <a className={cardLinkClassName}>
-                <InfoIcon className="inline-block h-4 w-4" />
-                <span>Details</span>
-                <span className="sr-only"> for {project.title}</span>
-              </a>
-            </NextLink>
-          )}
-          <a
-            className={cardLinkClassName}
-            target="_blank"
-            rel="noopener noreferrer"
-            href={project.live}
-          >
-            <ExternalIcon className="inline-block h-4 w-4" />
-            <span>
-              See <span className="sr-only">{project.title}</span> Live
-            </span>
-          </a>
-          <a
-            className={cardLinkClassName}
-            target="_blank"
-            rel="noopener noreferrer"
-            href={project.source}
-          >
-            <CodeIcon className="inline-block h-4 w-4" />
-            <span>Source</span>
-            <span className="sr-only"> for {project.title}</span>
-          </a>
+          <div className="-m-2 mb-0">
+            {project.hasContent && (
+              <NextLink href={`/projects/${project.slug}`} passHref>
+                <a className={cardLinkClassName}>
+                  <InfoIcon className="inline-block h-4 w-4" />
+                  <span>Details</span>
+                  <span className="sr-only"> for {project.title}</span>
+                </a>
+              </NextLink>
+            )}
+            <a
+              className={cardLinkClassName}
+              target="_blank"
+              rel="noopener noreferrer"
+              href={project.live}
+            >
+              <ExternalIcon className="inline-block h-4 w-4" />
+              <span>
+                See <span className="sr-only">{project.title}</span> Live
+              </span>
+            </a>
+            <a
+              className={cardLinkClassName}
+              target="_blank"
+              rel="noopener noreferrer"
+              href={project.source}
+            >
+              <CodeIcon className="inline-block h-4 w-4" />
+              <span>Source</span>
+              <span className="sr-only"> for {project.title}</span>
+            </a>
+          </div>
         </div>
       </div>
     </div>

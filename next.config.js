@@ -107,13 +107,20 @@ const config = {
     return {
       beforeFiles: [
         {
-          source: '/:path*',
+          source: '/',
           destination: '/api/curl-card',
           has: [
             {
               type: 'header',
               key: 'user-agent',
               value: 'curl/(.*)',
+            },
+          ],
+          missing: [
+            {
+              type: 'query',
+              key: 'card',
+              value: '(.*)',
             },
           ],
         },

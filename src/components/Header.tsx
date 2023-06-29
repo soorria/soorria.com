@@ -19,7 +19,7 @@ const LINKS = [
 
 const Header: React.FC = () => {
   return (
-    <Container>
+    <Container className="relative z-10">
       <a
         href="#main-content"
         className="focus-ring fixed left-1/2 z-50 mx-auto block -translate-x-1/2 -translate-y-full transform rounded bg-drac-base px-4 py-2 font-display font-bold text-drac-pink transition-transform focus:translate-y-2 focus:ring-2 hocus:shadow-xl"

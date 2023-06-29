@@ -52,7 +52,7 @@ const Subtitle: React.FC<SubtitleProps> = ({ options }) => {
         title="refresh subtitle about me"
       >
         <RefreshIcon
-          className={cx('h-em w-em transform transition-transform ease-in-out')}
+          className={cx('h-em w-em scale-x-100 transform transition-transform ease-out')}
           style={{
             ['--tw-rotate' as string]: `-${rotations}turn`,
             transitionDuration: `${rotationDuration}ms`,

@@ -26,6 +26,9 @@ const codeBlockRehypePlugins: PluggableList = [
     {
       theme: 'dracula', // Keep the background or use a custom background color?
       keepBackground: false,
+      tokensMap: {
+        fn: 'entity.name.function',
+      },
 
       // Callback hooks to add custom logic to elements when visiting
       // them.

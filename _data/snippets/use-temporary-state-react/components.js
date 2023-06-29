@@ -25,7 +25,7 @@ export const useTemporaryState = (initial, timeout = 2000) => {
 }
 
 export const Example = () => {
-  const [color, setColor] = useTemporaryState({})
+  const [color, setColor] = useTemporaryState()
 
   return (
     <div
@@ -53,7 +53,7 @@ export const Example = () => {
         style={{
           height: '4rem',
           borderRadius: '0.5rem',
-          backgroundColor: color || 'var(--pink)',
+          backgroundColor: color ? color : 'var(--pink)',
           transition: color ? 'none' : 'background-color 0.2s ease-in-out',
         }}
       ></div>
