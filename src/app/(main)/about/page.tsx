@@ -29,14 +29,16 @@ export const metadata = {
 }
 
 const AboutPage = async () => {
-  const { code: code, updatedAt: _updatedAt } = await getFileForMdx<
-    BaseData & { updatedAt: string }
-  >('misc', 'about')
+  const {
+    code: code,
+    updatedAt: _updatedAt,
+    slug,
+  } = await getFileForMdx<BaseData & { updatedAt: string }>('misc', 'about')
 
   return (
     <PostLayout title={title}>
       <ProseWrapper>
-        <MdxRenderer code={code} />
+        <MdxRenderer code={code} type="misc" slug={slug} />
       </ProseWrapper>
     </PostLayout>
   )

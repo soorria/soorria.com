@@ -56,7 +56,7 @@ const ProjectPage = async (props: ProjectPageProps) => {
     <PostLayout title={project.title}>
       <ProseWrapper>
         {code ? (
-          <MdxRenderer code={code} />
+          <MdxRenderer code={code} type="projects" slug={project.slug} />
         ) : (
           <h2>Unfortunately, I&apos;m not done with this page yet ☹</h2>
         )}

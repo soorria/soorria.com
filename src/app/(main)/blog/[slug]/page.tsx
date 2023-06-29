@@ -113,7 +113,7 @@ const PostPage = async (props: PostPageProps) => {
           </details>
         )}
 
-        <MdxRenderer code={code} />
+        <MdxRenderer code={code} type="blog" slug={post.slug} />
 
         <PostBottomSection>
           <PostGithubLinks dataType={'blog'} slug={post.slug} />

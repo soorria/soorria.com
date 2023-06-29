@@ -29,14 +29,16 @@ export const metadata = {
 }
 
 const UsesPage = async () => {
-  const { code: code, updatedAt: _updatedAt } = await getFileForMdx<
-    BaseData & { updatedAt: string }
-  >('misc', 'uses')
+  const {
+    code: code,
+    updatedAt: _updatedAt,
+    slug,
+  } = await getFileForMdx<BaseData & { updatedAt: string }>('misc', 'uses')
 
   return (
     <PostLayout title={title}>
       <ProseWrapper>
-        <MdxRenderer code={code} />
+        <MdxRenderer code={code} type="misc" slug={slug} />
         <PostBottomSection>
           Check out other <code>uses</code> pages{' '}
           <CustomLink href="https://uses.tech">here</CustomLink>
