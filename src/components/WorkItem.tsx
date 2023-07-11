@@ -26,9 +26,9 @@ const WorkItem: React.FC<WorkItemProps> = ({
     </div>
     {shortDescription && <div>{shortDescription}</div>}
     {techUsed?.length ? (
-      <div className="-mt-1 -ml-2 inline-flex flex-wrap text-xs text-drac-content text-opacity-80">
+      <div className="-ml-2 -mt-1 inline-flex flex-wrap text-xs text-drac-content text-opacity-80">
         {techUsed.map(tech => (
-          <span key={tech} className="mt-1 ml-2">
+          <span key={tech} className="ml-2 mt-1">
             {tech}
           </span>
         ))}

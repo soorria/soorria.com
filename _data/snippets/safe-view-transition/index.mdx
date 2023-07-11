@@ -1,0 +1,73 @@
+---
+title: safeViewTransition
+shortDescription:
+  A tiny wrapper around document.startViewTransition that respects users'
+  prefers-reduced-motion preferences
+category: TypeScript
+tags:
+  - typescript
+createdAt: '2023-07-11'
+# updatedAt: '2023-07-11'
+---
+
+Use the awesome, _experimental_
+[View Transitions API](https://developer.mozilla.org/en-US/docs/Web/API/View_Transitions_API)
+safely, without needing to worry about whether it's available, or whether the
+user prefers reduced motion.
+
+```ts
+// This block of code stops of the transition from happening if the user
+// doesn't want it
+const motionSafeMediaQuery = window.matchMedia(
+  '(prefers-reduced-motion: no-preference)'
+)
+let motionSafe = motionSafeMediaQuery.matches
+motionSafeMediaQuery.onchange = () => {
+  motionSafe = motionSafeMediaQuery.matches
+}
+
+export type ViewTransitionCallback = () => void | Promise<void>
+
+type ObjectWithStartViewTransition = {
+  startViewTransition: (callback: ViewTransitionCallback) => void
+}
+
+export function safeViewTransition(callback: ViewTransitionCallback) {
+  if (
+    motionSafe &&
+    typeof document !== 'undefined' &&
+    'startViewTransition' in document
+  ) {
+    // Needed until TypeScript catches up
+    const doc = document as unknown as ObjectWithStartViewTransition
+    doc.startViewTransition(callback)
+  } else {
+    callback()
+  }
+}
+```
+
+## Usage
+
+```tsx
+safeViewTransition(() => {
+  // update the DOM in here, and watch the magic happen!
+})
+```
+
+## Demo
+
+Try these demoes in browsers that support the View Transitions API (e.g.
+Chromium based browsers, including Chrome, Brave, Arc) and ones that don't (e.g.
+Safari, Firefox) to see these demos gracefully handle when the API is
+unavailable. You can also try emulating the `(prefers-reduced-motion: reduce)`
+media query (in Chrome, open the devtools, hit `cmd/ctrl + shift + p`, search
+for `prefers-reduced-motion`).
+
+### Vanilla JS
+
+<Demo component={VanillaExample} />
+
+### Vue 3
+
+<Sandbox src="https://stackblitz.com/edit/vitejs-vite-pkoagr?ctl=1&embed=1&file=src%2FApp.vue&theme=dark&view=preview" />

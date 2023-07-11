@@ -108,7 +108,7 @@ interface FooterProps {}
 const Footer: React.FC<FooterProps> = () => {
   return (
     <Container>
-      <footer className="flex flex-col space-y-8 border-t border-drac-base-light pt-8 pb-10">
+      <footer className="flex flex-col space-y-8 border-t border-drac-base-light pb-10 pt-8">
         <div className="mx-auto w-full max-w-sm">
           <MadeBy />
         </div>

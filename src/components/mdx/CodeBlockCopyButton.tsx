@@ -24,7 +24,9 @@ export const CodeBlockCopyButton: React.FC<{ parentSelector: string; preSelector
 
   const handleCopy = (clickEvent: MouseEvent<HTMLButtonElement>) => {
     const parent = clickEvent.currentTarget.closest(parentSelector)
-    const pre = parent?.querySelector<HTMLPreElement>(preSelector)
+    const pre = Array.from(parent?.querySelectorAll<HTMLPreElement>(preSelector) ?? []).find(
+      el => window.getComputedStyle(el).display !== 'none'
+    )
 
     if (!pre) {
       if (process.env.NODE_ENV !== 'production') {

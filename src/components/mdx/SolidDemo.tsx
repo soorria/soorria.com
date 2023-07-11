@@ -1,7 +1,7 @@
 'use client'
 
 import { type HyperScript } from 'hyper-dom-expressions'
-import { useEffect, useRef, useState } from 'react'
+import { CSSProperties, useEffect, useRef, useState } from 'react'
 
 import cx from '~/utils/cx'
 import { useHydrated } from '~/utils/use-hydrated'
@@ -79,6 +79,16 @@ const SolidDemo: React.FC<SolidDemoProps> = props => {
           />{' '}
           Reload Demo
         </button>
+      </div>
+
+      <div className="absolute inset-0 grid place-items-center rounded bg-drac-base-dark/80 backdrop-blur">
+        <span
+          className="inline-block max-w-md px-4 text-center"
+          style={{ textWrap: 'balance' } as CSSProperties}
+        >
+          Solid.js demos are broken since I migrated to Next.js 13&apos;s app directory & server
+          components
+        </span>
       </div>
     </div>
   )

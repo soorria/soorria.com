@@ -15,6 +15,7 @@
     "husky:install": "husky install",
     "prepare": "is-ci-cli \"\" \"husky:install\"",
     "postinstall": "npm run generate-mdx-data-components-file",
+    "predev": "npm run generate-mdx-data-components-file",
     "generate-mdx-data-components-file": "tsx src/scripts/generate-mdx-data-components-file.ts"
   },
   "dependencies": {

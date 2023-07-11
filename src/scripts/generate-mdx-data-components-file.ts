@@ -34,7 +34,7 @@ ${importSources
   })
   .join('\n')}
 }
-`.trim()
+`.trimStart()
 
   await fs.writeFile(
     'src/components/mdx/data-components.generated.ts',
