@@ -58,7 +58,7 @@ export const VanillaExample = () => {
         </div>
       </div>
       <button className="button" onClick={() => setSlow(!slow)}>
-        {slow ? 'Fast' : 'Slow'}
+        Toggle animation speed to {slow ? 'fast' : 'slow'}
       </button>
       <style>{`
         ::view-transition-group(box) {
@@ -70,6 +70,10 @@ export const VanillaExample = () => {
           height: 200px;
           display: flex;
           align-items: center;
+          justify-content: flex-start;
+        }
+        .container:has(.toggled) {
+          justify-content: flex-end;
         }
 
         .box {
