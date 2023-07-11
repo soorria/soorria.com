@@ -28,6 +28,7 @@ export function safeViewTransition(callback) {
 
 export const VanillaExample = () => {
   const [slow, setSlow] = useState(false)
+  const [differentTransitionName, setDifferentTransitionName] = useState(false)
 
   const boxRef = useRef(null)
   const toggledRef = useRef(false)
@@ -51,17 +52,37 @@ export const VanillaExample = () => {
 
   return (
     <>
-      Click the box below!
+      Click the box to see it move and grow! If you toggle the animation speed,
+      you can see how animated elements' content is handled with and without a
+      separate <code>view-transition-name</code>.
       <div className="container">
-        <div className="box" ref={boxRef}>
-          HI!
-        </div>
+        <button className="box" ref={boxRef}>
+          <span className={differentTransitionName ? 'box-content' : ''}>
+            HI!
+          </span>
+        </button>
       </div>
-      <button className="button" onClick={() => setSlow(!slow)}>
-        Toggle animation speed to {slow ? 'fast' : 'slow'}
-      </button>
+      <div
+        style={{
+          display: 'flex',
+          alignItems: 'center',
+          gap: '1rem',
+          flexWrap: 'wrap',
+        }}
+      >
+        <button className="button" onClick={() => setSlow(!slow)}>
+          Toggle animation speed to {slow ? 'fast' : 'slow'}
+        </button>
+        <button
+          className="button"
+          onClick={() => setDifferentTransitionName(!differentTransitionName)}
+        >
+          Toggle to {differentTransitionName ? 'no' : 'different'} content
+          transition name
+        </button>
+      </div>
       <style>{`
-        ::view-transition-group(box) {
+        ::view-transition-group(*) {
           animation-duration: ${slow ? '10s' : '0.25s'};
         }
       `}</style>
@@ -100,6 +121,11 @@ export const VanillaExample = () => {
           padding: 0.5rem 1rem;
           border-radius: 0.25rem;
           background: var(--base-dark);
+          font-size: 0.875rem;
+        }
+
+        .box-content {
+          view-transition-name: box-content;
         }
       `}</style>
     </>
