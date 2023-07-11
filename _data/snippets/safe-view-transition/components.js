@@ -88,7 +88,7 @@ export const VanillaExample = () => {
       `}</style>
       <style jsx>{`
         .container {
-          height: 200px;
+          height: 140px;
           display: flex;
           align-items: center;
           justify-content: flex-start;
