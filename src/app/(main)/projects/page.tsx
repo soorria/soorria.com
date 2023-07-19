@@ -40,9 +40,7 @@ const ProjectsPage = async () => {
   const numMainProjects = aboveFold.length
 
   return (
-    <PostLayout title="Projects">
-      <p className="mb-12 mt-6 text-center text-lg">{description}</p>
-
+    <PostLayout title="Projects" description={description}>
       <div>
         <ProjectsGrid initialStep="2">
           {projects.slice(0, numMainProjects).map(project => (

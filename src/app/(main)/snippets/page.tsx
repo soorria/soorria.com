@@ -36,9 +36,7 @@ const SnippetsPage = async () => {
   // )
 
   return (
-    <PostLayout title="Snippets">
-      <p className="mt-6 text-center text-lg">{description}</p>
-
+    <PostLayout title="Snippets" description={description}>
       <SnippetGrid snippets={snippets} />
     </PostLayout>
   )

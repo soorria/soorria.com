@@ -39,8 +39,7 @@ const SnippetsPage = async () => {
   ])
 
   return (
-    <PostLayout title="All Posts">
-      <p className="mb-12 mt-6 text-center text-lg">{description}</p>
+    <PostLayout title="All Posts" description={description}>
       <div>
         <div
           style={{ '--initial-step': '2' }}

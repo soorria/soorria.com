@@ -103,5 +103,12 @@ module.exports = {
     require('@tailwindcss/typography'),
     require('tailwindcss-hocus'),
     require('tailwindcss-nmp'),
+    plugin(({ addUtilities }) => {
+      addUtilities({
+        '.text-balance': {
+          textWrap: 'balance',
+        },
+      })
+    }),
   ],
 }

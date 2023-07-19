@@ -32,8 +32,7 @@ const PostsPage = async () => {
     sortByCreatedAtField(await getAllFilesFrontMatter<BlogPostFrontMatter>('blog'))
   )
   return (
-    <PostLayout title="Blog">
-      <p className="mb-12 mt-6 text-center text-lg">{description}</p>
+    <PostLayout title="Blog" description={description}>
       <div>
         <div className="slide-in grid grid-cols-1 gap-8" style={{ '--initial-step': '2' }}>
           {posts.map(post => (
