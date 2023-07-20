@@ -1,7 +1,7 @@
 'use client'
 
 import { type HyperScript } from 'hyper-dom-expressions'
-import { CSSProperties, useEffect, useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 
 import cx from '~/utils/cx'
 import { useHydrated } from '~/utils/use-hydrated'
@@ -35,25 +35,34 @@ const SolidDemo: React.FC<SolidDemoProps> = props => {
     const root = solidRoot.current
     if (!root || !hydrated) return
 
-    const unmount: () => void = () => {
+    let shouldRender = true
+    let unmount: () => void = () => {
       /**/
     }
 
     const go = async () => {
-      // const { createEffect, createSignal, onMount, onCleanup, createComponent } = await import(
-      //   'solid-js'
-      // )
-      // const { render } = await import('solid-js/web')
-      // const { default: h } = await import('solid-js/h')
-      // const demo = createSolidDemo({
-      //   createEffect,
-      //   createSignal,
-      //   onMount,
-      //   onCleanup,
-      //   // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-      //   h,
-      // })
-      // unmount = render(() => createComponent(demo.component, {}), root)
+      /**
+       * The things you do for love...
+       *
+       * The following code is a workaround for Webpack trying to handle dynamic imports.
+       */
+      /* eslint-disable */
+      const { createEffect, createSignal, onMount, onCleanup, createComponent } = await eval(
+        "import('https://esm.sh/solid-js@1.7.8')"
+      )
+      const { render } = await eval("import('https://esm.sh/solid-js@1.7.8/web')")
+      const { default: h } = await eval("import('https://esm.sh/solid-js@1.7.8/h')")
+      const demo = createSolidDemo({
+        createEffect,
+        createSignal,
+        onMount,
+        onCleanup,
+        h,
+      })
+      if (shouldRender) {
+        unmount = render(() => createComponent(demo.component, {}), root)
+      }
+      /* eslint-enable */
     }
 
     go()
@@ -61,6 +70,7 @@ const SolidDemo: React.FC<SolidDemoProps> = props => {
     return () => {
       root.innerHTML = ''
       unmount()
+      shouldRender = false
     }
   }, [key, hydrated, createSolidDemo])
 
@@ -81,17 +91,14 @@ const SolidDemo: React.FC<SolidDemoProps> = props => {
         </button>
       </div>
 
-      <div className="absolute inset-0 grid place-items-center rounded bg-drac-base-dark/80 backdrop-blur">
-        <span
-          className="inline-block max-w-md px-4 text-center"
-          style={{ textWrap: 'balance' } as CSSProperties}
-        >
+      {/* <div className="absolute inset-0 grid place-items-center rounded bg-drac-base-dark/80 backdrop-blur">
+        <span className="inline-block max-w-md px-4 text-center text-balance">
           🚧
           <br />
           Solid.js demos are broken since I migrated to Next.js 13&apos;s app directory & server
           components
         </span>
-      </div>
+      </div> */}
     </div>
   )
 }
