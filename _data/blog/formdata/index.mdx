@@ -117,7 +117,7 @@ registerForm.addEventListener('submit', event => {
 This doesn't look _that_ bad, but it's a lot of work that we could avoid.
 Consider (almost) the same script but now using `FormData`:
 
-```ts title="Form Submission with FormData" {7-12} jsKeepLines
+```ts title="Form Submission with FormData" {6-11} jsKeepLines
 const registerForm: HTMLFormElement = document.getElementById('register-form')
 
 registerForm.addEventListener('submit', event => {
@@ -230,7 +230,7 @@ property on methods to get access to the element that we added an event listener
 to, so `currentTarget` for a submit event will be the form! Here's what a
 simplified React component using `FormData` would look like:
 
-```tsx title="FormData in React" {8} jsLines="6"
+```tsx title="FormData in React" {9} jsLines="7"
 import type React from 'react'
 
 export const ExampleForm: React.FC = () => {
@@ -300,7 +300,7 @@ response's body as JSON.
 For example, in Remix your `action`s have access to the request and you can
 access its body as a `FormData` object:
 
-```ts {4,6-7,9} jsLines="2,4-5,7"
+```ts {5,7-8,10} jsLines="3,5-6,8"
 import type { ActionArgs } from 'remix'
 
 // This runs on the server!

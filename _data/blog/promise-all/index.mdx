@@ -89,7 +89,7 @@ resolve(results)
 
 A first implementation might look like this:
 
-```ts {3-7} jsLines="3-7"
+```ts {4-8} jsKeepLines
 // ...
 const results = [] as unknown as Awaited<PromiseAllResult<Promises>>
 
@@ -120,7 +120,7 @@ then `resolve`-ing the promise.
 We can make sure all promises are complete by only `resolve`-ing our promise
 when the number of results we have equals the number of promises provided.
 
-```ts {7-9} jsLines="7-9"
+```ts {8-10} jsKeepLines
 // ...
 const results = [] as unknown as Awaited<PromiseAllResult<Promises>>
 
@@ -157,7 +157,7 @@ we'll need to:
 3. separately keep track of how many promises have been resolved as point `1.`
    means that `results.length` will _always_ be the same as `promises.length`.
 
-```ts {1-4,6-7,9-10,12} jsLines="1,3,5-6,8-9,11"
+```ts {2-5,7-8,10-11,13} jsLines="2,4,6-7,9-10,12"
 // ...
 const results = Array(promises.length) as unknown as Awaited<
   PromiseAllResult<Promises>
@@ -191,7 +191,7 @@ yet. `Promise.all` throws an error if _any of the provided promises reject_. We
 can accomplish this by calling `reject` with the error when any of the provided
 promises throw:
 
-```ts {17-19} jsLines="16-18"
+```ts {18-20} jsLines="17-19"
 // ...
 const results = Array(promises.length) as unknown as Awaited<
   PromiseAllResult<Promises>
@@ -219,7 +219,7 @@ Now, this is fine - the `Promise` constructor only accepts the first `resolve`,
 or `reject`, and any other times the functions are called are ignored. However,
 if you're like me, you'd like some extra confirmation that nothing goes wrong:
 
-```ts {5,11,17,21,24} jsLines="4,10,16,20,23"
+```ts {6,12,18,22,25} jsLines="5,11,17,21,24"
 // ...
 const results = Array(promises.length) as unknown as Awaited<
   PromiseAllResult<Promises>
@@ -257,7 +257,7 @@ value that isn't a promise, it still works while our `myPromiseAll` so far would
 throw an error. We can fix this by wrapping each item in a promise that resolves
 immediately with `Promise.resolve`:
 
-```ts {2}
+```ts {3}
 // ...
 for (let i = 0; i < promises.length; i++) {
   const promise = Promise.resolve(promises[i])

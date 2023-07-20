@@ -52,14 +52,14 @@ export const remarkTypeScriptTransform = (): Transformer => {
       if (hasJsLines) {
         const jsLines = hasJsLines.groups?.lines
         if (jsLines) {
-          jsMeta += `{${jsLines}}`
+          jsMeta = jsMeta?.replace(hasJsLines[0], '') + ` {${jsLines}}`
         }
       }
     }
 
     const jsNode: Code = {
       type,
-      meta: jsMeta,
+      meta: jsMeta?.trim(),
       // meta,
       data: data,
       lang: transformedLang,

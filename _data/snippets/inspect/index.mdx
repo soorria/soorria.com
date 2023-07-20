@@ -23,7 +23,7 @@ export const inspect = <T extends unknown>(obj: T, ...args: unknown[]): T => {
 
 ## Example
 
-```js {0-1,4-5}
+```js
 inspect(
   inspect(document.querySelector('container'), 'container')?.querySelector(
     '[data-index="2"]'

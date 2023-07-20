@@ -86,6 +86,8 @@ const SolidDemo: React.FC<SolidDemoProps> = props => {
           className="inline-block max-w-md px-4 text-center"
           style={{ textWrap: 'balance' } as CSSProperties}
         >
+          🚧
+          <br />
           Solid.js demos are broken since I migrated to Next.js 13&apos;s app directory & server
           components
         </span>
