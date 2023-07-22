@@ -5,21 +5,23 @@ import { promises as fs } from 'fs'
 const main = async () => {
   const componentFiles = await glob('_data/*/*/components.js', {})
 
-  const importSources = componentFiles.map(file => {
-    const [type, slug] = file.replace('_data/', '').replace('/components.js', '').split('/') as [
-      string,
-      string
-    ]
-    const importPath = file.replace('_data/', '~data/').replace('.js', '')
-    const importName = pascalCase(slug)
+  const importSources = componentFiles
+    .map(file => {
+      const [type, slug] = file.replace('_data/', '').replace('/components.js', '').split('/') as [
+        string,
+        string
+      ]
+      const importPath = file.replace('_data/', '~data/').replace('.js', '')
+      const importName = pascalCase(slug)
 
-    return {
-      type,
-      slug,
-      importPath,
-      importName,
-    }
-  })
+      return {
+        type,
+        slug,
+        importPath,
+        importName,
+      }
+    })
+    .sort((a, b) => `${a.type}/${a.slug}`.localeCompare(`${b.type}/${b.slug}`))
 
   const imports = importSources.map(({ importPath, importName }) => {
     return `import * as ${importName} from '${importPath}'`

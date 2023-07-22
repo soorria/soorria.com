@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "dev": "next",
+    "dev": "npm run codegen && next",
     "build": "next build",
     "postbuild": "next-sitemap",
     "start": "next start",
@@ -16,7 +16,7 @@
     "prepare": "is-ci-cli \"\" \"husky:install\"",
     "postinstall": "npm run generate-mdx-data-components-file",
     "predev": "npm run generate-mdx-data-components-file",
-    "generate-mdx-data-components-file": "tsx src/scripts/generate-mdx-data-components-file.ts"
+    "codegen": "tsx src/scripts/generate-mdx-data-components-file.ts"
   },
   "dependencies": {
     "@babel/core": "^7.22.5",
