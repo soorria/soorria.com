@@ -84,7 +84,7 @@ const RootLayout = ({ children }: { children: ReactNode }) => {
           crossOrigin="anonymous"
         />
       </head>
-      <body className="h-full min-h-screen bg-drac-base text-drac-content">
+      <body className="relative h-full min-h-screen bg-drac-base text-drac-content">
         {children}
         <NoJsStyles />
         <TailwindIndicator />

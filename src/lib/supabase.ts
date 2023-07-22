@@ -1,6 +1,18 @@
 import { createClient } from '@supabase/supabase-js'
 
-const client = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_ANON_KEY)
+const client = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_ANON_KEY, {
+  fetch(input, init) {
+    return fetch(input, {
+      ...init,
+      headers: {
+        ...init?.headers,
+      },
+      next: {
+        revalidate: 10,
+      },
+    })
+  },
+})
 
 type Singleton = {
   id: number

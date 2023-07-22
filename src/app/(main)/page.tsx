@@ -55,6 +55,8 @@ const IndexPage = async () => {
     indexOptionsPromise,
   ])
 
+  const date = new Date()
+
   return (
     <Container>
       <Hero
@@ -77,6 +79,9 @@ const IndexPage = async () => {
       <Skills random={randoms[1]} skillIndexes={skillIndexes} />
       <Contact random={randoms[2]} />
       <div className="py-10" />
+      <div className="absolute inset-x-0 bottom-0.5 text-center text-xs text-drac-pink">
+        Rendered at {date.toLocaleTimeString()}, {date.toLocaleDateString()}
+      </div>
     </Container>
   )
 }
