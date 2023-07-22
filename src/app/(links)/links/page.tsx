@@ -28,9 +28,11 @@ const orderedLinks = [
 type LinksPageProps = {}
 
 const LinksPage = async (_props: LinksPageProps) => {
-  const { heroText, linksHeroText } = await getSingletonJsonSafe<{
+  const { heroText, linksHeroText, pattern, linksPattern } = await getSingletonJsonSafe<{
     heroText: string
     linksHeroText: string
+    pattern?: string
+    linksPattern?: string
   }>('index-options')
 
   return (
@@ -38,7 +40,11 @@ const LinksPage = async (_props: LinksPageProps) => {
       <Container>
         <Track event="Links Page" params={{}} />
         <div className="h-8 sm:h-20" />
-        <Hero title={linksHeroText || heroText || "Hey, I'm Soorria"} overflowHidden>
+        <Hero
+          title={linksHeroText || heroText || "Hey, I'm Soorria"}
+          overflowHidden
+          pattern={linksPattern ?? pattern}
+        >
           <div>
             <main
               className="slide-in relative mx-auto mt-8 max-w-md space-y-8 text-lg sm:mt-24 sm:text-xl"

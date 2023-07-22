@@ -34,7 +34,9 @@ const IndexPage = async () => {
 
   const nowPromise = getNow()
 
-  const indexOptionsPromise = getCachedSingletonJsonSafe<{ heroText: string }>('index-options')
+  const indexOptionsPromise = getCachedSingletonJsonSafe<{ heroText: string; pattern?: string }>(
+    'index-options'
+  )
 
   const projectsPromise: Promise<ProjectFrontMatter[]> = Promise.all(
     featuredProjects.map(async projectSlug => {
@@ -48,7 +50,7 @@ const IndexPage = async () => {
 
   const skillIndexes = getRandomSkillIndexes(8)
 
-  const [subtitleOptions, now, projects, { heroText }] = await Promise.all([
+  const [subtitleOptions, now, projects, { heroText, pattern }] = await Promise.all([
     subtitleOptionsPromise,
     nowPromise,
     projectsPromise,
@@ -68,6 +70,7 @@ const IndexPage = async () => {
           />
         }
         title={heroText}
+        pattern={pattern}
       >
         {now ? (
           <div className="text-lg" id="now">
