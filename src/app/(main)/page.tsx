@@ -63,7 +63,7 @@ const IndexPage = async () => {
         subtitle={
           <Subtitle
             options={subtitleOptions.map((code, i) => (
-              <MdxRenderer key={i} code={code} />
+              <MdxRenderer key={i} code={code} hasCodeBlocks={false} />
             ))}
           />
         }
@@ -71,7 +71,7 @@ const IndexPage = async () => {
       >
         {now ? (
           <div className="text-lg" id="now">
-            <MdxRenderer code={now} />
+            <MdxRenderer code={now} hasCodeBlocks={false} />
           </div>
         ) : null}
       </Hero>
