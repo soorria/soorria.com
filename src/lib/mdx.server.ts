@@ -11,6 +11,8 @@ import { Element } from 'hast'
 import { rehypeRearrangePrettyCodeOutput } from './rehype.server'
 import { SerializeOptions } from 'next-mdx-remote/dist/types'
 
+import _draculaTheme from 'shiki/themes/dracula.json'
+
 const codeBlockRemarkPlugins: PluggableList = [remarkTypeScriptTransform]
 
 const codeBlockRehypePlugins: PluggableList = [
