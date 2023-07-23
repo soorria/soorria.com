@@ -6,7 +6,7 @@ category: TypeScript
 tags:
   - typescript
 createdAt: '2023-06-20'
-updatedAt: '2023-06-25'
+updatedAt: '2023-07-23'
 ---
 
 Create a promise that you can resolve outside the Promise's executor function
@@ -18,7 +18,7 @@ useful for making your code 1 level less nested, or if you're allergic to
 export type ManualPromise<T> = {
   promise: Promise<T>
   resolve: (value: T | PromiseLike<T>) => void
-  reject: (reason?: any) => void
+  reject: (reason?: unknown) => void
 }
 
 export const createManualPromise = <T>(): ManualPromise<T> => {
@@ -111,11 +111,19 @@ export const waitUntilClicked = (selector: string): Promise<void> => {
 // Post from https://jsonplaceholder.typicode.com/
 type Post = { userId: number; id: number; title: string; body: string }
 export const fetchPosts = (): Promise<Post[]> => {
-  const { promise, resolve } = createManualPromise<Post[]>()
+  const { promise, resolve, reject } = createManualPromise<Post[]>()
 
   fetch('https://jsonplaceholder.typicode.com/')
-    .then(response => response.json())
-    .then(json => resolve(json))
+    .then(response => {
+      if (res.ok) {
+        return response.json()
+      }
+      return response
+        .text()
+        .then(text => Promise.reject(new Error(`Fetch posts error: ${text}`)))
+    })
+    .then(json => resolve(json as Post[]))
+    .catch(error => reject(error))
 
   return promise
 }
