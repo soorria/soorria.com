@@ -6,15 +6,19 @@ import { PUBLIC_URL } from '~/constants'
 import { notFound } from 'next/navigation'
 import ProseWrapper from '~/components/posts/ProseWrapper'
 import MdxRenderer from '~/components/mdx/MdxRenderer'
+import { ignoreError } from '~/utils/misc'
 
 type ProjectPageProps = {
   params: { slug: string }
 }
 
+export const dynamic = 'force-static'
+
 export const generateStaticParams = async () => []
 
 export const generateMetadata = async (props: ProjectPageProps) => {
-  const project = await getFileForMdx<Project>('projects', props.params.slug)
+  const project = await ignoreError(getFileForMdx<Project>('projects', props.params.slug))
+  if (!project) return {}
 
   const url = `${PUBLIC_URL}/projects/${project.slug}`
   const title = `${project.title} | Projects`
@@ -46,11 +50,13 @@ export const generateMetadata = async (props: ProjectPageProps) => {
 }
 
 const ProjectPage = async (props: ProjectPageProps) => {
-  const { code: code, ...project } = await getFileForMdx<Project>('projects', props.params.slug)
+  const data = await ignoreError(getFileForMdx<Project>('projects', props.params.slug))
 
-  if (!code) {
+  if (!data?.code) {
     return notFound()
   }
+
+  const { code, ...project } = data
 
   return (
     <PostLayout title={project.title}>

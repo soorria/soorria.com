@@ -11,11 +11,15 @@ import { getOgImageForData } from '~/utils/og'
 import ProseWrapper from '~/components/posts/ProseWrapper'
 import MdxRenderer from '~/components/mdx/MdxRenderer'
 import Image from 'next/image'
+import { ignoreError } from '~/utils/misc'
+import { notFound } from 'next/navigation'
 
 const SCROLL_VAR = '--scroll'
 type SnippetPageProps = {
   params: { slug: string }
 }
+
+export const dynamic = 'force-static'
 
 export const generateStaticParams = async () => {
   const snippets = await getAllFilesFrontMatter<SnippetFrontMatter>('snippets')
@@ -24,7 +28,8 @@ export const generateStaticParams = async () => {
 }
 
 export const generateMetadata = async ({ params }: SnippetPageProps): Promise<Metadata> => {
-  const snippet = await getFileForMdx<Snippet>('snippets', params.slug)
+  const snippet = await ignoreError(getFileForMdx<Snippet>('snippets', params.slug))
+  if (!snippet) return {}
 
   const url = `${PUBLIC_URL}/snippets/${snippet.slug}`
   const title = `${snippet.title} | Snippets`
@@ -58,7 +63,11 @@ export const generateMetadata = async ({ params }: SnippetPageProps): Promise<Me
 }
 
 const SnippetPage = async ({ params }: SnippetPageProps) => {
-  const { code, ...snippet } = await getFileForMdx<Snippet>('snippets', params.slug)
+  const data = await ignoreError(getFileForMdx<Snippet>('snippets', params.slug))
+
+  if (!data) notFound()
+
+  const { code, ...snippet } = data
 
   const ogImageData = getOgImageForData('snippets', snippet.title, snippet.ogImageTitleParts)
   return (

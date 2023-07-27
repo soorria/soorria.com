@@ -9,3 +9,6 @@ export const intersectionSet = <T>(set1: Set<T>, set2: Set<T>): Set<T> => {
   })
   return result
 }
+
+export const ignoreError = <T>(promise: Promise<T>): Promise<T | undefined> =>
+  promise.catch(() => undefined)

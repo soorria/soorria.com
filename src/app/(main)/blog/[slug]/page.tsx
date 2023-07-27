@@ -13,10 +13,14 @@ import Image from 'next/image'
 import { Metadata } from 'next'
 import ProseWrapper from '~/components/posts/ProseWrapper'
 import MdxRenderer from '~/components/mdx/MdxRenderer'
+import { ignoreError } from '~/utils/misc'
+import { notFound } from 'next/navigation'
 
 type PostPageProps = {
   params: { slug: string }
 }
+
+export const dynamic = 'force-static'
 
 export const generateStaticParams = async () => {
   const posts = await getAllFilesFrontMatter<BlogPostFrontMatter>('blog')
@@ -25,7 +29,8 @@ export const generateStaticParams = async () => {
 }
 
 export const generateMetadata = async ({ params }: PostPageProps): Promise<Metadata> => {
-  const post = await getFileForMdx<BlogPost>('blog', params.slug)
+  const post = await ignoreError(getFileForMdx<BlogPost>('blog', params.slug))
+  if (!post) return {}
 
   const url = `${PUBLIC_URL}/posts/${post.slug}`
   const title = `${post.title} | Blog`
@@ -60,7 +65,13 @@ export const generateMetadata = async ({ params }: PostPageProps): Promise<Metad
 
 const SCROLL_VAR = '--scroll'
 const PostPage = async (props: PostPageProps) => {
-  const { code: code, ...post } = await getFileForMdx<BlogPost>('blog', props.params.slug)
+  const data = await ignoreError(getFileForMdx<BlogPost>('blog', props.params.slug))
+
+  if (!data) {
+    return notFound()
+  }
+
+  const { code: code, ...post } = data
 
   const icon =
     (post.category && categoryLowerCaseToIcon[post.category.toLowerCase()]) || GlobeAuIcon
