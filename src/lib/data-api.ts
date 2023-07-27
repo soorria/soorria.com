@@ -63,7 +63,11 @@ export const createGetAllHandler =
 
       res.setHeader('Cache-Control', 'public, s-max-age=31536000')
 
-      res.json({ [type]: frontMatters })
+      if (req.query.flat) {
+        res.json(frontMatters)
+      } else {
+        res.json({ [type]: frontMatters })
+      }
     }
 
     if (end) res.end()
