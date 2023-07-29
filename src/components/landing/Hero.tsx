@@ -32,7 +32,7 @@ const Hero = ({
       <div
         id="hero"
         className={cx(
-          'hero-bg slide-in overflow-x-hidden pb-12 nmp-4 nmpt-36 nmpx-4 md:nmpx-8 lg:nmpx-20 xl:nmpx-52 2xl:nmpx-72',
+          'hero-bg slide-in overflow-x-hidden pb-8 nmpt-36 nmpx-4 md:nmpx-8 lg:nmpx-20 xl:nmpx-52 2xl:nmpx-72',
           overflowHidden && 'overflow-hidden'
         )}
         style={{
