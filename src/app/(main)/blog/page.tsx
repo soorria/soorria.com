@@ -36,6 +36,7 @@ const PostsPage = async () => {
       <div>
         <div className="slide-in grid grid-cols-1 gap-8" style={{ '--initial-step': '2' }}>
           {posts.map(post => (
+            // TODO: add --step-num to each item when needed
             <PostCard key={post.slug} post={post} />
           ))}
         </div>

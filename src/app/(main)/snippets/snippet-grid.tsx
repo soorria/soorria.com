@@ -116,8 +116,8 @@ const SnippetGrid = ({ snippets: _snippets }: SnippetGridProps) => {
           }}
           className="slide-in grid auto-cols-min grid-cols-1 content-start gap-x-6 gap-y-8 sm:!grid-cols-2 sm:gap-x-8 lg:gap-12"
         >
-          {snippets.map(snippet => (
-            <div key={snippet.slug} className="grid">
+          {snippets.map((snippet, i) => (
+            <div key={snippet.slug} className="grid" style={{ '--step-num': (i + 1).toString() }}>
               <SnippetCard key={snippet.slug} snippet={snippet} />
             </div>
           ))}
