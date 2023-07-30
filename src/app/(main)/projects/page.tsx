@@ -49,12 +49,19 @@ const ProjectsPage = async () => {
         </ProjectsGrid>
       </div>
 
-      <h2 className="mb-8 mt-16 text-4xl">Other Projects</h2>
-      <ProjectsGrid>
-        {projects.slice(numMainProjects).map(project => (
-          <ProjectCard key={project.slug} project={project} />
-        ))}
-      </ProjectsGrid>
+      <h2
+        className="mb-8 mt-16 text-4xl"
+        style={{ '--step-num': (numMainProjects + 3).toString() }}
+      >
+        Other Projects
+      </h2>
+      <div style={{ '--step-num': (numMainProjects + 4).toString() }}>
+        <ProjectsGrid initialStep={(numMainProjects + 3).toString()}>
+          {projects.slice(numMainProjects).map(project => (
+            <ProjectCard key={project.slug} project={project} />
+          ))}
+        </ProjectsGrid>
+      </div>
     </PostLayout>
   )
 }

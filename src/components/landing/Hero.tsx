@@ -19,27 +19,23 @@ const Hero = ({
   subtitle,
   title,
   children,
-  overflowHidden,
   pattern = 'circuit',
 }: PropsWithChildren<{
   subtitle?: ReactNode | null
   title: ReactNode
-  overflowHidden?: boolean
   pattern?: string
 }>) => {
   return (
     <div className="fade-in-direct">
       <div
         id="hero"
-        className={cx(
-          'hero-bg slide-in overflow-x-hidden pb-8 nmpt-36 nmpx-4 md:nmpx-8 lg:nmpx-20 xl:nmpx-52 2xl:nmpx-72',
-          overflowHidden && 'overflow-hidden'
-        )}
+        className="hero-bg slide-in relative overflow-hidden overflow-x-hidden pb-8 nmpt-36 nmpx-4 md:nmpx-8 lg:nmpx-20 xl:nmpx-52 2xl:nmpx-72"
         style={{
           '--pattern': patterns[pattern] ?? patterns.circuit ?? '',
         }}
       >
-        <div className="mx-auto my-4 cursor-default py-16 text-center font-display text-6xl font-bold leading-tight outline-none sm:my-8 sm:text-[4rem] md:text-[5rem] lg:text-8xl">
+        {/* <div className="absolute inset-0 z-0 bg-red-200/70"></div> */}
+        <div className="relative z-10 mx-auto my-4 cursor-default py-16 text-center font-display text-6xl font-bold leading-tight outline-none sm:my-8 sm:text-[4rem] md:text-[5rem] lg:text-8xl">
           <div className="slide-in relative" style={{ '--step-delay': '100ms' }}>
             <div className="absolute inset-0">
               <p

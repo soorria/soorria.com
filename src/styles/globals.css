@@ -136,6 +136,15 @@ input {
 }
 
 @layer components {
+  @keyframes bg-slide {
+    from {
+      background-position: left;
+    }
+    to {
+      background-position: right;
+    }
+  }
+
   .spinny-home-link {
     background-image: linear-gradient(
       to right,
@@ -144,21 +153,20 @@ input {
       theme('colors.drac.pink'),
       theme('colors.drac.pink'),
       theme('colors.drac.purple'),
-      theme('colors.drac.purple')
+      theme('colors.drac.purple'),
+      theme('colors.white'),
+      theme('colors.white')
     );
-    background-size: 600% 100%;
+    background-size: 800% 100%;
     background-position: left;
-    transition: background-position;
-    transition-duration: 2500ms;
-
-    transition-delay: 0ms;
-    @apply bg-clip-text text-transparent;
+    animation: bg-slide 5s linear infinite;
+    animation-play-state: paused;
+    background-clip: text;
+    color: transparent;
   }
 
-  .spinny-home-link:hover,
-  .spinny-home-link:focus {
-    background-position: right;
-    transition-delay: 1000ms;
+  a:is(:hover, :focus) .spinny-home-link {
+    animation-play-state: running;
   }
 }
 
@@ -263,7 +271,7 @@ input {
 .slide-in > * {
   --step-num: 0;
   --_initial-step: var(--initial-step, 0);
-  /* --step-delay: 500ms; */
+  --step-delay: 500ms;
   --_step-delay: var(--step-delay, 100ms);
   animation: slide-in var(--slide-duration, 0.5s) both 1;
   animation-delay: calc((var(--step-num) + var(--_initial-step)) * var(--_step-delay));

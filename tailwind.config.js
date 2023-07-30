@@ -1,6 +1,5 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 const { fontFamily } = require('tailwindcss/defaultTheme')
-const hocus = require('tailwindcss-hocus')
 const plugin = require('tailwindcss/plugin')
 
 const drac = {

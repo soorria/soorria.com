@@ -42,7 +42,6 @@ const LinksPage = async (_props: LinksPageProps) => {
         <div className="h-8 sm:h-20" />
         <Hero
           title={linksHeroText || heroText || "Hey, I'm Soorria"}
-          overflowHidden
           pattern={linksPattern ?? pattern}
         >
           <div>
