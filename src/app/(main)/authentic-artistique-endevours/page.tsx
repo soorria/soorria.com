@@ -56,7 +56,7 @@ const ArtPage = () => {
                 />
               </h2>
 
-              <MDXImage src={item.src} alt={item.alt} />
+              <MDXImage src={item.src} alt={item.alt} placeholder="blur" />
 
               {item.quotes.length ? (
                 <>
