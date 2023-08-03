@@ -1,9 +1,13 @@
 import { PropsWithChildren, ReactNode } from 'react'
 import Container from '../Container'
+import { Pattern, availablePatterns } from '../landing/hero-patterns'
+import cx from '~/utils/cx'
+import { heroBackdropClassname } from '../landing/Hero'
 
 type PostLayoutProps = PropsWithChildren<{
   title: string
   description?: ReactNode
+  patterns?: [Pattern, ...Pattern[]]
 }>
 
 export const PostHeading: React.FC<PropsWithChildren> = ({ children }) => {
@@ -27,12 +31,34 @@ export const PostDescription = ({ children }: { children: ReactNode }) => {
   return <p className="mb-12 mt-6 text-center text-lg text-balance">{children}</p>
 }
 
-const PostLayout: React.FC<PostLayoutProps> = ({ title, children, description }) => {
+const PostLayout: React.FC<PostLayoutProps> = ({ title, children, description, patterns }) => {
+  const meta = (
+    <>
+      <PostHeading>{title}</PostHeading>
+      {description && <PostDescription>{description}</PostDescription>}
+    </>
+  )
+
   return (
     <Container>
       <article className="slide-in space-y-12 pb-16 pt-8">
-        <PostHeading>{title}</PostHeading>
-        {description && <PostDescription>{description}</PostDescription>}
+        {patterns ? (
+          <div
+            className={cx('slide-in-direct isolate overflow-visible', heroBackdropClassname)}
+            aria-hidden
+          >
+            {patterns.map((pattern, i) => (
+              <div
+                className="hero-bg absolute inset-0 -bottom-16 -top-8 -z-10"
+                style={{ '--pattern': availablePatterns[pattern] ?? '' }}
+                key={i}
+              />
+            ))}
+            {meta}
+          </div>
+        ) : (
+          meta
+        )}
         {children}
       </article>
     </Container>

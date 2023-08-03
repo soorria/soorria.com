@@ -39,6 +39,10 @@ const LINKS: LinkType[][] = [
       href: '/about',
     },
     {
+      title: 'art',
+      href: '/authentic-artistique-endevours',
+    },
+    {
       title: '/uses',
       href: '/uses',
     },

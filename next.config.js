@@ -101,6 +101,11 @@ const config = {
         destination: '/blog/promise-all',
         permanent: false,
       },
+      {
+        source: '/art',
+        destination: '/authentic-artistique-endevours',
+        permanent: false,
+      },
     ]
   },
   async rewrites() {
