@@ -105,7 +105,7 @@ const PokelifeCard: React.FC<PokelifeCardProps> = ({ project }) => {
           <div className="max-w-[25rem] flex-1">
             <ul className="list-disc space-y-4 pl-6">
               <li>
-                Like Conway&apos;s Game of Life but with Pokemon types instead of boring 1s and 0s.
+                Like Conway&apos;s Game of Life but with Pokémon types instead of boring 1s and 0s.
               </li>
               <li>
                 Configurable settings for a{' '}
