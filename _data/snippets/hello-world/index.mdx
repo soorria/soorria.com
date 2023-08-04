@@ -19,7 +19,7 @@ tags:
   - c++
   - haskell
 createdAt: '2021-03-24'
-updatedAt: '2022-09-07'
+updatedAt: '2023-08-04'
 ---
 
 This only exists to test out the [mdx](https://mdxjs.com/) & ~~prism~~
@@ -27,19 +27,20 @@ This only exists to test out the [mdx](https://mdxjs.com/) & ~~prism~~
 a list of languages and / or frameworks I've used - not a list of languages I
 _know_ and not in any particular order.
 
+```typescript nojs
+;((console as any).log as any)('Hello, World!' as any)
+```
+
 ```javascript
 console.log('Hello, World!')
 ```
 
-```typescript
-;((console as any).log as any)('Hello, World!' as any)
-```
-
-```jsx title="SolidJS (JavaScript)"
+```tsx title="SolidJS (TypeScript)" nojs
+import type { Component } from 'solid-js'
 import { createSignal } from 'solid-js'
 import { render } from 'solid-js/web'
 
-const App = () => {
+const App: Component = () => {
   const [message, setMessage] = createSignal('Hello, World!')
 
   return <div>{message()}</div>
@@ -48,12 +49,11 @@ const App = () => {
 render(() => <App />, document.getElementById('root'))
 ```
 
-```tsx title="SolidJS (TypeScript)"
-import type { Component } from 'solid-js'
+```jsx title="SolidJS (JavaScript)"
 import { createSignal } from 'solid-js'
 import { render } from 'solid-js/web'
 
-const App: Component = () => {
+const App = () => {
   const [message, setMessage] = createSignal('Hello, World!')
 
   return <div>{message()}</div>
@@ -112,11 +112,12 @@ export default defineComponent({
 </script>
 ```
 
-```jsx title="React (JavaScript)"
+```tsx title="React (TypeScript)" nojs
+import type { FC } from 'react'
 import { useState } from 'react'
 import { render } from 'react-dom'
 
-const App = () => {
+const App: FC = () => {
   const [message, setMessage] = useState('Hello, World!')
 
   return <div>{message}</div>
@@ -125,12 +126,11 @@ const App = () => {
 render(<App />, document.getElementById('root'))
 ```
 
-```tsx title="React (TypeScript)"
-import type { FC } from 'react'
+```jsx title="React (JavaScript)"
 import { useState } from 'react'
 import { render } from 'react-dom'
 
-const App: FC = () => {
+const App = () => {
   const [message, setMessage] = useState('Hello, World!')
 
   return <div>{message}</div>
