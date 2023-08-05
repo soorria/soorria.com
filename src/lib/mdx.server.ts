@@ -5,11 +5,11 @@ import remarkGfm from 'remark-gfm'
 import rehypeRaw from 'rehype-raw'
 import { nodeTypes } from '@mdx-js/mdx'
 import { remarkTypeScriptTransform } from './remark.server'
-import rehypePrettyCode, { Options } from 'rehype-pretty-code'
+import rehypePrettyCode, { type Options } from 'rehype-pretty-code'
 import type { PluggableList } from 'unified'
-import { Element } from 'hast'
+import { type Element } from 'hast'
 import { rehypeRearrangePrettyCodeOutput } from './rehype.server'
-import { SerializeOptions } from 'next-mdx-remote/dist/types'
+import { type SerializeOptions } from 'next-mdx-remote/dist/types'
 
 const codeBlockRemarkPlugins: PluggableList = [remarkTypeScriptTransform]
 

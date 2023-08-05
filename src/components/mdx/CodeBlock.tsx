@@ -1,6 +1,6 @@
 import cx from '~/utils/cx'
-import React, { PropsWithChildren, ReactNode } from 'react'
-import { CodeBlockPre, CodeBlockPreExtraProps } from './CodeBlockPre'
+import React, { type PropsWithChildren, type ReactNode } from 'react'
+import { CodeBlockPre, type CodeBlockPreExtraProps } from './CodeBlockPre'
 import { CodeBlockTitle, CODE_BLOCK_CLASSNAMES, LANGUAGE_NAME_MAP } from './utils'
 import { CodeBlockCopyButton } from './CodeBlockCopyButton'
 

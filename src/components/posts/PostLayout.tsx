@@ -1,6 +1,6 @@
-import { PropsWithChildren, ReactNode } from 'react'
+import type { PropsWithChildren, ReactNode } from 'react'
 import Container from '../Container'
-import { Pattern, availablePatterns } from '../landing/hero-patterns'
+import { type Pattern, availablePatterns } from '../landing/hero-patterns'
 import cx from '~/utils/cx'
 import { heroBackdropClassname } from '../landing/Hero'
 

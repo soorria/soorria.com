@@ -3,9 +3,9 @@ import MDXImage from '~/components/mdx/MDXImage'
 import PostLayout from '~/components/posts/PostLayout'
 import ProseWrapper from '~/components/posts/ProseWrapper'
 import { artImages } from './images'
-import { StaticImageData } from 'next/image'
-import { Fragment, ReactNode } from 'react'
+import { Fragment, type ReactNode } from 'react'
 import { paramCase } from 'change-case'
+import type { StaticImageData } from 'next/image'
 
 const art: Array<{
   src: StaticImageData

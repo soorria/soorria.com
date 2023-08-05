@@ -1,4 +1,4 @@
-import Image, { ImageProps } from 'next/image'
+import Image, { type ImageProps } from 'next/image'
 
 const MDXImage: React.FC<ImageProps> = props => {
   return (

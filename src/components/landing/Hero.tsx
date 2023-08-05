@@ -1,7 +1,7 @@
 import cx from '~/utils/cx'
 import type { PropsWithChildren, ReactNode } from 'react'
 import type { LooseAutoComplete } from '~/utils/types'
-import { Pattern, availablePatterns } from './hero-patterns'
+import { type Pattern, availablePatterns } from './hero-patterns'
 
 const classes = {
   secondary:

@@ -1,6 +1,6 @@
 'use client'
 
-import { PropsWithChildren, useCallback, useReducer, useState } from 'react'
+import { type PropsWithChildren, useCallback, useReducer, useState } from 'react'
 import { getRandomSkillIndexes, SKILLS } from '~/lib/skills'
 import cx from '~/utils/cx'
 import CustomLink from '../CustomLink'

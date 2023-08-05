@@ -1,5 +1,5 @@
 import { Children } from 'react'
-import Collapse, { CollapseProps } from '../Collapse'
+import Collapse, { type CollapseProps } from '../Collapse'
 
 const MDXCollapse: React.FC<CollapseProps> = ({ children, ...props }) => {
   return (

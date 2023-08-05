@@ -1,7 +1,7 @@
 import CustomLink from '~/components/CustomLink'
 import PostLayout, { PostBottomSection } from '~/components/posts/PostLayout'
 import { getFileForMdx } from '~/lib/data'
-import { BaseData } from '~/types/data'
+import type { BaseData } from '~/types/data'
 import { getOgImage } from '~/utils/og'
 import { PUBLIC_URL } from '~/constants'
 import ProseWrapper from '~/components/posts/ProseWrapper'

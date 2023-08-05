@@ -4,7 +4,7 @@ import TsJsSwitcher from './TsJsSwitcher'
 import CodeBlock from './CodeBlock'
 import dynamic from 'next/dynamic'
 import { OnlyIsTs, TsJsToggle } from '../TsJsToggle'
-import { MDXRemoteProps } from 'next-mdx-remote'
+import type { MDXRemoteProps } from 'next-mdx-remote'
 
 const Sparkles = dynamic(() => import('./Sparkles'))
 

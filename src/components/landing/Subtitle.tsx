@@ -2,7 +2,7 @@
 
 import cx from '~/utils/cx'
 import { randomIndex } from '~/utils/random'
-import { ReactNode, useRef, useState } from 'react'
+import { type ReactNode, useRef, useState } from 'react'
 import { RefreshIcon } from '../icons'
 
 interface SubtitleProps {

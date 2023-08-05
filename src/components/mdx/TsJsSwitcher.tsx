@@ -1,7 +1,7 @@
 'use client'
 
 import cx from '~/utils/cx'
-import { PropsWithChildren } from 'react'
+import { type PropsWithChildren } from 'react'
 import { CodeBlockTitle, CODE_BLOCK_CLASSNAMES, LANGUAGE_NAME_MAP } from './utils'
 import { TsJsToggle, useIsTs } from '../TsJsToggle'
 import { CodeBlockCopyButton } from './CodeBlockCopyButton'

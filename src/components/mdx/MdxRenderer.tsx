@@ -1,5 +1,5 @@
 import { MDXRemote } from 'next-mdx-remote/rsc'
-import { DataType } from '~/types/data'
+import { type DataType } from '~/types/data'
 import { dataComponents } from './data-components.generated'
 import { baseComponents } from './base'
 import { getMdxOptions } from '~/lib/mdx.server'

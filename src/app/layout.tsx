@@ -1,5 +1,5 @@
 import '@total-typescript/ts-reset'
-import { ReactNode } from 'react'
+import type { ReactNode } from 'react'
 import { TailwindIndicator } from '~/components/TailwindIndicator'
 
 import '~/styles/globals.css'

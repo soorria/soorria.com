@@ -1,4 +1,4 @@
-import { PageConfig } from 'next'
+import { type PageConfig } from 'next'
 import { NextRequest } from 'next/server'
 import { getFullMessage } from '~/lib/curl-card'
 

@@ -1,6 +1,6 @@
 import PostLayout from '~/components/posts/PostLayout'
 import { getFileForMdx } from '~/lib/data'
-import { BaseData } from '~/types/data'
+import type { BaseData } from '~/types/data'
 import { PUBLIC_URL } from '~/constants'
 import { getOgImage } from '~/utils/og'
 import ProseWrapper from '~/components/posts/ProseWrapper'

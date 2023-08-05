@@ -1,4 +1,4 @@
-import { CSSProperties, Fragment, HTMLAttributes, PropsWithChildren } from 'react'
+import { Fragment, type CSSProperties, type HTMLAttributes, type PropsWithChildren } from 'react'
 
 type BleedAmount = string | number
 type BleedProps = {

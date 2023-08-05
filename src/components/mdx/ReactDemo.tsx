@@ -1,5 +1,5 @@
-import { ComponentType } from 'react'
-import ReactDemo, { ReactDemoProps } from './ReactDemo.client'
+import type { ComponentType } from 'react'
+import ReactDemo, { type ReactDemoProps } from './ReactDemo.client'
 
 const ReactDemoServer = ({
   component: Component,

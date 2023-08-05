@@ -4,7 +4,7 @@ import {
   EmailIcon,
   FacebookIconSolid,
   GithubIconSolid,
-  IconComponent,
+  type IconComponent,
   LinkedinIconSolid,
   LinkIcon,
   MALIconSolid,

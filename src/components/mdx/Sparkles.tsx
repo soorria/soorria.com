@@ -1,9 +1,9 @@
 'use client'
 
-import { IconComponent, ReactIcon, SolidJsIcon, TypescriptIcon } from '../icons'
+import { type IconComponent, ReactIcon, SolidJsIcon, TypescriptIcon } from '../icons'
 import cx from '~/utils/cx'
 import { random, randomItem } from '~/utils/random'
-import { PropsWithChildren, useEffect, useState } from 'react'
+import { type PropsWithChildren, useEffect, useState } from 'react'
 
 type SparklesProps = PropsWithChildren<{
   block?: boolean

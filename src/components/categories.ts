@@ -1,6 +1,6 @@
 import {
   CodeIcon,
-  IconComponent,
+  type IconComponent,
   JavascriptIcon,
   ReactIcon,
   ScriptIcon,

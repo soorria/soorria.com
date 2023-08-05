@@ -1,6 +1,6 @@
 'use client'
 
-import { MouseEvent } from 'react'
+import type { MouseEvent } from 'react'
 import cx from '~/utils/cx'
 import { useCopy } from '~/utils/use-copy'
 import { CODE_BLOCK_CLASSNAMES } from './utils'

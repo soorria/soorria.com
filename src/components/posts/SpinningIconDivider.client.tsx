@@ -1,7 +1,7 @@
 'use client'
 
-import { ReactNode } from 'react'
-import { useScrollCssVar, ScrollVar } from '~/utils/use-scroll-css-var'
+import { type ReactNode } from 'react'
+import { useScrollCssVar, type ScrollVar } from '~/utils/use-scroll-css-var'
 
 export const SpinningIconDividerClient: React.FC<{ icon: ReactNode; scrollVar: ScrollVar }> = ({
   icon,

@@ -16,7 +16,8 @@
     "husky:install": "husky install",
     "prepare": "is-ci-cli \"\" \"husky:install\"",
     "postinstall": "npm run codegen",
-    "codegen": "tsx src/scripts/generate-mdx-data-components-file.ts"
+    "codegen": "tsx src/scripts/generate-mdx-data-components-file.ts",
+    "typecheck": "tsc --noEmit"
   },
   "dependencies": {
     "@babel/core": "^7.22.5",

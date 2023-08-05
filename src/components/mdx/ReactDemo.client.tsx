@@ -1,6 +1,6 @@
 'use client'
 import cx from '~/utils/cx'
-import { Fragment, ReactNode, useEffect, useState } from 'react'
+import { Fragment, type ReactNode, useEffect, useState } from 'react'
 import { RefreshIcon } from '../icons'
 import { COMMON_CLASSNAMES, DEMO_CLASSNAMES } from './utils'
 

@@ -1,7 +1,7 @@
 'use client'
 
 import { useEffect } from 'react'
-import { AnalyticsCustomEvents, useTrackEvent } from '~/lib/analytics'
+import { useTrackEvent, type AnalyticsCustomEvents } from '~/lib/analytics'
 
 export const Track = <EventName extends keyof AnalyticsCustomEvents>(props: {
   event: EventName

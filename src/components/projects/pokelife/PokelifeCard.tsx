@@ -6,7 +6,7 @@ import { CodeIcon, ExternalIcon, InfoIcon } from '~/components/icons'
 import cx from '~/utils/cx'
 import { COMMON_CLASSNAMES } from '../utils'
 import type React from 'react'
-import { ButtonHTMLAttributes, useEffect, useMemo, useRef, useState } from 'react'
+import { type ButtonHTMLAttributes, useEffect, useMemo, useRef, useState } from 'react'
 
 interface PokelifeCardProps {
   project: ProjectFrontMatter
