@@ -54,10 +54,10 @@ export const generateMetadata = async ({ params }: PostPageProps): Promise<Metad
     },
     twitter: {
       card: 'summary_large_image',
-      creator: '@soorria',
+      creator: '@soorriously',
       description: post.shortDescription,
       title,
-      site: '@soorria',
+      site: '@soorriously',
       images: [getOgImageForData('blog', post.title)],
     },
   }

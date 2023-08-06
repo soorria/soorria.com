@@ -165,7 +165,7 @@ input {
     color: transparent;
   }
 
-  a:is(:hover, :focus) .spinny-home-link {
+  a:is(:hover, :focus-visible) .spinny-home-link {
     animation-play-state: running;
   }
 }

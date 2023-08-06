@@ -40,10 +40,10 @@ export const generateMetadata = async (props: ProjectPageProps) => {
     },
     twitter: {
       card: 'summary_large_image',
-      creator: '@soorria',
+      creator: '@soorriously',
       description: project.shortDescription,
       title,
-      site: '@soorria',
+      site: '@soorriously',
       images: [getOgImageForData('projects', project.title)],
     },
   }

@@ -53,10 +53,10 @@ export const generateMetadata = async ({ params }: SnippetPageProps): Promise<Me
     },
     twitter: {
       card: 'summary_large_image',
-      creator: '@soorria',
+      creator: '@soorriously',
       description: snippet.shortDescription,
       title,
-      site: '@soorria',
+      site: '@soorriously',
       images: [getOgImageForData('snippets', snippet.title)],
     },
   }

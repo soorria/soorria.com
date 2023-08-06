@@ -6,6 +6,26 @@ import { artImages } from './images'
 import { Fragment, type ReactNode } from 'react'
 import { paramCase } from 'change-case'
 import type { StaticImageData } from 'next/image'
+import { getOgImage } from '~/utils/og'
+import { PUBLIC_URL } from '~/constants'
+
+const url = `${PUBLIC_URL}/art`
+const title = 'Authentic Artistique Endevours'
+const description = 'Welcome to the world of the authentic artistique endevours of Soorria Saruva.'
+export const metadata = {
+  title,
+  description,
+  alternates: {
+    canonical: url,
+  },
+  openGraph: {
+    url,
+    title,
+    type: 'website',
+    description,
+    images: [getOgImage('Authentic Artistique Endevours', 'soorria.com/art')],
+  },
+}
 
 const art: Array<{
   src: StaticImageData
@@ -19,7 +39,7 @@ const art: Array<{
     src: artImages.DonaldTrumpNft,
     alt: 'satirical portrayal of a Donald Trump NFT involving a stick figure shooting laser beams out of their eyes and wearing a cape',
     quotes: [
-      "Wow it's so epic thanks ... best present ever",
+      "Wow it's so epic thanks [...] best present ever",
       'You had a stroke [of genius] on a page??',
     ],
   },
@@ -29,7 +49,7 @@ const art: Array<{
     alt: 'a drawing of a waifu with a speech bubble saying "I love you"',
     quotes: [
       // omg i love that anime too
-      'omg i love that ... too',
+      'omg i love that [...] too',
     ],
   },
 ]
