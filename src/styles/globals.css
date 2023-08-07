@@ -145,7 +145,7 @@ input {
     }
   }
 
-  .spinny-home-link {
+  .logo-link-text {
     background-image: linear-gradient(
       to right,
       theme('colors.white'),
@@ -165,7 +165,7 @@ input {
     color: transparent;
   }
 
-  a:is(:hover, :focus-visible) .spinny-home-link {
+  a:is(:hover, :focus-visible) .logo-link-text {
     animation-play-state: running;
   }
 }

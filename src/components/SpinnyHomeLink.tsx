@@ -51,7 +51,7 @@ const SpinnyHomeLink: React.FC<{ href?: string }> = ({ href = '/' }) => {
       </span>
       <span
         className={cx(
-          'spinny-home-link font-display text-2xl font-bold lowercase sm:ml-4 sm:text-3xl'
+          'logo-link-text font-display text-2xl font-bold lowercase sm:ml-4 sm:text-3xl'
         )}
       >
         <span className="sr-only sm:not-sr-only">Soorria</span>

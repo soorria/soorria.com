@@ -6,7 +6,7 @@ tags:
   - typescript
   - react
 createdAt: '2022-05-04'
-updatedAt: '2023-01-14'
+updatedAt: '2023-08-07'
 ---
 
 Set, get and remove a
@@ -19,7 +19,7 @@ will re-run your component fewer times.
 import { useMemo, useEffect } from 'react'
 
 type UseCssVarProps = {
-  name: string
+  name: `--${string}`
   root?: HTMLElement
 }
 
@@ -29,9 +29,11 @@ type CssVarControls = {
   remove: () => void
 }
 
+const defaultRoot = typeof document !== 'undefined' ? document.body : undefined
+
 export const useCssVar = ({
   name,
-  root = document.body,
+  root = defaultRoot!,
 }: UseCssVarProps): CssVarControls => {
   const controls: CssVarControls = useMemo(
     () => ({
