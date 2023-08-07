@@ -25,7 +25,7 @@ export const dynamic = 'force-static'
 export const generateStaticParams = async () => {
   const posts = await getAllFilesFrontMatter<BlogPostFrontMatter>('blog')
 
-  return posts.map(({ slug }) => ({ slug }))
+  return posts.filter(p => !!p.createdAt).map(({ slug }) => ({ slug }))
 }
 
 export const generateMetadata = async ({ params }: PostPageProps): Promise<Metadata> => {
@@ -49,7 +49,7 @@ export const generateMetadata = async ({ params }: PostPageProps): Promise<Metad
       section: 'Blog',
       authors: ['Soorria Saruva'],
       publishedTime: new Date(post.createdAt).toISOString(),
-      modifiedTime: new Date(post.updatedAt || post.createdAt).toISOString(),
+      modifiedTime: new Date(post.updatedAt || post.createdAt || 0).toISOString(),
       images: [getOgImageForData('blog', post.title)],
     },
     twitter: {
