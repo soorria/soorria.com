@@ -1,21 +1,7 @@
 'use client'
 
-import { useMemo, useEffect } from 'react'
-
-export const useCssVar = ({ name, root = document.body }) => {
-  const controls = useMemo(
-    () => ({
-      set: value => root.style.setProperty(name, value),
-      get: () => root.style.getPropertyValue(name),
-      remove: () => root.style.removeProperty(name),
-    }),
-    [name, root]
-  )
-  useEffect(() => {
-    return () => controls.remove()
-  }, [controls])
-  return controls
-}
+import { useEffect, type CSSProperties } from 'react'
+import { useCssVar } from '~/utils/use-css-var'
 
 const styles = {
   button: {
@@ -34,7 +20,7 @@ const styles = {
     border: '2px solid var(--purple)',
     borderRadius: '4px',
   },
-}
+} satisfies Record<string, CSSProperties>
 
 const IMAGE_SIZE = '80px'
 
@@ -44,7 +30,7 @@ export const EXAMPLE_TRANSFORM = `rotate(calc(var(${EXAMPLE_CSS_VAR}, 45) * 1deg
 export const Example = () => {
   const controls = useCssVar({
     name: EXAMPLE_CSS_VAR,
-    root: document.querySelector('main'),
+    root: document.querySelector('main')!,
   })
 
   useEffect(() => {
@@ -86,6 +72,7 @@ export const Example = () => {
           placeItems: 'center',
         }}
       >
+        {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
           style={{
             margin: '0',
@@ -94,6 +81,7 @@ export const Example = () => {
             transform: EXAMPLE_TRANSFORM,
             transition: 'transform 250ms ease-in-out',
           }}
+          alt="logo"
           width={IMAGE_SIZE}
           height={IMAGE_SIZE}
           loading="lazy"

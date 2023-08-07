@@ -1,30 +1,6 @@
 'use client'
 
-import { useState, useEffect, useCallback } from 'react'
-
-const useLocalStorage = (key, initialValue) => {
-  const [state, setState] = useState(() => {
-    const cached = localStorage.getItem(key)
-
-    if (!cached) return initialValue
-
-    try {
-      return JSON.parse(cached)
-    } catch (err) {
-      return initialValue
-    }
-  })
-
-  useEffect(() => {
-    localStorage.setItem(key, JSON.stringify(state))
-  }, [state, key])
-
-  const clearState = useCallback(() => {
-    setState(initilpjValue)
-  }, [initialValue])
-
-  return [state, setState, clearState]
-}
+import { useLocalStorage } from '~/utils/use-local-storage'
 
 export const LOCALSTORAGE_KEY = 'example:input'
 

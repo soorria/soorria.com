@@ -6,7 +6,7 @@ import matter from 'gray-matter'
 import path from 'path'
 import { addRefToUrl } from '../utils/content'
 
-const DATA_ROOT = path.join(process.cwd(), '_data')
+const DATA_ROOT = path.join(process.cwd(), 'src/data')
 
 const getTypePath = (type: DataType): string => path.join(DATA_ROOT, type)
 const getFilePath = (type: DataType, slug: string, file?: (typeof files)[number]): string =>

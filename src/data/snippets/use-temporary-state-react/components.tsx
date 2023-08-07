@@ -1,16 +1,21 @@
 'use client'
+
+import type { SetStateAction, Dispatch } from 'react'
 import { useState, useCallback, useRef, useEffect } from 'react'
 
-export const useTemporaryState = (initial, timeout = 2000) => {
-  const [state, _setState] = useState(initial)
-  const timeoutRef = useRef()
+export const useTemporaryState = <State,>(
+  initial: State | (() => State),
+  timeout = 2000
+): [State, Dispatch<SetStateAction<State>>] => {
+  const [state, _setState] = useState<State>(initial)
+  const timeoutRef = useRef<ReturnType<typeof setTimeout>>()
   const initialValueRef = useRef(initial)
 
   useEffect(() => {
     initialValueRef.current = initial
   }, [initial])
 
-  const setState = useCallback(
+  const setState: typeof _setState = useCallback(
     async valueOrUpdater => {
       _setState(valueOrUpdater)
       if (timeoutRef.current) clearTimeout(timeoutRef.current)
@@ -26,7 +31,7 @@ export const useTemporaryState = (initial, timeout = 2000) => {
 }
 
 export const Example = () => {
-  const [color, setColor] = useTemporaryState()
+  const [color, setColor] = useTemporaryState<string | undefined>(undefined)
 
   return (
     <div
@@ -41,7 +46,7 @@ export const Example = () => {
           htmlFor="color-input"
           style={{ display: 'block', marginBottom: '0.25rem' }}
         >
-          Temporarily change the box's color:
+          Temporarily change the box&apos;s color:
         </label>
         <input
           id="color-input"

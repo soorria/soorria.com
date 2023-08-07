@@ -18,7 +18,9 @@ type SolidStuff = {
   h: HyperScript
 }
 
-export type CreateSolidDemo = (stuff: SolidStuff) => { component: import('solid-js').Component }
+export type CreateSolidDemo = (stuff: SolidStuff) => {
+  component: import('solid-js').Component | (() => ReturnType<HyperScript>)
+}
 
 interface SolidDemoProps {
   create: CreateSolidDemo

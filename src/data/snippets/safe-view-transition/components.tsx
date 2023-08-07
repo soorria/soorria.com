@@ -1,6 +1,6 @@
 'use client'
 
-import { useRef, useEffect, useState } from 'react'
+import { useRef, useEffect, useState, type ElementRef } from 'react'
 
 // This block of code stops of the transition from happening if the user
 // doesn't want it
@@ -12,14 +12,20 @@ motionSafeMediaQuery.onchange = () => {
   motionSafe = motionSafeMediaQuery.matches
 }
 
-export function safeViewTransition(callback) {
+export type ViewTransitionCallback = () => void | Promise<void>
+
+type ObjectWithStartViewTransition = {
+  startViewTransition: (callback: ViewTransitionCallback) => void
+}
+
+export function safeViewTransition(callback: ViewTransitionCallback) {
   if (
     motionSafe &&
     typeof document !== 'undefined' &&
     'startViewTransition' in document
   ) {
     // Needed until TypeScript catches up
-    const doc = document
+    const doc = document as unknown as ObjectWithStartViewTransition
     doc.startViewTransition(callback)
   } else {
     callback()
@@ -30,7 +36,7 @@ export const VanillaExample = () => {
   const [slow, setSlow] = useState(false)
   const [differentTransitionName, setDifferentTransitionName] = useState(false)
 
-  const boxRef = useRef(null)
+  const boxRef = useRef<ElementRef<'button'>>(null)
   const toggledRef = useRef(false)
 
   useEffect(() => {
@@ -53,11 +59,11 @@ export const VanillaExample = () => {
   return (
     <>
       Click the box to see it move and grow! If you toggle the animation speed,
-      you can see how animated elements' content is handled with and without a
-      separate <code>view-transition-name</code>.
-      <div className="container">
-        <button className="box" ref={boxRef}>
-          <span className={differentTransitionName ? 'box-content' : ''}>
+      you can see how animated elements&apos; content is handled with and
+      without a separate <code>view-transition-name</code>.
+      <div className="svt-container">
+        <button className="svt-box" ref={boxRef}>
+          <span className={differentTransitionName ? 'svt-box-content' : ''}>
             HI!
           </span>
         </button>
@@ -70,11 +76,11 @@ export const VanillaExample = () => {
           flexWrap: 'wrap',
         }}
       >
-        <button className="button" onClick={() => setSlow(!slow)}>
+        <button className="svt-button" onClick={() => setSlow(!slow)}>
           Toggle animation speed to {slow ? 'fast' : 'slow'}
         </button>
         <button
-          className="button"
+          className="svt-button"
           onClick={() => setDifferentTransitionName(!differentTransitionName)}
         >
           Toggle to {differentTransitionName ? 'no' : 'different'} content
@@ -82,22 +88,24 @@ export const VanillaExample = () => {
         </button>
       </div>
       <style>{`
-        ::view-transition-group(*) {
+        ::view-transition-group(box),
+        ::view-transition-group(box-content) {
           animation-duration: ${slow ? '10s' : '0.25s'};
         }
       `}</style>
+      {/* eslint-disable-next-line react/no-unknown-property */}
       <style jsx>{`
-        .container {
+        .svt-container {
           height: 140px;
           display: flex;
           align-items: center;
           justify-content: flex-start;
         }
-        .container:has(.toggled) {
+        .svt-container:has(.toggled) {
           justify-content: flex-end;
         }
 
-        .box {
+        .svt-box {
           display: grid;
           place-items: center;
           width: 80px;
@@ -111,20 +119,20 @@ export const VanillaExample = () => {
           view-transition-name: box;
           cursor: pointer;
         }
-        .box.toggled {
+        .svt-box.toggled {
           width: 120px;
           rotate: 0.5turn;
           background: var(--cyan);
           margin-left: 100px;
         }
-        .button {
+        .svt-button {
           padding: 0.5rem 1rem;
           border-radius: 0.25rem;
           background: var(--base-dark);
           font-size: 0.875rem;
         }
 
-        .box-content {
+        .svt-box-content {
           view-transition-name: box-content;
         }
       `}</style>

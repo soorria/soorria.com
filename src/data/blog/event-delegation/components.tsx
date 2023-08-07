@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, type MouseEvent } from 'react'
 import { css } from '~/components/mdx/styles'
 
 const layer = css({
@@ -36,15 +36,17 @@ const layer = css({
 
 export const BubblingDemo = () => {
   const [clicked, setClicked] = useState(false)
-  const handleClick = event => {
+  const handleClick = (event: MouseEvent<HTMLElement>) => {
     if (clicked) return
     setClicked(true)
     // Element that the event listener was added to
     const currentTargetElementLayer = parseInt(
-      event.currentTarget.dataset.layer
+      event.currentTarget.dataset.layer!
     )
     // Element that was actually clicked
-    const targetElementLayer = parseInt(event.target.dataset.layer)
+    const targetElementLayer = parseInt(
+      (event.target as HTMLElement).dataset.layer!
+    )
     const delay = currentTargetElementLayer - targetElementLayer
 
     const el = event.currentTarget
@@ -63,6 +65,7 @@ export const BubblingDemo = () => {
     }, delay * timeoutMult)
   }
   return (
+    // eslint-disable-next-line
     <section
       data-layer={3}
       data-el="section"
@@ -73,6 +76,7 @@ export const BubblingDemo = () => {
       className={layer}
       onClick={handleClick}
     >
+      {/* eslint-disable-next-line */}
       <div
         data-layer={2}
         data-el="div"
@@ -80,6 +84,7 @@ export const BubblingDemo = () => {
         className={layer}
         onClick={handleClick}
       >
+        {/* eslint-disable-next-line */}
         <p
           data-layer={1}
           data-el="p"

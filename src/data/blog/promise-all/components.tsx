@@ -1,18 +1,22 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, type CSSProperties, type ReactNode } from 'react'
 
-const getPost = async id => {
+type Post = { id: number; title: string }
+
+const getPost = async (id: number) => {
   const response = await fetch(
     `https://jsonplaceholder.typicode.com/posts/${id}`
   )
   const post = await response.json()
-  return post
+  return post as Post
 }
 
-const myPromiseAll_Naive = promises => {
-  return new Promise((resolve, reject) => {
-    const results = []
+type MyPromiseAll = <T>(promises: Promise<T>[]) => Promise<T[]>
+
+const myPromiseAll_Naive: MyPromiseAll = promises => {
+  return new Promise((resolve, _reject) => {
+    const results: unknown[] = []
 
     for (const promise of promises) {
       promise.then(promiseResult => {
@@ -20,33 +24,34 @@ const myPromiseAll_Naive = promises => {
       })
     }
 
-    // This isn't exactly what I've written in the post, but is required due to React rerendering a bunch of extra times
-    resolve([...results])
+    // This isn't exactly what I've written in the post, but shallow-cloning
+    // the array is required due to React rerendering a bunch of extra times
+    resolve([...results] as any[])
   })
 }
 
-const myPromiseAll_WaitingForAll = promises => {
-  return new Promise((resolve, reject) => {
-    const results = []
+const myPromiseAll_WaitingForAll: MyPromiseAll = promises => {
+  return new Promise((resolve, _reject) => {
+    const results: unknown[] = []
 
     for (const promise of promises) {
       promise.then(promiseResult => {
         results.push(promiseResult)
 
         if (results.length === promises.length) {
-          resolve(results)
+          resolve(results as any[])
         }
       })
     }
   })
 }
 
-const myPromiseAll_InOrder = promises => {
-  return new Promise((resolve, reject) => {
+const myPromiseAll_InOrder: MyPromiseAll = promises => {
+  return new Promise((resolve, _reject) => {
     const results = Array(promises.length)
     let numResolvedPromises = 0
     for (let i = 0; i < promises.length; i++) {
-      const promise = promises[i]
+      const promise = promises[i]!
       promise.then(promiseResult => {
         results[i] = promiseResult
         numResolvedPromises++
@@ -63,7 +68,15 @@ const postIdsToFetch = Array.from({ length: 4 }, (_, i) => i + 1)
 
 const getPostPromises = () => postIdsToFetch.map(id => getPost(id))
 
-const createExample = ({ myPromiseAll, text = {}, height }) => {
+const createExample = ({
+  myPromiseAll,
+  text = {},
+  height,
+}: {
+  myPromiseAll: MyPromiseAll
+  text?: Partial<{ myPromiseAll: ReactNode; promiseAll: ReactNode }>
+  height?: string
+}) => {
   const hasText = !!(text.myPromiseAll || text.promiseAll)
   const styles = {
     grid: {
@@ -78,15 +91,15 @@ const createExample = ({ myPromiseAll, text = {}, height }) => {
       fontWeight: 'bold',
       marginTop: 0,
     },
-  }
+  } satisfies Record<string, CSSProperties>
 
-  return () => {
+  return function MyPromiseAllExample() {
     const [myPromiseAllResult, setMyPromiseAllResult] = useState({
-      posts: [],
+      posts: [] as Post[],
       loading: true,
     })
     const [promiseAllResult, setPromiseAllResult] = useState({
-      posts: [],
+      posts: [] as Post[],
       loading: true,
     })
 
@@ -113,11 +126,17 @@ const createExample = ({ myPromiseAll, text = {}, height }) => {
       }
     }, [])
 
-    const renderResult = ({ posts, loading }) => {
+    const renderResult = ({
+      posts,
+      loading,
+    }: {
+      posts: Post[]
+      loading: boolean
+    }) => {
       if (loading) return <p>Loading...</p>
       if (!posts.length) return <p>No results</p>
       return (
-        <ul style={styles.list}>
+        <ul>
           {posts.map(post => (
             <li key={post.id}>
               <b>Post #{post.id}</b> {post.title}

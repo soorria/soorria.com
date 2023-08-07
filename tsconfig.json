@@ -26,7 +26,7 @@
         "src/*"
       ],
       "~data/*": [
-        "_data/*"
+        "src/data/*"
       ],
       "$styles": [
         "src/mdx/styles.ts"

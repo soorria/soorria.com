@@ -1,6 +1,8 @@
 'use client'
 
-const download = (content, fileName, type) => {
+import type { CSSProperties } from 'react'
+
+const download = (content: string | Blob, fileName: string, type: string) => {
   const blob =
     typeof content === 'string' ? new Blob([content], { type }) : content
   const a = document.createElement('a')
@@ -19,7 +21,7 @@ const styles = {
     fontWeight: 'bold',
     textDecoration: 'none',
   },
-}
+} satisfies Record<string, CSSProperties>
 
 export const Example = () => {
   return (
