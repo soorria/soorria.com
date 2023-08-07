@@ -66,7 +66,7 @@ const ArtPage = () => {
           const slug = item.slug || paramCase(item.title)
           return (
             <Fragment key={slug}>
-              <h2>
+              <h2 id={slug}>
                 {item.title}
                 <CustomLink
                   href={`#${slug}`}
