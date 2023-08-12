@@ -1,5 +1,6 @@
 import '@total-typescript/ts-reset'
 import type { ReactNode } from 'react'
+import PlausibleProvider from 'next-plausible'
 import { TailwindIndicator } from '~/components/TailwindIndicator'
 
 import '~/styles/globals.css'
@@ -83,6 +84,7 @@ const RootLayout = ({ children }: { children: ReactNode }) => {
           type="font/woff2"
           crossOrigin="anonymous"
         />
+        <PlausibleProvider domain="mooth.tech" customDomain="https://soorria.com" selfHosted />
       </head>
       <body className="relative h-full min-h-screen bg-drac-base text-drac-content">
         {children}
