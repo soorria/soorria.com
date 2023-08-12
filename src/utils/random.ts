@@ -13,6 +13,10 @@ export const randomItem = <T>(arr: T[]): T => arr[randomIndex(arr)]!
 export const createNonRepeatRandomItem = <T>(arr: T[]): (() => T) => {
   let lastIndex: number | null = null
 
+  if (arr.length === 1) {
+    return () => arr[0]!
+  }
+
   return () => {
     let index = randomIndex(arr)
 
