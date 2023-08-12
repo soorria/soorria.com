@@ -170,6 +170,8 @@ const draw = (
         //
       ]
 
+  const getRandomXOffset = createNonRepeatRandomItem([-4, -2, 2, 4])
+  const getRandomYOffset = createNonRepeatRandomItem([-4, -2, 2, 4])
   const getRandomColor = createNonRepeatRandomItem(availablePatternColors)
   const getRandomPattern = createNonRepeatRandomItem(availablePatterns)
 
@@ -181,13 +183,13 @@ const draw = (
         defaultAngle: query.debugNoRandomAngle ? 0 : Math.random() * TAU,
         lastAngle: 0,
         lastAngleTime: 0,
+        xOffset: getRandomXOffset(),
+        yOffset: getRandomYOffset(),
       }
     })
   )
 
   let grid = baseGridPattern
-
-  // grid = baseGridPattern
 
   const handleResize = () => {
     const rect = container.getBoundingClientRect()
@@ -224,10 +226,11 @@ const draw = (
 
     if (isTouch) {
       const e = _e as TouchEvent
-      if (!e.touches[0]) return
+      if (e.touches.length !== 1) return
+      const touch = e.touches[0]!
       mouse = {
-        x: e.touches[0].clientX - rect.left,
-        y: e.touches[0].clientY - rect.top,
+        x: touch.clientX - rect.left,
+        y: touch.clientY - rect.top,
       }
     } else {
       const e = _e as MouseEvent
@@ -242,13 +245,23 @@ const draw = (
   window.addEventListener('touchmove', handlePointerMove)
 
   let mouseDown = false
-  const handleMouseUpDown = (e: MouseEvent | TouchEvent) => {
-    mouseDown = e.type === 'mousedown' || e.type === 'touchstart'
+  const handleMouseUpDown = (_e: MouseEvent | TouchEvent) => {
+    mouseDown = _e.type === 'mousedown' || _e.type === 'touchstart'
+
+    if (_e.type === 'touchstart') {
+      const e = _e as TouchEvent
+      if (e.touches.length !== 1) return
+      const touch = e.touches[0]!
+
+      // e.preventDefault()
+
+      // const isOverCanvas = canvas.contains(touch.target as Node)
+    }
   }
-  // window.addEventListener('mousedown', handleMouseUpDown)
-  // window.addEventListener('mouseup', handleMouseUpDown)
-  // window.addEventListener('touchstart', handleMouseUpDown)
-  // window.addEventListener('touchend', handleMouseUpDown)
+  window.addEventListener('mousedown', handleMouseUpDown)
+  window.addEventListener('mouseup', handleMouseUpDown)
+  window.addEventListener('touchstart', handleMouseUpDown, { passive: false })
+  window.addEventListener('touchend', handleMouseUpDown)
 
   const draw = () => {
     if (stopped) return
@@ -266,16 +279,16 @@ const draw = (
       for (let colIdx = 0; colIdx < row.length; colIdx++) {
         const cell = row[colIdx]!
 
-        const imageX = colIdx * CELL_WIDTH + CELL_HALF_WIDTH
-        const imageY = rowIdx * CELL_WIDTH + CELL_HALF_WIDTH
+        const cellX = colIdx * CELL_WIDTH + CELL_HALF_WIDTH + cell.xOffset
+        const cellY = rowIdx * CELL_WIDTH + CELL_HALF_WIDTH + cell.yOffset
 
-        const dx = mouse.x - imageX
-        const dy = mouse.y - imageY
+        const dx = mouse.x - cellX
+        const dy = mouse.y - cellY
 
         const inRange = dx ** 2 + dy ** 2 <= (CELL_WIDTH * 2.5) ** 2
 
         ctx.save()
-        ctx.translate(imageX, imageY)
+        ctx.translate(cellX, cellY)
         if (mouseDown && inRange) {
           ctx.scale(1.5, 1.5)
         }
@@ -384,6 +397,8 @@ const draw = (
 
     window.removeEventListener('mousedown', handleMouseUpDown)
     window.removeEventListener('mouseup', handleMouseUpDown)
+    window.removeEventListener('touchstart', handleMouseUpDown)
+    window.removeEventListener('touchend', handleMouseUpDown)
     stopped = true
   }
 }
