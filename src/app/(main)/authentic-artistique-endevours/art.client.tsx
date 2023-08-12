@@ -1,8 +1,7 @@
 'use client'
 
-import { useSearchParams } from 'next/navigation'
 import { useEffect, useRef } from 'react'
-import { createNonRepeatRandomItem, random, randomItem } from '~/utils/random'
+import { createNonRepeatRandomItem } from '~/utils/random'
 import { useHydrated } from '~/utils/use-hydrated'
 
 export const CanvasBackdrop = () => {
@@ -85,7 +84,7 @@ const draw = (
   let stopped = false
 
   const CELL_WIDTH = 30
-  const CELL_SCALE = CELL_WIDTH / (10 * 2)
+  // const CELL_SCALE = CELL_WIDTH / (10 * 2)
   const CELL_HALF_WIDTH = CELL_WIDTH / 2
   const RESET_DELAY_MS = 500 // 1000
   const RESET_DURATION_MS = 1000
