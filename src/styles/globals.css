@@ -228,6 +228,7 @@ input {
 
 .tooltip:before {
   content: attr(aria-label);
+  --tw-content: attr(aria-label);
   @apply pointer-events-none translate-y-1 opacity-0 transition;
   @apply absolute bottom-full left-1/2 mb-1 w-max -translate-x-1/2 rounded px-2 py-1;
   @apply bg-drac-base-dark text-drac-content;

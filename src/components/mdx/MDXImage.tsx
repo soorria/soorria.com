@@ -25,7 +25,7 @@ const MDXImage: React.FC<ImageProps & { download?: boolean }> = ({ download, ...
   const srcUrl = getSrcUrl(rest.src)
   const filename = srcUrl ? getFilename(srcUrl) : ''
   return (
-    <div className="relative right-4 top-4 -mx-2 md:-mx-6">
+    <div className="relative -mx-2 md:-mx-6">
       {/* eslint-disable-next-line jsx-a11y/alt-text */}
       <Image {...rest} />
       {download && srcUrl ? (
