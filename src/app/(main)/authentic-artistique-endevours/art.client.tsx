@@ -252,10 +252,22 @@ const draw = (
       const e = _e as TouchEvent
       if (e.touches.length !== 1) return
       const touch = e.touches[0]!
+      const isOnLink = !!(touch.target as HTMLElement).closest('a')
+      if (isOnLink) return
 
-      // e.preventDefault()
+      const containerRect = container.getBoundingClientRect()
+      const isOverContainer =
+        touch.clientX >= containerRect.left &&
+        touch.clientX <= containerRect.right &&
+        touch.clientY >= containerRect.top &&
+        touch.clientY <= containerRect.bottom
+
+      if (!isOverContainer) return
+      e.preventDefault()
 
       // const isOverCanvas = canvas.contains(touch.target as Node)
+    } else if (_e.type === 'touchend') {
+      mouse = { x: -Infinity, y: -Infinity }
     }
   }
   window.addEventListener('mousedown', handleMouseUpDown)
@@ -289,9 +301,9 @@ const draw = (
 
         ctx.save()
         ctx.translate(cellX, cellY)
-        if (mouseDown && inRange) {
-          ctx.scale(1.5, 1.5)
-        }
+        // if (mouseDown && inRange) {
+        //   ctx.scale(1.5, 1.5)
+        // }
         ctx.lineCap = 'round'
         ctx.lineWidth = 2.5
 
