@@ -244,12 +244,8 @@ const draw = (
   window.addEventListener('mousemove', handlePointerMove)
   window.addEventListener('touchmove', handlePointerMove)
 
-  let mouseDown = false
-  const handleMouseUpDown = (_e: MouseEvent | TouchEvent) => {
-    mouseDown = _e.type === 'mousedown' || _e.type === 'touchstart'
-
-    if (_e.type === 'touchstart') {
-      const e = _e as TouchEvent
+  const handleTouchUpDown = (e: TouchEvent) => {
+    if (e.type === 'touchstart') {
       if (e.touches.length !== 1) return
       const touch = e.touches[0]!
       const isOnLink = !!(touch.target as HTMLElement).closest('a')
@@ -264,16 +260,12 @@ const draw = (
 
       if (!isOverContainer) return
       e.preventDefault()
-
-      // const isOverCanvas = canvas.contains(touch.target as Node)
-    } else if (_e.type === 'touchend') {
+    } else if (e.type === 'touchend') {
       mouse = { x: -Infinity, y: -Infinity }
     }
   }
-  window.addEventListener('mousedown', handleMouseUpDown)
-  window.addEventListener('mouseup', handleMouseUpDown)
-  window.addEventListener('touchstart', handleMouseUpDown, { passive: false })
-  window.addEventListener('touchend', handleMouseUpDown)
+  window.addEventListener('touchstart', handleTouchUpDown, { passive: false })
+  window.addEventListener('touchend', handleTouchUpDown)
 
   const draw = () => {
     if (stopped) return
@@ -407,10 +399,8 @@ const draw = (
     window.removeEventListener('mousemove', handlePointerMove)
     window.removeEventListener('touchmove', handlePointerMove)
 
-    window.removeEventListener('mousedown', handleMouseUpDown)
-    window.removeEventListener('mouseup', handleMouseUpDown)
-    window.removeEventListener('touchstart', handleMouseUpDown)
-    window.removeEventListener('touchend', handleMouseUpDown)
+    window.removeEventListener('touchstart', handleTouchUpDown)
+    window.removeEventListener('touchend', handleTouchUpDown)
     stopped = true
   }
 }
