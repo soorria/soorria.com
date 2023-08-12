@@ -10,6 +10,7 @@ import { getOgImage } from '~/utils/og'
 import { PUBLIC_URL } from '~/constants'
 import { randomItem } from '~/utils/random'
 import { PageRenderedAt } from '~/components/PageRenderedAt'
+import { CanvasBackdrop } from './art.client'
 
 export const revalidate = 10
 
@@ -103,6 +104,8 @@ const ArtPage = () => {
         title="Art"
         description='...or more accurately "art". Welcome to the world of the authentic artistique endevours of Soorria Saruva.'
         patterns={['doodle-pattern-2']}
+        backdrop={<CanvasBackdrop />}
+        hidePatternsWhenJs
       >
         <ProseWrapper>
           {art.map(item => {

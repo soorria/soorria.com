@@ -8,6 +8,8 @@ type PostLayoutProps = PropsWithChildren<{
   title: string
   description?: ReactNode
   patterns?: [Pattern, ...Pattern[]]
+  backdrop?: ReactNode
+  hidePatternsWhenJs?: boolean
 }>
 
 export const PostHeading: React.FC<PropsWithChildren> = ({ children }) => {
@@ -31,7 +33,14 @@ export const PostDescription = ({ children }: { children: ReactNode }) => {
   return <p className="mb-12 mt-6 text-center text-lg text-balance">{children}</p>
 }
 
-const PostLayout: React.FC<PostLayoutProps> = ({ title, children, description, patterns }) => {
+const PostLayout: React.FC<PostLayoutProps> = ({
+  title,
+  children,
+  description,
+  patterns,
+  backdrop,
+  hidePatternsWhenJs,
+}) => {
   const meta = (
     <>
       <PostHeading>{title}</PostHeading>
@@ -49,11 +58,15 @@ const PostLayout: React.FC<PostLayoutProps> = ({ title, children, description, p
           >
             {patterns.map((pattern, i) => (
               <div
-                className="hero-bg absolute inset-0 -bottom-16 -top-8 -z-10"
+                className={cx(
+                  'hero-bg absolute inset-0 -bottom-16 -top-8 -z-10',
+                  hidePatternsWhenJs && 'no-js-block hidden'
+                )}
                 style={{ '--pattern': availablePatterns[pattern] ?? '' }}
                 key={i}
               />
             ))}
+            {backdrop}
             {meta}
           </div>
         ) : (
