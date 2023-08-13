@@ -7,11 +7,6 @@ import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 import cx from '~/utils/cx'
 import { random, shuffle } from '~/utils/random'
 
-// export const metadata = {
-//   title: 'Magic Sprinkles',
-//   description: 'A fun and addictive little interactive animation',
-// }
-
 const colors = shuffle([
   'text-drac-pink/25',
   'text-drac-green/25',
@@ -48,7 +43,11 @@ const MagicSprinklesPage = ({ children }: { children: ReactNode }) => {
               }
               onAnimationEnd={() => {
                 if (!quick) {
-                  router.replace(`${pathname}?quick-fade=true`, { scroll: false })
+                  const existingQuery = searchParams.toString()
+                  const query = existingQuery
+                    ? `${existingQuery}&quick-fade=true`
+                    : 'quick-fade=true'
+                  router.replace(`${pathname}?${query}`, { scroll: false })
                 }
               }}
             >

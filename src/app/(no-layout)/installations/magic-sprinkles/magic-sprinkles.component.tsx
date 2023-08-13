@@ -2,7 +2,7 @@
 
 import { useEffect, useRef } from 'react'
 import cx from '~/utils/cx'
-import { createNonRepeatRandomItem, random } from '~/utils/random'
+import { createNonRepeatRandomItem } from '~/utils/random'
 import { useHydrated } from '~/utils/use-hydrated'
 
 type MagicSprinklesProps = { fade?: boolean; isInHero?: boolean }
@@ -103,7 +103,6 @@ const draw = (
   const CELL_HALF_WIDTH = CELL_WIDTH / 2
   const RESET_DELAY_MS = 500 // 1000
   const RESET_DURATION_MS = 1000
-  const INACTIVE_DELAY = 1000
   const PI = Math.PI
   const TAU = PI * 2
 
@@ -231,34 +230,13 @@ const draw = (
         return structuredClone(row![colIdx % row.length]!)
       })
     )
-
-    // grid = [[grid[0]![0]!]]
   }
   handleResize()
   window.addEventListener('resize', handleResize)
 
-  let mouseInactiveTimeout: ReturnType<typeof setTimeout> | null = null
-  const queueInactive = () => {
-    mouseInactiveTimeout = setTimeout(handleMouseInactive, INACTIVE_DELAY)
-  }
-  const handleMouseInactive = () => {
-    // mouse = {
-    //   x: random(0, width),
-    //   y: random(0, height),
-    // }
-
-    queueInactive()
-  }
-  queueInactive()
-
   const handlePointerMove = (_e: MouseEvent | TouchEvent) => {
     const rect = canvas.getBoundingClientRect()
     const isTouch = _e.type === 'touchmove'
-
-    if (mouseInactiveTimeout) {
-      clearTimeout(mouseInactiveTimeout)
-    }
-    mouseInactiveTimeout = setTimeout(handleMouseInactive, INACTIVE_DELAY)
 
     if (isTouch) {
       const e = _e as TouchEvent
@@ -329,9 +307,6 @@ const draw = (
 
         ctx.save()
         ctx.translate(cellX, cellY)
-        // if (mouseDown && inRange) {
-        //   ctx.scale(1.5, 1.5)
-        // }
         ctx.lineCap = 'round'
         ctx.lineWidth = STROKE_WIDTH
 
@@ -340,31 +315,7 @@ const draw = (
 
         ctx.strokeStyle = color
 
-        // ctx.fillStyle = colors.purple
-        // ctx.fillRect(
-        //   -CELL_HALF_WIDTH + CELL_SCALE,
-        //   -CELL_HALF_WIDTH + CELL_SCALE,
-        //   CELL_WIDTH - CELL_SCALE * 2,
-        //   CELL_WIDTH - CELL_SCALE * 2
-        // )
-        // ctx.fillStyle = colors.base
-        // ctx.fillRect(
-        //   -CELL_HALF_WIDTH + CELL_SCALE * 1.5,
-        //   -CELL_HALF_WIDTH + CELL_SCALE * 1.5,
-        //   CELL_WIDTH - CELL_SCALE * 3,
-        //   CELL_WIDTH - CELL_SCALE * 3
-        // )
-
         let angle: number = cell.defaultAngle
-
-        // ctx.beginPath()
-        // ctx.moveTo(0, 0)
-        // ctx.lineTo(0, dy)
-        // ctx.stroke()
-        // ctx.beginPath()
-        // ctx.moveTo(0, 0)
-        // ctx.lineTo(dx, 0)
-        // ctx.stroke()
 
         if (inRange) {
           let targetAngle = Math.atan2(dy, dx) + PI * 0.5
