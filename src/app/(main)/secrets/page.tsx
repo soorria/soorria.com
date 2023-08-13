@@ -16,7 +16,7 @@ export const metadata = {
     url,
     title,
     description,
-    images: [getOgImage(title, 'soorria.com')],
+    images: [getOgImage({ title: 'Nothing to see here...', subtitle: 'soorria.com' })],
   },
 }
 

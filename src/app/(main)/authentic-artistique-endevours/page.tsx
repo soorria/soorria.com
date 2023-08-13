@@ -32,7 +32,7 @@ export const metadata = {
     title,
     type: 'website',
     description,
-    images: [getOgImage('Authentic Artistique Endevours', 'soorria.com/art')],
+    images: [getOgImage({ title: 'Authentic Artistique Endevours', subtitle: 'soorria.com/art' })],
   },
 }
 

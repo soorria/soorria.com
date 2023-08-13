@@ -24,7 +24,7 @@ export const metadata = {
     authors: ['Soorria Saruva'],
     // modifiedTime: new Date(updatedAt).toISOString(),
     // publishedTime: new Date(updatedAt).toISOString(),
-    images: [getOgImage('Uses')],
+    images: [getOgImage({ title: 'Uses' })],
   },
 }
 
