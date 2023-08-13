@@ -1,11 +1,13 @@
 import '@total-typescript/ts-reset'
 import type { ReactNode } from 'react'
 import PlausibleProvider from 'next-plausible'
-import { TailwindIndicator } from '~/components/TailwindIndicator'
 
 import '~/styles/globals.css'
 import NoJsStyles from '~/styles/NoJsStyles'
 import '~/styles/prose.css'
+import dynamic from 'next/dynamic'
+
+const DevHelpers = dynamic(() => import('~/components/dev-helpers'), { ssr: false })
 
 const title = 'Soorria Saruva - Full Stack Software Engineer'
 const description = 'Full Stack Software Engineer'
@@ -89,7 +91,7 @@ const RootLayout = ({ children }: { children: ReactNode }) => {
       <body className="relative h-full min-h-screen bg-drac-base text-drac-content">
         {children}
         <NoJsStyles />
-        <TailwindIndicator />
+        {process.env.NODE_ENV === 'development' && <DevHelpers />}
       </body>
     </html>
   )

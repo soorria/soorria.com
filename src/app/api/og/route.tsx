@@ -21,6 +21,7 @@ const poppinsBold = getFont('poppins-bold')
 
 export const GET = async (req: NextRequest): Promise<ImageResponse> => {
   const [regular, bold] = await Promise.all([poppinsRegular, poppinsBold])
+  const bottomText = req.nextUrl.searchParams.get('bottomText')
   const titleParts = req.nextUrl.searchParams.getAll('titleParts')
   const title = titleParts.length ? (
     titleParts.slice(0, 2).map((part, i) => <span key={i}>{part}</span>)
@@ -133,6 +134,31 @@ export const GET = async (req: NextRequest): Promise<ImageResponse> => {
             ) : null}
           </div>
         </div>
+
+        {bottomText && (
+          <div
+            style={{
+              position: 'absolute',
+              bottom: 16,
+              left: 0,
+              right: 0,
+              display: 'flex',
+              justifyContent: 'center',
+            }}
+          >
+            <p
+              style={{
+                fontFamily: 'PoppinsRegular',
+                fontSize: 30,
+                color: '#282a36',
+                // opacity: 178 / 255,
+                letterSpacing: 1.25,
+              }}
+            >
+              {bottomText}
+            </p>
+          </div>
+        )}
       </div>
     ),
     {

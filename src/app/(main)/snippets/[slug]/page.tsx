@@ -10,7 +10,6 @@ import type { Metadata } from 'next'
 import { getOgImageForData } from '~/utils/og'
 import ProseWrapper from '~/components/posts/ProseWrapper'
 import MdxRenderer from '~/components/mdx/MdxRenderer'
-import Image from 'next/image'
 import { ignoreError } from '~/utils/misc'
 import { notFound } from 'next/navigation'
 
@@ -69,7 +68,6 @@ const SnippetPage = async ({ params }: SnippetPageProps) => {
 
   const { code, ...snippet } = data
 
-  const ogImageData = getOgImageForData('snippets', snippet.title, snippet.ogImageTitleParts)
   return (
     <PostLayout title={snippet.title}>
       <SpinningIconDivider
@@ -77,18 +75,6 @@ const SnippetPage = async ({ params }: SnippetPageProps) => {
         icon={categoryLowerCaseToIcon[snippet.category.toLowerCase()] || defaultCategoryIcon}
       />
       <ProseWrapper>
-        {process.env.NODE_ENV !== 'production' && (
-          <details>
-            <summary>OG Image</summary>
-            <Image
-              src={ogImageData.url.replace('https://soorria.com', 'http://localhost:3000')}
-              width={1200}
-              height={630}
-              alt=""
-              id="__dev_og_image__"
-            />
-          </details>
-        )}
         <MdxRenderer code={code} type="snippets" slug={snippet.slug} />
         <PostBottomSection>
           <div suppressHydrationWarning>

@@ -9,7 +9,6 @@ import { formatDate } from '~/utils/date'
 import cx from '~/utils/cx'
 import PostGithubLinks from '~/components/posts/PostGithubLinks'
 import { categoryLowerCaseToIcon } from '~/components/categories'
-import Image from 'next/image'
 import type { Metadata } from 'next'
 import ProseWrapper from '~/components/posts/ProseWrapper'
 import MdxRenderer from '~/components/mdx/MdxRenderer'
@@ -76,8 +75,6 @@ const PostPage = async (props: PostPageProps) => {
   const icon =
     (post.category && categoryLowerCaseToIcon[post.category.toLowerCase()]) || GlobeAuIcon
 
-  const ogImageData = getOgImageForData('blog', post.title, post.ogImageTitleParts)
-
   return (
     <PostLayout title={post.title}>
       <SpinningIconDivider scrollVar={SCROLL_VAR} icon={icon} />
@@ -111,19 +108,6 @@ const PostPage = async (props: PostPageProps) => {
       </div>
 
       <ProseWrapper>
-        {process.env.NODE_ENV !== 'production' && (
-          <details>
-            <summary>OG Image</summary>
-            <Image
-              src={ogImageData.url.replace('https://soorria.com', 'http://localhost:3000')}
-              width={1200}
-              height={630}
-              alt=""
-              id="__dev_og_image__"
-            />
-          </details>
-        )}
-
         <MdxRenderer code={code} type="blog" slug={post.slug} />
 
         <PostBottomSection>

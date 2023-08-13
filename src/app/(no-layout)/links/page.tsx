@@ -84,7 +84,7 @@ const LinksPage = async (_props: LinksPageProps) => {
         </Hero>
 
         <footer className="pb-10 pt-8 text-lg">
-          <MadeBy />
+          <MadeBy asLink />
         </footer>
       </Container>
     </>

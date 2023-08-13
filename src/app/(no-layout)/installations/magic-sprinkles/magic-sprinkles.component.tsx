@@ -1,23 +1,26 @@
 'use client'
 
 import { useEffect, useRef } from 'react'
-import { createNonRepeatRandomItem } from '~/utils/random'
+import cx from '~/utils/cx'
+import { createNonRepeatRandomItem, random } from '~/utils/random'
 import { useHydrated } from '~/utils/use-hydrated'
 
-export const CanvasBackdrop = () => {
+type MagicSprinklesProps = { fade?: boolean; isInHero?: boolean }
+export const MagicSprinkles = (props: MagicSprinklesProps) => {
   const hydrated = useHydrated()
 
   if (!hydrated) return null
 
-  return <Canvas />
+  return <Canvas {...props} />
 }
+export default MagicSprinkles
 
 const masks = {
   ltr: 'linear-gradient(to left, transparent, black 10%, black 90%, transparent)',
   ttb: 'linear-gradient(to bottom, transparent, black 10%, black 75%, transparent)',
 }
 
-const Canvas = () => {
+const Canvas = (props: MagicSprinklesProps) => {
   const containerRef = useRef<HTMLDivElement>(null)
   const canvasRef = useRef<HTMLCanvasElement>(null)
 
@@ -33,26 +36,37 @@ const Canvas = () => {
 
   return (
     <div
-      className="fade-in-direct absolute inset-0 -bottom-16 -z-10 overflow-hidden bg-drac-base"
+      className={cx(
+        'fade-in-direct absolute inset-0 -z-10 overflow-hidden bg-drac-base',
+        props.isInHero && '-bottom-16'
+      )}
       aria-hidden
     >
       <div
         ref={containerRef}
         className="absolute inset-0 -inset-x-8"
-        style={{
-          WebkitMaskImage: masks.ttb,
-          maskImage: masks.ttb,
-        }}
+        style={
+          props.fade
+            ? {
+                WebkitMaskImage: masks.ttb,
+                maskImage: masks.ttb,
+              }
+            : undefined
+        }
       >
         <canvas
-          className="h-full w-full opacity-50"
+          className={cx('h-full w-full', props.isInHero && 'opacity-50')}
           width="1920"
           height="1080"
           ref={canvasRef}
-          style={{
-            WebkitMaskImage: masks.ltr,
-            maskImage: masks.ltr,
-          }}
+          style={
+            props.fade
+              ? {
+                  WebkitMaskImage: masks.ltr,
+                  maskImage: masks.ltr,
+                }
+              : undefined
+          }
         />
       </div>
     </div>
@@ -84,14 +98,21 @@ const draw = (
   let stopped = false
 
   const CELL_WIDTH = 30
-  // const CELL_SCALE = CELL_WIDTH / (10 * 2)
+  const CELL_SCALE = Math.round(CELL_WIDTH / 30)
+  const STROKE_WIDTH = 2
   const CELL_HALF_WIDTH = CELL_WIDTH / 2
   const RESET_DELAY_MS = 500 // 1000
   const RESET_DURATION_MS = 1000
+  const INACTIVE_DELAY = 1000
   const PI = Math.PI
   const TAU = PI * 2
 
   const BASE_GRID_SIZE = 10
+
+  /**
+   * Position in canvas
+   */
+  let mouse = { x: -1000, y: -1000 }
 
   type Point = [x: number, y: number]
   type Line = [Point, ...Point[]]
@@ -216,13 +237,28 @@ const draw = (
   handleResize()
   window.addEventListener('resize', handleResize)
 
-  /**
-   * Position in canvas
-   */
-  let mouse = { x: -1000, y: -1000 }
+  let mouseInactiveTimeout: ReturnType<typeof setTimeout> | null = null
+  const queueInactive = () => {
+    mouseInactiveTimeout = setTimeout(handleMouseInactive, INACTIVE_DELAY)
+  }
+  const handleMouseInactive = () => {
+    // mouse = {
+    //   x: random(0, width),
+    //   y: random(0, height),
+    // }
+
+    queueInactive()
+  }
+  queueInactive()
+
   const handlePointerMove = (_e: MouseEvent | TouchEvent) => {
     const rect = canvas.getBoundingClientRect()
     const isTouch = _e.type === 'touchmove'
+
+    if (mouseInactiveTimeout) {
+      clearTimeout(mouseInactiveTimeout)
+    }
+    mouseInactiveTimeout = setTimeout(handleMouseInactive, INACTIVE_DELAY)
 
     if (isTouch) {
       const e = _e as TouchEvent
@@ -297,7 +333,7 @@ const draw = (
         //   ctx.scale(1.5, 1.5)
         // }
         ctx.lineCap = 'round'
-        ctx.lineWidth = 2.5
+        ctx.lineWidth = STROKE_WIDTH
 
         const color =
           cell.lastAngle !== cell.defaultAngle ? cell.color : addOpacity(cell.color, 0.5)
@@ -369,10 +405,10 @@ const draw = (
         for (const line of cell.pattern) {
           ctx.beginPath()
           const [point, ...rest] = line
-          ctx.moveTo(point[0], point[1])
+          ctx.moveTo(point[0] * CELL_SCALE, point[1] * CELL_SCALE)
 
           for (const p of rest) {
-            ctx.lineTo(p[0], p[1])
+            ctx.lineTo(p[0] * CELL_SCALE, p[1] * CELL_SCALE)
           }
           ctx.stroke()
         }

@@ -29,3 +29,16 @@ export const createNonRepeatRandomItem = <T>(arr: T[]): (() => T) => {
     return arr[index]!
   }
 }
+
+export const shuffle = <T>(arr: T[]): T[] => {
+  const result = [...arr]
+
+  for (let i = 0; i < result.length; i++) {
+    const j = randomIndex(result)
+    const temp = result[i]!
+    result[i] = result[j]!
+    result[j] = temp
+  }
+
+  return result
+}

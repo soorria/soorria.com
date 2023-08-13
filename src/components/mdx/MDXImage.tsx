@@ -1,6 +1,7 @@
 import Image, { type ImageProps } from 'next/image'
 import { CODE_BLOCK_CLASSNAMES } from './utils'
 import cx from '~/utils/cx'
+import { SlightBleedContentWrapper } from './SlightBleedContentWrapper'
 
 const getSrcUrl = (srcProp: ImageProps['src']): string | null => {
   if (typeof srcProp === 'string') {
@@ -25,7 +26,7 @@ const MDXImage: React.FC<ImageProps & { download?: boolean }> = ({ download, ...
   const srcUrl = getSrcUrl(rest.src)
   const filename = srcUrl ? getFilename(srcUrl) : ''
   return (
-    <div className="relative -mx-2 md:-mx-6">
+    <SlightBleedContentWrapper>
       {/* eslint-disable-next-line jsx-a11y/alt-text */}
       <Image {...rest} />
       {download && srcUrl ? (
@@ -40,7 +41,7 @@ const MDXImage: React.FC<ImageProps & { download?: boolean }> = ({ download, ...
           </a>
         </div>
       ) : null}
-    </div>
+    </SlightBleedContentWrapper>
   )
 }
 

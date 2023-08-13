@@ -5,6 +5,7 @@ import CodeBlock from './CodeBlock'
 import dynamic from 'next/dynamic'
 import { OnlyIsTs, TsJsToggle } from '../TsJsToggle'
 import type { MDXRemoteProps } from 'next-mdx-remote'
+import { SlightBleedContentWrapper } from './SlightBleedContentWrapper'
 
 const Sparkles = dynamic(() => import('./Sparkles'))
 
@@ -13,7 +14,7 @@ export const baseComponents = {
   pre: CodeBlock,
   Image: dynamic(() => import('./MDXImage')),
   Sandbox: props => (
-    <div className="-mx-2 md:-mx-6">
+    <SlightBleedContentWrapper>
       {/* eslint-disable-next-line jsx-a11y/iframe-has-title */}
       <iframe
         loading="lazy"
@@ -21,7 +22,7 @@ export const baseComponents = {
         sandbox="allow-forms allow-modals allow-popups allow-presentation allow-same-origin allow-scripts"
         {...props}
       />
-    </div>
+    </SlightBleedContentWrapper>
   ),
   Note: dynamic(() => import('./Note')),
   Demo: ReactDemo,
