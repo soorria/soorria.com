@@ -98,7 +98,6 @@ const draw = (
   let stopped = false
 
   const CELL_WIDTH = 30
-  const CELL_SCALE = Math.round(CELL_WIDTH / 30)
   const STROKE_WIDTH = 2
   const CELL_HALF_WIDTH = CELL_WIDTH / 2
   const RESET_DELAY_MS = 500 // 1000
@@ -112,10 +111,6 @@ const draw = (
    * Position in canvas
    */
   let mouse = { x: -1000, y: -1000 }
-
-  type Point = [x: number, y: number]
-  type Line = [Point, ...Point[]]
-  type Pattern = [Line, ...Line[]]
 
   const debugPattern: Pattern = [
     [
@@ -283,96 +278,83 @@ const draw = (
 
   const draw = () => {
     if (stopped) return
-    ctx.save()
-    ctx.scale(ratio, ratio)
 
-    ctx.clearRect(0, 0, width, height)
+    withCanvasState(ctx, () => {
+      ctx.scale(ratio, ratio)
 
-    ctx.fillStyle = 'var(--pink)'
+      ctx.clearRect(0, 0, width, height)
 
-    const now = Date.now()
+      const now = Date.now()
 
-    for (let rowIdx = 0; rowIdx < grid.length; rowIdx++) {
-      const row = grid[rowIdx]!
-      for (let colIdx = 0; colIdx < row.length; colIdx++) {
-        const cell = row[colIdx]!
+      for (let rowIdx = 0; rowIdx < grid.length; rowIdx++) {
+        const row = grid[rowIdx]!
+        for (let colIdx = 0; colIdx < row.length; colIdx++) {
+          const cell = row[colIdx]!
 
-        const cellX = colIdx * CELL_WIDTH + CELL_HALF_WIDTH + cell.xOffset
-        const cellY = rowIdx * CELL_WIDTH + CELL_HALF_WIDTH + cell.yOffset
+          const cellX = colIdx * CELL_WIDTH + CELL_HALF_WIDTH + cell.xOffset
+          const cellY = rowIdx * CELL_WIDTH + CELL_HALF_WIDTH + cell.yOffset
 
-        const dx = mouse.x - cellX
-        const dy = mouse.y - cellY
+          const dx = mouse.x - cellX
+          const dy = mouse.y - cellY
 
-        const inRange = dx ** 2 + dy ** 2 <= (CELL_WIDTH * 2.5) ** 2
+          const inRange = dx ** 2 + dy ** 2 <= (CELL_WIDTH * 2.5) ** 2
 
-        ctx.save()
-        ctx.translate(cellX, cellY)
-        ctx.lineCap = 'round'
-        ctx.lineWidth = STROKE_WIDTH
+          withCanvasState(ctx, () => {
+            ctx.translate(cellX, cellY)
+            ctx.lineCap = 'round'
+            ctx.lineWidth = STROKE_WIDTH
 
-        const color =
-          cell.lastAngle !== cell.defaultAngle ? cell.color : addOpacity(cell.color, 0.5)
+            const color =
+              cell.lastAngle !== cell.defaultAngle ? cell.color : addOpacity(cell.color, 0.5)
 
-        ctx.strokeStyle = color
+            ctx.strokeStyle = color
 
-        let angle: number = cell.defaultAngle
+            let angle = cell.defaultAngle
 
-        if (inRange) {
-          let targetAngle = Math.atan2(dy, dx) + PI * 0.5
-          const diff = targetAngle - cell.defaultAngle
-          if (diff > PI) {
-            targetAngle -= TAU
-          } else if (diff < -PI) {
-            targetAngle += TAU
-          }
-          cell.lastAngle = targetAngle
-          if (targetAngle !== cell.defaultAngle) {
-            cell.lastAngleTime = now
-          }
-          angle = targetAngle
-        } else if (cell.lastAngle !== cell.defaultAngle) {
-          const timeSinceLastAngle = now - cell.lastAngleTime
+            if (inRange) {
+              let targetAngle = Math.atan2(dy, dx) + PI * 0.5
+              const diff = targetAngle - cell.defaultAngle
+              if (diff > PI) {
+                targetAngle -= TAU
+              } else if (diff < -PI) {
+                targetAngle += TAU
+              }
+              cell.lastAngle = targetAngle
+              if (targetAngle !== cell.defaultAngle) {
+                cell.lastAngleTime = now
+              }
+              angle = targetAngle
+            } else if (cell.lastAngle !== cell.defaultAngle) {
+              const timeSinceLastAngle = now - cell.lastAngleTime
 
-          if (timeSinceLastAngle < RESET_DELAY_MS) {
-            angle = cell.lastAngle
-          } else {
-            angle =
-              cell.lastAngle +
-              (cell.defaultAngle - cell.lastAngle) *
-                easeInOutCubic((timeSinceLastAngle - RESET_DELAY_MS) / RESET_DURATION_MS)
-            const diff = Math.abs(angle - cell.defaultAngle)
-            if (
-              diff < 0.001 ||
-              (cell.lastAngle < cell.defaultAngle && angle > cell.defaultAngle) ||
-              (cell.lastAngle > cell.defaultAngle && angle < cell.defaultAngle)
-            ) {
-              angle = cell.defaultAngle
-              cell.lastAngle = cell.defaultAngle
+              if (timeSinceLastAngle < RESET_DELAY_MS) {
+                angle = cell.lastAngle
+              } else {
+                angle =
+                  cell.lastAngle +
+                  (cell.defaultAngle - cell.lastAngle) *
+                    easeInOutCubic((timeSinceLastAngle - RESET_DELAY_MS) / RESET_DURATION_MS)
+                const diff = Math.abs(angle - cell.defaultAngle)
+                if (
+                  diff < 0.001 ||
+                  (cell.lastAngle < cell.defaultAngle && angle > cell.defaultAngle) ||
+                  (cell.lastAngle > cell.defaultAngle && angle < cell.defaultAngle)
+                ) {
+                  angle = cell.defaultAngle
+                  cell.lastAngle = cell.defaultAngle
+                }
+              }
             }
-          }
+
+            ctx.rotate(angle)
+            for (const line of cell.pattern) {
+              drawLine(ctx, line)
+            }
+          })
         }
-
-        ctx.rotate(angle)
-        for (const line of cell.pattern) {
-          ctx.beginPath()
-          const [point, ...rest] = line
-          ctx.moveTo(point[0] * CELL_SCALE, point[1] * CELL_SCALE)
-
-          for (const p of rest) {
-            ctx.lineTo(p[0] * CELL_SCALE, p[1] * CELL_SCALE)
-          }
-          ctx.stroke()
-        }
-
-        ctx.restore()
       }
-    }
+    })
 
-    ctx.restore()
-
-    // new Promise(resolve => setTimeout(resolve, 1000 / 10)).then(() => {
-    //   frame = requestAnimationFrame(draw)
-    // })
     frame = requestAnimationFrame(draw)
   }
 
@@ -403,4 +385,25 @@ function addOpacity(color: string, opacity: number): string {
       .padStart(2, '0')}`
   }
   return color
+}
+
+const withCanvasState = (ctx: CanvasRenderingContext2D, fn: () => void) => {
+  ctx.save()
+  fn()
+  ctx.restore()
+}
+
+type Point = [x: number, y: number]
+type Line = [Point, ...Point[]]
+type Pattern = [Line, ...Line[]]
+
+const drawLine = (ctx: CanvasRenderingContext2D, line: Line) => {
+  ctx.beginPath()
+  const [point, ...rest] = line
+  ctx.moveTo(point[0], point[1])
+
+  for (const p of rest) {
+    ctx.lineTo(p[0], p[1])
+  }
+  ctx.stroke()
 }
