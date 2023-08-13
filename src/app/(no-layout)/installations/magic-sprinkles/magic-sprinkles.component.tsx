@@ -284,7 +284,7 @@ const renderer = (
     if (e.type === 'touchstart') {
       if (e.touches.length !== 1) return
       const touch = e.touches[0]!
-      const isOnLink = !!(touch.target as HTMLElement).closest('a')
+      const isOnLink = !!(touch.target as HTMLElement).closest('a,input,button,select,textarea')
       if (isOnLink) return
 
       const containerRect = container.getBoundingClientRect()
