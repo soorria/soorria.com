@@ -2,19 +2,36 @@ import MadeBy from '~/components/MadeBy'
 import MagicSprinklesPage from './page.client'
 import { getOgImage } from '~/utils/og'
 
+const url = '/installations/magic-sprinkles'
+const title = 'Magic Sprinkles'
+const description = 'A fun and addictive little interactive animation'
+
+const ogImage = getOgImage({
+  title: 'magic sprinkles',
+  subtitle: 'A fun and addictive little interactive animation',
+  bottomText: 'soorria.com/art',
+})
+
 export const metadata = {
-  title: 'Magic Sprinkles',
-  description: 'A fun and addictive little interactive animation',
+  title,
+  description,
+
+  alternates: {
+    canonical: url,
+  },
 
   openGraph: {
     type: 'article',
-    images: [
-      getOgImage({
-        title: 'magic sprinkles',
-        subtitle: 'A fun and addictive little interactive animation',
-        bottomText: 'soorria.com/art',
-      }),
-    ],
+    url,
+    title,
+    description,
+    images: [ogImage],
+  },
+
+  twitter: {
+    title,
+    description,
+    images: [ogImage],
   },
 }
 
