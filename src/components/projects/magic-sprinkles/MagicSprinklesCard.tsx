@@ -56,7 +56,7 @@ const MagicSprinklesCard: React.FC<MagicSprinklesCardProps> = ({ project }) => {
               </li>
             </ul>
           </div>
-          <div className="-m-3 mb-0 pb-2">
+          <div className="-m-3 !mb-0 pb-3">
             {project.hasContent && (
               <NextLink href={`/projects/${project.slug}`} passHref>
                 <a className={cardLinkClassName}>
