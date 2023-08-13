@@ -90,7 +90,7 @@ const draw = (
     cyan: style.getPropertyValue('--cyan'),
     base: style.getPropertyValue('--base'),
   }
-  const availablePatternColors = [colors.pink, colors.purple, colors.green, colors.cyan]
+  const availableSprinkleColors = [colors.pink, colors.purple, colors.green, colors.cyan]
 
   let width = 0
   let height = 0
@@ -112,7 +112,7 @@ const draw = (
    */
   let mouse = { x: -1000, y: -1000 }
 
-  const debugPattern: Pattern = [
+  const debugSprinkle: Sprinkle = [
     [
       [0, -7],
       [0, 2],
@@ -128,72 +128,73 @@ const draw = (
     ],
   ]
 
-  const availablePatterns: Pattern[] = query.debugPattern
-    ? [debugPattern]
-    : [
-        //
+  const availableSprinkles: Sprinkle[] =
+    query.debugSprinkle || query.debugPattern
+      ? [debugSprinkle]
+      : [
+          //
 
-        [
           [
-            [-4, -9],
-            [-3, 8],
+            [
+              [-4, -9],
+              [-3, 8],
+            ],
+            [
+              [3, -7],
+              [2, 6],
+            ],
           ],
-          [
-            [3, -7],
-            [2, 6],
-          ],
-        ],
 
-        [
           [
-            [-3, -8],
-            [-3, 8],
+            [
+              [-3, -8],
+              [-3, 8],
+            ],
+            [
+              [3, -8],
+              [3, 8],
+            ],
           ],
-          [
-            [3, -8],
-            [3, 8],
-          ],
-        ],
 
-        [
           [
-            [-2, -9],
-            [-3, 8],
+            [
+              [-2, -9],
+              [-3, 8],
+            ],
+            [
+              [3, -7],
+              [4, 6],
+            ],
           ],
-          [
-            [3, -7],
-            [4, 6],
-          ],
-        ],
 
-        [
           [
-            [-3, -9],
-            [-4, -3],
-            [-4, 0],
-            [-3, 6],
+            [
+              [-3, -9],
+              [-4, -3],
+              [-4, 0],
+              [-3, 6],
+            ],
+            [
+              [4, -9],
+              [3, -3],
+              [2, 0],
+              [2, 3],
+              [3, 6],
+            ],
           ],
-          [
-            [4, -9],
-            [3, -3],
-            [2, 0],
-            [2, 3],
-            [3, 6],
-          ],
-        ],
 
-        //
-      ]
+          //
+        ]
 
   const getRandomXOffset = createNonRepeatRandomItem([-4, -2, 2, 4])
   const getRandomYOffset = createNonRepeatRandomItem([-4, -2, 2, 4])
-  const getRandomColor = createNonRepeatRandomItem(availablePatternColors)
-  const getRandomPattern = createNonRepeatRandomItem(availablePatterns)
+  const getRandomColor = createNonRepeatRandomItem(availableSprinkleColors)
+  const getRandomSprinkle = createNonRepeatRandomItem(availableSprinkles)
 
-  const baseGridPattern = Array.from({ length: BASE_GRID_SIZE }, (_, _row) =>
+  const baseGridSprinklePattern = Array.from({ length: BASE_GRID_SIZE }, (_, _row) =>
     Array.from({ length: BASE_GRID_SIZE }, (_, _column) => {
       return {
-        pattern: getRandomPattern(),
+        sprinkle: getRandomSprinkle(),
         color: getRandomColor(),
         defaultAngle: query.debugNoRandomAngle ? 0 : Math.random() * TAU,
         lastAngle: 0,
@@ -204,7 +205,7 @@ const draw = (
     })
   )
 
-  let grid = baseGridPattern
+  let grid = baseGridSprinklePattern
 
   const handleResize = () => {
     const rect = container.getBoundingClientRect()
@@ -221,7 +222,7 @@ const draw = (
 
     grid = Array.from({ length: rows }, (_, rowIdx) =>
       Array.from({ length: columns }, (_, colIdx) => {
-        const row = baseGridPattern[rowIdx % baseGridPattern.length]!
+        const row = baseGridSprinklePattern[rowIdx % baseGridSprinklePattern.length]!
         return structuredClone(row![colIdx % row.length]!)
       })
     )
@@ -347,7 +348,7 @@ const draw = (
             }
 
             ctx.rotate(angle)
-            for (const line of cell.pattern) {
+            for (const line of cell.sprinkle) {
               drawLine(ctx, line)
             }
           })
@@ -395,7 +396,7 @@ const withCanvasState = (ctx: CanvasRenderingContext2D, fn: () => void) => {
 
 type Point = [x: number, y: number]
 type Line = [Point, ...Point[]]
-type Pattern = [Line, ...Line[]]
+type Sprinkle = [Line, ...Line[]]
 
 const drawLine = (ctx: CanvasRenderingContext2D, line: Line) => {
   ctx.beginPath()
