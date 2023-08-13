@@ -25,7 +25,7 @@ const UtilsProjectCard: React.FC<UtilsProjectCardProps> = ({
   fullWidth,
 }) => {
   return (
-    <div className={fullWidth ? 'col-span-full' : ''}>
+    <div className={fullWidth ? 'col-span-full' : ''} id={project.slug}>
       <div
         className={cx(COMMON_CLASSNAMES.specialCardRoot, 'bg-var-bg')}
         style={{ ['--bg' as any]: '#414558', ['--col' as any]: '#FF7AC6' }}

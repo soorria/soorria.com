@@ -15,6 +15,7 @@ const projectCardMap: Record<string, ProjectCardComponent> = {
   'not-messenger': dynamic(() => import('./not-messenger/NotMessengerCard')),
   sizes: dynamic(() => import('./sizes/SizesCard')),
   pokelife: dynamic(() => import('./pokelife/PokelifeCard')),
+  'magic-sprinkles': dynamic(() => import('./magic-sprinkles/MagicSprinklesCard')),
 }
 
 const classes = {
@@ -28,7 +29,7 @@ const ProjectCard: ProjectCardComponent = ({ project }) => {
   }
 
   return (
-    <div className="flex flex-col space-y-3">
+    <div className="flex flex-col space-y-3" id={project.slug}>
       <div className="font-display text-xl font-bold text-drac-pink">
         {project.title}
         {project.wip && (

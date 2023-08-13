@@ -182,6 +182,22 @@ input {
   a:is(:hover, :focus-visible) .logo-link-text {
     animation-play-state: running;
   }
+
+  .rainbow-gradient {
+    background: linear-gradient(
+      45deg,
+      theme('colors.drac.purple'),
+      theme('colors.drac.pink'),
+      theme('colors.drac.red'),
+      theme('colors.drac.orange'),
+      theme('colors.drac.yellow'),
+      theme('colors.drac.green'),
+      theme('colors.drac.cyan'),
+      theme('colors.drac.purple'),
+      theme('colors.drac.pink')
+    );
+    background-size: 1000%;
+  }
 }
 
 @keyframes sparkle {

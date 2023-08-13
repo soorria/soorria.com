@@ -9,7 +9,7 @@ const cardLinkClassName =
 
 const NotMessengerCard: ProjectCardComponent = ({ project }) => {
   return (
-    <div>
+    <div id={project.slug}>
       <div className={cx('bg-gray-700', COMMON_CLASSNAMES.specialCardRoot)}>
         <div className="flex h-full flex-col space-y-4 p-8">
           <header className="flex items-center font-display text-3xl font-bold text-green-400">

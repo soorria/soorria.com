@@ -78,12 +78,8 @@ const PokelifeCard: React.FC<PokelifeCardProps> = ({ project }) => {
     (navigator as unknown as { connection: { saveData: boolean } })?.connection?.saveData
 
   return (
-    <div className="sm:col-span-2">
-      <div
-        id="pokelife"
-        ref={root}
-        className={cx('bg-[#272933]', COMMON_CLASSNAMES.specialCardRoot)}
-      >
+    <div className="sm:col-span-2" id={`${project.slug}`}>
+      <div ref={root} className={cx('bg-[#272933]', COMMON_CLASSNAMES.specialCardRoot)}>
         <div className="absolute -inset-4 grid grid-cols-3 overflow-hidden rounded-xl">
           {!isDataSaver && showDemo && (
             <iframe

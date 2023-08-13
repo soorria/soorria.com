@@ -27,11 +27,13 @@ const MagicSprinklesPage = ({ children }: { children: ReactNode }) => {
   const router = useRouter()
   const pathname = usePathname()
 
+  const embed = searchParams.has('embed')
+
   return (
     <div className="relative min-h-screen">
       <MagicSprinkles />
 
-      {hydrated && (
+      {hydrated && !embed && (
         <>
           {showHeading && (
             <div

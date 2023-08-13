@@ -3,6 +3,7 @@ export const GITHUB_URL = 'https://github.com/soorria'
 
 export const featuredProjects = [
   'jupyter-js',
+  'magic-sprinkles',
   'pokelife',
   'sizes',
   'clinically-relevant',

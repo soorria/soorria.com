@@ -15,7 +15,7 @@ const cardLinkClassName =
 
 const JupyterJsCard: React.FC<JupyterJsCardProps> = ({ project }) => {
   return (
-    <div className="sm:col-span-2">
+    <div className="sm:col-span-2" id={project.slug}>
       <div className={cx(COMMON_CLASSNAMES.specialCardRoot, 'bg-purple-600')}>
         <div className="absolute inset-y-0 right-0 hidden items-center sm:flex">
           <div>

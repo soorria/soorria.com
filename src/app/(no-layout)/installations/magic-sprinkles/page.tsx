@@ -8,7 +8,7 @@ const description = 'A fun and addictive little interactive animation'
 
 const ogImage = getOgImage({
   title: 'magic sprinkles',
-  subtitle: 'A fun and addictive little interactive animation',
+  subtitle: description,
   bottomText: 'soorria.com/art',
 })
 
