@@ -149,17 +149,29 @@ input {
 
   .logo-link-text {
     background-image: linear-gradient(
-      to right,
+      45deg,
       theme('colors.white'),
       theme('colors.white'),
       theme('colors.drac.pink'),
       theme('colors.drac.pink'),
       theme('colors.drac.purple'),
       theme('colors.drac.purple'),
+      theme('colors.drac.cyan'),
+      theme('colors.drac.cyan'),
+      theme('colors.drac.green'),
+      theme('colors.drac.green'),
+      theme('colors.drac.yellow'),
+      theme('colors.drac.yellow'),
+      theme('colors.drac.orange'),
+      theme('colors.drac.orange'),
+      theme('colors.drac.red'),
+      theme('colors.drac.red'),
+      theme('colors.drac.pink'),
+      theme('colors.drac.pink'),
       theme('colors.white'),
       theme('colors.white')
     );
-    background-size: 800% 100%;
+    background-size: 2000% 100%;
     background-position: left;
     animation: bg-slide 5s linear infinite;
     animation-play-state: paused;
