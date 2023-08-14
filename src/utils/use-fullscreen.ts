@@ -31,6 +31,7 @@ export const useFullscreen = (): [
   }, [])
 
   const exit = useCallback<FullscreenControls['exit']>(async () => {
+    if (!document.fullscreenElement) return
     await document.exitFullscreen()
   }, [])
 

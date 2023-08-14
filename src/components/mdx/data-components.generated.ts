@@ -4,6 +4,7 @@ import * as CreatePreviousMemo from '~data/snippets/create-previous-memo/compone
 import * as FileDownload from '~data/snippets/file-download/components'
 import * as SafeViewTransition from '~data/snippets/safe-view-transition/components'
 import * as UseCssVarReact from '~data/snippets/use-css-var-react/components'
+import * as UseFullscreen from '~data/snippets/use-fullscreen/components'
 import * as UseIsMouseInactiveSolid from '~data/snippets/use-is-mouse-inactive-solid/components'
 import * as UseLocalStorage from '~data/snippets/use-local-storage/components'
 import * as UseTemporaryStateReact from '~data/snippets/use-temporary-state-react/components'
@@ -15,6 +16,7 @@ export const dataComponents = {
   'snippets/file-download': FileDownload,
   'snippets/safe-view-transition': SafeViewTransition,
   'snippets/use-css-var-react': UseCssVarReact,
+  'snippets/use-fullscreen': UseFullscreen,
   'snippets/use-is-mouse-inactive-solid': UseIsMouseInactiveSolid,
   'snippets/use-local-storage': UseLocalStorage,
   'snippets/use-temporary-state-react': UseTemporaryStateReact,

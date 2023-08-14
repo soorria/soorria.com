@@ -25,6 +25,7 @@ export const baseComponents = {
     </SlightBleedContentWrapper>
   ),
   Note: dynamic(() => import('./Note')),
+  ReactDemo,
   Demo: ReactDemo,
   SolidDemo: dynamic(() => import('./SolidDemo'), { ssr: false }),
   Sparkles,

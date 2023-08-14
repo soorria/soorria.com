@@ -11,7 +11,7 @@
     "lint": "eslint --fix src",
     "format": "run-s format:*",
     "format:code": "prettier -w src ./**/*.js",
-    "format:mdx": "prettier --config './_data/.prettierrc' -w _data/**/*.mdx",
+    "format:mdx": "prettier --config './src/data/.prettierrc' -w src/data/**/*.mdx",
     "type-check": "tsc --noEmit",
     "husky:install": "husky install",
     "prepare": "is-ci-cli \"\" \"husky:install\"",
@@ -102,8 +102,8 @@
       "prettier -w",
       "eslint --fix --cache"
     ],
-    "_data/**/*.mdx": [
-      "prettier --config './_data/.prettierrc' --parser mdx -w"
+    "src/data/**/*.mdx": [
+      "prettier --config './src/data/.prettierrc' --parser mdx -w"
     ]
   }
 }

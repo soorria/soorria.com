@@ -88,7 +88,7 @@ const RootLayout = ({ children }: { children: ReactNode }) => {
         />
         <PlausibleProvider domain="mooth.tech" customDomain="https://soorria.com" selfHosted />
       </head>
-      <body className="relative h-full min-h-screen bg-drac-base text-drac-content">
+      <body className="relative h-full min-h-screen overflow-y-auto bg-drac-base text-drac-content">
         {children}
         <NoJsStyles />
         {process.env.NODE_ENV === 'development' && <DevHelpers />}

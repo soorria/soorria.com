@@ -1,0 +1,133 @@
+---
+title: useFullscreen (React)
+shortDescription:
+  Get access to the current fullscreen element, and controls to enter, exit, and
+  toggle fullscreen.
+category: React Hook
+tags:
+  - typescript
+  - react
+createdAt: '2023-08-14'
+# updatedAt: '2023-03-18'
+---
+
+This hook allows you to easily get access to the current fullscreen element, and
+control set (`enter{:.fn}`), unset (`exit{:.fn}`) and `toggle{:.fn}` the
+fullscreen element. Get access
+
+```ts
+import { useCallback, useEffect, useRef, useState } from 'react'
+
+type FullscreenControls = {
+  enter: (element: Element, options?: FullscreenOptions) => Promise<void>
+  exit: () => Promise<void>
+  toggle: (element: Element, options?: FullscreenOptions) => Promise<void>
+}
+
+export const useFullscreen = (): [
+  fullscreenElement: Element | null,
+  controls: FullscreenControls
+] => {
+  const [fullscreenElement, setFullscreenElement] = useState<Element | null>(
+    null
+  )
+
+  const fullscreenElementRef = useRef<Element | null>(null)
+
+  useEffect(() => {
+    const handler = () => {
+      setFullscreenElement(document.fullscreenElement)
+      fullscreenElementRef.current = document.fullscreenElement
+    }
+    document.addEventListener('fullscreenchange', handler)
+
+    return () => {
+      document.removeEventListener('fullscreenchange', handler)
+    }
+  }, [])
+
+  const enter = useCallback<FullscreenControls['enter']>(
+    async (element, options) => {
+      await element.requestFullscreen(options)
+    },
+    []
+  )
+
+  const exit = useCallback<FullscreenControls['exit']>(async () => {
+    if (!document.fullscreenElement) return
+    await document.exitFullscreen()
+  }, [])
+
+  const toggle = useCallback<FullscreenControls['toggle']>(
+    async (element, options) => {
+      if (fullscreenElementRef.current === element) {
+        await exit()
+      } else {
+        await enter(element, options)
+      }
+    },
+    [enter, exit]
+  )
+
+  return [
+    fullscreenElement,
+    {
+      enter,
+      exit,
+      toggle,
+    },
+  ]
+}
+```
+
+## Usage
+
+```tsx
+import { useFullscreen } from './useFullscreen'
+
+const Example = () => {
+  const [fullscreenElement, fullscreenControls] = useFullscreen()
+
+  return (
+    <div>
+      <button onClick={() => fullscreenControls.enter(document.body)}>
+        Enter
+      </button>
+      <button onClick={() => fullscreenControls.exit()}>Exit</button>
+      <button onClick={() => fullscreenControls.toggle(document.body)}>
+        Toggle
+      </button>
+    </div>
+  )
+}
+```
+
+<Note variant="warning">
+
+When you enter fullscreen with an element, you may notice a couple things:
+
+1. The fullscreen-ed element will be stretched to fill the screen, and scrolling
+   may be disabled
+2. The background may become black
+
+You can (and probably should, unlike me 😅) fix these issues with CSS. For
+example using the `:fullscreen{:css}` and `:-webkit-full-screen{:css}`
+pseudo-classes
+([`postcss-preset-env`](https://github.com/csstools/postcss-plugins/tree/main/plugin-packs/postcss-preset-env#postcss-preset-env-)
+can add the latter for you!) to fix the disabled scrolling:
+
+```css
+*:fullscreen {
+  overflow: auto;
+}
+
+*:-webkit-full-screen {
+  overflow: auto;
+}
+```
+
+</Note>
+
+## Example
+
+<ReactDemo component={Example} init="mount" />

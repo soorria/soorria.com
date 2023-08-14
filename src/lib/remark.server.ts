@@ -3,12 +3,16 @@ import type { Parent } from 'unist'
 import { transformSync } from '@babel/core'
 // @ts-expect-error no types
 import tsPreset from '@babel/preset-typescript'
-import { format } from 'prettier'
+import { format, type Options as PrettierOptions } from 'prettier'
 import type { Transformer } from 'unified'
 import type { Code } from 'mdast'
+import fs from 'fs'
 
 const isTypescriptCodeBlock = (lang: string) => ['ts', 'tsx', 'typescript'].includes(lang)
 const getJavascriptType = (lang: string) => (lang === 'tsx' ? 'jsx' : 'js')
+const prettierConfig = JSON.parse(
+  fs.readFileSync('./src/data/.prettierrc', 'utf8')
+) as PrettierOptions
 
 export const remarkTypeScriptTransform = (): Transformer => {
   const visitor = (node: Code, index: number, parent: Parent) => {
@@ -31,15 +35,7 @@ export const remarkTypeScriptTransform = (): Transformer => {
       })?.code ?? ''
 
     const formattedCode = !meta?.match(/\bnoformat\b/i)
-      ? format(transformedCode, {
-          semi: false,
-          tabWidth: 2,
-          printWidth: 80,
-          singleQuote: true,
-          trailingComma: 'es5',
-          arrowParens: 'avoid',
-          parser: 'babel',
-        }).trim()
+      ? format(transformedCode, { ...prettierConfig, parser: 'babel' }).trim()
       : transformedCode
 
     let jsMeta = meta
