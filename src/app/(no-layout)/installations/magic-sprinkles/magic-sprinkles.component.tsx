@@ -222,9 +222,10 @@ const renderer = (
       .flat()
   let grid = flattenGrid(baseGridSprinklePattern)
 
-  const handleResize = () => {
-    const rect = container.getBoundingClientRect()
-    if (rect.width === width && rect.height === height) return
+  const resizeObserver = new ResizeObserver(entries => {
+    if (!entries.length) return
+
+    const rect = entries[0]!.contentRect
 
     width = rect.width
     height = rect.height
@@ -243,9 +244,8 @@ const renderer = (
         })
       )
     )
-  }
-  handleResize()
-  window.addEventListener('resize', handleResize, { passive: true })
+  })
+  resizeObserver.observe(container)
 
   const handlePointerMove = (_e: MouseEvent | TouchEvent) => {
     const rect = canvas.getBoundingClientRect()
@@ -285,6 +285,7 @@ const renderer = (
       if (e.touches.length !== 1) return
       const touch = e.touches[0]!
       const isOnLink = !!(touch.target as HTMLElement).closest('a,input,button,select,textarea')
+      console.log({ isOnLink })
       if (isOnLink) return
 
       const containerRect = container.getBoundingClientRect()
@@ -294,8 +295,12 @@ const renderer = (
         touch.clientY >= containerRect.top &&
         touch.clientY <= containerRect.bottom
 
+      console.log({ isOverContainer })
+
       if (!isOverContainer) return
       e.preventDefault()
+      console.log(document.activeElement)
+      ;(document.activeElement as HTMLElement)?.blur()
     } else if (e.type === 'touchend') {
       mouse = { x: -Infinity, y: -Infinity }
     }
@@ -393,7 +398,6 @@ const renderer = (
     if (frame) {
       cancelAnimationFrame(frame)
     }
-    window.removeEventListener('resize', handleResize)
 
     window.removeEventListener('touchstart', handleTouchUpDown)
     window.removeEventListener('touchend', handleTouchUpDown)

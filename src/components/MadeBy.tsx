@@ -10,9 +10,10 @@ interface MadeByProps {
 
 const MadeBy: React.FC<MadeByProps> = props => {
   const classes = {
-    ping: props.ping === 'hover' ? 'group-hover:animate-ping' : 'animate-ping',
-    text: props.asLink ? 'group-hover:underline' : '',
+    ping: props.ping === 'hover' ? 'group-hover:supports-hover:animate-ping' : 'animate-ping',
+    text: props.asLink ? 'group-hover:supports-hover:underline' : '',
   }
+
   const content = (
     <>
       <span className={classes.text}>Made with</span>{' '}
