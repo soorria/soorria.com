@@ -8,6 +8,7 @@ import type { SnippetFrontMatter } from '~/types/snippet'
 import { getAllTags } from '~/utils/content'
 import cx from '~/utils/cx'
 import { intersectionSet } from '~/utils/misc'
+import { useMounted } from '~/utils/use-mounted'
 
 type SnippetGridProps = {
   snippets: SnippetFrontMatter[]
@@ -26,6 +27,7 @@ const tags: Array<{ label: string; value: string }> = [
 ]
 
 const SnippetGrid = ({ snippets: _snippets }: SnippetGridProps) => {
+  const mounted = useMounted()
   const [grid] = useAutoAnimate({})
 
   const [matchAll, setMatchAll] = useState(false)
@@ -114,7 +116,10 @@ const SnippetGrid = ({ snippets: _snippets }: SnippetGridProps) => {
             gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))',
             '--initial-step': '3',
           }}
-          className="slide-in grid auto-cols-min grid-cols-1 content-start gap-x-6 gap-y-8 sm:!grid-cols-2 sm:gap-x-8 lg:gap-12"
+          className={cx(
+            !mounted && 'slide-in',
+            'grid auto-cols-min grid-cols-1 content-start gap-x-6 gap-y-8 sm:!grid-cols-2 sm:gap-x-8 lg:gap-12'
+          )}
         >
           {snippets.map((snippet, i) => (
             <div key={snippet.slug} className="grid" style={{ '--step-num': (i + 1).toString() }}>
