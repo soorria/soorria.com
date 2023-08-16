@@ -20,7 +20,7 @@ export const OgImagePreview = () => {
     setImage(parsed.toString())
   }, [])
 
-  const searchParams = useSearchParams()
+  const searchParams = useSearchParams()!
   const defaultOpen = searchParams.has('og')
   const defaultAcknowledged = useRef(false)
 
