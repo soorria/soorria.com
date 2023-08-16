@@ -50,6 +50,7 @@
     "src/**/*.ts",
     "src/**/*.js",
     "src/**/*.tsx",
-    ".next/types/**/*.ts"
+    ".next/types/**/*.ts",
+    "next-env.d.ts",
   ]
 }
