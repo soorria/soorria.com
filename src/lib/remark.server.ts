@@ -10,9 +10,21 @@ import fs from 'fs'
 
 const isTypescriptCodeBlock = (lang: string) => ['ts', 'tsx', 'typescript'].includes(lang)
 const getJavascriptType = (lang: string) => (lang === 'tsx' ? 'jsx' : 'js')
-const prettierConfig = JSON.parse(
-  fs.readFileSync('./src/data/.prettierrc', 'utf8')
-) as PrettierOptions
+let prettierConfig: PrettierOptions
+
+try {
+  prettierConfig = JSON.parse(fs.readFileSync('./src/data/.prettierrc', 'utf8')) as PrettierOptions
+} catch {
+  prettierConfig = {
+    semi: false,
+    tabWidth: 2,
+    printWidth: 80,
+    singleQuote: true,
+    trailingComma: 'es5',
+    arrowParens: 'avoid',
+    proseWrap: 'always',
+  }
+}
 
 export const remarkTypeScriptTransform = (): Transformer => {
   const visitor = (node: Code, index: number, parent: Parent) => {
