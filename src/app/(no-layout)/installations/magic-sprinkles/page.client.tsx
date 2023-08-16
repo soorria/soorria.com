@@ -23,7 +23,7 @@ const colors = shuffle([
 const MagicSprinklesPage = ({ children }: { children: ReactNode }) => {
   const [showHeading, setShowHeading] = useState(true)
   const hydrated = useHydrated()
-  const searchParams = useSearchParams()
+  const searchParams = useSearchParams()!
   const quick = searchParams.has('quick-fade')
   const router = useRouter()
   const pathname = usePathname()
