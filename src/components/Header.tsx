@@ -15,6 +15,10 @@ const LINKS = [
     title: 'blog',
     href: '/blog',
   },
+  {
+    title: 'art',
+    href: '/authentic-artistique-endevours',
+  },
 ]
 
 const Header: React.FC = () => {
