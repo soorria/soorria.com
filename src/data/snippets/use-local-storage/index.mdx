@@ -7,11 +7,12 @@ tags:
   - typescript
   - react
 createdAt: '2021-03-26'
-updatedAt: '2023-03-18'
+updatedAt: '2023-08-30'
 ---
 
-Save to `localStorage` whenever state changes and read form it for the first
-render.
+Save to `localStorage` whenever state changes and read from it for the first
+render. More primitive (and minimal) ancestor of
+[`useSyncedLocalStorage`](/snippets/use-synced-local-storage).
 
 ```typescript
 import type { Dispatch, SetStateAction } from 'react'

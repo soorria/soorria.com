@@ -8,13 +8,13 @@ tags:
   - typescript
   - react
 createdAt: '2022-07-07'
-updatedAt: '2022-10-13'
+updatedAt: '2023-08-30'
 ---
 
-Save state to localStorage and sync it between hook instances, tabs and windows!
-It also has an almost identical interface to `useState`.
+Save state to localStorage and sync it between components, custom hooks, tabs
+and windows! It also has an almost identical interface to `useState`.
 
-This is an extended / advanced version of
+This is an extended & more advanced version of
 [`useLocalStorage`](/snippets/use-local-storage) that adds the following
 features:
 
@@ -22,6 +22,9 @@ features:
   render to prevent react's hydration warnings)
 - Synchronisation of state for `key` across `useSyncedLocalStorage` instances in
   the same / different tabs and between windows of the same app.
+
+However, it comes with the cost of being larger, doing more work, and having a
+dependency.
 
 ```ts
 import type { Dispatch, SetStateAction } from 'react'
