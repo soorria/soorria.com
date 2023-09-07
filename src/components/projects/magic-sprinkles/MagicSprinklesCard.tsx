@@ -41,7 +41,7 @@ const MagicSprinklesCard: React.FC<MagicSprinklesCardProps> = ({ project }) => {
           </header>
           <div className="max-w-[25rem] flex-1">
             <ul className="list-disc space-y-4 pl-6">
-              <li className="no-js-hidden">Easily embeddable, and way too fun to play with →.</li>
+              <li className="no-js-hidden">Easily embeddable, and way too fun to play with →</li>
               <li>
                 Works seamlessly on mobile, so you can enjoy{' '}
                 <span className="font-display font-bold">magic sprinkles</span> on the go! No more
