@@ -10,7 +10,8 @@ interface MadeByProps {
 
 const MadeBy: React.FC<MadeByProps> = props => {
   const classes = {
-    ping: props.ping === 'hover' ? 'group-hover:supports-hover:animate-ping' : 'animate-ping',
+    ping:
+      props.ping === 'hover' ? 'group-hover:supports-hover:animate-ping-slow' : 'animate-ping-slow',
     text: props.asLink ? 'group-hover:supports-hover:underline' : '',
   }
 

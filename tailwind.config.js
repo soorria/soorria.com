@@ -41,6 +41,26 @@ module.exports = {
       spacing: {
         em: '1em',
       },
+      keyframes: {
+        'ping-slow': {
+          '75%, 100%': {
+            transform: 'scale(2)',
+            opacity: 0,
+          },
+          '0%, 50%': {
+            transform: 'scale(1)',
+          },
+          '0%, 49%': {
+            opacity: 0,
+          },
+          '50%': {
+            opacity: 1,
+          },
+        },
+      },
+      animation: {
+        'ping-slow': 'ping-slow 1.75s cubic-bezier(0, 0, 0.2, 1) infinite',
+      },
       typography: ({ theme }) => {
         const { content, pink, purple, highlight } = drac
         return {
