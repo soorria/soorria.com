@@ -106,6 +106,18 @@ const config = {
         destination: '/authentic-artistique-endevours',
         permanent: false,
       },
+      {
+        source: '/COMP6080-23T3',
+        destination:
+          'https://drive.google.com/drive/folders/1iJXHR94eGNzyXj01OajorafFANW3lffP?usp=sharing',
+        permanent: false,
+      },
+      {
+        source: '/6080',
+        destination:
+          'https://drive.google.com/drive/folders/1iJXHR94eGNzyXj01OajorafFANW3lffP?usp=sharing',
+        permanent: false,
+      },
     ]
   },
   async rewrites() {
