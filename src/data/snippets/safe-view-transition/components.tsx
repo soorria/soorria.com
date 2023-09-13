@@ -151,6 +151,9 @@ export const VanillaExample = () => {
           background: var(--base-dark);
           font-size: 0.875rem;
         }
+        .svt-button:hover {
+          opacity: 0.8;
+        }
 
         .svt-box-content {
           view-transition-name: box-content;
