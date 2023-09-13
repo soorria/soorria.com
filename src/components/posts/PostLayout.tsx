@@ -15,12 +15,34 @@ type PostLayoutProps = PropsWithChildren<{
 export const PostHeading: React.FC<PropsWithChildren> = ({ children }) => {
   return (
     <h1
-      className="mb-20 mt-0 text-center text-5xl !leading-tight text-drac-pink text-balance sm:mt-8 sm:text-6xl md:text-7xl"
+      className="mb-20 mt-0 text-center text-5xl !leading-tight text-drac-pink text-balance sm:mt-8 sm:text-6xl md:text-7xl lg:mb-16 lg:text-8xl"
       style={{
         overflowWrap: 'break-word',
+        '--width': 'calc(100vw - 8rem)',
+        width: 'var(--width)',
+        position: 'relative',
+        left: '50%',
+        right: '50%',
+        marginLeft: 'calc(var(--width) / -2)',
+        marginRight: 'calc(var(--width) / -2)',
+        // @ts-expect-error textWrap is not in the CSS typings
+        textWrap: 'balance',
       }}
     >
-      {children}
+      {typeof children === 'string'
+        ? children
+            .split(' ')
+            .map(word =>
+              word
+                .replace(/[a-z][A-Z]/g, m => `${m[0]} ${m[1]}`)
+                .split(' ')
+                .flatMap((chunk, i) => (i === 0 ? [chunk] : [<wbr key={i} />, chunk]))
+            )
+            .map((word, i) => {
+              if (i === 0) return word
+              return [' ', word]
+            })
+        : children}
     </h1>
   )
 }
