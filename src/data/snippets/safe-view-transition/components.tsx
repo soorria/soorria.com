@@ -35,6 +35,7 @@ export function safeViewTransition(callback: ViewTransitionCallback) {
 export const VanillaExample = () => {
   const [slow, setSlow] = useState(false)
   const [differentTransitionName, setDifferentTransitionName] = useState(false)
+  const [clicked, setClicked] = useState(false)
 
   const boxRef = useRef<ElementRef<'button'>>(null)
   const toggledRef = useRef(false)
@@ -47,6 +48,7 @@ export const VanillaExample = () => {
       safeViewTransition(() => {
         box.classList.toggle('toggled', toggledRef.current)
       })
+      setClicked(true)
     }
 
     box.addEventListener('click', handler)
@@ -59,14 +61,30 @@ export const VanillaExample = () => {
   return (
     <>
       Click the box to see it move and grow! If you toggle the animation speed,
-      you can see how animated elements&apos; content is handled with and
-      without a separate <code>view-transition-name</code>.
+      you can see how &quot;Hi!&quot; text is handled with, and without a
+      separate <code>view-transition-name</code>.
       <div className="svt-container">
         <button className="svt-box" ref={boxRef}>
           <span className={differentTransitionName ? 'svt-box-content' : ''}>
             HI!
           </span>
         </button>
+
+        <span
+          style={{
+            position: 'absolute',
+            right: '0',
+            top: '50%',
+            transform: 'translateY(-50%)',
+            maxWidth: '40rem',
+            textAlign: 'center',
+            pointerEvents: 'none',
+            transition: 'opacity 0.1s ease',
+            opacity: clicked ? 0 : 1,
+          }}
+        >
+          ← Click the square-ish button!
+        </span>
       </div>
       <div
         style={{
@@ -100,6 +118,7 @@ export const VanillaExample = () => {
           display: flex;
           align-items: center;
           justify-content: flex-start;
+          position: relative;
         }
         .svt-container:has(.toggled) {
           justify-content: flex-end;
@@ -118,6 +137,7 @@ export const VanillaExample = () => {
           font-weight: bold;
           view-transition-name: box;
           cursor: pointer;
+          border-radius: 0.25rem;
         }
         .svt-box.toggled {
           width: 120px;
