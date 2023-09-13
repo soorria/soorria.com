@@ -15,7 +15,7 @@ type PostLayoutProps = PropsWithChildren<{
 export const PostHeading: React.FC<PropsWithChildren> = ({ children }) => {
   return (
     <h1
-      className="mb-20 mt-0 text-center text-5xl !leading-tight text-drac-pink outline text-balance [--heading-padding:1rem] sm:mt-8 sm:text-6xl md:text-7xl lg:mb-16 lg:text-8xl lg:[--heading-padding:8rem]"
+      className="mb-20 mt-0 text-center text-5xl !leading-tight text-drac-pink text-balance [--heading-padding:1rem] sm:mt-8 sm:text-6xl md:text-7xl lg:mb-16 lg:text-8xl lg:[--heading-padding:8rem]"
       style={{
         overflowWrap: 'break-word',
         '--width': 'calc(100vw - var(--heading-padding))',
