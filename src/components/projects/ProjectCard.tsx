@@ -16,6 +16,7 @@ const projectCardMap: Record<string, ProjectCardComponent> = {
   sizes: dynamic(() => import('./sizes/SizesCard')),
   pokelife: dynamic(() => import('./pokelife/PokelifeCard')),
   'magic-sprinkles': dynamic(() => import('./magic-sprinkles/MagicSprinklesCard')),
+  'prompt-racer': dynamic(() => import('./prompt-racer/PromptRacerCard')),
 }
 
 const classes = {
@@ -46,7 +47,7 @@ const ProjectCard: ProjectCardComponent = ({ project }) => {
           ))}
         </div>
       </div>
-      <div className="flex space-x-4 text-sm">
+      <div className="flex gap-4 text-sm">
         {project.hasContent && (
           <Link
             href={`/projects/${project.slug}`}

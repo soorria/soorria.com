@@ -27,7 +27,16 @@ export const metadata = {
 }
 
 const ProjectsPage = async () => {
-  const aboveFold = [...featuredProjects, 'aqrm', 'wordle-score', 'slidy', 'fight-for-tribeland']
+  const aboveFold = [
+    ...featuredProjects,
+    'sizes',
+    'clinically-relevant',
+    'not-messenger',
+    'aqrm',
+    'wordle-score',
+    'slidy',
+    'fight-for-tribeland',
+  ]
   const projectOrder = [...aboveFold]
   const getProjectIndex = (slug: string): number => {
     const idx = projectOrder.indexOf(slug)

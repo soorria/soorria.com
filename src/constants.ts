@@ -5,7 +5,6 @@ export const featuredProjects = [
   'jupyter-js',
   'magic-sprinkles',
   'pokelife',
+  'prompt-racer',
   'sizes',
-  'clinically-relevant',
-  'not-messenger',
 ]
