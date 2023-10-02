@@ -1,0 +1,122 @@
+---
+title: Pinpoint Bugs with Git Bisect
+ogImageTitleParts: ['Pinpointing Bugs', 'with Git Bisect']
+tags:
+  - javascript
+  - typescript
+category: 'javascript'
+shortDescription: |
+  Find the exact commit that caused a bug using a less known git command.
+
+createdAt: '2023-10-02'
+# updatedAt: '2023-04-15'
+---
+
+Recently at [work](https://relevanceai.com), I encountered a couple issues where
+our frontend was failing to load in our development environment, but we had no
+clue about the cause, or which commit introduced the bug! I could have manually
+checked each commit until I found the offending one, but that would have been
+time-consuming and more importantly **boring**. Instead, I used `git bisect` and
+its subcommands to quickly find the causal commit, and diagnose the issue!
+
+## How to use it
+
+1. Get started by running the following:
+
+   ```console
+   git bisect start
+   ```
+
+   This will start the binary search of your git history,
+
+1. Checkout a branch, or commit where you're 100% sure is buggy.
+
+   ```console
+   git checkout <branch or commit hash>
+   ```
+
+   There's a decent chance it's the current branch you're on if the bug exists
+   your latest code, and if so you can just skip this step.
+
+   Now, mark the branch as "bad":
+
+   ```console
+   git bisect bad
+   ```
+
+1. Find a commit you're sure **is not** buggy. A good way to do this is to find
+   a time without the bug, and use `git log` to find a commit around that time.
+   It's okay if the commit is too old - since `git bisect` does a binary search
+   you won't have that many extra iterations! Mark this commit as "good":
+
+   ```console
+   git bisect good <commit hash>
+   ```
+
+   Now, we're ready to binary search! After you run the command above, you
+   should see something like the following in your console:
+
+   ```console
+   Bisecting: 311 revisions left to test after this (roughly 8 steps)
+   [d0f8d96ef806c440d4d2bce0bb56244540fd292f] Do a thing with code :)
+   ```
+
+1. Check if the bug exists in the current commit - run unit / integration / E2E
+   tests, or just manually check if the bug exists. If the bug exists, run
+
+   ```console
+   git bisect bad
+   ```
+
+   Otherwise, if the bug doesn't exist in the current commit, run
+
+   ```console
+   git bisect good
+   ```
+
+   Repeat this step until you see a message like
+
+   ```console
+   14ff3ae7ab1403ec630e831d68cd8307e9ce982a is the first bad commit
+   commit 14ff3ae7ab1403ec630e831d68cd8307e9ce982a
+   Author: Soorria Saruva <soorria.ss@gmail.com>
+   Date:   Mon Aug 29 13:33:37 2022 +1000
+
+       add bugs
+
+   path/to/real-file.txt | 2 +-
+   1 file changed, 1 insertion(+), 1 deletion(-)
+   ```
+
+1. Fix the bug! Git checks out the commit for you
+
+## Automating the boring bits away
+
+Step 4 above is the most time-consuming and boring part of this process. If you
+can check if the bug exists without manually checking functionality (e.g.
+running tests), `git bisect` can run the command for you and automatically mark
+commits as "good" and "bad". To do this, run
+
+```console
+git bisect run <command that checks if bug exists>
+```
+
+<Note variant="info">
+
+- The command must return a non-zero exit code if the commit should be marked as
+  "bad". If you're using a testing framework, it probably already does this.
+
+- **Do not** quote the whole command. For example, if you want to run
+  `npm run test`, your `git bisect` command should be
+
+  ```console
+  git bisect run npm run test
+  ```
+
+  and **not**
+
+  ```console
+  git bisect run "npm run test"
+  ```
+
+</Note>
