@@ -48,7 +48,7 @@ export const generateMetadata = async ({ params }: SnippetPageProps): Promise<Me
       authors: ['Soorria Saruva'],
       publishedTime: new Date(snippet.createdAt).toISOString(),
       modifiedTime: new Date(snippet.updatedAt || snippet.createdAt).toISOString(),
-      images: [getOgImageForData('snippets', snippet.title)],
+      images: [getOgImageForData('snippets', snippet.title, snippet.ogImageTitleParts)],
     },
     twitter: {
       card: 'summary_large_image',
@@ -56,7 +56,7 @@ export const generateMetadata = async ({ params }: SnippetPageProps): Promise<Me
       description: snippet.shortDescription,
       title,
       site: '@soorriously',
-      images: [getOgImageForData('snippets', snippet.title)],
+      images: [getOgImageForData('snippets', snippet.title, snippet.ogImageTitleParts)],
     },
   }
 }

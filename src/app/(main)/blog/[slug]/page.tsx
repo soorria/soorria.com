@@ -47,9 +47,9 @@ export const generateMetadata = async ({ params }: PostPageProps): Promise<Metad
       tags: [post.category, ...post.tags],
       section: 'Blog',
       authors: ['Soorria Saruva'],
-      publishedTime: new Date(post.createdAt).toISOString(),
+      publishedTime: new Date(post.createdAt || 0).toISOString(),
       modifiedTime: new Date(post.updatedAt || post.createdAt || 0).toISOString(),
-      images: [getOgImageForData('blog', post.title)],
+      images: [getOgImageForData('blog', post.title, post.ogImageTitleParts)],
     },
     twitter: {
       card: 'summary_large_image',
@@ -57,7 +57,7 @@ export const generateMetadata = async ({ params }: PostPageProps): Promise<Metad
       description: post.shortDescription,
       title,
       site: '@soorriously',
-      images: [getOgImageForData('blog', post.title)],
+      images: [getOgImageForData('blog', post.title, post.ogImageTitleParts)],
     },
   }
 }
