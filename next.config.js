@@ -141,6 +141,24 @@ const config = {
             },
           ],
         },
+        {
+          source: '/',
+          destination: '/api/curl-card',
+          has: [
+            {
+              type: 'header',
+              key: 'user-agent',
+              value: 'HTTPie/(.*)',
+            },
+          ],
+          missing: [
+            {
+              type: 'query',
+              key: 'card',
+              value: '(.*)',
+            },
+          ],
+        },
       ],
       afterFiles: [],
       fallback: [
