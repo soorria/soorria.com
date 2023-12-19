@@ -119,6 +119,31 @@ const getArt = (): Array<
     ),
     fullInstallationPath: '/installations/magic-sprinkles',
   },
+  {
+    title: (
+      <>
+        david Lau <Abbr title={randomItem(realNftMeanings)}>nft</Abbr> (real)
+      </>
+    ),
+    slug: 'david-lau-nft-real',
+    content: (
+      <MDXImage
+        src={artImages.DavidLauNft}
+        alt={`"realistic" depiction of David Lau looking like The Boy's Homelander and shooting laser beams from his eyes.`}
+        placeholder="blur"
+      />
+    ),
+  },
+  {
+    title: 'Speed Sudoku Champion Riki',
+    content: (
+      <MDXImage
+        src={artImages.SpeedSudokuChampionRiki}
+        alt="pencil-on-paper drawing of Riki Miyamura sitting and wearing a Champion jumper after winning a speed sudoku competition"
+        placeholder="blur"
+      />
+    ),
+  },
 ]
 
 const ArtPage = () => {
