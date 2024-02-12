@@ -113,9 +113,13 @@ const config = {
         permanent: false,
       },
       {
+        source: '/COMP6080-24T1',
+        destination: 'https://drive.google.com/drive/u/0/folders/1R2NkpjFDaeMO0JjHUMhpdmEERB79Pvav',
+        permanent: false,
+      },
+      {
         source: '/6080',
-        destination:
-          'https://drive.google.com/drive/folders/1iJXHR94eGNzyXj01OajorafFANW3lffP?usp=sharing',
+        destination: 'https://drive.google.com/drive/u/0/folders/1R2NkpjFDaeMO0JjHUMhpdmEERB79Pvav',
         permanent: false,
       },
     ]
