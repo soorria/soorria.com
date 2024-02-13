@@ -1,0 +1,35 @@
+---
+title: Mocking classes from mocked modules in Vitest tests
+shortDescription: How to mock and expect on class methods from mocked modules.
+category: TypeScript
+tags:
+  - typescript
+  - vitest
+createdAt: '2024-02-13'
+# updatedAt: '2024-02-13'
+---
+
+How to mock and expect on class methods on classes from `vi.mock`ed modules.
+
+```ts
+import { describe, it, vi } from 'vitest'
+import { ClassToMock } from './path/to/class/to/mock'
+
+// This line mocks the module so the actual class method doesn't get called
+vi.mock('./path/to/class/to/mock')
+
+describe('ThingThatUsesClassToMock', () => {
+  it('should do the thing that I expect it to do :)', t => {
+    const methodSpy = vi.spyOn(
+      // Spy on the class' prototype since that's where the actual function is
+      ClassToMock.prototype,
+      // The name of the method to expect on
+      'method'
+    )
+
+    // do the thing!!
+
+    t.expect(methodSpy).toHaveBeenCalledOnce()
+  })
+})
+```
