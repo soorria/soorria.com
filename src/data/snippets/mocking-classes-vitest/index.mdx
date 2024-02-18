@@ -6,7 +6,7 @@ tags:
   - typescript
   - vitest
 createdAt: '2024-02-13'
-# updatedAt: '2024-02-13'
+updatedAt: '2024-02-19'
 ---
 
 How to mock and expect on class methods on classes from `vi.mock`ed modules.
@@ -29,6 +29,7 @@ describe('ThingThatUsesClassToMock', () => {
 
     // do the thing!!
 
+    // expect based on the spy just like you'd expect on a mock
     t.expect(methodSpy).toHaveBeenCalledOnce()
   })
 })
