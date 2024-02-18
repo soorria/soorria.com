@@ -94,7 +94,7 @@ const SolidDemo: React.FC<SolidDemoProps> = props => {
       </div>
 
       {/* <div className="absolute inset-0 grid place-items-center rounded bg-drac-base-dark/80 backdrop-blur">
-        <span className="inline-block max-w-md px-4 text-center text-balance">
+        <span className="inline-block max-w-md px-4 text-center text-pretty">
           🚧
           <br />
           Solid.js demos are broken since I migrated to Next.js 13&apos;s app directory & server

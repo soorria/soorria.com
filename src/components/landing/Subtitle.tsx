@@ -40,7 +40,7 @@ const Subtitle: React.FC<SubtitleProps> = ({ options = [] }) => {
   }
 
   return (
-    <div className="[&>p]:inline">
+    <div className="[&>p]:inline [&>p]:text-pretty">
       {options[index]}
       <button
         onClick={randomise}

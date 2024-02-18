@@ -72,7 +72,7 @@ const IndexPage = async () => {
         pattern={pattern}
       >
         {now ? (
-          <div className="text-lg" id="now">
+          <div className="text-pretty text-lg" id="now">
             <MdxRenderer code={now} hasCodeBlocks={false} />
           </div>
         ) : null}
