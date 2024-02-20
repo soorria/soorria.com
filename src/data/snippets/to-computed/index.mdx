@@ -1,0 +1,44 @@
+---
+title: toComputed
+shortDescription:
+  Vue 3 composable that simplifies using a value that's a MaybeRefOrGetter
+category: Vue Composable
+tags:
+  - vue
+  - typescript
+createdAt: '2024-02-20'
+# updatedAt: '2024-02-19'
+---
+
+A Vue 3 composable that _slightly_ simplifies using a value that's a raw value,
+a ref, or a getter.
+
+```ts
+import { type MaybeRefOrGetter, computed, toValue } from 'vue'
+
+export function toComputed<T>(source: MaybeRefOrGetter<T>) {
+  return computed(() => toValue(source))
+}
+```
+
+<Note variant="info">
+
+If you're using [Nuxt](https://nuxt.com) (or just
+[`unimport`](https://github.com/unjs/unimport) directly), you can remove the
+imports at the top :).
+
+</Note>
+
+## Example
+
+```ts
+import { type MaybeRefOrGetter } from 'vue'
+
+export function useDoubledNumber(_number: MaybeRefOrGetter<number>) {
+  const number = toComputed(_number)
+
+  return computed(() => {
+    return number.value * 2
+  })
+}
+```

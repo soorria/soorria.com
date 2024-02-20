@@ -7,6 +7,7 @@ import {
   SolidJsIcon,
   TailwindIcon,
   TypescriptIcon,
+  VueIcon,
 } from './icons'
 
 export const categoryLowerCaseToIcon: Record<string, IconComponent> = {
@@ -18,6 +19,8 @@ export const categoryLowerCaseToIcon: Record<string, IconComponent> = {
   miscellaneous: CodeIcon,
   solidjs: SolidJsIcon,
   tailwindcss: TailwindIcon,
+  'vue composable': VueIcon,
+  vue: VueIcon,
 }
 
 export const defaultCategoryIcon = CodeIcon

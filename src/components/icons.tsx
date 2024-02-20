@@ -447,3 +447,18 @@ export const TailwindIcon: IconComponent = props => (
     />
   </svg>
 )
+
+export const VueIcon: IconComponent = props => (
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 221" {...props}>
+    <path
+      fill="currentColor"
+      d="m0 0l128 220.8L256 0h-51.2L128 132.48L50.56 0z"
+      style={{ opacity: '0.5' }}
+    />
+    <path
+      fill="currentColor"
+      style={{ opacity: '1' }}
+      d="M50.56 0L128 133.12L204.8 0h-47.36L128 51.2L97.92 0z"
+    />
+  </svg>
+)
