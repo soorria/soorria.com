@@ -24,6 +24,7 @@ const tags: Array<{ label: string; value: string }> = [
   { value: 'miscellaneous', label: 'Miscellaneous' },
   { value: 'tailwindcss', label: 'Tailwind CSS' },
   { value: 'testing', label: 'Testing' },
+  { value: 'vue', label: 'Vue' },
 ]
 
 const SnippetGrid = ({ snippets: _snippets }: SnippetGridProps) => {
