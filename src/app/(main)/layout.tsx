@@ -6,7 +6,7 @@ const MainLayout = ({ children }: { children: ReactNode }) => {
   return (
     <>
       <Header />
-      <main role="main" id="main-content" className="bg-drac-base">
+      <main role="main" id="main-content" className="flex-1 bg-drac-base">
         {children}
       </main>
       <Footer />

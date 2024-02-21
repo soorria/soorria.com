@@ -4,7 +4,10 @@ import { promises as fs } from 'fs'
 import readingTime from 'reading-time'
 import matter from 'gray-matter'
 import path from 'path'
-import { addRefToUrl } from '../utils/content'
+import { addRefToUrl, blogPostFilter, sortByCreatedAtField } from '../utils/content'
+import { unstable_cache } from 'next/cache'
+import type { SnippetFrontMatter } from '~/types/snippet'
+import type { BlogPostFrontMatter } from '~/types/blog-post'
 
 const DATA_ROOT = path.join(process.cwd(), 'src/data')
 
@@ -128,4 +131,45 @@ export const getFileForMdx = async <TData extends BaseData>(
     hasContent: content.trim().length !== 0,
     ...getContentMetrics(content),
   } as TData
+}
+
+export const getAllPosts = async () => {
+  const [snippets, blogPosts] = await Promise.all([
+    getAllFilesFrontMatter<SnippetFrontMatter>('snippets'),
+    getAllFilesFrontMatter<BlogPostFrontMatter>('blog'),
+  ])
+
+  return [
+    ...snippets.map(s => ({ ...s, type: 'snippets' as const })),
+    ...blogPostFilter(blogPosts).map(p => ({ ...p, type: 'blog' as const })),
+  ].map(p => ({ ...p, width: p.type === 'snippets' ? 1 : 2 }))
+}
+
+export type AllPostsItem = Awaited<ReturnType<typeof getAllPosts>>[number]
+
+export const sortPostsForRender = (posts: AllPostsItem[]) => {
+  const sortedByCreated = sortByCreatedAtField(posts)
+
+  // Reorder posts so that they match the order when rendered
+  // with `grid-auto-flow: dense`
+  const result: typeof sortedByCreated = []
+  let buffer: (typeof sortedByCreated)[number] | null = null
+  for (const post of sortedByCreated) {
+    if (post.width === 1) {
+      if (buffer) {
+        result.push(buffer)
+        buffer = null
+        result.push(post)
+      } else {
+        buffer = post
+      }
+    } else {
+      result.push(post)
+    }
+  }
+  if (buffer) {
+    result.push(buffer)
+  }
+
+  return result
 }

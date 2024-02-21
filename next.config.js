@@ -117,11 +117,6 @@ const config = {
         destination: 'https://drive.google.com/drive/u/0/folders/1R2NkpjFDaeMO0JjHUMhpdmEERB79Pvav',
         permanent: false,
       },
-      {
-        source: '/6080',
-        destination: 'https://drive.google.com/drive/u/0/folders/1R2NkpjFDaeMO0JjHUMhpdmEERB79Pvav',
-        permanent: false,
-      },
     ]
   },
   async rewrites() {

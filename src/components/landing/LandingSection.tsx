@@ -4,7 +4,7 @@ import CustomLink from '../CustomLink'
 
 type LandingSectionProps = PropsWithChildren<{
   title: ReactNode
-  id?: string
+  id: string
   className?: string
   style?: CSSProperties
 }>
