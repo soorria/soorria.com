@@ -16,7 +16,7 @@ const LINKS = [
     href: '/blog',
   },
   {
-    title: 'art',
+    title: <span className="header-art-link-text">art</span>,
     href: '/authentic-artistique-endevours',
   },
 ]
@@ -38,7 +38,7 @@ const Header: React.FC = () => {
               key={href}
               href={href}
               passHref
-              className="focus-ring relative overflow-hidden rounded border-drac-content px-2 py-1 leading-none transition hocus:bg-drac-base-light hocus:text-drac-pink sm:px-3 sm:py-2"
+              className="focus-ring group relative overflow-hidden rounded border-drac-content px-2 py-1 leading-none transition hocus:bg-drac-base-light hocus:text-drac-pink sm:px-3 sm:py-2"
             >
               {title}
             </Link>

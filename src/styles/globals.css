@@ -198,6 +198,31 @@ input {
     );
     background-size: 1000%;
   }
+
+  .header-art-link-text {
+    position: relative;
+
+    &:before,
+    &:after {
+      content: '"';
+      position: absolute;
+      @apply transition-opacity;
+      opacity: 0;
+
+      .group:hover & {
+        opacity: 1;
+      }
+    }
+
+    &:before {
+      left: 0;
+      transform: translateX(-100%);
+    }
+    &:after {
+      right: 0;
+      transform: translateX(100%);
+    }
+  }
 }
 
 @keyframes sparkle {
