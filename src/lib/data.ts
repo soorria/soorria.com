@@ -5,7 +5,6 @@ import readingTime from 'reading-time'
 import matter from 'gray-matter'
 import path from 'path'
 import { addRefToUrl, blogPostFilter, sortByCreatedAtField } from '../utils/content'
-import { unstable_cache } from 'next/cache'
 import type { SnippetFrontMatter } from '~/types/snippet'
 import type { BlogPostFrontMatter } from '~/types/blog-post'
 
