@@ -1,0 +1,37 @@
+---
+title: Overlay an image on your page
+shortDescription: CSS-only method to overlay an image on an html page.
+category: CSS
+tags:
+  - css
+  - comp6080
+createdAt: '2024-02-21'
+# updatedAt: '2024-02-19'
+---
+
+CSS-only method to overlay an image on an html page. Very useful if you need to
+almost identially copy a design from an image for some reason.
+
+```css
+body {
+  position: relative;
+}
+
+body::after {
+  content: '';
+  background-image: url('./path/to/image.png');
+  position: absolute;
+  inset: 0;
+  background-repeat: no-repeat;
+  opacity: 0.5;
+  pointer-events: none;
+  z-index: 999998;
+}
+```
+
+<Note variant="info">
+
+If you need your `<body>` to be a specific width and height, you can set it with
+CSS in the top rule above.
+
+</Note>
