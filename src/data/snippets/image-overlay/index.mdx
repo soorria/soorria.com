@@ -7,11 +7,12 @@ tags:
   - css
   - comp6080
 createdAt: '2024-02-21'
-updatedAt: '2024-02-21'
+updatedAt: '2024-02-24'
 ---
 
-CSS-only method to overlay an image on an html page. Very useful if you need to
-almost identially copy a design from an image for some reason.
+CSS-only method to overlay an image on an html page - all you need to do is edit
+the `background-image` property! Very useful if you need to almost identially
+copy a design from an image for some reason.
 
 ```css
 body {
@@ -20,6 +21,7 @@ body {
 
 body::after {
   content: '';
+  /* EDIT THIS LINE TO POINT TO YOUR REFERENCE IMAGE */
   background-image: url('./path/to/image.png');
   position: absolute;
   inset: 0;
