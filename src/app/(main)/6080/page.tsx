@@ -9,7 +9,7 @@ import AllPostsGrid from '~/components/posts/AllPostsGrid'
 const DRIVE_LINK = 'https://drive.google.com/drive/u/0/folders/1R2NkpjFDaeMO0JjHUMhpdmEERB79Pvav'
 const UNI_EMAIL = 's.saruva@unsw.edu.au'
 
-const links: { icon: IconComponent; title: ReactNode; href: string }[] = [
+const IMPORTANT_LINKS: { icon: IconComponent; title: ReactNode; href: string }[] = [
   {
     icon: props => (
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 15 15" {...props}>
@@ -29,6 +29,13 @@ const links: { icon: IconComponent; title: ReactNode; href: string }[] = [
   },
 ]
 
+const OTHER_LINKS: { title: string; href: string }[] = [
+  {
+    title: 'Explanateon of margin collapse',
+    href: 'https://www.joshwcomeau.com/css/rules-of-margin-collapse/',
+  },
+]
+
 const RelevantPosts = async () => {
   const allPosts = await getAllPosts()
 
@@ -42,9 +49,9 @@ const RelevantPosts = async () => {
 const COMP6080Page = () => {
   return (
     <PostLayout title="COMP6080 Stuff">
-      <LandingSection title="Links" id="links">
+      <LandingSection title="Important Links" id="links">
         <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
-          {links.map(({ title, href, icon: Icon }) => (
+          {IMPORTANT_LINKS.map(({ title, href, icon: Icon }) => (
             <a
               key={href}
               href={href}
@@ -63,8 +70,22 @@ const COMP6080Page = () => {
         </div>
       </LandingSection>
 
-      <LandingSection title="Relevant posts" id="posts">
+      <LandingSection title="Relevant Posts" id="posts">
         <RelevantPosts />
+      </LandingSection>
+
+      <LandingSection title="Other links" id="other-links">
+        <div className="prose max-w-[none]">
+          <ul className="list-disc pl-4">
+            {OTHER_LINKS.map(({ title, href }) => (
+              <li key={href}>
+                <a href={href} target="_blank" rel="noopener noreferrer">
+                  {title}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </div>
       </LandingSection>
     </PostLayout>
   )
