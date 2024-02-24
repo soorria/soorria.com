@@ -15,7 +15,7 @@ type PostLayoutProps = PropsWithChildren<{
 export const PostHeading: React.FC<PropsWithChildren> = ({ children }) => {
   return (
     <h1
-      className="mb-20 mt-0 text-pretty text-center text-5xl !leading-tight text-drac-pink [--heading-padding:1rem] sm:mt-8 sm:text-6xl md:text-7xl lg:mb-16 lg:text-8xl lg:[--heading-padding:8rem]"
+      className="mb-20 mt-0 text-center text-5xl !leading-tight text-drac-pink text-safe-pretty [--heading-padding:1rem] sm:mt-8 sm:text-6xl md:text-7xl lg:mb-16 lg:text-8xl lg:[--heading-padding:8rem]"
       style={{
         overflowWrap: 'break-word',
         '--width': 'calc(100vw - var(--heading-padding))',
@@ -25,24 +25,25 @@ export const PostHeading: React.FC<PropsWithChildren> = ({ children }) => {
         right: '50%',
         marginLeft: 'calc(var(--width) / -2)',
         marginRight: 'calc(var(--width) / -2)',
-        // @ts-expect-error textWrap is not in the CSS typings
-        textWrap: 'balance',
+        textAlign: 'center',
       }}
     >
-      {typeof children === 'string'
-        ? children
-            .split(' ')
-            .map(word =>
-              word
-                .replace(/[a-z][A-Z]/g, m => `${m[0]} ${m[1]}`)
-                .split(' ')
-                .flatMap((chunk, i) => (i === 0 ? [chunk] : [<wbr key={i} />, chunk]))
-            )
-            .map((word, i) => {
-              if (i === 0) return word
-              return [' ', word]
-            })
-        : children}
+      <span className="inline-block max-w-screen-xl">
+        {typeof children === 'string'
+          ? children
+              .split(' ')
+              .map(word =>
+                word
+                  .replace(/[a-z][A-Z]/g, m => `${m[0]} ${m[1]}`)
+                  .split(' ')
+                  .flatMap((chunk, i) => (i === 0 ? [chunk] : [<wbr key={i} />, chunk]))
+              )
+              .map((word, i) => {
+                if (i === 0) return word
+                return [' ', word]
+              })
+          : children}
+      </span>
     </h1>
   )
 }

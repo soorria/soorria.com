@@ -122,11 +122,17 @@ module.exports = {
     require('@tailwindcss/typography'),
     require('tailwindcss-hocus'),
     require('tailwindcss-nmp'),
-    plugin(({ addVariant }) => {
+    plugin(({ addVariant, addUtilities }) => {
       addVariant('supports-hover', '@media (hover: hover)')
 
       addVariant('fullscreen', '&:fullscreen')
       addVariant('not-fullscreen', '&:not(:fullscreen)')
+
+      addUtilities({
+        '.text-safe-pretty': {
+          textWrap: ['balance', 'pretty'],
+        },
+      })
     }),
   ],
 }
