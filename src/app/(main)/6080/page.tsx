@@ -1,15 +1,26 @@
 import type { ReactNode } from 'react'
-import { EmailIcon, type IconComponent } from '~/components/icons'
+import { EmailIcon, GithubIconSolid, type IconComponent } from '~/components/icons'
 import LandingSection from '~/components/landing/LandingSection'
 import PostLayout from '~/components/posts/PostLayout'
 import QRDialog from './qr-dialog'
 import { getAllPosts, sortPostsForRender } from '~/lib/data'
 import AllPostsGrid from '~/components/posts/AllPostsGrid'
 
+const GITHUB_LINK = 'https://github.com/soorria/COMP6080-24t1'
 const DRIVE_LINK = 'https://drive.google.com/drive/u/0/folders/1R2NkpjFDaeMO0JjHUMhpdmEERB79Pvav'
 const UNI_EMAIL = 's.saruva@unsw.edu.au'
 
 const IMPORTANT_LINKS: { icon: IconComponent; title: ReactNode; href: string }[] = [
+  {
+    icon: GithubIconSolid,
+    title: 'GitHub (tute code)',
+    href: GITHUB_LINK,
+  },
+  {
+    icon: EmailIcon,
+    title: UNI_EMAIL,
+    href: `mailto:${UNI_EMAIL}`,
+  },
   {
     icon: props => (
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 15 15" {...props}>
@@ -19,13 +30,8 @@ const IMPORTANT_LINKS: { icon: IconComponent; title: ReactNode; href: string }[]
         ></path>
       </svg>
     ),
-    title: 'Google Drive (tute code)',
+    title: 'Google Drive',
     href: DRIVE_LINK,
-  },
-  {
-    icon: EmailIcon,
-    title: UNI_EMAIL,
-    href: `mailto:${UNI_EMAIL}`,
   },
 ]
 
