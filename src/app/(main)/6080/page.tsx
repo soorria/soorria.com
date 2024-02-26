@@ -31,7 +31,15 @@ const IMPORTANT_LINKS: { icon: IconComponent; title: ReactNode; href: string }[]
 
 const OTHER_LINKS: { title: string; href: string }[] = [
   {
-    title: 'Explanateon of margin collapse',
+    title: 'MDN - basically docs for all web stuff',
+    href: 'https://developer.mozilla.org/en-US/',
+  },
+  {
+    title: 'CSSReference - quick reference for what most CSS properties do',
+    href: 'https://cssreference.io/',
+  },
+  {
+    title: 'Explanation of margin collapse',
     href: 'https://www.joshwcomeau.com/css/rules-of-margin-collapse/',
   },
 ]
