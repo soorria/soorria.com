@@ -7,17 +7,27 @@ tags:
   - vue
   - typescript
 createdAt: '2024-02-20'
-# updatedAt: '2024-02-19'
+updatedAt: '2024-02-29'
 ---
 
 A Vue 3 composable that _slightly_ simplifies using a value that's a raw value,
-a ref, or a getter.
+a ref, or a getter. Also supports providing a fallback for when the value is
+nullish.
 
 ```ts
-import { type MaybeRefOrGetter, computed, toValue } from 'vue'
+import { type MaybeRefOrGetter, type ComputedRef, computed, toValue } from 'vue'
 
-export function toComputed<T>(source: MaybeRefOrGetter<T>) {
-  return computed(() => toValue(source))
+export function toComputed<T>(
+  source: MaybeRefOrGetter<T | null | undefined>,
+  fallback: T | (() => T)
+): ComputedRef<T>
+export function toComputed<T>(source: MaybeRefOrGetter<T>): ComputedRef<T>
+export function toComputed(source: MaybeRefOrGetter, fallback?: any) {
+  return computed(
+    () =>
+      toValue(source) ??
+      (typeof fallback === 'function' ? fallback() : fallback)
+  )
 }
 ```
 
