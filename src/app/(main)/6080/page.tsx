@@ -33,6 +33,11 @@ const IMPORTANT_LINKS: { icon: IconComponent; title: ReactNode; href: string }[]
     title: 'Google Drive',
     href: DRIVE_LINK,
   },
+  {
+    icon: EmailIcon,
+    title: 'cs6080@cse.unsw.edu.au',
+    href: `mailto:cs6080@cse.unsw.edu.au`,
+  },
 ]
 
 const OTHER_LINKS: { title: string; href: string }[] = [
