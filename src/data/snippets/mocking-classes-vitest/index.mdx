@@ -7,7 +7,7 @@ tags:
   - vitest
   - testing
 createdAt: '2024-02-13'
-updatedAt: '2024-02-20'
+updatedAt: '2024-03-04'
 ---
 
 How to mock and expect on class methods on classes from `vi.mock`ed modules.
@@ -22,7 +22,9 @@ vi.mock('./path/to/class/to/mock')
 describe('ThingThatUsesClassToMock', () => {
   it('should do the thing that I expect it to do :)', t => {
     const methodSpy = vi.spyOn(
-      // Spy on the class' prototype since that's where the actual function is
+      // Spy on the class' prototype since that's where the actual function is.
+      // If you're mocking a static method, you can use the class directly instead
+      // of its prototype.
       ClassToMock.prototype,
       // The name of the method to expect on
       'method'
@@ -35,3 +37,35 @@ describe('ThingThatUsesClassToMock', () => {
   })
 })
 ```
+
+<Note variant="warning">
+
+This method will only work if the method is defined using the
+[Method Definition](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/Method_definitions)
+syntax, and not as a property.
+
+For example, this is valid:
+
+```ts nojs
+class ValidClassToMock {
+  // ✅
+  methodThatWorks() {}
+}
+```
+
+but theses aren't:
+
+```ts nojs
+class InvalidClassToMock {
+  // ❌
+  arrowFunctionThatDoesNotWork = () => {}
+  // ❌
+  functionKeywordThatDoesNotWork = function () {}
+}
+```
+
+This is because only the first method defines the class on the prototype of the
+class (and so the functions are shared between instances). The last two methods
+are created per-instance and are not defined on the class' prototype.
+
+</Note>
