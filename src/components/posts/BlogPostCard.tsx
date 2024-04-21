@@ -37,7 +37,7 @@ const BlogPostCard: React.FC<{ post: BlogPostFrontMatter }> = ({
           aria-label="Created at"
         >
           <ClockIconSolid role="presentation" className="inline-block h-3 w-3" />
-          <span suppressHydrationWarning>{createdAt ? formatDate(createdAt) : 'UNPUBLISHED'}</span>
+          <span suppressHydrationWarning>{formatDate(createdAt, 'DRAFT')}</span>
         </div>
       </div>
     </div>

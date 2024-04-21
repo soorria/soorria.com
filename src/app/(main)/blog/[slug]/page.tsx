@@ -103,7 +103,7 @@ const PostPage = async (props: PostPageProps) => {
 
         <div className="tooltip flex items-center space-x-2" aria-label="Created at">
           <ClockIconSolid className="inline-block h-4 w-4" />
-          <span suppressHydrationWarning>{formatDate(post.createdAt)}</span>
+          <span suppressHydrationWarning>{formatDate(post.createdAt, 'DRAFT')}</span>
         </div>
       </div>
 
