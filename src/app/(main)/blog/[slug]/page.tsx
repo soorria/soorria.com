@@ -24,7 +24,7 @@ export const dynamic = 'force-static'
 export const generateStaticParams = async () => {
   const posts = await getAllFilesFrontMatter<BlogPostFrontMatter>('blog')
 
-  return posts.filter(p => !!p.createdAt).map(({ slug }) => ({ slug }))
+  return posts.map(({ slug }) => ({ slug }))
 }
 
 export const generateMetadata = async ({ params }: PostPageProps): Promise<Metadata> => {
