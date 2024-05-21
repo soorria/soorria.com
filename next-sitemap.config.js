@@ -1,7 +1,7 @@
 /** @type {import('next-sitemap').IConfig} */
 module.exports = {
   siteUrl: 'https://soorria.com',
-  generateRobotsTxt: true, // (optional)
+  generateRobotsTxt: false,
   generateIndexSitemap: false,
   // ...other options
 }

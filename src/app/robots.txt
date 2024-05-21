@@ -1,0 +1,12 @@
+# *
+User-agent: *
+Allow: /
+
+User-agent: GPTBot
+Disallow: /
+
+# Host
+Host: https://soorria.com
+
+# Sitemaps
+Sitemap: https://soorria.com/sitemap.xml
