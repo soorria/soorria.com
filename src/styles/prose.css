@@ -122,7 +122,7 @@ pre code {
 }
 
 .prose kbd {
-  @apply inline-flex items-center font-mono;
+  @apply inline-flex items-center rounded bg-drac-base-light px-1.5 py-1 font-mono leading-none text-drac-pink;
 }
 
 .prose kbd > kbd {
