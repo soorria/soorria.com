@@ -238,7 +238,7 @@ function SkillItem({
         style={{ width: imageWidth, height: 'auto', maxHeight: imageWidth }}
         draggable={false}
       />
-      <span className="pointer-events-none absolute -bottom-5 left-1/2 -translate-x-1/2 text-xs md:-bottom-6 md:text-sm">
+      <span className="pointer-events-none absolute -bottom-5 left-1/2 -translate-x-1/2 text-xs opacity-0 transition-opacity group-hover:opacity-100 md:-bottom-6 md:text-sm">
         {skill.label}
       </span>
     </button>
