@@ -5,6 +5,7 @@
   "scripts": {
     "predev": "npm run codegen",
     "dev": "next",
+    "dev:party": "partykit dev",
     "build": "next build",
     "postbuild": "next-sitemap",
     "start": "next start",
@@ -61,7 +62,8 @@
     "tailwindcss-hocus": "^0.0.7",
     "tailwindcss-nmp": "^0.0.2",
     "unified": "^10.1.2",
-    "unist-util-visit": "^4.1.2"
+    "unist-util-visit": "^4.1.2",
+    "partysocket": "1.0.1"
   },
   "devDependencies": {
     "@next/eslint-plugin-next": "^13.4.13",
@@ -95,7 +97,8 @@
     "solid-js": "^1.7.9",
     "tailwindcss": "^3.3.3",
     "tsx": "^3.12.7",
-    "typescript": "^5.1.6"
+    "typescript": "^5.1.6",
+    "partykit": "0.0.105"
   },
   "license": "MIT",
   "lint-staged": {
