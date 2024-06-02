@@ -303,7 +303,6 @@ function SkillItem({
   return (
     <button
       ref={element}
-      key={skill.label}
       className={cx(
         'fade-in-direct group absolute block w-fit select-none ease-linear',
         moving ? 'cursor-grabbing' : 'cursor-grab transition-transform'
