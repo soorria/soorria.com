@@ -2,24 +2,26 @@
 
 import {
   useCallback,
-  useReducer,
   useState,
   useEffect,
   useRef,
   type RefObject,
   useLayoutEffect,
+  type ReactNode,
 } from 'react'
-import { getRandomSkillIndexes, SKILLS, type SkillDefinition } from '~/lib/skills/definitions'
+import { SKILLS, type SkillDefinition, SKILLS_MAGIC_NUMBERS } from '~/lib/skills/definitions'
 import cx from '~/utils/cx'
 import CustomLink from '../CustomLink'
 import { RefreshIcon } from '../icons'
 import LandingSection from './LandingSection'
+import { skillLabelToImage } from '~/lib/skills/images'
+import usePartySocket from 'partysocket/react'
+import type { ClientMessage, ServerMessage, SkillPosition } from '~/lib/skills/schems'
 
 const titles = ["What I've Learned", 'Technical Skills', 'Tools I Use']
 
 export type UseSkillsInput = {
-  defaultIndexes?: number[]
-  defaultShowAll?: boolean
+  scale: number
 }
 
 export type UseSkillsResult = {
@@ -29,40 +31,100 @@ export type UseSkillsResult = {
   toggleShowAll: (next?: boolean) => void
 }
 
-const useSkills = ({ defaultIndexes, defaultShowAll = false }: UseSkillsInput): UseSkillsResult => {
-  const [indexes, setIndexes] = useState(() => {
-    if (defaultIndexes) return defaultIndexes
-    return getRandomSkillIndexes()
+type SkillDefinitionWithId = SkillDefinition & { id: string; position: SkillPosition }
+
+function useLiveSkills({ scale }: UseSkillsInput) {
+  const [state, setState] = useState<{
+    ready: boolean
+    items: SkillDefinitionWithId[]
+    numConnections: number
+  }>({
+    ready: false,
+    items: [],
+    numConnections: 9,
   })
-  const shuffle = useCallback(
-    (n?: number) => {
-      setIndexes(getRandomSkillIndexes(n ?? indexes.length))
+
+  const ws = usePartySocket({
+    host: 'https://soorria-website.soorria.partykit.dev',
+    // host: 'http://192.168.1.113:1999',
+    room: 'the-one-room',
+    onMessage(event) {
+      const message = JSON.parse(event.data as string) as ServerMessage
+      if (message.type === 'init') {
+        setState({
+          ready: true,
+          items: (message.items as SkillDefinitionWithId[]).map(s => ({
+            ...s,
+            position: scalePosition(s.position, scale),
+          })),
+          numConnections: message.numConnections,
+        })
+      } else if (message.type === 'connections-updated') {
+        setState(s => ({
+          ...s,
+          numConnections: message.numConnections,
+        }))
+      } else if (message.type === 'items-updated') {
+        setState(s => ({
+          ...s,
+          items: (message.items as SkillDefinitionWithId[]).map(s => ({
+            ...s,
+            position: scalePosition(s.position, scale),
+          })),
+        }))
+      }
     },
-    [indexes.length]
+  })
+
+  const sendMessage = useCallback(
+    (message: ClientMessage) => {
+      ws.send(JSON.stringify(message))
+    },
+    [ws]
   )
 
-  const [showAll, toggleShowAll] = useReducer<(v: boolean, next?: boolean) => boolean, boolean>(
-    (v, next) => (typeof next === 'undefined' ? !v : next),
-    defaultShowAll,
-    () => defaultShowAll
+  const moveItem: OnItemPositionChangeHandler = useCallback(
+    (id, newPosition) => {
+      setState(s => ({
+        ...s,
+        items: s.items.map(item => {
+          if (item.id !== id) {
+            return item
+          }
+          return {
+            ...item,
+            position: newPosition,
+          }
+        }),
+      }))
+
+      sendMessage({
+        type: 'move-item',
+        itemId: id,
+        newPosition: scalePosition(newPosition, 1 / scale),
+      })
+    },
+    [scale, sendMessage]
   )
 
-  const skills = showAll ? SKILLS : indexes.map(i => SKILLS[i]!)
+  const addMore = useCallback(() => {
+    sendMessage({
+      type: 'add-more',
+    })
+  }, [sendMessage])
 
-  return { skills, shuffle, toggleShowAll, showAll }
+  return {
+    ready: state.ready,
+    skills: state.items,
+    numConnections: state.numConnections,
+    moveItem,
+    addMore,
+  }
 }
 
 const classes = {
   buttonCommon:
     'rounded bg-drac-base-light px-2 py-1 text-drac-content transition-colors hocus:text-drac-purple focus-ring',
-}
-
-const MAGIC_NUMBERS = {
-  rootWidthPx: 832,
-  imageWidthPx: 86,
-  numColumns: 4,
-  gapPx: 48,
-  aspectRatio: 16 / 9,
 }
 
 function useElementWidth(element: RefObject<HTMLElement>) {
@@ -83,8 +145,7 @@ function useElementWidth(element: RefObject<HTMLElement>) {
   return width
 }
 
-type Position = { x: number; y: number }
-type OnItemPositionChangeHandler = (id: string, updatedPosition: Position) => void
+type OnItemPositionChangeHandler = (id: string, updatedPosition: SkillPosition) => void
 
 function clamp(value: number, min: number, max: number) {
   if (value < min) {
@@ -111,7 +172,7 @@ function SkillItem({
 }: {
   skill: SkillDefinition & { id: string }
   imageWidth: number
-  position: Position
+  position: SkillPosition
   onPositionChange?: OnItemPositionChangeHandler
   containerRef: RefObject<HTMLElement>
 }) {
@@ -224,7 +285,7 @@ function SkillItem({
       ref={element}
       key={skill.label}
       className={cx(
-        'group absolute block w-fit',
+        'fade-in-direct group absolute block w-fit',
         moving ? 'cursor-grabbing' : 'cursor-grab transition-transform'
       )}
       style={{ transform: `translate(calc(${position.x}px - 50%), calc(${position.y}px - 50%))` }}
@@ -232,13 +293,13 @@ function SkillItem({
     >
       {/* eslint-disable-next-line */}
       <img
-        src={skill.img?.src}
+        src={skillLabelToImage[skill.label]?.src}
         alt={`${skill.label} logo`}
         className=""
         style={{ width: imageWidth, height: 'auto', maxHeight: imageWidth }}
         draggable={false}
       />
-      <span className="pointer-events-none absolute -bottom-5 left-1/2 -translate-x-1/2 text-xs opacity-0 transition-opacity group-hover:opacity-100 md:-bottom-6 md:text-sm">
+      <span className="pointer-events-none absolute -bottom-5 left-1/2 -translate-x-1/2 text-xs opacity-0 transition-opacity group-hocus-visible:opacity-100 md:-bottom-6 md:text-sm">
         {skill.label}
       </span>
     </button>
@@ -256,117 +317,113 @@ function useDebouncedValue<T>(target: T, delayMs = 250): T {
   return state
 }
 
-const getId = () => {
-  return crypto.randomUUID?.() ?? Math.random().toString()
+function scalePosition(position: SkillPosition, scale: number) {
+  return {
+    x: Math.round(position.x * scale),
+    y: Math.round(position.y * scale),
+  }
 }
 
-function SkillsArea(props: { skills: (SkillDefinition & { id: string })[] }) {
+function SkillsArea(props: { staticFallback?: ReactNode }) {
   const rootRef = useRef<HTMLDivElement | null>(null)
   const width = useDebouncedValue(useElementWidth(rootRef))
-  const ready = width !== 0
-  const height = width / MAGIC_NUMBERS.aspectRatio
 
-  const scale = width / MAGIC_NUMBERS.rootWidthPx
-  const unscaledImageWidth = MAGIC_NUMBERS.imageWidthPx
+  const scale = width / SKILLS_MAGIC_NUMBERS.rootWidthPx
+  const unscaledImageWidth = SKILLS_MAGIC_NUMBERS.imageWidthPx
   const imageWidth = unscaledImageWidth * scale
 
-  const skills = props.skills
-
-  const [savedPositions, setSavedPositions] = useState<Record<string, Position>>({})
-
-  const positions = skills.map((skill, i) => {
-    const saved = savedPositions[skill.id]
-    if (saved) {
-      const { x, y } = saved
-      return { x: x * scale, y: y * scale }
-    }
-
-    const rowNumber = Math.floor(i / MAGIC_NUMBERS.numColumns)
-    const colNumber = i - rowNumber * MAGIC_NUMBERS.numColumns
-
-    const columnWidth = width / MAGIC_NUMBERS.numColumns
-    const centerOfColumn = (colNumber + 0.5) * columnWidth
-
-    const rowHeight = height / 2
-    const centerOfRow = (rowNumber + 0.5) * rowHeight
-
-    return {
-      x: centerOfColumn,
-      y: centerOfRow,
-    }
-  })
-
-  const handleItemPositionChange: OnItemPositionChangeHandler = useCallback(
-    (id, newPosition) => {
-      setSavedPositions(savedPositions => ({
-        ...savedPositions,
-        [id]: {
-          x: newPosition.x / scale,
-          y: newPosition.y / scale,
-        },
-      }))
-    },
-    [scale]
-  )
+  const liveSkills = useLiveSkills({ scale })
+  const ready = width !== 0 && liveSkills.ready
 
   return (
-    <div ref={rootRef} className="relative mb-8 aspect-video overflow-visible">
-      {ready &&
-        skills.map((skill, i) => {
-          return (
-            <SkillItem
-              imageWidth={imageWidth}
-              position={positions[i]!}
-              skill={skill}
-              key={skill.label}
-              onPositionChange={handleItemPositionChange}
-              containerRef={rootRef}
-            />
-          )
-        })}
-
-      <div
-        className={cx(
-          'pointer-events-none absolute inset-0 grid items-center justify-around justify-items-center opacity-0 transition-opacity',
-          !ready && 'pointer-events-auto opacity-100'
-        )}
-        style={{
-          gridTemplateColumns: `repeat(4, ${(
-            (MAGIC_NUMBERS.imageWidthPx / MAGIC_NUMBERS.rootWidthPx) *
-            100
-          ).toString()}%)`,
-        }}
-      >
-        {skills.map(skill => {
-          return (
-            <div
-              key={skill.label}
-              className="relative grid w-full place-items-center"
-              draggable={false}
-            >
-              {/* eslint-disable-next-line */}
-              <img
-                src={skill.img?.src}
-                alt={`${skill.label} logo`}
-                className="block aspect-square h-auto w-full object-contain"
-                draggable={false}
+    <>
+      <div ref={rootRef} className="relative mb-8 aspect-video overflow-visible">
+        {ready &&
+          liveSkills.skills.map(skill => {
+            return (
+              <SkillItem
+                imageWidth={imageWidth}
+                position={skill.position}
+                skill={skill}
+                key={skill.id}
+                onPositionChange={liveSkills.moveItem}
+                containerRef={rootRef}
               />
-              <span className="pointer-events-none absolute -bottom-5 left-1/2 -translate-x-1/2 text-xs md:-bottom-6 md:text-sm">
-                {skill.label}
-              </span>
-            </div>
-          )
-        })}
+            )
+          })}
+
+        <div
+          className={cx(
+            'pointer-events-none opacity-0 transition-opacity',
+            !ready && 'pointer-events-auto opacity-100'
+          )}
+        >
+          {props.staticFallback}
+        </div>
+
+        {ready && (
+          <div className="absolute bottom-0 right-0 rounded bg-drac-base px-1 text-xs opacity-50 transition-opacity hover:opacity-100 md:text-sm">
+            {liveSkills.numConnections} {liveSkills.numConnections === 1 ? 'person' : 'people'}{' '}
+            online
+          </div>
+        )}
       </div>
+
+      <div className="flex items-center justify-center space-x-1">
+        <button
+          onClick={() => {
+            liveSkills.addMore()
+          }}
+          className={cx('flex items-center', classes.buttonCommon)}
+        >
+          <RefreshIcon className="mr-1 inline-block h-em w-em" /> See more skills
+        </button>
+      </div>
+    </>
+  )
+}
+
+function StaticSkillsArea({ skillIndexes }: { skillIndexes: number[] }) {
+  const skills = skillIndexes?.map(index => SKILLS[index]!)
+
+  return (
+    <div
+      className={cx('absolute inset-0 grid items-center justify-around justify-items-center')}
+      style={{
+        gridTemplateColumns: `repeat(4, ${(
+          (SKILLS_MAGIC_NUMBERS.imageWidthPx / SKILLS_MAGIC_NUMBERS.rootWidthPx) *
+          100
+        ).toString()}%)`,
+      }}
+    >
+      {skills.map(skill => {
+        return (
+          <div
+            key={skill.label}
+            className="relative grid w-full place-items-center"
+            draggable={false}
+          >
+            {/* eslint-disable-next-line */}
+            <img
+              src={skillLabelToImage[skill.label]?.src}
+              alt={`${skill.label} logo`}
+              className="block aspect-square h-auto w-full object-contain"
+              draggable={false}
+            />
+            <span className="pointer-events-none absolute -bottom-5 left-1/2 -translate-x-1/2 text-xs md:-bottom-6 md:text-sm">
+              {skill.label}
+            </span>
+          </div>
+        )
+      })}
     </div>
   )
 }
 
-const Skills: React.FC<{ random?: number; skillIndexes?: number[] }> = ({
+const Skills: React.FC<{ random?: number; skillIndexes: number[] }> = ({
   random = 0,
   skillIndexes,
 }) => {
-  const { shuffle, toggleShowAll, showAll, skills } = useSkills({ defaultIndexes: skillIndexes })
   const title = titles[random % titles.length]
 
   return (
@@ -376,23 +433,8 @@ const Skills: React.FC<{ random?: number; skillIndexes?: number[] }> = ({
         of curiosity.
       </p>
       <div className="space-y-4 text-center text-sm">
-        <SkillsArea skills={skills.map(s => ({ ...s, id: s.label.toLowerCase() }))} />
+        <SkillsArea staticFallback={<StaticSkillsArea skillIndexes={skillIndexes} />} />
 
-        <div className="flex items-center justify-center space-x-1">
-          <button onClick={() => toggleShowAll()} className={classes.buttonCommon}>
-            {showAll ? 'Show a random set of my skills' : "Show all the tech I've learned"}
-          </button>
-          <span>&nbsp;/&nbsp;</span>
-          <button
-            onClick={() => {
-              if (showAll) toggleShowAll(false)
-              shuffle()
-            }}
-            className={cx('flex items-center', classes.buttonCommon)}
-          >
-            <RefreshIcon className="mr-1 inline-block h-em w-em" /> Randomise skills
-          </button>
-        </div>
         <p>
           Want to see a pointlessly long list of languages I&apos;ve used?
           <br />

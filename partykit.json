@@ -1,6 +1,6 @@
 {
   "$schema": "https://www.partykit.io/schema.json",
-  "name": "soorria-webiste",
+  "name": "soorria-website",
   "main": "src/partykit/index.ts",
   "compatibilityDate": "2024-06-01"
 }
