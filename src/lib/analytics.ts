@@ -4,6 +4,7 @@ import { useCallback, useRef } from 'react'
 export type AnalyticsCustomEvents = {
   'Easter Egg': { which: string }
   'Links Page': { link?: string }
+  'Play with skills': {}
 }
 
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
