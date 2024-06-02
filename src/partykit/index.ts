@@ -211,7 +211,7 @@ export default class Server implements Party.Server {
       }),
       ignoreSelf ? [sender.id] : []
     )
-    await this.room.storage.setAlarm(Date.now() + 30 * 1000)
+    await this.room.storage.setAlarm(Date.now() + 2 * 60 * 1000)
   }
 
   onAlarm() {
