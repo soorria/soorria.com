@@ -167,11 +167,9 @@ export default class Server implements Party.Server {
       return
     }
 
-    const SEND_MESSAGE_TIMEOUT_MS = 50
-
     const now = Date.now()
     const prevSendTime = sender.state?.lastMessageTime ?? 0
-    const nextSendTime = prevSendTime + SEND_MESSAGE_TIMEOUT_MS
+    const nextSendTime = prevSendTime + SKILLS_MAGIC_NUMBERS.sendMessageTimeoutMs
 
     if (now < nextSendTime) {
       return

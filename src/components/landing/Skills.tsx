@@ -43,6 +43,13 @@ function useLiveSkills({ scale }: UseSkillsInput) {
     items: [],
     numConnections: 9,
   })
+  const lastSentDetailsRef = useRef<{
+    lastSentAt: number
+    timeouts: Record<string, ReturnType<typeof setTimeout>>
+  }>({
+    lastSentAt: 0,
+    timeouts: {},
+  })
 
   const ws = usePartySocket({
     host: 'https://soorria-website.soorria.partykit.dev',
@@ -98,11 +105,31 @@ function useLiveSkills({ scale }: UseSkillsInput) {
         }),
       }))
 
-      sendMessage({
-        type: 'move-item',
-        itemId: id,
-        newPosition: scalePosition(newPosition, 1 / scale),
-      })
+      const now = Date.now()
+      const nextSendAt =
+        lastSentDetailsRef.current.lastSentAt + SKILLS_MAGIC_NUMBERS.sendMessageTimeoutMs
+
+      if (lastSentDetailsRef.current.timeouts[id]) {
+        clearTimeout(lastSentDetailsRef.current.timeouts[id])
+      }
+
+      if (now < nextSendAt) {
+        lastSentDetailsRef.current.timeouts[id] = setTimeout(() => {
+          lastSentDetailsRef.current.lastSentAt = now
+          sendMessage({
+            type: 'move-item',
+            itemId: id,
+            newPosition: scalePosition(newPosition, 1 / scale),
+          })
+        }, SKILLS_MAGIC_NUMBERS.sendMessageTimeoutMs)
+      } else {
+        lastSentDetailsRef.current.lastSentAt = now
+        sendMessage({
+          type: 'move-item',
+          itemId: id,
+          newPosition: scalePosition(newPosition, 1 / scale),
+        })
+      }
     },
     [scale, sendMessage]
   )
@@ -122,11 +149,6 @@ function useLiveSkills({ scale }: UseSkillsInput) {
   }
 }
 
-const classes = {
-  buttonCommon:
-    'rounded bg-drac-base-light px-2 py-1 text-drac-content transition-colors hocus:text-drac-purple focus-ring',
-}
-
 function useElementWidth(element: RefObject<HTMLElement>) {
   const [width, setWidth] = useState(0)
 
@@ -144,9 +166,7 @@ function useElementWidth(element: RefObject<HTMLElement>) {
 
   return width
 }
-
 type OnItemPositionChangeHandler = (id: string, updatedPosition: SkillPosition) => void
-
 function clamp(value: number, min: number, max: number) {
   if (value < min) {
     return min
@@ -285,7 +305,7 @@ function SkillItem({
       ref={element}
       key={skill.label}
       className={cx(
-        'fade-in-direct group absolute block w-fit',
+        'fade-in-direct group absolute block w-fit select-none ease-linear',
         moving ? 'cursor-grabbing' : 'cursor-grab transition-transform'
       )}
       style={{ transform: `translate(calc(${position.x}px - 50%), calc(${position.y}px - 50%))` }}
@@ -337,6 +357,11 @@ function SkillsArea(props: { staticFallback?: ReactNode }) {
 
   return (
     <>
+      <p className="mb-8 text-lg">
+        Here are some of the technical skills I&apos;ve learned during my degree, work, and just out
+        of curiosity.
+      </p>
+
       <div ref={rootRef} className="relative mb-8 aspect-video overflow-visible">
         {ready &&
           liveSkills.skills.map(skill => {
@@ -362,22 +387,22 @@ function SkillsArea(props: { staticFallback?: ReactNode }) {
         </div>
 
         {ready && (
-          <div className="absolute bottom-0 right-0 rounded bg-drac-base px-1 text-xs opacity-50 transition-opacity hover:opacity-100 md:text-sm">
-            {liveSkills.numConnections} {liveSkills.numConnections === 1 ? 'person' : 'people'}{' '}
-            online
-          </div>
-        )}
-      </div>
+          <>
+            <button
+              onClick={() => {
+                liveSkills.addMore()
+              }}
+              className="focus-ring absolute bottom-0 left-0 flex items-center rounded bg-drac-base-light px-2 py-1 text-drac-content opacity-50 transition hover:opacity-100 hocus:text-drac-purple"
+            >
+              <RefreshIcon className="mr-1 inline-block h-em w-em" /> See more skills
+            </button>
 
-      <div className="flex items-center justify-center space-x-1">
-        <button
-          onClick={() => {
-            liveSkills.addMore()
-          }}
-          className={cx('flex items-center', classes.buttonCommon)}
-        >
-          <RefreshIcon className="mr-1 inline-block h-em w-em" /> See more skills
-        </button>
+            <div className="absolute bottom-0 right-0 rounded bg-drac-base px-1 text-xs opacity-50 transition-opacity hover:opacity-100 md:text-sm">
+              {liveSkills.numConnections} {liveSkills.numConnections === 1 ? 'person' : 'people'}{' '}
+              online
+            </div>
+          </>
+        )}
       </div>
     </>
   )
@@ -428,14 +453,10 @@ const Skills: React.FC<{ random?: number; skillIndexes: number[] }> = ({
 
   return (
     <LandingSection id="skills" title={title}>
-      <p className="mb-8 text-lg">
-        Here are some of the technical skills I&apos;ve learned during my degree, work, and just out
-        of curiosity.
-      </p>
-      <div className="space-y-4 text-center text-sm">
+      <div className="space-y-4 text-sm">
         <SkillsArea staticFallback={<StaticSkillsArea skillIndexes={skillIndexes} />} />
 
-        <p>
+        <p className="text-center">
           Want to see a pointlessly long list of languages I&apos;ve used?
           <br />
           Check out my{' '}

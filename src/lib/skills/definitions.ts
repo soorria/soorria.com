@@ -41,4 +41,6 @@ export const SKILLS_MAGIC_NUMBERS = {
   numColumns: 4,
   gapPx: 48,
   aspectRatio: 16 / 9,
+
+  sendMessageTimeoutMs: 50,
 }
