@@ -55,6 +55,12 @@ export default class Server implements Party.Server {
       }
     }
   }
+  async saveState() {
+    if (this.state.status === 'not-ready') {
+      return
+    }
+    await this.room.storage.put('items', this.state.items)
+  }
 
   private static getId() {
     return crypto.randomUUID()
@@ -211,10 +217,10 @@ export default class Server implements Party.Server {
       }),
       ignoreSelf ? [sender.id] : []
     )
-    await this.room.storage.setAlarm(Date.now() + 2 * 60 * 1000)
+    await Promise.all([this.room.storage.setAlarm(Date.now() + 2 * 60 * 1000), this.saveState()])
   }
 
-  onAlarm() {
+  async onAlarm() {
     if (this.state.status === 'not-ready') {
       return
     }
@@ -231,6 +237,7 @@ export default class Server implements Party.Server {
         items: this.state.items,
       })
     )
+    await this.saveState()
   }
 }
 
