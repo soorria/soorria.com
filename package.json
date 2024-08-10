@@ -27,7 +27,6 @@
     "@mdx-js/mdx": "^2.3.0",
     "@next/bundle-analyzer": "^10.2.3",
     "@radix-ui/react-dialog": "^1.0.5",
-    "@supabase/supabase-js": "^1.35.7",
     "@vercel/og": "^0.0.16",
     "boxen": "^7.1.1",
     "change-case": "^4.1.2",

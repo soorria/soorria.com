@@ -285,7 +285,6 @@ const renderer = (
       if (e.touches.length !== 1) return
       const touch = e.touches[0]!
       const isOnLink = !!(touch.target as HTMLElement).closest('a,input,button,select,textarea')
-      console.log({ isOnLink })
       if (isOnLink) return
 
       const containerRect = container.getBoundingClientRect()
@@ -295,11 +294,8 @@ const renderer = (
         touch.clientY >= containerRect.top &&
         touch.clientY <= containerRect.bottom
 
-      console.log({ isOverContainer })
-
       if (!isOverContainer) return
       e.preventDefault()
-      console.log(document.activeElement)
       ;(document.activeElement as HTMLElement)?.blur()
     } else if (e.type === 'touchend') {
       mouse = { x: -Infinity, y: -Infinity }

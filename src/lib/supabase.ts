@@ -1,19 +1,3 @@
-import { createClient } from '@supabase/supabase-js'
-
-const client = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_ANON_KEY, {
-  fetch(input, init) {
-    return fetch(input, {
-      ...init,
-      headers: {
-        ...init?.headers,
-      },
-      next: {
-        revalidate: 10,
-      },
-    })
-  },
-})
-
 type Singleton = {
   id: number
   slug: string
@@ -21,27 +5,37 @@ type Singleton = {
   is_multiline: boolean
 }
 
-export const getSingleton = async (slug: string): Promise<Singleton> => {
-  const { data, error } = await client
-    .from<Singleton>('singletons')
-    .select('*')
-    .eq('slug', slug)
-    .maybeSingle()
+const API_KEY = process.env.SUPABASE_ANON_KEY
+const BASE_URL = process.env.SUPABASE_URL
 
-  if (error) {
-    throw error
+async function fetchSingleton(slug: string): Promise<Singleton | null> {
+  const url = new URL(`/rest/v1/singletons`, BASE_URL)
+  url.searchParams.set('select', '*')
+  url.searchParams.set('slug', `eq.${slug}`)
+  const response = await fetch(url.toString(), {
+    headers: {
+      apiKey: API_KEY,
+      Authorization: `Bearer ${API_KEY}`,
+    },
+  })
+
+  if (!response.ok) {
+    return null
   }
+
+  const data = (await response.json()) as Singleton[]
+
+  return data[0] ?? null
+}
+
+const getSingleton = async (slug: string): Promise<Singleton> => {
+  const data = await fetchSingleton(slug)
 
   if (!data) {
     throw new Error(`Singleton not found: ${slug}`)
   }
 
   return data
-}
-
-export const getSingletonText = async (slug: string): Promise<string> => {
-  const singleton = await getSingleton(slug)
-  return singleton.content
 }
 
 export const getSingletonTextSafe = async (slug: string): Promise<string | null> => {
@@ -52,8 +46,6 @@ export const getSingletonTextSafe = async (slug: string): Promise<string | null>
     return null
   }
 }
-
-export const getCachedSingletonTextSafe = getSingletonTextSafe
 
 export const getSingletonJsonSafe = async <T extends Record<string, unknown>>(
   slug: string
@@ -67,5 +59,3 @@ export const getSingletonJsonSafe = async <T extends Record<string, unknown>>(
     return {}
   }
 }
-
-export const getCachedSingletonJsonSafe = getSingletonJsonSafe

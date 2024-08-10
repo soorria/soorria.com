@@ -8,7 +8,7 @@ import { getFileFrontMatter } from '~/lib/data'
 import { featuredProjects } from '~/constants'
 import Skills from '~/components/landing/Skills'
 import { randomArray } from '~/utils/random'
-import { getCachedSingletonJsonSafe, getCachedSingletonTextSafe } from '~/lib/supabase'
+import { getSingletonJsonSafe, getSingletonTextSafe } from '~/lib/supabase'
 import { getRandomSkillIndexes } from '~/lib/skills/definitions'
 import Subtitle from '~/components/landing/Subtitle'
 import MdxRenderer from '~/components/mdx/MdxRenderer'
@@ -17,7 +17,7 @@ import { PageRenderedAt } from '~/components/PageRenderedAt'
 export const revalidate = 10
 
 const getSubtitleOptions = async () => {
-  const subtitleText = (await getCachedSingletonTextSafe('subtitle')) ?? ''
+  const subtitleText = (await getSingletonTextSafe('subtitle')) ?? ''
   const subtitleChunks = subtitleText
     .split('---')
     .map(chunk => chunk.trim().replace(/\.$/, ''))
@@ -26,7 +26,7 @@ const getSubtitleOptions = async () => {
 }
 
 const getNow = async () => {
-  const nowText = await getCachedSingletonTextSafe('now')
+  const nowText = await getSingletonTextSafe('now')
   return nowText || null
 }
 
@@ -35,7 +35,7 @@ const IndexPage = async () => {
 
   const nowPromise = getNow()
 
-  const indexOptionsPromise = getCachedSingletonJsonSafe<{ heroText: string; pattern?: string }>(
+  const indexOptionsPromise = getSingletonJsonSafe<{ heroText: string; pattern?: string }>(
     'index-options'
   )
 
