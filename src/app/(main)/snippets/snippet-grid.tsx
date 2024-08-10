@@ -19,12 +19,12 @@ const tagBaseClass = 'focus-ring rounded-full border-2 transition hocus:border-d
 const tags: Array<{ label: string; value: string }> = [
   { value: 'react', label: 'React' },
   { value: 'solidjs', label: 'SolidJS' },
+  { value: 'vue', label: 'Vue' },
   { value: 'typescript', label: 'TypeScript' },
   { value: 'javascript', label: 'JavaScript' },
   { value: 'miscellaneous', label: 'Miscellaneous' },
   { value: 'tailwindcss', label: 'Tailwind CSS' },
   { value: 'testing', label: 'Testing' },
-  { value: 'vue', label: 'Vue' },
 ]
 
 const SnippetGrid = ({ snippets: _snippets }: SnippetGridProps) => {
