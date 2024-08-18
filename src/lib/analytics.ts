@@ -7,7 +7,6 @@ export type AnalyticsCustomEvents = {
   'Play with skills': {}
   'Clicked code block copy button': {
     page: string
-    codeBlockIndex: number
   }
 }
 

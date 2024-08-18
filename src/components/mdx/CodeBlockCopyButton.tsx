@@ -41,7 +41,7 @@ export const CodeBlockCopyButton: React.FC<{ parentSelector: string; preSelector
 
     const codeBlockIndex = Array.from(document.querySelectorAll('.code-block')).indexOf(parent)
     track('Clicked code block copy button', {
-      props: { page: window.location.pathname, codeBlockIndex },
+      props: { page: [window.location.pathname, codeBlockIndex].join(':') },
     })
   }
 
