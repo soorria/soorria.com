@@ -4,6 +4,7 @@ import type { Dispatch, SetStateAction } from 'react'
 import cx from '~/utils/cx'
 import { useSyncedLocalStorage } from '~/utils/use-synced-local-storage'
 import { CODE_BLOCK_CLASSNAMES } from './mdx/utils'
+import { flushSync } from 'react-dom'
 
 export const useIsTs = (): [boolean, Dispatch<SetStateAction<boolean>>] =>
   useSyncedLocalStorage<boolean>('soorria.com:isTs', true)
@@ -16,7 +17,39 @@ export const TsJsToggle: React.FC<{ responsive?: boolean }> = props => {
   const langTextClass = responsive ? 'hidden md:inline' : ''
 
   return (
-    <button type="button" className={CODE_BLOCK_CLASSNAMES.button} onClick={() => setIsTs(t => !t)}>
+    <button
+      type="button"
+      className={CODE_BLOCK_CLASSNAMES.button}
+      onClick={e => {
+        const button = e.currentTarget
+
+        // distance from top of viewport to top of button
+        const oldDistanceToTop = button.getBoundingClientRect().top
+
+        flushSync(() => {
+          setIsTs(t => !t)
+        })
+
+        requestAnimationFrame(() => {
+          requestAnimationFrame(() => {
+            // maintain distance to top of button
+            const newDistanceToTop = button.getBoundingClientRect().top
+
+            console.log({
+              oldDistanceToTop,
+              newDistanceToTop,
+            })
+
+            const currentScrollPosition = window.scrollY
+
+            window.scrollTo({
+              top: currentScrollPosition + newDistanceToTop - oldDistanceToTop,
+              behavior: 'instant',
+            })
+          })
+        })
+      }}
+    >
       {/**
        * What should get shown here:
        *
