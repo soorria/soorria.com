@@ -6,12 +6,25 @@ export type AnalyticsCustomEvents = {
   'Links Page': { link?: string }
   'Play with skills': {}
   'Clicked code block copy button': {
-    page: string
+    id: string
   }
 }
 
-// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-export const useTrackEvent = () => usePlausible<AnalyticsCustomEvents>()
+type PlausibleTrackEvent = ReturnType<typeof usePlausible<AnalyticsCustomEvents>>
+
+export const useTrackEvent: () => PlausibleTrackEvent =
+  process.env.NODE_ENV === 'development'
+    ? () => {
+        const track = usePlausible<AnalyticsCustomEvents>()
+        return useCallback(
+          (...args) => {
+            console.log('tracked', ...args)
+            track(...args)
+          },
+          [track]
+        ) as PlausibleTrackEvent
+      }
+    : () => usePlausible<AnalyticsCustomEvents>()
 
 export const useTrackFirstEvent = (): ReturnType<typeof useTrackEvent> => {
   const isFirst = useRef(true)
