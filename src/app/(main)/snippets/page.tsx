@@ -7,7 +7,7 @@ import { PUBLIC_URL } from '~/constants'
 import SnippetGrid from './snippet-grid'
 
 const description =
-  'Little bits of code that I find useful and you might too! Mostly written in TypeScript (with a transpiled JavaScript version available) and often for React and SolidJS.'
+  'Little bits of code that I find useful and you might too! Mostly written in TypeScript & JavaScript and often for React, Vue and SolidJS.'
 const title = 'Snippets'
 const url = `${PUBLIC_URL}/snippets`
 
