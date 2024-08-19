@@ -8,7 +8,7 @@ tags:
   - typescript
   - drizzle-orm
 createdAt: '2024-01-03'
-# updatedAt: '2023-09-07'
+updatedAt: '2024-08-19'
 ---
 
 A couple type helpers to get a table's document type (when you SELECT) and the
@@ -90,7 +90,7 @@ export const products = sqliteTable('products', {
 })
 ```
 
-```ts title="~/somewhere/else/in/your/code"
+```ts nojs title="~/somewhere/else/in/your/code"
 import type { Doc, DocInsert } from '~/lib/db/types'
 
 /**
