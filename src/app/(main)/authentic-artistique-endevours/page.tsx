@@ -152,7 +152,16 @@ const ArtPage = () => {
     <>
       <PostLayout
         title="Art"
-        description='...or more accurately "art". Welcome to the world of the authentic artistique endevours of Soorria Saruva.'
+        description={
+          <>
+            ...or more accurately &ldquo;art&rdquo;. Welcome to the world of the authentic
+            artistique endevours of Soorria Saruva.
+            <span className="mx-auto mt-3 block w-1/2 text-balance text-xs sm:hidden">
+              If you&apos;re on mobile, scrolling won&apos;t work while your finger is on the
+              &ldquo;sprinkles&rdquo; at the top here
+            </span>
+          </>
+        }
         patterns={['doodle-pattern-2']}
         backdrop={<LazyMagicSprinkles fade isInHero />}
         hidePatternsWhenJs

@@ -49,10 +49,15 @@ const MagicSprinklesCard: React.FC<MagicSprinklesCardProps> = ({ project }) => {
               </li>
               <li>
                 Increases user retention by at least 1000%!!1! No questions asked, 100% money-back
-                guarantee<sup>*</sup>. <br />
+                guarantee<sup>*</sup>
+                <br />
                 <small className="text-[0.5rem]">
                   <sup>*</sup>(note: if you paid for this, you were scammed)
                 </small>
+              </li>
+              <li className="text-pretty text-xs sm:hidden">
+                If you&apos;re on mobile, scrolling won&apos;t work while your finger is on this
+                card.
               </li>
             </ul>
           </div>
