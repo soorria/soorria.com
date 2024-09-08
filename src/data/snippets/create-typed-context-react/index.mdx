@@ -1,0 +1,111 @@
+---
+title: createTypedContext (React)
+shortDescription: Easily make a typed context provider and helper hook in React
+category: React
+tags:
+  - typescript
+  - react
+createdAt: '2024-09-08'
+# updatedAt: '2024-02-29'
+---
+
+Easily create typed React Contexts and associated hooks without needing to
+dupliate types, and worry about default values!
+
+<Note variant='warning'>
+
+The snippet below uses React 19's `use` hook. If you're on a version before v19,
+all you need to do is replace all uses of the `use` hook with `useContext`!
+
+</Note>
+
+```tsx
+import type { ComponentType } from 'react'
+import { createContext, use } from 'react'
+
+export function createTypedContext<
+  TContext,
+  TProps extends Record<string, unknown> = Record<never, never>
+>(
+  useContextValue: (props: TProps) => TContext
+): [
+  Provider: ComponentType<TProps & { children: React.ReactNode }>,
+  useContext: () => TContext,
+  useOptionalContext: () => TContext | null
+] {
+  const Context = createContext<TContext | null>(null)
+
+  function Provider(props: TProps & { children: React.ReactNode }) {
+    return (
+      <Context.Provider value={useContextValue(props)}>
+        {props.children}
+      </Context.Provider>
+    )
+  }
+
+  function useOptionalTypedContext() {
+    const context = use(Context)
+    return context
+  }
+
+  function useTypedContext() {
+    const context = use(Context)
+    if (!context) {
+      throw new Error('Context not found')
+    }
+    return context
+  }
+
+  return [Provider, useTypedContext, useOptionalTypedContext]
+}
+```
+
+## Examples
+
+```tsx title="~/lib/secret-number/context.tsx"
+import { useState } from 'react'
+
+export const [SecretNumberProvider, useSecretNumber] = createTypedContext(
+  ({ secretNumber }: { secretNumber }) => {
+    const [multiplier, setMultiplier] = useState(1)
+
+    return {
+      secretNumber,
+      multiplier,
+      setMultiplier,
+      multipliedSecretNumber: secretNumber * multiplier,
+    }
+  }
+)
+```
+
+```tsx title="~/component/that/renders/provider"
+import { ReactNode } from 'react'
+
+export function ProviderProvider(props: { children: ReactNode }) {
+  return (
+    <SecretNumberProvider secretNumber={42}>
+      {props.children}
+    </SecretNumberProvider>
+  )
+}
+```
+
+```tsx title="~/component/that/consumes/context"
+export function ContextUser() {
+  const { secretNumber, setMultiplier, multipliedSecretNumber } =
+    useSecretNumber()
+
+  return (
+    <div>
+      <div>
+        <s>Secret</s> number: {secretNumber}
+      </div>
+      <div>
+        Multiplied <s>secret</s> number: {multipliedSecretNumber}
+      </div>
+      <button onClick={() => setMultiplier(m => m + 1)}>MULTIPLY!!</button>
+    </div>
+  )
+}
+```
