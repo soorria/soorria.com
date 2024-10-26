@@ -46,11 +46,11 @@ const PromptRacerCard: React.FC<PokelifeCardProps> = ({ project }) => {
     }
   }, [])
 
-  const comingSoonTag = (
-    <span className="inline-block -translate-y-px rounded bg-green-500/50 px-1 pb-px text-xs text-green-200">
-      coming soon
-    </span>
-  )
+  // const comingSoonTag = (
+  //   <span className="inline-block -translate-y-px rounded bg-green-500/50 px-1 pb-px text-xs text-green-200">
+  //     coming soon
+  //   </span>
+  // )
 
   return (
     <div className="sm:col-span-2" id={`${project.slug}`}>
@@ -88,8 +88,8 @@ const PromptRacerCard: React.FC<PokelifeCardProps> = ({ project }) => {
                 time!
               </li>
               <li>
-                {comingSoonTag} Leaderboard so you can stroke your ego, and show off your prompt
-                engineering prowess.
+                Leaderboard so you can stroke your ego, and show off your prompt engineering
+                prowess.
               </li>
               {/* <li>
                 {comingSoonTag} Create, upgrade and share coding bots with custom system prompts and

@@ -1,0 +1,128 @@
+---
+title: Only React has controlled inputs
+tags:
+  - javascript
+  - react
+  - vue
+  - solidjs
+  - preact
+  - svelte
+category: react
+shortDescription:
+  Follow me down a rabbit hole to understand how React works _slightly_
+  differently to every other framework.
+---
+
+TODO: intro
+
+## What are "controlled inputs"?
+
+Whether an input (or more generally a component) is "controlled" or
+"uncontrolled" depends on where its state is managed.
+
+**Controlled components** have their state managed by their consumers, and
+passed down as props. This means that the consumer of a controlled component can
+force it into a specific state. For `<input>`s this often looks like a `value`
+prop and an `onChange` event listener:
+
+```jsx
+import { useState } from 'react'
+
+export function ControlledInputExample() {
+  const [value, setValue] = useState('')
+
+  // use `value` however you want here!
+
+  return (
+    <input
+      // we're setting the input's value here
+      value={value}
+      onChange={event => {
+        setValue(event.currentTarget.value)
+      }}
+    ></input>
+  )
+}
+```
+
+**Uncontrolled** components manage their state internally, and consumers cannot
+easily force the component into a specific state. Sometimes, you'll be able to
+set default values, e.g. using the `defaultValue` prop on `<input>`s, and often
+uncontrolled components will emit events to expose some or all of their internal
+state, e.g. `onChange`. You can also access the values of native inputs using
+`ref`s or by using [`FormData`](/blog/formdata) on a surrounding form.
+
+## How are controlled inputs different across frameworks?
+
+Let's look at how the following `MessageInput` component behaves across
+frameworks:
+
+```tsx
+import { useState } from 'react'
+
+function removeVowels(message) {
+  return message.replace(/[aeiou]/gi, '')
+}
+
+export default function MessageInput() {
+  const [message, setMessage] = useState('rhythm')
+
+  const cleanedMessage = removeVowels(message)
+
+  return (
+    <>
+      <input
+        value={cleanedMessage}
+        onChange={event => {
+          setMessage(event.currentTarget.value)
+        }}
+      ></input>
+    </>
+  )
+}
+```
+
+<Collapse summary="The component implemented across frameworks, in CodeSandbox" >
+
+<Collapse summary="React">
+
+<Sandbox
+  src="https://codesandbox.io/embed/shsfjh?view=preview&module=%2Fsrc%2FApp.tsx&hidenavigation=1"
+  title="blog/event-delegation - Complete"
+/>
+
+- [React](https://codesandbox.io/p/sandbox/gallant-taussig-q2zfc8)
+
+</Collapse>
+
+</Collapse>
+
+- All frameworks update the input's value when
+- React forces the input's value to match the prop when it rerenders and after
+  event handlers have run
+
+### How does React do it?
+
+- It uses event delegation to handle all events that could affect an `<input>`,
+  `<textarea>` or `<select>`'s values
+  - https://github.com/facebook/react/blob/cd22717c274061fd7dc13cd6eaff10e6a3946508/packages/react-dom-bindings/src/events/plugins/ChangeEventPlugin.js#L38-L47
+- After all event handlers (if any) are run, any controlled inputs have their
+  internal values set to the `value` prop:
+  - https://github.com/facebook/react/blob/cd22717c274061fd7dc13cd6eaff10e6a3946508/packages/react-dom-bindings/src/events/ReactDOMUpdateBatching.js#L42
+  - https://github.com/facebook/react/blob/cd22717c274061fd7dc13cd6eaff10e6a3946508/packages/react-dom-bindings/src/client/ReactDOMComponent.js
+
+## Opinion time!
+
+Is what React does a good thing?
+
+- forcing inputs' values to match their `value` props makes things more
+  intuitive
+- not how things work in general
+- but react does patch over other things to make things a bit easier / more
+  intuitive, e.g.
+  - oninput, onchange, etc -> onChange
+  - whitespace in jsx isn't preserved - only in the strings you add, unlike in
+    html
+- this makes things easier, but could lead to people becoming "React" developers
+  vs web developers - i.e. people learning the framework instead of learning the
+  platform

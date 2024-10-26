@@ -41,5 +41,9 @@
     "!vue",
     "!yaml",
     "!yml"
+  ],
+  "cSpell.words": [
+    "preact",
+    "solidjs"
   ]
 }
