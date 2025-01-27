@@ -78,7 +78,11 @@ export function UncontrolledInputExample() {
 ## How are controlled inputs different across frameworks?
 
 Let's look at how the following `ControlledInput` component behaves across
-frameworks:
+frameworks. The component contains an input bound to a piece of state using an
+`onChange` event listener. The value of the input has all its vowels removed
+before state is updated. The transformation of the value is arbitrary, and other
+examples include converting it to snake_case, but it's important as it
+highlights the differences between frameworks' handling of controlled inputs.
 
 ```tsx
 import { useState } from 'react'
@@ -105,12 +109,6 @@ export default function ControlledInput() {
 }
 ```
 
-The above component contains an input bound to a piece of state using an
-`onChange` event listener. The value of the input has all its vowels removed
-before state is updated. The transformation of the value is arbitrary, and other
-examples include converting it to snake_case, but it's important as it
-highlights the differences between frameworks' handling of controlled inputs.
-
 Using [Astro](https://astro.build), I've implemented the above component in
 React, Preact, Solid.js, Vue, and Svelte - play around with the demo below, and
 see if you can figure out the difference between React and the other frameworks!
@@ -134,11 +132,12 @@ stay there! When you add another consonant, "t", the errant "e"s disappear and
 the text rendered in the input becomes "yt". However in React, as you type out
 "yeeee", the text rendered in the input stays as "y".
 
-The main difference here is that in the non-React frameworks, the value of the
-input is only set when the value in state changes, whereas React forces the
-value of the input to match the state!
+The main difference here is that React **forces** the internal value of input
+elements to match their `value` props (if present), almost always keeping them
+in sync! Other frameworks only synchronise `value` props and the internal values
+of inputs when the prop's value changes.
 
-### How does React do it?
+## How does React do it?
 
 React adds event listeners to handle relevant events for `<input>`,
 `<textarea>`, and `<select>` elements using
@@ -180,8 +179,15 @@ vs web developers who use React. This doesn't apply only to React, but many
 developers end up only learning how to solve problems using a framework or
 library, and become significantly less effective when without!
 
-Overall, I think this is ok as long as developers are aware of the difference
-between React and how HTML elements & the DOM work in general.
+This difference can also lead to a confusing experience for users who see input
+values that don't match the state of the app. In practice, this often results in
+data in forms getting saved not matching what is rendered on users' screens.
+Apart from the Vue component test I mentioned at the top of this blog post, I've
+seen (caused) this when converting text to snake_case in a
+[writable Vue computed](https://vuejs.org/guide/essentials/computed.html#writable-computed).
+
+Overall, I think what React has done is ok as long as developers are aware of
+the difference between React and how HTML elements & the DOM work.
 
 <div hidden>
 
