@@ -82,13 +82,17 @@ html {
   @apply flex h-full min-h-screen flex-col;
 }
 
+[id] {
+  @apply scroll-mt-24;
+}
+
 h1,
 h2,
 h3,
 h4,
 h5,
 h6 {
-  @apply scroll-mt-24 font-display font-bold;
+  @apply font-display font-bold;
 }
 
 h1 {
