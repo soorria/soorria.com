@@ -11,6 +11,7 @@ category: react
 shortDescription:
   Follow me down a rabbit hole to understand how React works slightly
   differently to every other framework.
+createdAt: '2025-01-28'
 ---
 
 I got nerd-sniped by a bug in a unit test for a Vue component, and 4 months
@@ -95,16 +96,14 @@ export default function ControlledInput() {
   const [message, setMessage] = useState('rhythm')
 
   return (
-    <>
-      <input
-        value={cleanedMessage}
-        onChange={event => {
-          const messageFromInput = event.currentTarget.value
-          const cleanedMessage = removeVowels(messageFromInput)
-          setMessage(cleanedMessage)
-        }}
-      ></input>
-    </>
+    <input
+      value={message}
+      onChange={event => {
+        const messageFromInput = event.currentTarget.value
+        const cleanedMessage = removeVowels(messageFromInput)
+        setMessage(cleanedMessage)
+      }}
+    />
   )
 }
 ```
@@ -188,26 +187,6 @@ seen (caused) this when converting text to snake_case in a
 
 Overall, I think what React has done is ok as long as developers are aware of
 the difference between React and how HTML elements & the DOM work.
-
-<div hidden>
-
-Is what React does a good thing?
-
-- forcing inputs' values to match their `value` props makes things more
-  intuitive
-- not how things work in general
-- but react does patch over other things to make things a bit easier / more
-  intuitive, e.g.
-  - oninput, onchange, etc -> onChange
-  - whitespace in jsx isn't preserved - only in the strings you add, unlike in
-    html
-- this makes things easier, but could lead to people becoming "React" developers
-  vs web developers - i.e. people learning the framework instead of learning the
-  platform
-- more of a JSX thing, but self-closing tags work different:
-  https://jakearchibald.com/2023/against-self-closing-tags-in-html/
-
-</div>
 
 ## Conclusion
 
