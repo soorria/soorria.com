@@ -12,6 +12,7 @@ shortDescription:
   Follow me down a rabbit hole to understand how React works slightly
   differently to every other framework.
 createdAt: '2025-01-28'
+updatedAt: '2025-01-28'
 ---
 
 I got nerd-sniped by a bug in a unit test for a Vue component, and 4 months
@@ -47,6 +48,16 @@ export function ControlledInputExample() {
   )
 }
 ```
+
+<Note variant="info">
+
+This post generally only goes over the `<input>` element and its `value` prop,
+but this also applies to:
+
+- the `value` prop on `<select>`s and `<textarea>`s
+- the `checked` prop on `<input type="radio">`s and `<input type="checkbox">`s
+
+</Note>
 
 **Uncontrolled** components manage their state internally, and consumers cannot
 easily force the component into a specific state. Sometimes, you'll be able to
