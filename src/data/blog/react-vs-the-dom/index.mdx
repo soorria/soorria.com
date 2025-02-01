@@ -1,0 +1,41 @@
+---
+title: React vs the DOM
+tags:
+  - javascript
+  - react
+category: react
+shortDescription:
+  How React "fixes" some issues and inconsistencies in HTML and the DOM.
+# createdAt: ''
+# updatedAt: ''
+---
+
+- className, htmlFor
+- forcing inputs' values to match their `value` props makes things more
+  intuitive
+- but react does patch over other things to make things a bit easier / more
+  intuitive, e.g.
+  - oninput, onchange, etc -> onChange
+  - whitespace in jsx isn't preserved - only in the strings you add, unlike in
+    html
+- more of a JSX thing, but self-closing tags work different:
+  https://jakearchibald.com/2023/against-self-closing-tags-in-html/
+- events differences:
+  https://react.dev/reference/react-dom/components/common#react-event-object
+- form action prop as function
+- head elements get automatically moved to the `<head>`
+
+  - https://react.dev/reference/react-dom/components/link
+    - links are also automatically deduped
+  - https://react.dev/reference/react-dom/components/meta
+  - https://react.dev/reference/react-dom/components/script
+    - `<script async src="...">` only
+  - https://react.dev/reference/react-dom/components/style
+    - additional `precedence` prop to handle ordering for CSS cascade
+  - https://react.dev/reference/react-dom/components/title#set-the-document-title
+    - children needs to be a single string, otherwise React will Error
+
+- this makes things easier, but could lead to people becoming "React" developers
+  vs web developers - i.e. people learning the framework instead of learning the
+  platform
+- not how things work in general
