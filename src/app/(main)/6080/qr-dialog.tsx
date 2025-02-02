@@ -40,10 +40,10 @@ const QRDialog = () => {
       <Dialog.Portal>
         <Dialog.Overlay className="fixed inset-0 z-50 bg-drac-base-dark/75" />
 
-        <Dialog.Content className="fixed bottom-0 left-1/2 z-50 flex w-full max-w-screen-sm -translate-x-1/2 flex-col gap-8 rounded-lg bg-drac-base p-6 shadow-lg sm:bottom-auto sm:top-1/2 sm:-translate-y-1/2">
+        <Dialog.Content className="fixed bottom-0 left-1/2 z-50 flex w-full max-w-(--breakpoint-sm) -translate-x-1/2 flex-col gap-8 rounded-lg bg-drac-base p-6 shadow-lg sm:bottom-auto sm:top-1/2 sm:-translate-y-1/2">
           <Dialog.Title className="text-2xl font-bold sm:text-3xl">soorria.com/6080</Dialog.Title>
 
-          <Dialog.Close className="absolute right-4 top-4 rounded px-1.5 text-sm text-drac-pink transition-colors hover:bg-drac-base-dark hover:text-drac-purple">
+          <Dialog.Close className="absolute right-4 top-4 rounded-sm px-1.5 text-sm text-drac-pink transition-colors hover:bg-drac-base-dark hover:text-drac-purple">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" className="h-4 w-4">
               <path
                 fill="none"

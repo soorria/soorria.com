@@ -86,7 +86,7 @@ const getArt = (): Array<
       <MDXImage
         src={artImages.DonaldTrumpNft}
         alt="satirical portrayal of a Donald Trump NFT involving a stick figure shooting laser beams out of their eyes and wearing a cape"
-        placeholder="blur"
+        placeholder="blur-sm"
       />
     ),
     quotes: [
@@ -100,7 +100,7 @@ const getArt = (): Array<
       <MDXImage
         src={artImages.UnnamedWaifu}
         alt='a drawing of a waifu with a speech bubble saying "I love you"'
-        placeholder="blur"
+        placeholder="blur-sm"
       />
     ),
     quotes: [
@@ -130,7 +130,7 @@ const getArt = (): Array<
       <MDXImage
         src={artImages.DavidLauNft}
         alt={`"realistic" depiction of David Lau looking like The Boy's Homelander and shooting laser beams from his eyes.`}
-        placeholder="blur"
+        placeholder="blur-sm"
       />
     ),
   },
@@ -140,7 +140,7 @@ const getArt = (): Array<
       <MDXImage
         src={artImages.SpeedSudokuChampionRiki}
         alt="pencil-on-paper drawing of Riki Miyamura sitting and wearing a Champion jumper after winning a speed sudoku competition"
-        placeholder="blur"
+        placeholder="blur-sm"
       />
     ),
   },

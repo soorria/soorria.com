@@ -13,13 +13,13 @@ interface PokelifeCardProps {
 }
 
 const cardLinkClassName =
-  'inline-flex items-center px-6 py-2 ml-4 mt-4 space-x-2 font-semibold transition-colors border-2 border-current border-white rounded hocus:text-drac-base hocus:bg-white focus-ring'
+  'inline-flex items-center px-6 py-2 ml-4 mt-4 space-x-2 font-semibold transition-colors border-2 border-current border-white rounded-sm hocus:text-drac-base hocus:bg-white focus-ring'
 
 const SettingButton: React.FC<ButtonHTMLAttributes<HTMLButtonElement>> = props => {
   return (
     <button
       {...props}
-      className="focus-ring -mx-1 cursor-pointer break-words break-all rounded px-1 underline disabled:cursor-not-allowed disabled:opacity-50"
+      className="focus-ring -mx-1 cursor-pointer break-words break-all rounded-sm px-1 underline disabled:cursor-not-allowed disabled:opacity-50"
     />
   )
 }
@@ -95,7 +95,7 @@ const PokelifeCard: React.FC<PokelifeCardProps> = ({ project }) => {
             </p>
           </noscript>
         </div>
-        <div className="absolute -inset-4 bg-gradient-to-r from-[#272933] via-[#272933] to-[#27293377] sm:to-transparent" />
+        <div className="absolute -inset-4 bg-linear-to-r from-[#272933] via-[#272933] to-[#27293377] sm:to-transparent" />
         <div className="relative z-10 flex h-full flex-col space-y-4 rounded-xl p-8 ring-4 ring-inset ring-drac-pink">
           <header className="font-display text-3xl font-bold">Pokélife</header>
           <div className="max-w-[25rem] flex-1">

@@ -93,7 +93,7 @@ const SolidDemo: React.FC<SolidDemoProps> = props => {
         </button>
       </div>
 
-      {/* <div className="absolute inset-0 grid place-items-center rounded bg-drac-base-dark/80 backdrop-blur">
+      {/* <div className="absolute inset-0 grid place-items-center rounded-sm bg-drac-base-dark/80 backdrop-blur-sm">
         <span className="inline-block max-w-md px-4 text-center text-pretty">
           🚧
           <br />

@@ -30,7 +30,7 @@ const FeaturedProjects: React.FC<FeaturedProjectsProps> = ({ projects, random = 
         <Link
           href="/projects"
           passHref
-          className="focus-ring rounded px-3 py-2 text-drac-pink transition-colors hocus:bg-drac-base-light hocus:text-drac-purple"
+          className="focus-ring rounded-sm px-3 py-2 text-drac-pink transition-colors hocus:bg-drac-base-light hocus:text-drac-purple"
         >
           <span>See All Projects</span>
         </Link>

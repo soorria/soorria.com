@@ -8,7 +8,7 @@ import { CodeIcon, ExternalIcon, InfoIcon } from '~/components/icons'
 import { type PropsWithChildren } from 'react'
 
 const cardLinkClassName =
-  'inline-flex items-center px-3 py-1 ml-2 mt-2 space-x-1 text-sm font-semibold transition-colors border-2 border-current border-white rounded-sm hocus:text-var-bg hocus:bg-white focus-ring'
+  'inline-flex items-center px-3 py-1 ml-2 mt-2 space-x-1 text-sm font-semibold transition-colors border-2 border-current border-white rounded-xs hocus:text-var-bg hocus:bg-white focus-ring'
 
 type UtilsProjectCardProps = PropsWithChildren<
   ProjectCardProps &
@@ -39,11 +39,11 @@ const UtilsProjectCard: React.FC<UtilsProjectCardProps> = ({
                   height="356"
                   width="381"
                   alt="flowchart showing file sizes after gzip"
-                  placeholder="blur"
+                  placeholder="blur-sm"
                 />
               </div>
             </div>
-            <div className="absolute inset-0 bg-gradient-to-r from-var-bg via-var-bg to-transparent"></div>
+            <div className="absolute inset-0 bg-linear-to-r from-var-bg via-var-bg to-transparent"></div>
           </>
         ) : null}
         <div className="relative flex h-full flex-col space-y-4 p-8">

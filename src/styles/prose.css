@@ -1,9 +1,11 @@
+@reference "./globals.css";
+
 .prose {
   @apply max-w-none;
 }
 
 .prose code:not([data-language]) {
-  @apply rounded bg-drac-base-light p-1 leading-none text-drac-pink;
+  @apply rounded-sm bg-drac-base-light p-1 leading-none text-drac-pink;
 }
 
 .prose a:hover code {
@@ -16,7 +18,7 @@
 
 .prose img,
 .prose iframe {
-  @apply rounded md:rounded-xl;
+  @apply rounded-sm md:rounded-xl;
 }
 
 .prose iframe {
@@ -46,7 +48,7 @@
 }
 
 .prose code {
-  @apply rounded bg-drac-base-light px-1.5 py-1 leading-none text-drac-pink;
+  @apply rounded-sm bg-drac-base-light px-1.5 py-1 leading-none text-drac-pink;
 }
 
 pre[data-language] code {
@@ -76,10 +78,10 @@ pre[data-language] .line--highlighted {
   opacity: 1 !important;
 }
 pre[data-language] .line--highlighted {
-  background-color: theme('colors.drac.base-dark') !important;
+  background-color: var(--base-dark) !important;
 }
 pre[data-language]:hover .line--highlighted {
-  box-shadow: inset 0.25rem 0 0 0 theme('colors.drac.purple') !important;
+  box-shadow: inset 0.25rem 0 0 0 var(--purple) !important;
 }
 
 /* Visually differentiates twoslash code samples  */
@@ -99,7 +101,7 @@ pre.twoslash data-lsp:hover::before {
   position: absolute;
   transform: translate(0, 1.75rem);
 
-  @apply whitespace-pre-wrap rounded bg-drac-base-light px-1 py-2 text-left font-mono text-sm text-drac-content;
+  @apply whitespace-pre-wrap rounded-sm bg-drac-base-light px-1 py-2 text-left font-mono text-sm text-drac-content;
   z-index: 100;
 }
 
@@ -122,12 +124,12 @@ pre code {
 }
 
 .prose kbd {
-  @apply inline-flex items-center rounded bg-drac-base-light px-1.5 py-1 font-mono leading-none text-drac-pink;
+  @apply inline-flex items-center rounded-sm bg-drac-base-light px-1.5 py-1 font-mono leading-none text-drac-pink;
 }
 
 .prose kbd > kbd {
   padding: 1px 2px 0px;
-  @apply inline-block rounded border border-drac-pink leading-none;
+  @apply inline-block rounded-sm border border-drac-pink leading-none;
 }
 
 /**

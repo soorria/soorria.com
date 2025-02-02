@@ -11,7 +11,7 @@ interface JupyterJsCardProps {
 }
 
 const cardLinkClassName =
-  'inline-flex items-center px-6 py-2 ml-4 mt-4 space-x-2 font-semibold transition-colors border-2 border-current border-white rounded hocus:text-purple-500 hocus:bg-white focus-ring'
+  'inline-flex items-center px-6 py-2 ml-4 mt-4 space-x-2 font-semibold transition-colors border-2 border-current border-white rounded-sm hocus:text-purple-500 hocus:bg-white focus-ring'
 
 const JupyterJsCard: React.FC<JupyterJsCardProps> = ({ project }) => {
   return (
@@ -25,11 +25,11 @@ const JupyterJsCard: React.FC<JupyterJsCardProps> = ({ project }) => {
               width="546"
               className="h-auto w-full"
               alt="preview showing jupyter-js' code and markdown cells running"
-              placeholder="blur"
+              placeholder="blur-sm"
             />
           </div>
         </div>
-        <div className="absolute inset-0 hidden bg-gradient-to-r from-purple-600 via-purple-600 to-transparent sm:block" />
+        <div className="absolute inset-0 hidden bg-linear-to-r from-purple-600 via-purple-600 to-transparent sm:block" />
         <div className="relative z-10 flex h-full flex-col space-y-4 p-8">
           <header className="font-display text-3xl font-bold">jupyter.js</header>
           <div className="max-w-[25rem] flex-1">

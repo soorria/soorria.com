@@ -35,7 +35,7 @@ const MagicSprinklesPage = ({ children }: { children: ReactNode }) => {
 
   const classes = {
     button:
-      'rounded px-2.5 py-1.5 font-display text-sm font-bold transition supports-hover:hover:bg-drac-base-dark/75 supports-hover:hover:text-drac-pink supports-hover:hover:underline contrast-more:bg-drac-base contrast-more:text-drac-pink supports-hover:contrast-more:hover:bg-drac-base-dark',
+      'rounded-sm px-2.5 py-1.5 font-display text-sm font-bold transition supports-hover:hover:bg-drac-base-dark/75 supports-hover:hover:text-drac-pink supports-hover:hover:underline contrast-more:bg-drac-base contrast-more:text-drac-pink supports-hover:contrast-more:hover:bg-drac-base-dark',
   }
 
   return (

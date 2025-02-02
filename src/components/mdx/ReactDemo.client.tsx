@@ -41,7 +41,7 @@ const ReactDemo = ({ content, init = 'mount' }: ReactDemoProps) => {
           <div className="no-js-hidden h-20 bg-drac-purple/50 p-4 md:px-6">
             <button
               onClick={() => setStarted(true)}
-              className="focus-ring block h-full w-full rounded bg-drac-base text-drac-pink transition hocus:text-drac-purple"
+              className="focus-ring block h-full w-full rounded-sm bg-drac-base text-drac-pink transition hocus:text-drac-purple"
             >
               Start Demo
             </button>

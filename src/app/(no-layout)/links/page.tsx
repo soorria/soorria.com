@@ -11,7 +11,7 @@ const classes = {
   anchor: cx(
     'group flex items-center justify-between rounded-lg bg-drac-base/75 py-6 px-8 text-drac-pink transition',
     'hocus:bg-drac-base hocus:text-drac-purple hocus:shadow-xl',
-    'focus:outline-none focus:ring focus:ring-drac-purple'
+    'focus:outline-hidden focus:ring-3 focus:ring-drac-purple'
   ),
 }
 
