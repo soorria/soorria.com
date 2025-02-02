@@ -8,7 +8,7 @@ type FullscreenControls = {
 
 export const useFullscreen = (): [
   fullscreenElement: Element | null,
-  controls: FullscreenControls
+  controls: FullscreenControls,
 ] => {
   const [fullscreenElement, setFullscreenElement] = useState<Element | null>(null)
 

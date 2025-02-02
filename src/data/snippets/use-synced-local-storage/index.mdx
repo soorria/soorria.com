@@ -75,7 +75,7 @@ type NonNullJsonValue =
   | JsonValue[]
 
 export const useSyncedLocalStorage = <
-  T extends NonNullJsonValue = NonNullJsonValue
+  T extends NonNullJsonValue = NonNullJsonValue,
 >(
   key: string,
   initialValue: T

@@ -26,13 +26,13 @@ import { createContext, use } from 'react'
 
 export function createTypedContext<
   TContext,
-  TProps extends Record<string, unknown> = Record<never, never>
+  TProps extends Record<string, unknown> = Record<never, never>,
 >(
   useContextValue: (props: TProps) => TContext
 ): [
   Provider: ComponentType<TProps & { children: React.ReactNode }>,
   useContext: () => TContext,
-  useOptionalContext: () => TContext | null
+  useOptionalContext: () => TContext | null,
 ] {
   const Context = createContext<TContext | null>(null)
 

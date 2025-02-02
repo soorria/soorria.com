@@ -8,7 +8,7 @@ type CopyFn = (text: string) => Promise<void>
 
 export const useCopy = ({ copiedTimeout = 2000 }: UseCopyProps = {}): [
   copy: CopyFn,
-  copied: boolean
+  copied: boolean,
 ] => {
   const [copied, setCopied] = useState(false)
   const timeoutRef = useRef<NodeJS.Timeout>()

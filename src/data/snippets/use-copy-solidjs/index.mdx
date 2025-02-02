@@ -24,7 +24,7 @@ type CopyFn = (text: string) => Promise<void>
 
 export const useCopy = ({ copiedTimeout = 2000 }: UseCopyProps = {}): [
   copy: CopyFn,
-  copied: Accessor<boolean>
+  copied: Accessor<boolean>,
 ] => {
   const [copied, setCopied] = createSignal(false)
   let timeout: NodeJS.Timeout

@@ -25,7 +25,7 @@ const JupyterJsCard: React.FC<JupyterJsCardProps> = ({ project }) => {
               width="546"
               className="h-auto w-full"
               alt="preview showing jupyter-js' code and markdown cells running"
-              placeholder="blur-sm"
+              placeholder="blur"
             />
           </div>
         </div>

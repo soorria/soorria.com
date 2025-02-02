@@ -1,5 +1,5 @@
 export type SkillDefinition = {
-  label: keyof typeof import('./images')['skillLabelToImage']
+  label: keyof (typeof import('./images'))['skillLabelToImage']
 }
 
 export const SKILLS = [

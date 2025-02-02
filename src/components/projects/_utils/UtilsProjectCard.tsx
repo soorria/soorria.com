@@ -39,7 +39,7 @@ const UtilsProjectCard: React.FC<UtilsProjectCardProps> = ({
                   height="356"
                   width="381"
                   alt="flowchart showing file sizes after gzip"
-                  placeholder="blur-sm"
+                  placeholder="blur"
                 />
               </div>
             </div>

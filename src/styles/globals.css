@@ -86,7 +86,8 @@
     font-style: normal;
     font-display: swap;
     font-weight: 400;
-    src: url('/fonts/poppins-latin-400.woff2') format('woff2'),
+    src:
+      url('/fonts/poppins-latin-400.woff2') format('woff2'),
       url('/fonts/poppins-latin-400.woff') format('woff');
   }
   @font-face {
@@ -94,7 +95,8 @@
     font-style: normal;
     font-display: swap;
     font-weight: 700;
-    src: url('/fonts/poppins-latin-700.woff2') format('woff2'),
+    src:
+      url('/fonts/poppins-latin-700.woff2') format('woff2'),
       url('/fonts/poppins-latin-700.woff') format('woff');
   }
   @font-face {
@@ -102,7 +104,8 @@
     font-style: normal;
     font-display: swap;
     font-weight: 400;
-    src: url('/fonts/jetbrains-mono-latin-400.woff2') format('woff2'),
+    src:
+      url('/fonts/jetbrains-mono-latin-400.woff2') format('woff2'),
       url('/fonts/jetbrains-mono-latin-400.woff') format('woff');
   }
 
