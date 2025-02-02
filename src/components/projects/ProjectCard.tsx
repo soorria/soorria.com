@@ -41,7 +41,7 @@ const ProjectCard: ProjectCardComponent = ({ project }) => {
       </div>
       <div className="flex-1">{project.shortDescription}</div>
       <div>
-        <div className="flex flex-wrap gap-2 text-xs text-drac-content text-opacity-80">
+        <div className="flex flex-wrap gap-2 text-xs text-drac-content/80">
           {project.stack.map(tech => (
             <span key={tech}>{tech}</span>
           ))}

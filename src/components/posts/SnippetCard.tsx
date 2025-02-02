@@ -10,7 +10,7 @@ const SnippetCard: React.FC<{ snippet: SnippetFrontMatter }> = ({
   const Icon = categoryLowerCaseToIcon[category.toLowerCase()] || defaultCategoryIcon
   return (
     <PostListItemLink href={`/snippets/${slug}`}>
-      <div className="pointer-events-none absolute inset-0 flex items-center text-drac-highlight text-opacity-20">
+      <div className="pointer-events-none absolute inset-0 flex items-center text-drac-highlight/20">
         <div className="grid h-48 w-48 -translate-x-6 scale-110 place-items-center group-hocus:-rotate-20 group-hocus:scale-125 motion-safe:transition-transform">
           <Icon />
         </div>

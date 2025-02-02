@@ -120,9 +120,14 @@ module.exports = {
   },
   plugins: [
     require('@tailwindcss/typography'),
-    require('tailwindcss-hocus'),
+    // require('tailwindcss-hocus'),
+
     require('tailwindcss-nmp'),
     plugin(({ addVariant, addUtilities }) => {
+      addVariant('hocus', '&:hover, &:focus')
+      addVariant('hocus-visible', '&:hover, &:focus-visible')
+      addVariant('hocus-within', '&:hover, &:focus-within')
+
       addVariant('supports-hover', '@media (hover: hover)')
 
       addVariant('fullscreen', '&:fullscreen')

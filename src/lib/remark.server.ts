@@ -3,7 +3,7 @@ import type { Parent } from 'unist'
 import { transformSync } from '@babel/core'
 // @ts-expect-error no types
 import tsPreset from '@babel/preset-typescript'
-import { format, type Options as PrettierOptions } from 'prettier'
+import { format as prettierFormat, type Options as PrettierOptions } from 'prettier'
 import type { Transformer } from 'unified'
 import type { Code } from 'mdast'
 import fs from 'fs'
@@ -14,7 +14,8 @@ let prettierConfig: PrettierOptions
 
 try {
   prettierConfig = JSON.parse(fs.readFileSync('./src/data/.prettierrc', 'utf8')) as PrettierOptions
-} catch {
+} catch (e) {
+  console.log('failed to read data prettier config', e)
   prettierConfig = {
     semi: false,
     tabWidth: 2,
@@ -26,7 +27,11 @@ try {
   }
 }
 
+const format = (code: string) => prettierFormat(code, { ...prettierConfig, parser: 'babel' })
+
 export const remarkTypeScriptTransform = (): Transformer => {
+  const promises: Promise<void>[] = []
+
   const visitor = (node: Code, index: number, parent: Parent) => {
     const { lang, value, meta, data, type } = node
     if (!lang) {
@@ -46,10 +51,6 @@ export const remarkTypeScriptTransform = (): Transformer => {
         presets: [tsPreset],
       })?.code ?? ''
 
-    const formattedCode = !meta?.match(/\bnoformat\b/i)
-      ? format(transformedCode, { ...prettierConfig, parser: 'babel' }).trim()
-      : transformedCode
-
     let jsMeta = meta
     const hasJsLines = meta?.match(/\bjsLines="(?<lines>[^"]+)"/)
     const removeTsLines = !meta?.match(/\bjsKeepLines\b/) || hasJsLines
@@ -68,12 +69,17 @@ export const remarkTypeScriptTransform = (): Transformer => {
     const jsNode: Code = {
       type,
       meta: jsMeta?.trim(),
-      // meta,
       data: data,
       lang: transformedLang,
-      value: formattedCode,
+      value: 'THIS SHOULD NOT EXIST!! FORMATTING TRANSPIlED JS FAILED',
     }
     node.lang = node.lang === 'tsx' ? 'tsx' : 'ts'
+
+    promises.push(
+      format(transformedCode).then(formattedCode => {
+        jsNode.value = formattedCode
+      })
+    )
 
     const wrapper = {
       type: 'mdxJsxFlowElement',
@@ -86,11 +92,14 @@ export const remarkTypeScriptTransform = (): Transformer => {
         },
       ],
       children: [node, jsNode],
-      properties: { a: true },
     }
 
     parent.children.splice(index, 1, wrapper)
   }
 
-  return tree => visit(tree, 'code', visitor)
+  return async tree => {
+    visit(tree, 'code', visitor, undefined)
+
+    await Promise.all(promises)
+  }
 }
