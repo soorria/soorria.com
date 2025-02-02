@@ -9,7 +9,7 @@ export const Example = () => {
 
   const classes = {
     button:
-      'rounded bg-drac-base-light px-2 py-1 hover:bg-drac-base-dark transition text-drac-pink hover:text-drac-purple text-center',
+      'rounded-sm bg-drac-base-light px-2 py-1 hover:bg-drac-base-dark transition text-drac-pink hover:text-drac-purple text-center',
   }
 
   let text = 'No current fullscreen element'

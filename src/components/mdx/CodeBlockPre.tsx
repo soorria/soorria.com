@@ -29,7 +29,7 @@ export const CodeBlockPre = forwardRef<HTMLPreElement, CodeBlockPreProps>(
         {truncate && !expanded && (
           <button
             className={cx(
-              'absolute bottom-4 left-1/2 -translate-x-1/2 opacity-90 shadow hover:opacity-100',
+              'absolute bottom-4 left-1/2 -translate-x-1/2 opacity-90 shadow-sm hover:opacity-100',
               CODE_BLOCK_CLASSNAMES.button
             )}
             onClick={() => setExpanded(true)}

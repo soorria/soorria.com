@@ -5,7 +5,7 @@ import { COMMON_CLASSNAMES } from '../utils'
 import cx from '~/utils/cx'
 
 const cardLinkClassName =
-  'inline-flex items-center px-3 py-1 ml-2 mt-2 space-x-1 text-sm font-semibold transition-colors border-2 border-current border-white rounded-sm hocus:text-green-700 hocus:bg-white focus-ring'
+  'inline-flex items-center px-3 py-1 ml-2 mt-2 space-x-1 text-sm font-semibold transition-colors border-2 border-current border-white rounded-xs hocus:text-green-700 hocus:bg-white focus-ring'
 
 const NotMessengerCard: ProjectCardComponent = ({ project }) => {
   return (

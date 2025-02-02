@@ -32,9 +32,12 @@ const Subtitle: React.FC<SubtitleProps> = ({ options = [] }) => {
     if (rotationTimeoutRef.current) {
       clearTimeout(rotationTimeoutRef.current)
     }
-    rotationTimeoutRef.current = setTimeout(() => {
-      setRotations(0)
-    }, getDurationMs(rotations + 1) + 300)
+    rotationTimeoutRef.current = setTimeout(
+      () => {
+        setRotations(0)
+      },
+      getDurationMs(rotations + 1) + 300
+    )
 
     setRotations(r => r + 1)
   }
@@ -44,7 +47,7 @@ const Subtitle: React.FC<SubtitleProps> = ({ options = [] }) => {
       {options[index]}
       <button
         onClick={randomise}
-        className="focus-ring group relative ml-2 inline-flex translate-y-1 items-center rounded text-drac-highlight transition hocus:text-drac-purple"
+        className="focus-ring group relative ml-2 inline-flex translate-y-1 items-center rounded-sm text-drac-highlight transition hocus:text-drac-purple"
         aria-label="refresh subtitle about me"
         title="refresh subtitle about me"
       >

@@ -43,7 +43,7 @@ export const OgImagePreview = () => {
           className="slide-in-direct fixed inset-0 grid h-screen place-items-center bg-drac-base-dark/75"
         >
           <div className="flex w-screen flex-col items-center bg-transparent">
-            <div className="flex max-h-[90vh] max-w-screen-lg flex-col items-center gap-16 overflow-auto overflow-y-auto px-8 pb-64">
+            <div className="flex max-h-[90vh] max-w-(--breakpoint-lg) flex-col items-center gap-16 overflow-auto overflow-y-auto px-8 pb-64">
               <Image src={image} alt="og image" width={1200} height={630} />
               <Image src={image} alt="og image" width={600} height={312} />
               <Image src={image} alt="og image" width={300} height={156} />
@@ -51,7 +51,7 @@ export const OgImagePreview = () => {
           </div>
 
           <button
-            className="absolute bottom-16 rounded bg-drac-pink px-2 py-1 text-drac-base transition hover:bg-drac-purple"
+            className="absolute bottom-16 rounded-sm bg-drac-pink px-2 py-1 text-drac-base transition hover:bg-drac-purple"
             onClick={() => setImage(null)}
           >
             close

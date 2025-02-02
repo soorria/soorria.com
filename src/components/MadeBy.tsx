@@ -33,7 +33,7 @@ const MadeBy: React.FC<MadeByProps> = props => {
   )
 
   const commonProps = {
-    className: 'focus-ring group block rounded text-center',
+    className: 'focus-ring group block rounded-sm text-center',
     'aria-label': 'Made with love by Soorria',
   }
 

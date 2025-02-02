@@ -15,7 +15,7 @@ interface PokelifeCardProps {
 }
 
 const cardLinkClassName =
-  'inline-flex items-center px-6 py-2 ml-4 mt-4 space-x-2 font-semibold transition-colors border-2 border-current border-white rounded hocus:text-[#22c55e] hocus:bg-white focus-ring'
+  'inline-flex items-center px-6 py-2 ml-4 mt-4 space-x-2 font-semibold transition-colors border-2 border-current border-white rounded-sm hocus:text-[#22c55e] hocus:bg-white focus-ring'
 
 const promptRacerColors = {
   primary: '#22c55e',
@@ -47,7 +47,7 @@ const PromptRacerCard: React.FC<PokelifeCardProps> = ({ project }) => {
   }, [])
 
   // const comingSoonTag = (
-  //   <span className="inline-block -translate-y-px rounded bg-green-500/50 px-1 pb-px text-xs text-green-200">
+  //   <span className="inline-block -translate-y-px rounded-sm bg-green-500/50 px-1 pb-px text-xs text-green-200">
   //     coming soon
   //   </span>
   // )
@@ -69,7 +69,7 @@ const PromptRacerCard: React.FC<PokelifeCardProps> = ({ project }) => {
             </p>
           </noscript> */}
         </div>
-        <div className="absolute -inset-4 bg-gradient-to-r from-[#272933] via-[#272933] to-[#27293300] sm:to-transparent" />
+        <div className="absolute -inset-4 bg-linear-to-r from-[#272933] via-[#272933] to-[#27293300] sm:to-transparent" />
         <div
           className="relative z-10 flex h-full flex-col space-y-4 rounded-xl p-8 ring-4 ring-inset ring-drac-pink"
           style={{

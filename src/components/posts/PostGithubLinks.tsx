@@ -12,7 +12,7 @@ const PostGithubLinks: React.FC<PostGithubLinksProps> = ({ dataType, slug }) => 
       Found a mistake, or want to suggest an improvement? Source on GitHub{' '}
       <a
         href={sourceUrl(dataType, slug)}
-        className="focus-ring -mx-1 rounded px-1"
+        className="focus-ring -mx-1 rounded-sm px-1"
         rel="noopenner noreferrer"
         target="_blank"
       >
@@ -22,7 +22,7 @@ const PostGithubLinks: React.FC<PostGithubLinksProps> = ({ dataType, slug }) => 
       and see edit history{' '}
       <a
         href={historyUrl(dataType, slug)}
-        className="focus-ring -mx-1 rounded px-1"
+        className="focus-ring -mx-1 rounded-sm px-1"
         rel="noopenner noreferrer"
         target="_blank"
       >

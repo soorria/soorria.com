@@ -13,12 +13,12 @@ interface MagicSprinklesCardProps {
 }
 
 const cardLinkClassName =
-  'inline-flex items-center px-6 py-2 ml-4 mt-4 space-x-2 font-semibold transition-colors border-2 border-current border-white rounded hocus:text-drac-base hocus:bg-white focus-ring'
+  'inline-flex items-center px-6 py-2 ml-4 mt-4 space-x-2 font-semibold transition-colors border-2 border-current border-white rounded-sm hocus:text-drac-base hocus:bg-white focus-ring'
 
 const MagicSprinklesCard: React.FC<MagicSprinklesCardProps> = ({ project }) => {
   return (
     <div className="group sm:col-span-2" id={project.slug}>
-      <div className={cx(COMMON_CLASSNAMES.specialCardRoot, '[&>*]:rounded-lg')}>
+      <div className={cx(COMMON_CLASSNAMES.specialCardRoot, '*:rounded-lg')}>
         <div
           className="rainbow-gradient absolute inset-0"
           style={{ animation: 'bg-slide 5s linear infinite' }}
@@ -34,7 +34,7 @@ const MagicSprinklesCard: React.FC<MagicSprinklesCardProps> = ({ project }) => {
             </p>
           </noscript>
         </div>
-        <div className="absolute inset-1 bg-gradient-to-r from-drac-base via-drac-base to-transparent md:via-25%" />
+        <div className="absolute inset-1 bg-linear-to-r from-drac-base via-drac-base to-transparent md:via-25%" />
         <div className="relative inset-1 z-10 flex h-full flex-col space-y-4 bg-transparent p-6">
           <header className="pl-1 font-display text-3xl font-bold">
             <Sparkles>{project.title}</Sparkles>
@@ -61,7 +61,7 @@ const MagicSprinklesCard: React.FC<MagicSprinklesCardProps> = ({ project }) => {
               </li>
             </ul>
           </div>
-          <div className="-m-3 !mb-0 pb-3">
+          <div className="-m-3 mb-0! pb-3">
             {project.hasContent && (
               <NextLink href={`/projects/${project.slug}`} passHref>
                 <a className={cardLinkClassName}>

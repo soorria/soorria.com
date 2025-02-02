@@ -315,12 +315,12 @@ export function LiveSkillsArea(props: {
         onClick={() => {
           liveSkills.addMore()
         }}
-        className="focus-ring absolute bottom-1 left-0 flex items-center rounded bg-drac-base px-2 py-1 text-drac-content opacity-50 transition hover:opacity-100 hocus:text-drac-purple"
+        className="focus-ring absolute bottom-1 left-0 flex items-center rounded-sm bg-drac-base px-2 py-1 text-drac-content opacity-50 transition hover:opacity-100 hocus:text-drac-purple"
       >
         <RefreshIcon className="mr-1 inline-block h-em w-em" /> See more skills
       </button>
 
-      <div className="absolute bottom-1 right-0 rounded bg-drac-base px-1 text-xs opacity-50 transition-opacity hover:opacity-100 md:text-sm">
+      <div className="absolute bottom-1 right-0 rounded-sm bg-drac-base px-1 text-xs opacity-50 transition-opacity hover:opacity-100 md:text-sm">
         {liveSkills.numConnections === 1
           ? 'just you online :('
           : `${liveSkills.numConnections} people online`}

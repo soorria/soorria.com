@@ -14,7 +14,7 @@ const classes = {
   formGroup: 'flex flex-col space-y-4 group',
   label: 'block group-focus-within:text-drac-pink transition-colors',
   input:
-    'block w-full bg-drac-base-light focus:outline-none focus:ring focus:ring-drac-pink transition p-2 rounded',
+    'block w-full bg-drac-base-light focus:outline-hidden focus:ring-3 focus:ring-drac-pink transition p-2 rounded-sm',
 }
 
 enum FormStatus {
@@ -65,7 +65,7 @@ const ContactForm: React.FC = () => {
   return (
     <>
       {status === FormStatus.SUBMITTED ? (
-        <div className="rounded border-2 border-drac-green/70 bg-drac-green/30 p-4">
+        <div className="rounded-sm border-2 border-drac-green/70 bg-drac-green/30 p-4">
           Thanks for contacting me! I&apos;ll try to get back to you in 24 hours.
         </div>
       ) : null}
@@ -81,7 +81,7 @@ const ContactForm: React.FC = () => {
             <div
               aria-live="polite"
               id={IDS.errorEl}
-              className="rounded border-2 border-drac-red/70 bg-drac-red/30 p-4"
+              className="rounded-sm border-2 border-drac-red/70 bg-drac-red/30 p-4"
             >
               Looks like something went wrong with my form, or you&apos;re offline ☹. You can try
               again later, or just shoot me an email.
@@ -149,7 +149,7 @@ const ContactForm: React.FC = () => {
           <button
             type="submit"
             className={cx(
-              'block w-full rounded bg-drac-pink px-4 py-2 font-semibold text-drac-base transition-colors',
+              'block w-full rounded-sm bg-drac-pink px-4 py-2 font-semibold text-drac-base transition-colors',
               status === FormStatus.SUBMITTING
                 ? 'cursor-not-allowed opacity-70'
                 : 'hover:bg-drac-purple'
@@ -182,7 +182,7 @@ const Contact: React.FC<ContactProps> = ({ random = 0 }) => {
                 setShowForm(p => !p)
               }}
               className={cx(
-                'no-js-text break-words focus:outline-none',
+                'no-js-text break-words focus:outline-hidden',
                 showForm ? 'text-drac-purple' : 'text-drac-base hover:text-drac-purple'
               )}
             >
@@ -198,7 +198,7 @@ const Contact: React.FC<ContactProps> = ({ random = 0 }) => {
             <a
               key={href}
               href={href}
-              className="focus-ring group flex items-center rounded py-1 text-drac-pink nmpl-2 hocus:text-drac-purple"
+              className="focus-ring group flex items-center rounded-sm py-1 text-drac-pink nmpl-2 hocus:text-drac-purple"
               {...(newTab ? { target: '_blank', rel: 'noopener noreferrer' } : null)}
             >
               <Icon className="mr-3 h-5 w-5 transition-transform group-hocus:-rotate-20" />

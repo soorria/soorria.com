@@ -5,7 +5,7 @@ const MDXCollapse: React.FC<CollapseProps> = ({ children, ...props }) => {
   return (
     <Collapse {...props}>
       {Children.map(children, (child, i) => (
-        <div key={i} className="collapse-child [&>.code-block]:!-mx-0">
+        <div key={i} className="collapse-child [&>.code-block]:-mx-0!">
           {child}
         </div>
       ))}

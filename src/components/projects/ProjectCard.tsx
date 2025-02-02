@@ -20,7 +20,7 @@ const projectCardMap: Record<string, ProjectCardComponent> = {
 }
 
 const classes = {
-  link: 'inline-flex items-center space-x-1 text-drac-pink underline hocus:text-drac-purple focus-ring rounded -mx-1 px-1',
+  link: 'inline-flex items-center space-x-1 text-drac-pink underline hocus:text-drac-purple focus-ring rounded-sm -mx-1 px-1',
 }
 
 const ProjectCard: ProjectCardComponent = ({ project }) => {

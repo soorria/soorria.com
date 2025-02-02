@@ -6,7 +6,7 @@ import { type Pattern, availablePatterns } from './hero-patterns'
 const classes = {
   secondary:
     'hidden sm:block absolute inset-0 select-none contrast-more:sm:hidden pointer-events-none',
-  main: 'relative cursor-text inset-0 bg-gradient-to-tr from-drac-pink to-drac-purple bg-clip-text text-transparent sm:text-drac-content contrast-more:sm:text-drac-pink contrast-more:scale-110',
+  main: 'relative cursor-text inset-0 bg-linear-to-tr from-drac-pink to-drac-purple bg-clip-text text-transparent sm:text-drac-content contrast-more:sm:text-drac-pink contrast-more:scale-110',
 }
 
 export const heroBackdropClassname =
@@ -32,7 +32,7 @@ const Hero = ({
         }}
       >
         {/* <div className="absolute inset-0 z-0 bg-red-200/70"></div> */}
-        <div className="relative z-10 mx-auto my-4 cursor-default py-16 text-center font-display text-6xl font-bold leading-tight outline-none sm:my-8 sm:text-[4rem] md:text-[5rem] lg:text-8xl">
+        <div className="relative z-10 mx-auto my-4 cursor-default py-16 text-center font-display text-6xl font-bold leading-tight outline-hidden sm:my-8 sm:text-[4rem] md:text-[5rem] lg:text-8xl">
           <div className="slide-in relative" style={{ '--step-delay': '100ms' }}>
             <div className="absolute inset-0">
               <p

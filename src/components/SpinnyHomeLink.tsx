@@ -41,7 +41,7 @@ const SpinnyHomeLink: React.FC<{ href?: string }> = ({ href = '/' }) => {
           spin()
         }
       }}
-      className="focus-ring group z-10 -m-2 flex items-center rounded p-2"
+      className="focus-ring group z-10 -m-2 flex items-center rounded-sm p-2"
     >
       <span
         className="h-8 w-8 transform transition-transform duration-700 ease-in-out md:h-10 md:w-10"

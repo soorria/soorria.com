@@ -42,7 +42,7 @@ const MagicSprinklesServerPage = () => {
         className="slide-in-direct pointer-events-none fixed inset-x-0 bottom-4 flex justify-center text-sm"
         style={{ '--initial-step': '5' }}
       >
-        <div className="group pointer-events-auto rounded px-4 py-2 opacity-50 transition hover:bg-drac-base-dark/75 hover:opacity-100">
+        <div className="group pointer-events-auto rounded-sm px-4 py-2 opacity-50 transition hover:bg-drac-base-dark/75 hover:opacity-100">
           <MadeBy asLink ping="hover" />
         </div>
       </div>

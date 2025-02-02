@@ -25,7 +25,7 @@ MIT license found here: https://github.com/soorria/soorria.com/blob/master/LICEN
 `.trim()
 
 const classes = {
-  pre: 'rounded whitespace-pre-wrap p-4 ring-2 ring-drac-purple overflow-x-auto',
+  pre: 'rounded-sm whitespace-pre-wrap p-4 ring-2 ring-drac-purple overflow-x-auto',
 }
 
 const License: React.FC<{ summary: ReactNode; attribution?: AttributionOptions }> = ({

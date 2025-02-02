@@ -15,7 +15,7 @@ type PostLayoutProps = PropsWithChildren<{
 export const PostHeading: React.FC<PropsWithChildren> = ({ children }) => {
   return (
     <h1
-      className="mb-20 mt-0 text-center text-5xl !leading-tight text-drac-pink text-safe-pretty [--heading-padding:1rem] sm:mt-8 sm:text-6xl md:text-7xl lg:mb-16 lg:text-8xl lg:[--heading-padding:8rem]"
+      className="mb-20 mt-0 text-center text-5xl leading-tight! text-drac-pink text-safe-pretty [--heading-padding:1rem] sm:mt-8 sm:text-6xl md:text-7xl lg:mb-16 lg:text-8xl lg:[--heading-padding:8rem]"
       style={{
         overflowWrap: 'break-word',
         '--width': 'calc(100vw - var(--heading-padding))',
@@ -28,7 +28,7 @@ export const PostHeading: React.FC<PropsWithChildren> = ({ children }) => {
         textAlign: 'center',
       }}
     >
-      <span className="inline-block max-w-screen-xl">
+      <span className="inline-block max-w-(--breakpoint-xl)">
         {typeof children === 'string'
           ? children
               .split(' ')
@@ -49,7 +49,7 @@ export const PostHeading: React.FC<PropsWithChildren> = ({ children }) => {
 }
 
 export const PostBottomSection: React.FC<PropsWithChildren> = ({ children }) => {
-  return <div className="mx-auto !mt-24 max-w-xs space-y-8 text-center text-sm">{children}</div>
+  return <div className="mx-auto mt-24! max-w-xs space-y-8 text-center text-sm">{children}</div>
 }
 
 export const PostDescription = ({ children }: { children: ReactNode }) => {
