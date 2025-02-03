@@ -7,7 +7,6 @@ import { nodeTypes } from '@mdx-js/mdx'
 import { remarkTypeScriptTransform } from './remark.server'
 import rehypePrettyCode, { type Options } from 'rehype-pretty-code'
 import type { PluggableList } from 'unified'
-import { type Element } from 'hast'
 import { rehypeRearrangePrettyCodeOutput } from './rehype.server'
 import { type SerializeOptions } from 'next-mdx-remote/dist/types'
 
@@ -25,28 +24,34 @@ const codeBlockRehypePlugins: PluggableList = [
 
       // Callback hooks to add custom logic to elements when visiting
       // them.
-      onVisitLine(element: Element) {
+      onVisitLine(element) {
         // Prevent lines from collapsing in `display: grid` mode, and
         // allow empty lines to be copy/pasted
         if (element.children.length === 0) {
           element.children = [{ type: 'text', value: ' ' }]
         }
       },
-      onVisitHighlightedLine(element: Element) {
+      onVisitHighlightedLine(element) {
         // Each line element by default has `class="line"`.
-        // @ts-expect-error cbs handling thss
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-call
-        element.properties?.className.push('line--highlighted')
+
+        const properties = element.properties as { className?: string[] }
+
+        properties.className?.push('line--highlighted')
       },
-      onVisitHighlightedWord(element: Element, id) {
-        // @ts-expect-error - cbs handling this
-        element.properties.className = ['word']
+      onVisitHighlightedWord(element, id) {
+        const properties = element.properties as {
+          className?: string[]
+          'data-rehype-pretty-code-wrapper'?: boolean
+          style?: string
+          'data-word-id'?: string
+        }
+
+        properties.className = ['word']
 
         if (id) {
           // If the word spans across syntax boundaries (e.g. punctuation), remove
           // colors from the child elements.
-          // @ts-expect-error - cbs handling this
-          if (element.properties['data-rehype-pretty-code-wrapper']) {
+          if (properties['data-rehype-pretty-code-wrapper']) {
             element.children.forEach(child => {
               // @ts-expect-error - cbs handling this
               // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
@@ -54,10 +59,8 @@ const codeBlockRehypePlugins: PluggableList = [
             })
           }
 
-          // @ts-expect-error - cbs handling this
-          element.properties.style = ''
-          // @ts-expect-error - cbs handling this
-          element.properties['data-word-id'] = id
+          properties.style = ''
+          properties['data-word-id'] = id
         }
       },
     } satisfies Options,

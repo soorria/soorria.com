@@ -3,7 +3,7 @@ import type { Node as UnistNode } from 'unist'
 import { visit } from 'unist-util-visit'
 import type { Element, Node } from 'hast'
 
-const isRehypeCodeWrapper = (n: UnistNode<Record<string, any>>): n is Element =>
+const isRehypeCodeWrapper = (n: UnistNode): n is Element =>
   'data-rehype-pretty-code-fragment' in ((n as Element).properties ?? {})
 
 export const rehypeRearrangePrettyCodeOutput: Plugin = () => {
