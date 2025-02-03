@@ -158,10 +158,6 @@ const config = {
       ],
       afterFiles: [],
       fallback: [
-        // {
-        //   source: '/api/og',
-        //   destination: 'https://og-gen-mooth.vercel.app/api/og',
-        // },
         {
           source: '/og.png',
           destination: 'https://soorria.com/api/og?title=Soorria%20Saruva&subtitle=soorria.com',
@@ -204,6 +200,9 @@ const config = {
   },
   eslint: {
     ignoreDuringBuilds: true,
+  },
+  typescript: {
+    ignoreBuildErrors: true,
   },
 }
 

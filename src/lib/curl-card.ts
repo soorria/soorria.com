@@ -98,7 +98,7 @@ ${LINKS.map(
     )}`
 ).join('\n')}
 
-${kleur.dim("To get this page's HTML, add '?card=no' to the URL.")}`,
+${kleur.dim("To get this page's HTML, add '?card=nah' to the URL.")}`,
       62,
       `== ${kleur.bold('Soorria Saruva')} ==`
     ) + '\n'
