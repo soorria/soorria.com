@@ -1,7 +1,7 @@
 import type * as _CSS from 'csstype'
 
-declare module 'csstype' {
-  interface Properties {
+declare module 'react' {
+  interface CSSProperties {
     [customPropery: `--${string}`]: string
   }
 }

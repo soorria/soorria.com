@@ -41,6 +41,6 @@
     "src/**/*.tsx",
     ".next/types/**/*.ts",
     "next-env.d.ts",
-    "src/types/csstype.d.ts"
+    "src/types/react.d..ts"
   ]
 }
