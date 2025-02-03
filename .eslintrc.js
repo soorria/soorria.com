@@ -22,7 +22,7 @@ module.exports = {
   ignorePatterns: [
     '.eslintrc.js',
     'tailwind.config.js',
-    'postcss.config.js',
+    'postcss.config.mjs',
     'next.config.js',
     'next-sitemap.config.js',
   ],
