@@ -6,10 +6,7 @@
     "forceConsistentCasingInFileNames": true,
     "isolatedModules": true,
     "jsx": "preserve",
-    "lib": [
-      "dom",
-      "es2019",
-    ],
+    "lib": ["dom", "es2019"],
     "module": "esnext",
     "moduleResolution": "node",
     "noEmit": true,
@@ -22,15 +19,9 @@
     "target": "esnext",
     "baseUrl": ".",
     "paths": {
-      "~/*": [
-        "src/*"
-      ],
-      "~data/*": [
-        "src/data/*"
-      ],
-      "$styles": [
-        "src/mdx/styles.ts"
-      ]
+      "~/*": ["src/*"],
+      "~data/*": ["src/data/*"],
+      "$styles": ["src/mdx/styles.ts"]
     },
     "incremental": true,
     "importsNotUsedAsValues": "remove",
@@ -41,16 +32,15 @@
         "name": "next"
       }
     ],
-    "verbatimModuleSyntax": true,
+    "verbatimModuleSyntax": true
   },
-  "exclude": [
-    "node_modules"
-  ],
+  "exclude": ["node_modules"],
   "include": [
     "src/**/*.ts",
     "src/**/*.js",
     "src/**/*.tsx",
     ".next/types/**/*.ts",
     "next-env.d.ts",
+    "src/types/csstype.d.ts"
   ]
 }

@@ -120,8 +120,8 @@ dependencies:
     specifier: ^5.1.2
     version: 5.1.2
   tailwindcss-hocus:
-    specifier: ^0.0.7
-    version: 0.0.7(tailwindcss@4.0.3)
+    specifier: ^1.0.0
+    version: 1.0.0(tailwindcss@4.0.3)
   tailwindcss-nmp:
     specifier: ^0.0.2
     version: 0.0.2(tailwindcss@4.0.3)
@@ -6779,10 +6779,10 @@ packages:
       strip-ansi: 6.0.1
     dev: true
 
-  /tailwindcss-hocus@0.0.7(tailwindcss@4.0.3):
-    resolution: {integrity: sha512-KY3jLlppAoPkCLRhDqbe503c1Ryq//G1bLQqFCZz1pnB0JFzHa3VK0bXvjTa8n/dwCxgkhi5uJm1d6gp8OzPhw==}
+  /tailwindcss-hocus@1.0.0(tailwindcss@4.0.3):
+    resolution: {integrity: sha512-PLgBHiCHZOCgY/VtRuatNwsqzqf1aYa7GI2+ZxwUbh/U8A9yn9baow3G3HUc+bPALLxC/yDcDZhznRY8efwVKQ==}
     peerDependencies:
-      tailwindcss: ^3.0.0
+      tailwindcss: ^4.0.0
     dependencies:
       tailwindcss: 4.0.3
     dev: false
