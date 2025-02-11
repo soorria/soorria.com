@@ -36,11 +36,9 @@
   },
   "exclude": ["node_modules"],
   "include": [
-    "src/**/*.ts",
-    "src/**/*.js",
-    "src/**/*.tsx",
+    "src/**/*",
     ".next/types/**/*.ts",
     "next-env.d.ts",
-    "src/types/react.d..ts"
+    "src/types/react.d.ts"
   ]
 }

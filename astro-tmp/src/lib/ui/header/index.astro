@@ -1,0 +1,19 @@
+---
+import Container from '../container.astro'
+import { Nav } from './Nav'
+import { SpinnyHomeLink } from './spinny-home-link'
+---
+
+<Container class="relative z-10">
+  <a
+    href="#main-content"
+    class="focus-ring bg-drac-base font-display text-drac-pink hocus:shadow-xl fixed -top-16 left-1/2 z-50 mx-auto block w-max -translate-x-1/2 transform rounded-sm px-4 py-2 text-center font-bold transition-transform focus:translate-y-20 focus:ring-2"
+  >
+    Skip to Main Content
+  </a>
+  <header class="slide-in-direct flex items-center justify-between py-8">
+    <SpinnyHomeLink client:idle />
+
+    <Nav />
+  </header>
+</Container>

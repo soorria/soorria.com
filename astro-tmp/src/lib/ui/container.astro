@@ -1,0 +1,13 @@
+---
+import { cx } from '~/lib/utils/styles'
+
+export interface Props {
+  class?: string
+}
+
+const { class: className } = Astro.props
+---
+
+<div class={cx('container mx-auto max-w-4xl px-4 md:px-8', className)}>
+  <slot />
+</div>

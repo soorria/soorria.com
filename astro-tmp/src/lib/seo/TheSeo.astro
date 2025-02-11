@@ -1,0 +1,11 @@
+---
+import { SEO, type SEOProps } from 'astro-seo'
+
+export type Props = SEOProps
+
+const props = Astro.props
+
+const defaultSEO = {} satisfies SEOProps
+---
+
+<SEO {...props} />

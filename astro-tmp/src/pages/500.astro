@@ -1,0 +1,16 @@
+---
+import ErrorPage from '~/lib/ui/error-page.astro'
+import MainLayout from '~/lib/ui/main-layout.astro'
+
+
+export interface Props {
+  error: unknown
+}
+
+const { error } = Astro.props
+
+---
+
+<MainLayout>
+  <ErrorPage error={error} statusCode={500} />
+</MainLayout>

@@ -1,0 +1,9 @@
+---
+import { OgImagePreview } from './og-image.react'
+import TailwindIndicator from './TailwindIndicator.astro'
+---
+
+<div class="text-drac-pink fixed bottom-2 left-2 z-50 flex items-center justify-center font-mono">
+  <TailwindIndicator />
+  <OgImagePreview client:idle />
+</div>
