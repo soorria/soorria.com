@@ -4,12 +4,8 @@ import Header from '../ui/header/index.astro'
 import Footer from '../ui/footer/index.astro'
 ---
 
-<BaseLayout >
-  <Header
-    transition:animate='none'
-    transition:name='header'
-    transition:persist
-  />
+<BaseLayout>
+  <Header />
 
   <main role="main" id="main-content" class="bg-drac-base flex-1">
     <slot />

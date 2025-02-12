@@ -12,7 +12,7 @@ import {
   type ClientMessage,
   ClientMessageSchema,
   type SkillPosition,
-} from '~/lib/skills/schems'
+} from '~/lib/skills/schema'
 import { random } from '~/utils/random'
 
 type ServerState =

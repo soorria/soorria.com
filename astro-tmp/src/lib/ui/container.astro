@@ -5,9 +5,9 @@ export interface Props {
   class?: string
 }
 
-const { class: className } = Astro.props
+const { class: className, ...rest } = Astro.props
 ---
 
-<div class={cx('container mx-auto max-w-4xl px-4 md:px-8', className)}>
+<div {...rest} class={cx('container mx-auto max-w-4xl px-4 md:px-8', className)}>
   <slot />
 </div>

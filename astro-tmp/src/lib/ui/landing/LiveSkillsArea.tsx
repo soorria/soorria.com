@@ -1,4 +1,3 @@
-'use client'
 import usePartySocket from 'partysocket/react'
 import { useCallback, useRef, useState, type RefObject, useEffect } from 'react'
 import { SKILLS_MAGIC_NUMBERS } from '~/lib/skills/definitions'
@@ -9,13 +8,13 @@ import type {
   ServerSkillItem,
   SkillPosition,
 } from '~/lib/skills/schema'
-import cx from '~/utils/cx'
+import { cx } from '~/lib/utils/styles'
 import { RefreshIcon } from '../icons'
-import { useTrackFirstEvent } from '~/lib/analytics'
+import { createTrackFirstEvent } from '~/lib/analytics/utils'
+
+const track = createTrackFirstEvent()
 
 function useLiveSkills({ scale }: { scale: number }) {
-  const track = useTrackFirstEvent()
-
   const [state, setState] = useState<{
     ready: boolean
     items: ServerSkillItem[]
@@ -46,12 +45,12 @@ function useLiveSkills({ scale }: { scale: number }) {
           numConnections: message.numConnections,
         })
       } else if (message.type === 'connections-updated') {
-        setState(s => ({
+        setState((s) => ({
           ...s,
           numConnections: message.numConnections,
         }))
       } else if (message.type === 'items-updated') {
-        setState(s => ({
+        setState((s) => ({
           ...s,
           items: message.items,
         }))
@@ -63,7 +62,7 @@ function useLiveSkills({ scale }: { scale: number }) {
     (message: ClientMessage) => {
       ws.send(JSON.stringify(message))
     },
-    [ws]
+    [ws],
   )
 
   const moveItem = useCallback<OnItemPositionChangeHandler>(
@@ -72,9 +71,9 @@ function useLiveSkills({ scale }: { scale: number }) {
 
       const unscaledPosition = scalePosition(newPosition, 1 / scale)
 
-      setState(s => ({
+      setState((s) => ({
         ...s,
-        items: s.items.map(item => {
+        items: s.items.map((item) => {
           if (item.id !== id) {
             return item
           }
@@ -111,7 +110,7 @@ function useLiveSkills({ scale }: { scale: number }) {
         })
       }
     },
-    [scale, sendMessage, track]
+    [scale, sendMessage],
   )
 
   const addMore = useCallback(() => {
@@ -122,7 +121,7 @@ function useLiveSkills({ scale }: { scale: number }) {
 
   return {
     ready: state.ready,
-    skills: state.items.map(item => ({ ...item, position: scalePosition(item.position, scale) })),
+    skills: state.items.map((item) => ({ ...item, position: scalePosition(item.position, scale) })),
     numConnections: state.numConnections,
     moveItem,
     addMore,
@@ -157,7 +156,7 @@ function SkillItem({
   imageWidth: number
   position: SkillPosition
   onPositionChange?: OnItemPositionChangeHandler
-  containerRef: RefObject<HTMLElement>
+  containerRef: RefObject<HTMLElement | null>
 }) {
   const element = useRef<HTMLButtonElement>(null)
   const [moving, setMoving] = useState<{
@@ -172,6 +171,8 @@ function SkillItem({
     if (!el) {
       return
     }
+
+    const abortController = new AbortController()
 
     function handlePointerStart(e: MouseEvent | TouchEvent) {
       const rect = (e.currentTarget as HTMLElement).getBoundingClientRect?.()
@@ -204,12 +205,15 @@ function SkillItem({
       })
     }
 
-    el.addEventListener('mousedown', handlePointerStart)
-    el.addEventListener('touchstart', handlePointerStart)
+    el.addEventListener('mousedown', handlePointerStart, {
+      signal: abortController.signal,
+    })
+    el.addEventListener('touchstart', handlePointerStart, {
+      signal: abortController.signal,
+    })
 
     return () => {
-      el.removeEventListener('mousedown', handlePointerStart)
-      el.removeEventListener('touchstart', handlePointerStart)
+      abortController.abort()
     }
   }, [])
 
@@ -242,7 +246,7 @@ function SkillItem({
         x: clamp(
           touch.clientX + moving.offset.x - containerRect.x,
           halfElementWidth,
-          containerRect.width - halfElementWidth
+          containerRect.width - halfElementWidth,
         ),
         y: clamp(touch.clientY + moving.offset.y - containerRect.y, 0, containerRect.height),
       }
@@ -267,8 +271,8 @@ function SkillItem({
     <button
       ref={element}
       className={cx(
-        'fade-in-direct group absolute block w-fit select-none ease-linear',
-        moving ? 'cursor-grabbing' : 'cursor-grab transition-transform'
+        'fade-in-direct group absolute block w-fit ease-linear select-none',
+        moving ? 'cursor-grabbing' : 'cursor-grab transition-transform',
       )}
       style={{ transform: `translate(calc(${position.x}px - 50%), calc(${position.y}px - 50%))` }}
       draggable={false}
@@ -281,7 +285,7 @@ function SkillItem({
         style={{ width: imageWidth, height: 'auto', maxHeight: imageWidth }}
         draggable={false}
       />
-      <span className="pointer-events-none absolute -bottom-5 left-1/2 -translate-x-1/2 text-xs opacity-0 transition-opacity group-hocus-visible:opacity-100 md:-bottom-6 md:text-sm">
+      <span className="group-hocus-visible:opacity-100 pointer-events-none absolute -bottom-5 left-1/2 -translate-x-1/2 text-xs opacity-0 transition-opacity md:-bottom-6 md:text-sm">
         {skill.label}
       </span>
     </button>
@@ -291,14 +295,14 @@ function SkillItem({
 export function LiveSkillsArea(props: {
   scale: number
   imageWidth: number
-  rootRef: RefObject<HTMLElement>
+  rootRef: RefObject<HTMLElement | null>
 }) {
   const liveSkills = useLiveSkills({
     scale: props.scale,
   })
   return (
     <>
-      {liveSkills.skills.map(skill => {
+      {liveSkills.skills.map((skill) => {
         return (
           <SkillItem
             imageWidth={props.imageWidth}
@@ -315,12 +319,12 @@ export function LiveSkillsArea(props: {
         onClick={() => {
           liveSkills.addMore()
         }}
-        className="focus-ring absolute bottom-1 left-0 flex items-center rounded-sm bg-drac-base px-2 py-1 text-drac-content opacity-50 transition hover:opacity-100 hocus:text-drac-purple"
+        className="focus-ring bg-drac-base text-drac-content hocus:text-drac-purple absolute bottom-1 left-0 flex items-center rounded-sm px-2 py-1 opacity-50 transition hover:opacity-100"
       >
-        <RefreshIcon className="mr-1 inline-block h-em w-em" /> See more skills
+        <RefreshIcon className="h-em w-em mr-1 inline-block" /> See more skills
       </button>
 
-      <div className="absolute bottom-1 right-0 rounded-sm bg-drac-base px-1 text-xs opacity-50 transition-opacity hover:opacity-100 md:text-sm">
+      <div className="bg-drac-base absolute right-0 bottom-1 rounded-sm px-1 text-xs opacity-50 transition-opacity hover:opacity-100 md:text-sm">
         {liveSkills.numConnections === 1
           ? 'just you online :('
           : `${liveSkills.numConnections} people online`}

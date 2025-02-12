@@ -25,6 +25,7 @@ module.exports = {
     'postcss.config.mjs',
     'next.config.js',
     'next-sitemap.config.js',
+    'astro-tmp/**/*',
   ],
   extends: [
     'eslint:recommended',

@@ -195,7 +195,7 @@
   }
 
   ::-webkit-scrollbar-thumb {
-    @apply rounded-full bg-drac-purple transition-colors hover:bg-drac-pink;
+    @apply bg-drac-purple hover:bg-drac-pink rounded-full transition-colors;
   }
 
   /* Firefox */
@@ -207,7 +207,7 @@
 
 @layer components {
   .focus-ring {
-    @apply focus:outline-hidden ring-drac-pink transition-shadow focus:ring-2;
+    @apply ring-drac-pink transition-shadow focus:ring-2 focus:outline-hidden;
   }
 }
 
@@ -276,7 +276,7 @@
 }
 
 .heading-anchor:after {
-  @apply font-normal text-drac-highlight transition-colors duration-100;
+  @apply text-drac-highlight font-normal transition-colors duration-100;
   content: '#';
 }
 
@@ -342,6 +342,8 @@
   --_step-delay: var(--step-delay, 100ms);
   animation: slide-in var(--slide-duration, 0.5s) both 1;
   animation-delay: calc((var(--step-num) + var(--_initial-step)) * var(--_step-delay));
+
+  outline: 1px solid red;
 
   @media (prefers-reduced-motion: reduce) {
     animation-name: fade-in;

@@ -1,38 +1,41 @@
 // @ts-check
-import { defineConfig } from "astro/config";
+import { defineConfig, envField } from 'astro/config'
 
-import tailwindcss from "@tailwindcss/vite";
+import tailwindcss from '@tailwindcss/vite'
+import Inspect from 'vite-plugin-inspect'
 
-import react from "@astrojs/react";
-import vercel from "@astrojs/vercel";
-import mdx from "@astrojs/mdx";
-import sitemap from "@astrojs/sitemap";
+import react from '@astrojs/react'
+import vercel from '@astrojs/vercel'
+import mdx from '@astrojs/mdx'
+import sitemap from '@astrojs/sitemap'
 
 // https://astro.build/config
 export default defineConfig({
-  vite: {
-    plugins: [tailwindcss()],
+  site: 'https://soorria.com',
+
+  env: {
+    schema: {
+      SUPABASE_ANON_KEY: envField.string({ context: 'server', access: 'public' }),
+      SUPABASE_URL: envField.string({ context: 'server', access: 'public' }),
+    },
   },
-  integrations: [
-    react({
-      include: ["./src/**/*.react.tsx"],
-    }),
-    mdx(),
-    sitemap(),
-  ],
+
+  vite: {
+    plugins: [tailwindcss(), Inspect()],
+  },
+  integrations: [react(), mdx(), sitemap()],
   adapter: vercel(),
 
-  site: "https://soorria.com",
   devToolbar: {
     enabled: true,
   },
 
   prefetch: {
-    defaultStrategy: "hover",
+    defaultStrategy: 'hover',
     prefetchAll: true,
   },
 
-  trailingSlash: "never",
+  trailingSlash: 'never',
 
   redirects: {},
-});
+})
