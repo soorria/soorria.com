@@ -1,0 +1,218 @@
+---
+title: Event Delegation
+tags:
+  - javascript
+  - comp6080
+shortDescription:
+  A better way to handle multiple elements with the same event handlers
+createdAt: '2022-10-23'
+updatedAt: '2024-03-09'
+---
+
+## What and Why
+
+Event delegation allows you to add a single event listener to a parent element,
+rather than adding event listeners to each child elements. This is useful when
+the child elements (e.g. a list of buttons) change or there are lots of them. It
+can also be a bit more performant, and frameworks like
+[React](https://reactjs.org/) use it for all `click` events with the `onClick`
+prop.
+
+## How
+
+Event delegation exploits a behaviour of the DOM's event system - event
+_bubbling_. When an event (e.g. a `click` event) happens, your browser drills
+down to the smallest element affected by the event (e.g. clicked on) - the
+event's `target`. The browser then <Sparkles>_bubbles_</Sparkles> the event up
+the DOM tree, firing an event on every parent!
+
+<Demo component={BubblingDemo} init="always" />
+
+## Example
+
+Let's try it out on this UI which should `alert` with some information when any
+of the buttons is clicked.
+
+```html
+<div id="elements-list">
+  <button>
+    <img src="/water-tribe.png" />
+    Water
+  </button>
+  <button>
+    <img src="/earth-kingdom.png" />
+    Earth
+  </button>
+  <button>
+    <img src="/fire-nation.png" />
+    Fire
+  </button>
+  <button>
+    <img src="/air-temple.png" />
+    Air
+  </button>
+</div>
+```
+
+### Adding an Event Listener
+
+The _default_ way to do this would be to select all of the buttons, and add an
+event listener to each of them. However, since we're using _event delegation_,
+we'll add a `'click'` event listener to the parent:
+
+```ts
+const list = document.getElementById('elements-list')!
+
+list.addEventListener('click', event => {
+  // this is where we'll handle the buttons being clicked
+})
+```
+
+### Getting the Clicked Button
+
+Okay, so we've added the event listener how do we get the actual button that was
+clicked? The event fired when an action occurs has two properties that can help
+us:
+
+- `event.currentTarget` - This is the element that we added the event to. In
+  this case, it's the surrounding `<div>`
+- `event.target` - This is the deepest element that was clicked.
+
+Looking at the two options above, it seems like `event.target` is perfect, but
+in the example above we have a little issue. If a user clicks a button, but
+their mouse is over the image, `event.target` will be the `<img>`! Obviously, we
+_could_ just remove the icons, but they'll look nice and that's important to me.
+Instead, we'll use the
+[`closest`](https://developer.mozilla.org/en-US/docs/Web/API/Element/closest)
+method available on all HTML elements. It accepts a CSS selector (just like
+`querySelector`) and walks up the DOM tree until it finds an element that
+matches the selector, or runs out of elements. This allows us to the get the
+button that was clicked _even if_ the deepest clicked element is something else!
+
+```ts
+list.addEventListener('click', event => {
+  const clickedButton = (event.target as Element).closest('button')
+
+  // Check in case there isn't a parent matching the selector
+  if (!clickedButton) {
+    return
+  }
+})
+```
+
+<Note variant='info'>
+
+Notice above that we return early if `event.target.closest` returns a falsy
+value. We do this since:
+
+1. If a user clicks a part of the containing element (in this case the
+   surrounding `<div>`), and their mouse isn't also over a button (e.g. if
+   there's some spacing between the buttons), it will return `null``.
+2. **TypeScript only**: The return type of `event.target.closest` is defined
+   similar to `HTMLElement | null`, so if the return value is unchecked you will
+   have type errors (and lose autocomplete) when using it.
+
+</Note>
+
+### Showing the `alert`
+
+We can finally show the alert, but we have a little issue. We have the button
+that was clicked, but how do we know _which_ specific button was clicked? We
+need a way to distinguish them from each other. In this example, we'll use
+[data attributes](https://developer.mozilla.org/en-US/docs/Learn/HTML/Howto/Use_data_attributes)
+since their values are easy to access in JavaScript, and there's a no chance for
+conflicts with any attributes added to browsers in the future.
+
+You can use any data attribute, but since the buttons in this example are for
+bending elements from
+[Avatar: The Last Airbender](https://en.wikipedia.org/wiki/Avatar:_The_Last_Airbender)
+I'll use `data-element`.
+
+```html
+<button data-element="water">
+  <!-- water button contents -->
+</button>
+<button data-element="earth">
+  <!-- earth button contents -->
+</button>
+<button data-element="fire">
+  <!-- fire button contents -->
+</button>
+<button data-element="air">
+  <!-- air button contents -->
+</button>
+```
+
+Now, we can access the value of the `data-element` attribute using the `dataset`
+property on every element:
+
+```ts
+const elementForClickedButton = clickedButton.dataset.element
+```
+
+### Putting it all together
+
+Putting all the above steps together we have our JavaScript
+
+```ts
+const list = document.getElementById('elements-list')!
+
+list.addEventListener('click', event => {
+  const clickedButton = event.target.closest('button')
+
+  // Check in case there isn't a parent matching the selector
+  if (!clickedButton) {
+    return
+  }
+
+  // Get the value from the `data-element` attribute
+  const bendingElementForClickedButton = clickedButton.dataset.element
+
+  showAlertForElement(bendingElementForClickedButton)
+})
+```
+
+and our HTML (now with alt attributes!)
+
+```html
+<div id="elements-list">
+  <button data-element="water">
+    <img
+      src="/water-tribe.png"
+      alt="line art, crashing waves inside a circle representing water bending"
+    />
+    Water
+  </button>
+  <button data-element="earth">
+    <img
+      src="/earth-kingdom.png"
+      alt="line art, rock-like trapezium with swirl inside representing earth bending"
+    />
+    Earth
+  </button>
+  <button data-element="fire">
+    <img
+      src="/fire-nation.png"
+      alt="line art, three-pronged flamed with a swirl in the centre representing fire bending"
+    />
+    Fire
+  </button>
+  <button data-element="air">
+    <img
+      src="/air-temple.png"
+      alt="line art, three swirls organised in an upside-down triangle representing airbending"
+    />
+    Air
+  </button>
+</div>
+```
+
+## Demo
+
+Here's a demo with the icons, and _a_ complete, useful and 100% non-trivial
+`showAlertForElement` implementation:
+
+<Sandbox
+  src="https://codesandbox.io/embed/event-delegation-complete-if0zp9?fontsize=14&hidenavigation=1&theme=dark&view=preview"
+  title="blog/event-delegation - Complete"
+/>

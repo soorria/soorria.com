@@ -254,16 +254,21 @@ function SkillItem({
       onPositionChange?.(skill.id, update)
     }
 
-    window.addEventListener('mouseup', handleMouseUp)
-    window.addEventListener('touchend', handleMouseUp)
-    window.addEventListener('mousemove', handleMouseMove, { passive: true })
-    window.addEventListener('touchmove', handleMouseMove, { passive: true })
+    const abortController = new AbortController()
+
+    window.addEventListener('mouseup', handleMouseUp, { signal: abortController.signal })
+    window.addEventListener('touchend', handleMouseUp, { signal: abortController.signal })
+    window.addEventListener('mousemove', handleMouseMove, {
+      passive: true,
+      signal: abortController.signal,
+    })
+    window.addEventListener('touchmove', handleMouseMove, {
+      passive: true,
+      signal: abortController.signal,
+    })
 
     return () => {
-      window.removeEventListener('mouseup', handleMouseUp)
-      window.removeEventListener('touchend', handleMouseUp)
-      window.removeEventListener('mousemove', handleMouseMove)
-      window.removeEventListener('touchmove', handleMouseMove)
+      abortController.abort()
     }
   }, [moving, skill.id, onPositionChange, containerRef])
 
@@ -285,7 +290,7 @@ function SkillItem({
         style={{ width: imageWidth, height: 'auto', maxHeight: imageWidth }}
         draggable={false}
       />
-      <span className="group-hocus-visible:opacity-100 pointer-events-none absolute -bottom-5 left-1/2 -translate-x-1/2 text-xs opacity-0 transition-opacity md:-bottom-6 md:text-sm">
+      <span className="pointer-fine:group-hocus-visible:opacity-100 pointer-events-none absolute -bottom-5 left-1/2 -translate-x-1/2 text-xs opacity-0 transition-opacity md:-bottom-6 md:text-sm">
         {skill.label}
       </span>
     </button>

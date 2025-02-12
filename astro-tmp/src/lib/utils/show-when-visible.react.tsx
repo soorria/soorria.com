@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState, type ReactNode } from 'react'
+import { useMounted } from './use-mounted.react'
 
 type ShowWhenVisibleProps = {
   children: ReactNode
@@ -8,6 +9,7 @@ type ShowWhenVisibleProps = {
 const ShowWhenVisible = (props: ShowWhenVisibleProps) => {
   const ref = useRef<HTMLDivElement>(null)
   const [show, setShow] = useState(false)
+  const mounted = useMounted()
 
   useEffect(() => {
     if (!ref.current) return
@@ -33,7 +35,7 @@ const ShowWhenVisible = (props: ShowWhenVisibleProps) => {
 
   return (
     <div ref={ref} className={props.className}>
-      {show && props.children}
+      {mounted && show && props.children}
     </div>
   )
 }

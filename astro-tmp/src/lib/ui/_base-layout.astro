@@ -1,4 +1,5 @@
 ---
+import '@total-typescript/ts-reset'
 import NoJsStyles from '~/styles/NoJsStyles.astro'
 import '~/styles/global.css'
 
@@ -8,7 +9,12 @@ import { ClientRouter } from 'astro:transitions'
 ---
 
 <!doctype html>
-<html lang="en" transition:animate="none" transition:name="root">
+<html
+  lang="en"
+  transition:animate="none"
+  transition:name="root"
+  class:list={[{ dev: import.meta.env.DEV }]}
+>
   <head>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -41,9 +47,9 @@ import { ClientRouter } from 'astro:transitions'
       const animateOnLoadClassNames = ['slide-in', 'slide-in-direct', 'fade-in-direct']
       const animatedElementsSelector = animateOnLoadClassNames.map((c) => `.${c}`).join(', ')
 
-      let abortController = new AbortController() 
+      let abortController = new AbortController()
 
-      function removeAnimations(rootElement: Element) {
+      function removeAnimationsOnElement(rootElement: Element) {
         const animatedElements = [...rootElement.querySelectorAll(animatedElementsSelector)]
 
         if (rootElement.matches(animatedElementsSelector)) {
@@ -51,19 +57,31 @@ import { ClientRouter } from 'astro:transitions'
         }
 
         animatedElements.forEach((el) => {
-          el.addEventListener('animationend', () => {
-            el.classList.remove(...animateOnLoadClassNames)
-          }, { 
-            signal: abortController.signal
-          })
+          el.addEventListener(
+            'animationend',
+            () => {
+              el.classList.remove(...animateOnLoadClassNames)
+            },
+            {
+              signal: abortController.signal,
+            },
+          )
         })
       }
 
-      document.addEventListener('astro:page-load', () => {
-        abortController.abort();
+      function removeAnimations() {
+        document
+          .querySelectorAll('[data-astro-transition-persist]')
+          .forEach(removeAnimationsOnElement)
+      }
+
+      document.addEventListener('astro:after-swap', () => {
+        abortController.abort()
         abortController = new AbortController()
-        document.querySelectorAll('[data-astro-transition-persist]').forEach(removeAnimations)
+        removeAnimations()
       })
+
+      removeAnimations()
 
       // document.addEventListener('astro:before-swap', (event) => {
       //   const newDocument = event.newDocument
@@ -79,6 +97,8 @@ import { ClientRouter } from 'astro:transitions'
 
       //
     </script>
+
+    <slot name="head" />
   </head>
   <body
     class="bg-drac-base text-drac-content relative flex h-full min-h-screen flex-col overflow-y-auto"

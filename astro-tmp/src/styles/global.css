@@ -79,6 +79,8 @@
   }
 }
 
+@custom-variant pointer-fine (@media (pointer: fine));
+
 @layer base {
   /* poppins-latin-400-normal*/
   @font-face {
@@ -343,7 +345,9 @@
   animation: slide-in var(--slide-duration, 0.5s) both 1;
   animation-delay: calc((var(--step-num) + var(--_initial-step)) * var(--_step-delay));
 
-  outline: 1px solid red;
+  .dev & {
+    outline: 1px solid red;
+  }
 
   @media (prefers-reduced-motion: reduce) {
     animation-name: fade-in;

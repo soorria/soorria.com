@@ -1,8 +1,7 @@
-import type { ProjectFrontMatter } from '~/types/project'
-import Link from 'next/link'
-import ProjectCard from '~/components/projects/ProjectCard'
+import ProjectCard from '~/lib/ui/projects/ProjectCard'
 import LandingSection from './LandingSection'
-import ProjectsGrid from '../projects/ProjectsGrid'
+import ProjectsGrid from '~/lib/ui/projects/ProjectsGrid'
+import type { ProjectFrontMatter } from '~/lib/data/types'
 
 interface FeaturedProjectsProps {
   projects: ProjectFrontMatter[]
@@ -22,18 +21,17 @@ const FeaturedProjects: React.FC<FeaturedProjectsProps> = ({ projects, random = 
       title={titles[random % titles.length]}
     >
       <ProjectsGrid initialStep="3">
-        {projects.map(project => (
-          <ProjectCard key={project.slug} project={project} />
+        {projects.map((project) => (
+          <ProjectCard key={project.id} project={project} />
         ))}
       </ProjectsGrid>
       <div className="mt-8 text-center">
-        <Link
+        <a
           href="/projects"
-          passHref
-          className="focus-ring rounded-sm px-3 py-2 text-drac-pink transition-colors hocus:bg-drac-base-light hocus:text-drac-purple"
+          className="focus-ring text-drac-pink hocus:bg-drac-base-light hocus:text-drac-purple rounded-sm px-3 py-2 transition-colors"
         >
           <span>See All Projects</span>
-        </Link>
+        </a>
       </div>
     </LandingSection>
   )

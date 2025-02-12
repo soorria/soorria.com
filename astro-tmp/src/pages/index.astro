@@ -4,12 +4,15 @@ import Hero from '~/lib/ui/landing/Hero'
 import Subtitle from '~/lib/ui/landing/Subtitle'
 import MainLayout from '~/lib/ui/main-layout.astro'
 
-import { getSingletonTextSafe, getSingletonJsonSafe } from '~/lib/supabase'
+import { getSingletonTextSafe, getSingletonJsonSafe } from '~/lib/data/supabase'
 import { randomArray } from '~/lib/utils/random'
 import { getRandomSkillIndexes } from '~/lib/skills/definitions'
+import { featuredProjects } from '~/lib/constants/projects'
 import Skills from '~/lib/ui/landing/Skills'
 import Contact from '~/lib/ui/landing/Contact'
 import PageRenderedAt from '~/lib/utils/page-rendered-at.astro'
+import { getCollection } from 'astro:content'
+import FeaturedProjects from '~/lib/ui/landing/FeaturedProjects'
 
 export const prerender = false
 
@@ -35,27 +38,24 @@ const indexOptionsPromise = getSingletonJsonSafe<{ heroText: string; pattern?: s
   'index-options',
 )
 
-// const projectsPromise: Promise<ProjectFrontMatter[]> = Promise.all(
-//   featuredProjects.map(async projectSlug => {
-//     const frontmatter = await getFileFrontMatter<ProjectFrontMatter>('projects', projectSlug)
-//     delete frontmatter.readingTime
-//     return frontmatter
-//   })
-// )
+const projectsPromise = getCollection('projects', (project) => {
+  return featuredProjects.includes(project.id)
+}).then((data) => {
+  return featuredProjects
+    .map((slug) => {
+      return data.find((project) => project.id === slug)
+    })
+    .filter(Boolean)
+})
 
 const randoms = randomArray(0, 100, 5)
 
 const skillIndexes = getRandomSkillIndexes(8)
 
-const [
-  subtitleOptions,
-  now,
-  // projects,
-  { heroText, pattern },
-] = await Promise.all([
+const [subtitleOptions, now, projects, { heroText, pattern }] = await Promise.all([
   subtitleOptionsPromise,
   nowPromise,
-  // projectsPromise,
+  projectsPromise,
   indexOptionsPromise,
 ])
 ---
@@ -67,9 +67,8 @@ const [
         <Subtitle
           client:idle
           options={subtitleOptions.map(
-            (code, i) =>
-              code,
-              // <MdxRenderer key={i} code={code} hasCodeBlocks={false} />
+            (code, i) => code,
+            // <MdxRenderer key={i} code={code} hasCodeBlocks={false} />
           )}
         />
       </Fragment>
@@ -83,7 +82,7 @@ const [
         ) : null
       }
     </Hero>
-    <!-- <FeaturedProjects random={randoms[0]} projects={projects} /> -->
+    <FeaturedProjects random={randoms[0]} projects={projects} client:idle />
     <Skills client:visible random={randoms[1]} skillIndexes={skillIndexes} />
     <Contact client:visible random={randoms[2]} />
     <div class="py-10"></div>

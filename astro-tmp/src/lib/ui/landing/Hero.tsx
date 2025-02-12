@@ -22,9 +22,6 @@ const Hero = ({
   title: ReactNode
   pattern?: LooseAutoComplete<Pattern>
 }>) => {
-  console.log({
-    subtitle,
-  })
   return (
     <div className="fade-in-direct">
       <div

@@ -1,42 +1,42 @@
-import { useCallback, useEffect, useRef, useState } from "react";
-import { random } from "~/lib/utils/random";
-import Logo from "../logo";
-import { cx } from "~/lib/utils/styles";
-import { usePathname } from "~/lib/utils/use-pathname-react";
+import { useCallback, useEffect, useRef, useState } from 'react'
+import { random } from '~/lib/utils/random'
+import Logo from '../logo'
+import { cx } from '~/lib/utils/styles'
+import { usePathname } from '~/lib/utils/use-pathname.react'
 
-const MIN_ROTATION = 0;
-const MAX_ROTATION = 360 * 4;
-const START_ROTATION = MAX_ROTATION / 2;
+const MIN_ROTATION = 0
+const MAX_ROTATION = 360 * 4
+const START_ROTATION = MAX_ROTATION / 2
 
-const RESET_TIMEOUT = 10000; // 10 seconds
+const RESET_TIMEOUT = 10000 // 10 seconds
 
-export const SpinnyHomeLink: React.FC<{ href?: string }> = ({ href = "/" }) => {
-  const [rotation, setRotation] = useState(START_ROTATION);
-  const resetTimout = useRef<ReturnType<typeof setTimeout> | null>(null);
+export const SpinnyHomeLink: React.FC<{ href?: string }> = ({ href = '/' }) => {
+  const [rotation, setRotation] = useState(START_ROTATION)
+  const resetTimout = useRef<ReturnType<typeof setTimeout> | null>(null)
 
   const spin = useCallback(() => {
-    setRotation(random(MIN_ROTATION, MAX_ROTATION));
+    setRotation(random(MIN_ROTATION, MAX_ROTATION))
     if (resetTimout.current) {
-      clearTimeout(resetTimout.current);
+      clearTimeout(resetTimout.current)
     }
     resetTimout.current = setTimeout(() => {
-      setRotation(START_ROTATION);
-    }, RESET_TIMEOUT);
-  }, []);
+      setRotation(START_ROTATION)
+    }, RESET_TIMEOUT)
+  }, [])
 
-  const pathname = usePathname();
+  const pathname = usePathname()
 
   useEffect(() => {
-    spin();
-  }, [pathname, spin]);
+    spin()
+  }, [pathname, spin])
 
   return (
     <a
       href={href}
       onClick={(e) => {
         if (pathname === href) {
-          spin();
-          e.preventDefault();
+          spin()
+          e.preventDefault()
         }
       }}
       className="focus-ring group z-10 -m-2 flex items-center rounded-sm p-2"
@@ -49,12 +49,12 @@ export const SpinnyHomeLink: React.FC<{ href?: string }> = ({ href = "/" }) => {
       </span>
       <span
         className={cx(
-          "logo-link-text font-display text-2xl font-bold lowercase sm:ml-4 sm:text-3xl",
+          'logo-link-text font-display text-2xl font-bold lowercase sm:ml-4 sm:text-3xl',
         )}
       >
         <span className="sr-only sm:not-sr-only">Soorria</span>
         <span className="sr-only md:not-sr-only"> Saruva</span>
       </span>
     </a>
-  );
-};
+  )
+}

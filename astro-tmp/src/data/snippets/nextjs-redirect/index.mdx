@@ -1,0 +1,45 @@
+---
+title: Next.js <Redirect />
+shortDescription: A <Redirect /> component like the one for react-router.
+category: React
+tags:
+  - typescript
+  - react
+createdAt: '2021-04-02'
+updatedAt: '2023-03-18'
+---
+
+A `<Redirect />` component like the one from
+[`react-router v5`](https://v5.reactrouter.com/).
+
+```typescript
+import { useRouter } from 'next/router'
+
+interface RedirectProps {
+  to: string
+  replace?: boolean
+}
+
+const Redirect: React.FC<RedirectProps> = ({ to, replace }) => {
+  const router = useRouter()
+
+  useEffect(() => {
+    router[replace ? 'replace' : 'push'](to)
+  }, [to, replace])
+
+  return null
+}
+```
+
+## Usage
+
+```tsx {4} jsKeepLines
+const Example = () => {
+  // Get authentication state from somewhere
+  const { loggedIn } = useAuth()
+
+  if (!loggedIn) return <Redirect to="/login" />
+
+  return <ProtectedContent />
+}
+```

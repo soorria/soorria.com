@@ -1,0 +1,92 @@
+---
+title: useIsMouseInactive (SolidJS)
+shortDescription: Know when the mouse hasn't moved for a period of time
+category: SolidJS
+tags:
+  - typescript
+  - solidjs
+createdAt: '2022-08-27'
+updatedAt: '2023-08-07'
+---
+
+Get a signal that lets you know when the mouse has stopped moving for some time.
+
+```ts
+import {
+  Accessor,
+  createEffect,
+  createMemo,
+  createSignal,
+  onCleanup,
+  onMount,
+} from 'solid-js'
+
+interface UseIsMouseInactiveOptions {
+  timeout?: number
+  root: Element | Window | null
+}
+
+export const useIsMouseInactive = (props: UseIsMouseInactiveOptions) => {
+  const [inactive, setInactive] = createSignal(false)
+  let timer: ReturnType<typeof setTimeout>
+
+  const onMouseMove = () => {
+    setInactive(false)
+    if (timer) clearTimeout(timer)
+    timer = setTimeout(() => {
+      setInactive(true)
+    }, props.timeout ?? 5000)
+  }
+
+  createEffect(() => {
+    const el = props.root
+    if (!el) return
+
+    onMount(() => {
+      el.addEventListener('mousemove', onMouseMove)
+      onMouseMove()
+    })
+
+    onCleanup(() => {
+      el.removeEventListener('mousemove', onMouseMove)
+    })
+  })
+
+  return inactive
+}
+```
+
+## Usage
+
+```tsx {6-10,17-20} jsLines="4-8,15-18"
+import type { VoidComponent } from 'solid-js'
+
+export const Example: VoidComponent = () => {
+  const [element, setElement] = createSignal<HTMLElement>()
+
+  const isInactive = useIsMouseInactive({
+    get root() {
+      return element()
+    },
+  })
+
+  return (
+    <div class="grid h-96 place-items-center">
+      <div
+        ref={setElement}
+        class="h-64 w-64 bg-red-500"
+        classList={{
+          // Hide cursor when mouse hasn't moved for a while
+          'cursor-none touch-none': isInactive(),
+        }}
+      />
+    </div>
+  )
+}
+```
+
+## Demo
+
+import { createExample } from './components'
+
+<SolidDemo create={createExample} />

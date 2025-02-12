@@ -1,0 +1,189 @@
+---
+title: Vue stuff
+tags:
+  - javascript
+  - typescript
+  - vue
+category: 'vue'
+shortDescription: |
+  semi-unordered list of vue-related things
+
+# createdAt: ''
+# updatedAt: ''
+---
+
+semi-unordered list of vue-related things
+
+## Maintaining reactivity
+
+You should only access the value of a `ref`, `computed`, a prop, or a key in a
+reactive in your `<template>`, or inside a function.
+
+## Only top-level `ref`s are unwrapped in your `<template>`
+
+## `computed`s are lazy
+
+`computed`s are lazy in 2 ways:
+
+1. The getter function will only be run if the `computed`'s value is accessed.
+2. The getter function will only automatically re-run if the `computed` is used
+   in a reactive scope, for example in your `<template>`, inside another
+   `computed`, or as a `watch` target.
+
+## You can't use double quotes inside dynamic props
+
+Vue requires double quotes (`"`) around your dynamic props, so you can't use
+them in the value of your prop. Instead you can only use single quotes (`'`) and
+backticks (<code>&#96;</code>) in your template. If you _really_ need to use
+double quotes you need to make a variable in your `<script>` section.
+
+For example, these work:
+
+```vue
+<script setup lang="ts">
+const stringWithDoubleQuotes = '"'
+</script>
+
+<template>
+  <input :value="'hello'" />
+  <input :value="`hello`" />
+  <input :value="stringWithDoubleQuotes" />
+</template>
+```
+
+But the following don't, even though the syntax highlighting looks okay. See
+also in the
+[Vue SFC Playground](https://play.vuejs.org/#eNp9kT9vwjAQxb+KdQsLCkM7RWmltmJoh7ZqO97QKBzB4NiWfQ6RUL47thF/BkC6wXq/d753uh28WFv0gaCEiqmzqmZ6Ri1EJbUNLMq+VoGeECa5xOwq/M91A04Qz73V7GIKTIF9Y/RStsXaGx1D7NIPCI3prFTkvixLoz1CKTJJrFbKbD+yxi7Q9Kg3K2o2V/S1H5KG8O3Ik+sJ4cS4di3xAc9/P2mI7xPszCKo6L4Df8gbFVLGg+016EWMfeHLad87axxL3f75+cCk/XGpFDQ5x+xHiJd4u7P6Oe5D8Zj7UI8w7gE8LJFv)
+
+{/* prettier-ignore */}
+```vue
+<template>
+  <input :value="'"'" />
+  <input :value="`"`" />
+  <input :value="'\"'" />
+</template>
+```
+
+## Changing routes in vue-router and nuxt
+
+If you switch routes using the route's name (vs using the actual path), you only
+need to provide params that have changed!! For example, if you're on the
+`/agents/agent-1/tasks/task-1` route and you want to navigate to the
+`/agents/agent-1/tasks/task-2` route, you can do this
+
+```vue
+<template>
+  <Link
+    :to="{
+      name: 'agent-agentId-tasks-taskId',
+      params: {
+        taskId: 'task-2',
+      },
+    }"
+  >
+    To next task
+  </Link>
+</template>
+```
+
+or
+
+```ts
+const router = useRouter()
+
+router.push({
+  name: 'agent-agentId-tasks-taskId',
+  params: {
+    taskId: 'task-2',
+  },
+})
+```
+
+<Note variant="warning">
+
+This only works for route `params`, but **NOT `query`**. The query is
+overwritten every time you navigate to a new page.
+
+</Note>
+
+## Probably don't use `proxyRefs`
+
+<Collapse summary="What is proxyRefs?">
+
+`proxyRefs` is a nice utility that unwraps `ref` keys on an object (can't find
+the docs for this 😕). For example, the following 2 snippets have the same
+effect on the `message` ref.
+
+```ts title="Without proxyRefs"
+const message = ref('hi')
+
+console.log(message.value) // 'hi'
+
+message.value = 'hello'
+```
+
+```ts title="With proxyRefs"
+const message = ref('hi')
+
+const proxyObject = proxyRefs({
+  message,
+})
+
+console.log(proxyObject.message) // 'hi'
+
+proxyObject.message = 'hello' // updates the underlying `message` ref
+```
+
+<small>
+
+Sidenote: I can't find any reference to this in the docs, so maybe we're not
+supposed to use it at all 🤷, and
+[`reactive`](https://vuejs.org/api/reactivity-core.html#reactive) and
+[`shallowReactive`](https://vuejs.org/api/reactivity-advanced.html#shallowreactive)
+do the same thing and more.
+
+</small>
+
+</Collapse>
+
+Using `proxyRefs` can make it harder to reason about when you're accessing a
+"reactive" value. This is an especially big issue with custom composables /
+hooks if you wrap the whole return value in `proxyRefs` and destructure its
+return value:
+
+```ts
+export const useStuff = () => {
+  const message = ref('hi')
+
+  return proxyRefs({ message })
+}
+
+// in another file...
+
+/**
+ * Here, `message` will just be a string, and not a ref, so anywhere you use
+ * `message` won't receive updates!!!
+ */
+const { message } = useStuff()
+```
+
+### The exception
+
+For me, the main exception to this is if you're using
+[TanStack Query](https://tanstack.com/query/latest/docs/framework/vue/overview),
+since it returns an object where each value at the top level is a ref. I don't
+like destructuring the return value of a `useQuery` or `useMutation` (even in
+React), and I find it more ergonomic to write `query.data` instead of
+`query.data.value`. When I use `proxyRefs` for this, I generally try to use it
+directly at the `useQuery` call:
+
+```ts
+const stuff = proxyRefs(
+  useQuery({
+    queryKey: ['key', 'for', 'stuff'],
+    queryFn: () => getStuff(),
+  })
+)
+```
+
+## `<template>`s behave differently if they have no `v-*` attributes

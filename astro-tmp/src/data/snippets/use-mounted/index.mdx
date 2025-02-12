@@ -1,0 +1,42 @@
+---
+title: useMounted (React)
+shortDescription: Know when the current component is mounted.
+category: React Hook
+tags:
+  - typescript
+  - react
+createdAt: '2021-04-02'
+updatedAt: '2023-03-18'
+---
+
+Returns whether the current component is mounted. Useful for SSR stuff (e.g.
+with Next.js).
+
+```typescript
+import { useEffect, useState } from 'react'
+
+const useMounted = (): boolean => {
+  const [mounted, setMounted] = useState(false)
+
+  useEffect(() => {
+    setMounted(true)
+  }, [])
+
+  return mounted
+}
+```
+
+## Usage
+
+```tsx {2,7} jsKeepLines
+const Example = () => {
+  const mounted = useMounted()
+
+  return (
+    <>
+      <ServerSideRenderableStuff />
+      {mounted ? <ComponentThatReliesOnWindow /> : null}
+    </>
+  )
+}
+```

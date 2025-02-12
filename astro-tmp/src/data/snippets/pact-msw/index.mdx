@@ -1,0 +1,233 @@
+---
+title: Simpler Pact consumer tests with MSW
+shortDescription: Simplify your Pact consumer tests with MSW and this helper
+category: Miscellaneous
+tags:
+  - typescript
+  - testing
+createdAt: '2024-09-02'
+# updatedAt: '2024-02-29'
+---
+
+Writing consumer tests with Pact can get pretty annoying since you need to
+someone feed the mock server's url wherever API requests are being made. This
+can be especially annoying when you're using an SDK such as Gmail's Node SDK.
+
+- `runWithPact` lets you use [MSW](https://mswjs.io/) to proxy requests to the
+  provider's origin(s) to Pact's consumer test server. They support v3 and v4 of
+  Pact's spec, and doesn't care about what you do with them - all this helper
+  does is proxy requests made in your code to the Pact test server.
+- `onUnhandledRequest` ensures that MSW doesn't throw errors for requests to the
+  proxy server. Use don't _need_ this since MSW doesn't error on unhandled
+  requests by default, but it still produces warning logs for the requests to
+  the Pact test server.
+
+There's also a more official
+[Pact MSW adapter](https://github.com/pactflow/pact-msw-adapter/tree/main), but
+I'm too stupid to figure it out, and this seems a lot simpler to me.
+
+<Note variant='info'>
+
+- This helper only lets you (easily) mock one origin at a time. While you can
+  mock multiple origins, you probably shouldn't, and needing to mock multiple
+  origins can be a sign that code can be better organised.
+- The helper is set up to use MSW's node implementation since that's all I've
+  used, but it should be pretty painless to update this to work with the browser
+  and native implementations.
+
+</Note>
+
+```ts
+import { setupServer, SetupServerApi } from 'msw/node'
+import { http, HttpResponse } from 'msw'
+
+export function runWithPact<T>(
+  {
+    pact,
+    originToMock,
+    server,
+  }: {
+    pact: PactLike
+    originToMock: string
+    server: SetupServerApi
+  },
+  testFunction: () => Promise<T>
+): Promise<T | undefined> {
+  return pact.executeTest(async mockServer => {
+    const wrappedTestFunction = server.boundary(async () => {
+      const handler = http.all(`${originToMock}/*`, async ({ request }) => {
+        const actualRequestUrl = new URL(request.url)
+
+        const proxyUrl = new URL(
+          actualRequestUrl.pathname + actualRequestUrl.search,
+          mockServer.url
+        )
+
+        const responseFromPact = await fetch(proxyUrl, {
+          /**
+           * NOTE: cannot spread `request` as it is an class instance
+           */
+          body: request.body,
+          headers: request.headers,
+          method: request.method,
+          credentials: request.credentials,
+          cache: request.cache,
+          redirect: request.redirect,
+          referrer: request.referrer,
+          integrity: request.integrity,
+          keepalive: request.keepalive,
+          mode: request.mode,
+          referrerPolicy: request.referrerPolicy,
+          signal: request.signal,
+
+          /**
+           * Note: you may need the following if using Node.js' native `fetch`
+           * (i.e. undici)
+           */
+          // @ts-expect-error
+          duplex: 'half',
+        })
+
+        return new HttpResponse(responseFromPact.body, {
+          status: responseFromPact.status,
+          headers: responseFromPact.headers,
+          statusText: responseFromPact.statusText,
+          type: responseFromPact.type,
+        })
+      })
+
+      server.use(handler)
+
+      return await testFunction()
+    })
+
+    return wrappedTestFunction()
+  })
+}
+
+type OnUnhandledRequest = NonNullable<
+  NonNullable<Parameters<SetupServerApi['listen']>[0]>['onUnhandledRequest']
+>
+export const onUnhandledRequest: OnUnhandledRequest = (request, print) => {
+  const localhostOrigins = [
+    'http://localhost',
+    'https://localhost',
+    'http://127.0.0.1',
+    'https://127.0.0.1',
+    'http://0.0.0.0',
+    'https://0.0.0.0',
+  ]
+  if (localhostOrigins.some(origin => request.url.startsWith(origin))) {
+    return
+  }
+
+  print.error()
+}
+
+interface PactLike {
+  executeTest<T>(
+    fn: (mockServer: { url: string }) => Promise<T>
+  ): Promise<T | undefined>
+}
+```
+
+## Examples
+
+### With Pact v3
+
+```ts
+import { PactV3 } from '@pact-foundation/pact'
+import { runWithPact, onUnhandledRequest } from './pact-msw-utils.ts'
+
+describe('pactv3', () => {
+  const pact = new PactV3({
+    consumer: 'soorria.com',
+    provider: 'stuff',
+  })
+
+  const server = setupServer()
+
+  beforeAll(() => {
+    server.listen({ onUnhandledRequest })
+  })
+
+  afterAll(() => {
+    server.close()
+  })
+
+  it('should make a request for stuff', async () => {
+    pact
+      .uponReceiving('A request for stuff')
+      .withRequest({
+        method: 'GET',
+        path: '/stuff',
+      })
+      .willRespondWith({
+        status: 200,
+        body: {
+          stuff: [],
+        },
+      })
+
+    return await runWithPact(
+      {
+        pact,
+        server,
+        originToMock: 'https://soorria.com',
+      },
+      async () => {
+        const result = await fetchStuff()
+        expect(result).toEqual({ stuff: [] })
+      }
+    )
+  })
+})
+```
+
+### With Pact v4
+
+```ts
+import { PactV4 } from '@pact-foundation/pact'
+import { runWithPact, onUnhandledRequest } from './pact-msw-utils.ts'
+
+describe('pactv4', () => {
+  const pact = new PactV4({
+    consumer: 'soorria.com',
+    provider: 'stuff',
+  })
+
+  const server = setupServer()
+
+  beforeAll(() => {
+    server.listen({ onUnhandledRequest })
+  })
+
+  afterAll(() => {
+    server.close()
+  })
+
+  it('should make a request for stuff', async () => {
+    const interaction = pact
+      .addInteraction()
+      .uponReceiving('A request for stuff')
+      .withRequest('GET', '/stuff')
+      .willRespondWith(200, b => {
+        b.jsonBody({
+          stuff: [],
+        })
+      })
+
+    return await runWithPact(
+      {
+        pact: interaction,
+        server,
+        originToMock: 'https://soorria.com',
+      },
+      async () => {
+        const result = await fetchStuff()
+        expect(result).toEqual({ stuff: [] })
+      }
+    )
+  })
+})
+```

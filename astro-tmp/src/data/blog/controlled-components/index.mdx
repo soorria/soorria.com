@@ -1,0 +1,207 @@
+---
+title: Only React has controlled inputs
+tags:
+  - javascript
+  - react
+  - vue
+  - solidjs
+  - preact
+  - svelte
+category: react
+shortDescription:
+  Follow me down a rabbit hole to understand how React works slightly
+  differently to every other framework.
+createdAt: '2025-01-28'
+updatedAt: '2025-01-28'
+---
+
+I got nerd-sniped by a bug in a unit test for a Vue component, and 4 months
+later this baby exists. The title is only _kind of_ a lie - basically every
+frontend framework has controlled inputs, but none of them do what exactly React
+does.
+
+## What are "controlled inputs"?
+
+Whether an input (or more generally a component) is "controlled" or
+"uncontrolled" depends on where its state is managed.
+
+**Controlled components** have their state managed by their consumers, and
+passed down as props. This means that the consumer of a controlled component can
+force it into a specific state. For `<input>`s this often looks like a `value`
+prop and an `onChange` event listener:
+
+```tsx title="controlled-input.tsx" nojs
+import { useState } from 'react'
+
+export function ControlledInputExample() {
+  const [value, setValue] = useState('')
+
+  return (
+    <input
+      // we're setting the input's value here, so if `setValue` is
+      // called, the text displayed by the input will update.
+      value={value}
+      onChange={event => {
+        setValue(event.currentTarget.value)
+      }}
+    ></input>
+  )
+}
+```
+
+<Note variant="info">
+
+This post generally only goes over the `<input>` element and its `value` prop,
+but this also applies to:
+
+- the `value` prop on `<select>`s and `<textarea>`s
+- the `checked` prop on `<input type="radio">`s and `<input type="checkbox">`s
+
+</Note>
+
+**Uncontrolled** components manage their state internally, and consumers cannot
+easily force the component into a specific state. Sometimes, you'll be able to
+set default values, e.g. using the `defaultValue` prop on `<input>`s, and often
+uncontrolled components will emit events to expose some or all of their internal
+state, e.g. `onChange`. You can also access the values of native inputs using
+`ref`s or by using [`FormData`](/blog/formdata) on a surrounding form. Here's an
+example of an uncontrolled `<input>`:
+
+```tsx title="uncontrolled-input.tsx" nojs
+import { useState } from 'react'
+
+export function UncontrolledInputExample() {
+  const [value, setValue] = useState('')
+
+  return (
+    <input
+      // Note that we're NOT setting the input's `value` here, just
+      // the `defaultValue`. If `setValue` is called,  the text
+      // displayed by this input WILL NOT change!
+      defaultValue={value}
+      onChange={event => {
+        setValue(event.currentTarget.value)
+      }}
+    ></input>
+  )
+}
+```
+
+## How are controlled inputs different across frameworks?
+
+Let's look at how the following `ControlledInput` component behaves across
+frameworks. The component contains an input bound to a piece of state using an
+`onChange` event listener. The value of the input has all its vowels removed
+before state is updated. The transformation of the value is arbitrary, and other
+examples include converting it to snake_case, but it's important as it
+highlights the differences between frameworks' handling of controlled inputs.
+
+```tsx
+import { useState } from 'react'
+
+function removeVowels(message) {
+  return message.replaceAll(/[aeiou]/gi, '')
+}
+
+export default function ControlledInput() {
+  const [message, setMessage] = useState('rhythm')
+
+  return (
+    <input
+      value={message}
+      onChange={event => {
+        const messageFromInput = event.currentTarget.value
+        const cleanedMessage = removeVowels(messageFromInput)
+        setMessage(cleanedMessage)
+      }}
+    />
+  )
+}
+```
+
+Using [Astro](https://astro.build), I've implemented the above component in
+React, Preact, Solid.js, Vue, and Svelte - play around with the demo below, and
+see if you can figure out the difference between React and the other frameworks!
+
+<Sandbox
+  title="Framework controlled component comparison"
+  src="https://stackblitz.com/edit/controlled-inputs?ctl=1&embed=1&hideExplorer=1&hideNavigation=1&theme=dark&view=preview"
+/>
+
+In all of the above frameworks, entering consonants only (e.g. type out
+"rhythm") behaves the same across frameworks. This is expected as there's no
+transformation applied to the text (i.e. vowels aren't removed since there
+aren't any).
+
+If you enter text that contains vowels, you might notice a _slight_ difference
+between React and the other frameworks. Try entering some text that contains
+several consecutive vowels, for example "yeeeet". As you type out the first "e",
+you'll noticed that in non-React frameworks it stays rendered in the input, but
+has not been set in state. If you add more "e"s, you'll notice that they still
+stay there! When you add another consonant, "t", the errant "e"s disappear and
+the text rendered in the input becomes "yt". However in React, as you type out
+"yeeee", the text rendered in the input stays as "y".
+
+The main difference here is that React **forces** the internal value of input
+elements to match their `value` props (if present), almost always keeping them
+in sync! Other frameworks only synchronise `value` props and the internal values
+of inputs when the prop's value changes.
+
+## How does React do it?
+
+React adds event listeners to handle relevant events for `<input>`,
+`<textarea>`, and `<select>` elements using
+[<Sparkles> _event delegation_</Sparkles>](#event-delegation). After all your
+`onChange`s and other event handlers finish running, all controlled input
+elements have their values re-set to that of the element's `value` prop!
+
+You can see exactly what React does in the source:
+
+1. React sets up all global event listeners for the events that get handled by
+   `onChange`:
+   https://github.com/facebook/react/blob/cd22717c274061fd7dc13cd6eaff10e6a3946508/packages/react-dom-bindings/src/events/plugins/ChangeEventPlugin.js#L38-L47
+2. After all synchronous code for `onChange` handlers is run, React "restores"
+   the state of `<input>`s, `<textarea>`s, and `<select>`s:
+   https://github.com/facebook/react/blob/cd22717c274061fd7dc13cd6eaff10e6a3946508/packages/react-dom-bindings/src/events/ReactDOMUpdateBatching.js#L42
+3. React sets the value of input elements:
+   https://github.com/facebook/react/blob/9eabb37338e6bea18441dec58a4284fe00ee09ae/packages/react-dom-bindings/src/client/ReactDOMInput.js#L85
+
+<Note variant="info" id="event-delegation" title="What is event delegation?">
+
+I've written a long-ish [post about event delegation](/blog/event-delegation)
+before, but the gist is that instead of adding an event listener on every
+element, you can add a single event listener per-event on a common parent
+element and manually route the event to the correct element. This is why when
+you `console.log` events in React, you see a `SyntheticEvent` rather than the
+raw event!
+
+</Note>
+
+## Opinion time!
+
+Is what React does a good thing?
+
+kinda 🙂
+
+React does a lot of things to make web development simpler and more intuitive
+for developers, but it can often result in developers being "React developers"
+vs web developers who use React. This doesn't apply only to React, but many
+developers end up only learning how to solve problems using a framework or
+library, and become significantly less effective when without!
+
+This difference can also lead to a confusing experience for users who see input
+values that don't match the state of the app. In practice, this often results in
+data in forms getting saved not matching what is rendered on users' screens.
+Apart from the Vue component test I mentioned at the top of this blog post, I've
+seen (caused) this when converting text to snake_case in a
+[writable Vue computed](https://vuejs.org/guide/essentials/computed.html#writable-computed).
+
+Overall, I think what React has done is ok as long as developers are aware of
+the difference between React and how HTML elements & the DOM work.
+
+## Conclusion
+
+React forces the value of inputs to match the `value` prop if set, while other
+frameworks only update the value of an input if its `value` prop changes. This
+can lead to subtle differences in what users see and expect out of your apps,
+but not necessarily what actually happens.

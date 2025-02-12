@@ -1,0 +1,310 @@
+---
+title: Write your own Promise.all()
+ogImageTitleParts: ['Write your own', 'Promise.all()']
+tags:
+  - javascript
+  - typescript
+  - comp6080
+category: 'javascript'
+shortDescription: |
+  Work your way up to the super useful Promise.all() function from scratch!
+
+createdAt: '2023-03-19'
+updatedAt: '2024-02-22'
+---
+
+<Note variant="info">
+  This post works in TypeScript and JavaScript. If you don't know, or don't care
+  about TypeScript you can toggle it here <TsJsToggle responsive={false} />, or
+  in any of the code blocks in this post.
+</Note>
+
+`Promise.all()` is a super useful function that takes a list of promises and
+returns a promise that resolves to the results of each of the promises. Most
+importantly, it returns the results of your promises **in the same order**, and
+runs the promises concurrently.
+
+<Image
+  src="/img/promise-all/promise-all.png"
+  width="2880"
+  height="938"
+  alt="depiction of Promise.all accepting a list of promises and return a promise resolving to the list with results in the order of the provided promises"
+/>
+
+## Getting started
+
+To get started, we need a function that matches the signature of `Promise.all`,
+i.e. one that accepts a list of promises and returns a promise. We're using the
+`Promise` constructor here as it allows us to manually resolve the promise
+whenever we want with its executor function (the function argument that you pass
+to `new Promise`). For now, we'll resolve the promise immediately with an empty
+array and for the majority of the article we'll be working out of the executor
+function.
+
+```ts
+type PromiseAllResult<Promises extends readonly unknown[] | []> = Promise<{
+  -readonly [K in keyof Promises]: Awaited<Promises[K]>
+}>
+
+const myPromiseAll = <Promises extends readonly unknown[] | []>(
+  promises: Promises
+): PromiseAllResult<Promises> => {
+  return new Promise((resolve, reject) => {
+    resolve([] as unknown as Awaited<PromiseAllResult<Promises>>)
+  })
+}
+```
+
+<OnlyIsTs isTs>
+  <Collapse summary="Explanation of complex types" summaryComponent="h3">
+    The types above may seem overly complex, but they're required to make sure
+    types _flow through_ the function. They make sure that the function's output 
+    is correctly typed and are exactly the same as the real `Promise.all`'s types. 
+    Here's my best attempt at an explanation of the more confusing parts:
+
+    * We need a generic so that the output types can match the input types. The `Promises`
+      type argument extends `readonly unknown[]` to ensure that the input is an array.
+      We mark the array type as `readonly` as it allows the function's types to
+      [work with a wider variety of inputs](https://www.typescriptlang.org/play?#code/MYewdgzgLgBATgUwIYBNwBsCeBBOcmYCMMAvDANqEA0MATALoxIQyiRQCwAUG9PMmjBZc+TLQBcMAEoCMOPAQA8YAK4BbAEYI4APlIVqdegG5u3XrDWYACnBBqAlhATZ06YmUW37ThCwQAHlAIYCgsMqhyIkoqYADWYCAA7mB6AD4U9DoAFNwwMAAOdo7OEJLeJX7cAJTlxb6KAN4wALSIkUKYFADSMA5gMHEImCAAZjAVvhD0kthJSA7BKF71peTdWTAAvnokeo15-FAqcAONW0wsSGCY3FtmXFaTzq7u2e2CwgpE1dxPqy43IR3rJOtExL8uA8LDB-j4Xm5aPoVvC-DBAsFQixYglkmByIwMgScociqiyhMARAanVUU1Wh85D0+gMhiNxs8-DMYHMFksUZUIOtNjtSPtDohjqcYOdLkwbnduAB6JUwAByIGCMCgAAsEOi8CA4Cw9Yg-jYAa9aCCOl9RIRIXDKlabZ95KJaNUgA).
+      The additional `| []` allows the types of tuple elements to flow through the function
+      too. Finally, we use `unknown` instead of `any` as it prevents us from accidentally
+      making mistakes in the function body.
+    * In the output type we use a [mapped type](https://www.typescriptlang.org/docs/handbook/2/mapped-types.html)
+      which allows for correct output types when using tuples. The `-readonly` in the mapped
+      type makes the resulting type **not** readonly, and `Awaited` unwraps promise types,
+      converted something like `Promise<number>` to `number`.
+
+  </Collapse>
+</OnlyIsTs>
+
+Let's now extract out the results array so that we can easily set values in
+later steps:
+
+```ts
+// ...
+const results = [] as unknown as Awaited<PromiseAllResult<Promises>>
+resolve(results)
+```
+
+## The naïve approach
+
+A first implementation might look like this:
+
+```ts {4-8} jsKeepLines
+// ...
+const results = [] as unknown as Awaited<PromiseAllResult<Promises>>
+
+for (const promise of promises) {
+  promise.then(promiseResult => {
+    results.push(promiseResult as any)
+  })
+}
+
+resolve(results)
+```
+
+This has a very big problem however. Promises are _asynchronous_, so the
+function we pass to `.then` will not be called immediately and calling `resolve`
+right after the for-loop means the promise gets resolved with an empty array. In
+the demo below you probably won't even see the `Loading...` text due to how
+immediately `myPromiseAll` resolves.
+
+import { NaiveExample } from './components'
+
+<Demo component={NaiveExample} />
+
+Instead, we need some way of knowing when all the promises are complete and only
+then `resolve`-ing the promise.
+
+## Waiting for all the promises to finish
+
+We can make sure all promises are complete by only `resolve`-ing our promise
+when the number of results we have equals the number of promises provided.
+
+```ts {8-10} jsKeepLines
+// ...
+const results = [] as unknown as Awaited<PromiseAllResult<Promises>>
+
+for (const promise of promises) {
+  promise.then(promiseResult => {
+    results.push(promiseResult as any)
+
+    if (results.length === promises.length) {
+      resolve(results)
+    }
+  })
+}
+```
+
+... and now this works! We're waiting for all the promises to complete before
+`resolve`-ing, so all the results are available `myPromiseAll` resolves.
+
+However, we have one big problem: the results are sometimes _in the wrong
+order_:
+
+import { WaitingForAllPromisesExample } from './components'
+
+<Demo component={WaitingForAllPromisesExample} />
+
+## Setting results in the right order
+
+Making sure results end up in the right order requires a bit of a refactor -
+we'll need to:
+
+1. initialise the `results` array to be the same length as the input `promises`
+   array.
+2. know the index of each promise so we can set its result in the correct
+   position in the output array.
+3. separately keep track of how many promises have been resolved as point `1.`
+   means that `results.length` will _always_ be the same as `promises.length`.
+
+```ts {2-5,7-8,10-11,13} jsLines="2,4,6-7,9-10,12"
+// ...
+const results = Array(promises.length) as unknown as Awaited<
+  PromiseAllResult<Promises>
+>
+let numResolvedPromises = 0
+
+for (let i = 0; i < promises.length; i++) {
+  const promise = promises[i]
+  promise.then(promiseResult => {
+    results[i] = promiseResult as any
+    numResolvedPromises++
+
+    if (numResolvedPromises === promises.length) {
+      resolve(results)
+    }
+  })
+}
+```
+
+We can now see that the order of results of our `myPromiseAll` function is
+consistently the same as `Promise.all`:
+
+import { InOrderExample } from './components'
+
+<Demo component={InOrderExample} />
+
+## Handling errors
+
+So far, we've handled everything going well, but we haven't handled any errors
+yet. `Promise.all` throws an error if _any of the provided promises reject_. We
+can accomplish this by calling `reject` with the error when any of the provided
+promises throw:
+
+```ts {18-20} jsLines="17-19"
+// ...
+const results = Array(promises.length) as unknown as Awaited<
+  PromiseAllResult<Promises>
+>
+let numResolvedPromises = 0
+
+for (let i = 0; i < promises.length; i++) {
+  const promise = promises[i]
+  promise
+    .then(promiseResult => {
+      results[i] = promiseResult as any
+      numResolvedPromises++
+
+      if (numResolvedPromises === promises.length) {
+        resolve(results)
+      }
+    })
+    .catch((error: unknown) => {
+      reject(error)
+    })
+}
+```
+
+Now, this is fine - the `Promise` constructor only accepts the first `resolve`,
+or `reject`, and any other times the functions are called are ignored. However,
+if you're like me, you'd like some extra confirmation that nothing goes wrong:
+
+```ts {6,12,18,22,25} jsLines="5,11,17,21,24"
+// ...
+const results = Array(promises.length) as unknown as Awaited<
+  PromiseAllResult<Promises>
+>
+let numResolvedPromises = 0
+let settled = false
+
+for (let i = 0; i < promises.length; i++) {
+  const promise = promises[i]
+  promise
+    .then(promiseResult => {
+      if (settled) return
+      results[i] = promiseResult as any
+      numResolvedPromises++
+
+      if (numResolvedPromises === promises.length) {
+        settled = true
+        resolve(results)
+      }
+    })
+    .catch((error: unknown) => {
+      if (settled) return
+
+      settled = true
+      reject(error)
+    })
+}
+```
+
+## Handling non-promises
+
+We're now almost done. One last minor thing we need to do is handle when an
+element in the promises array isn't a promise. When `Promise.all` encounters a
+value that isn't a promise, it still works while our `myPromiseAll` so far would
+throw an error. We can fix this by wrapping each item in a promise that resolves
+immediately with `Promise.resolve`:
+
+```ts {3}
+// ...
+for (let i = 0; i < promises.length; i++) {
+  const promise = Promise.resolve(promises[i])
+  // ...
+}
+```
+
+## All together
+
+Here's the entire code for `myPromiseAll`:
+
+```ts truncate
+type PromiseAllResult<Promises extends readonly unknown[] | []> = Promise<{
+  -readonly [K in keyof Promises]: Awaited<Promises[K]>
+}>
+
+const myPromiseAll = <Promises extends readonly unknown[] | []>(
+  promises: Promises
+): PromiseAllResult<Promises> => {
+  return new Promise((resolve, reject) => {
+    const results = Array(promises.length) as unknown as Awaited<
+      PromiseAllResult<Promises>
+    >
+    let numResolvedPromises = 0
+    let settled = false
+
+    for (let i = 0; i < promises.length; i++) {
+      const promise = Promise.resolve(promises[i])
+      promise
+        .then(promiseResult => {
+          if (settled) return
+          results[i] = promiseResult as any
+          numResolvedPromises++
+
+          if (numResolvedPromises === promises.length) {
+            settled = true
+            resolve(results)
+          }
+        })
+        .catch((error: unknown) => {
+          if (settled) return
+
+          settled = true
+          reject(error)
+        })
+    }
+  })
+}
+```

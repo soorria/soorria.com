@@ -1,0 +1,115 @@
+---
+title: Drizzle ORM Type Helpers
+shortDescription:
+  A couple type helpers to get a table's document type (when you SELECT) and the
+  table's insert type (when you INSERT).
+category: TypeScript
+tags:
+  - typescript
+  - drizzle-orm
+createdAt: '2024-01-03'
+updatedAt: '2024-08-19'
+---
+
+A couple type helpers to get a table's document type (when you SELECT) and the
+table's insert type (when you INSERT). **Heavily** inspired by
+[convex.dev's](https://www.convex.dev/)
+[`Doc` type](https://docs.convex.dev/generated-api/data-model#doc).
+
+<Note>
+
+The following snippet is made specifically for SQLite drivers, but for details
+for other drivers, see [here](#other-drivers)
+
+</Note>
+
+```ts title="~/lib/db/types.ts" nojs
+import type { InferInsertModel, InferSelectModel } from 'drizzle-orm'
+import type { SQLiteTableWithColumns } from 'drizzle-orm/sqlite-core'
+
+import * as schema from './schema'
+
+/**
+ * Filters out any relation definitions from your schema
+ */
+type SchemaTableNames = {
+  [TableOrRelationName in keyof typeof schema]: (typeof schema)[TableOrRelationName] extends SQLiteTableWithColumns<any>
+    ? TableOrRelationName
+    : never
+}[keyof typeof schema]
+
+type DBSelectTypeMap = {
+  [TableName in SchemaTableNames]: InferSelectModel<(typeof schema)[TableName]>
+}
+/**
+ * Get the SELECT type for a table given it's export name in the drizzle schema.
+ */
+export type Doc<TableName extends keyof DBSelectTypeMap> =
+  DBSelectTypeMap[TableName]
+
+type DBInsertTypeMap = {
+  [TableName in SchemaTableNames]: InferInsertModel<(typeof schema)[TableName]>
+}
+/**
+ * Get the INSERT type for a table given it's export name in the drizzle schema.
+ */
+export type DocInsert<TableName extends keyof DBInsertTypeMap> =
+  DBInsertTypeMap[TableName]
+```
+
+<Collapse summary="Using with other drivers (e.g. PostgreSQL or MySQL)" id="other-drivers">
+
+To use with other drivers (e.g. PostgreSQL or MySQL), you'll need to replace the
+`SQLiteTableWithColumns` import statement and type with the corresponding one
+for the driver you're using:
+
+- **PostgresSQL**
+
+  ```ts nojs
+  import type { PgTableWithColumns } from 'drizzle-orm/pg-core'
+  ```
+
+- **MySQL**
+
+  ```ts nojs
+  import type { MySqlTableWithColumns } from 'drizzle-orm/mysql-core'
+  ```
+
+</Collapse>
+
+## Example
+
+```ts title="~/lib/db/schema.ts" nojs
+import { int, sqliteTable, text } from 'drizzle-orm/sqlite-core'
+
+export const products = sqliteTable('products', {
+  id: int('id').primaryKey({ autoIncrement: true }),
+  name: text('name').notNull(),
+  description: text('description').notNull().default(''),
+  price: int('price').notNull(),
+})
+```
+
+```ts nojs title="~/somewhere/else/in/your/code"
+import type { Doc, DocInsert } from '~/lib/db/types'
+
+/**
+ * {
+ *    id: number;
+ *    name: string;
+ *    description: string;
+ *    price: number;
+ * }
+ */
+type Product = Doc<'products'>
+
+/**
+ * {
+ *    id?: number | undefined;
+ *    name: string;
+ *    description?: string | undefined;
+ *    price: number;
+ * }
+ */
+type ProductInsert = DocInsert<'product'>
+```

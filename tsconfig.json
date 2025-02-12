@@ -40,5 +40,5 @@
     ".next/types/**/*.ts",
     "next-env.d.ts",
     "src/types/react.d.ts"
-  ]
+, "astro-tmp/src/lib/data/snippet.ts", "astro-tmp/src/lib/data/project.ts", "astro-tmp/src/lib/data/data.ts", "astro-tmp/src/lib/data/blog-post.ts"  ]
 }
