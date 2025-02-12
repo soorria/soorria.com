@@ -1,7 +1,7 @@
 export const featuredProjects = [
-  // 'jupyter-js',
+  'jupyter-js',
   'magic-sprinkles',
-  // 'pokelife',
-  // 'prompt-racer',
-  // 'sizes',
+  'pokelife',
+  'prompt-racer',
+  'sizes',
 ]

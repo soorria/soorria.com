@@ -24,7 +24,7 @@ const MagicSprinklesCard: React.FC<MagicSprinklesCardProps> = ({ project }) => {
         ></div>
         <div className="bg-drac-base absolute inset-1"></div>
         <div className="absolute -inset-x-6 -inset-y-4 grid -translate-x-0.5">
-          <ShowWhenVisible className="transition-transform group-hover:scale-[0.952]">
+          <ShowWhenVisible className="md:group-hocus-within:scale-[0.952] transition-transform">
             <LazyMagicSprinkles />
           </ShowWhenVisible>
           <div className="no-js-grid col-span-2 col-start-2 hidden items-center justify-end p-12">
