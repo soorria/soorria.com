@@ -45,7 +45,7 @@ const SpinnyHomeLink: React.FC<{ href?: string }> = ({ href = '/' }) => {
     >
       <span
         className="h-8 w-8 transform transition-transform duration-700 ease-in-out md:h-10 md:w-10"
-        style={{ '--tw-rotate': `${rotation}deg` }}
+        style={{ rotate: `${rotation}deg` }}
       >
         <Logo />
       </span>
