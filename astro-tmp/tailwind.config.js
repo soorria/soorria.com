@@ -129,6 +129,8 @@ module.exports = {
       addVariant('fullscreen', '&:fullscreen')
       addVariant('not-fullscreen', '&:not(:fullscreen)')
 
+      addVariant('focus-visible-within', '&:has(:focus-visible)')
+
       addUtilities({
         '.text-safe-pretty': {
           textWrap: ['balance', 'pretty'],

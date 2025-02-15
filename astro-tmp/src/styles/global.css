@@ -209,7 +209,7 @@
 
 @layer components {
   .focus-ring {
-    @apply ring-drac-pink transition-shadow focus:ring-2 focus:outline-hidden;
+    @apply ring-drac-pink transition-shadow focus-visible:ring-2 focus-visible:outline-hidden;
   }
 }
 
