@@ -27,7 +27,7 @@ export default defineConfig({
   adapter: vercel(),
 
   devToolbar: {
-    enabled: true,
+    enabled: false,
   },
 
   prefetch: {

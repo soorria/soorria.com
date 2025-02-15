@@ -59,6 +59,8 @@ const [subtitleOptions, now, projects, { heroText, pattern }] = await Promise.al
   projectsPromise,
   indexOptionsPromise,
 ])
+
+Astro.response.headers.set('Cache-Control', 's-max-age=10, stale-while-revalidate=86400')
 ---
 
 <MainLayout>
