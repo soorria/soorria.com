@@ -24,7 +24,13 @@ export default defineConfig({
     plugins: [tailwindcss(), Inspect()],
   },
   integrations: [react(), mdx(), sitemap()],
-  adapter: vercel(),
+  adapter: vercel({
+    edgeMiddleware: true,
+    imageService: true,
+    isr: {
+      expiration: 10,
+    },
+  }),
 
   devToolbar: {
     enabled: false,
