@@ -1,15 +1,15 @@
 import { cx } from '~/lib/utils/styles'
 import { randomIndex } from '~/lib/utils/random'
-import { type ReactNode, useRef, useState } from 'react'
+import { useRef, useState } from 'react'
 import { RefreshIcon } from '../icons'
 
 interface SubtitleProps {
-  options?: ReactNode[] | undefined
+  options?: string[] | undefined
 }
 
 const getDurationMs = (n: number) => 700 + n * 200
 
-const Subtitle: React.FC<SubtitleProps> = ({ options = [] }) => {
+const Subtitle: React.FC<SubtitleProps> = ({ options = [], ...args }) => {
   const [rotations, setRotations] = useState(0)
   const rotationTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null)
   const rotationDuration = rotations > 0 ? getDurationMs(rotations) : 0
@@ -42,7 +42,8 @@ const Subtitle: React.FC<SubtitleProps> = ({ options = [] }) => {
 
   return (
     <div className="[&>p]:inline [&>p]:text-pretty">
-      {options[index]}
+      {options[index] && <p dangerouslySetInnerHTML={{ __html: options[index] }}></p>}
+
       <button
         onClick={randomise}
         className="focus-ring group text-drac-highlight hocus:text-drac-purple relative ml-2 inline-flex translate-y-1 items-center rounded-sm transition"

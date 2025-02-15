@@ -13,6 +13,7 @@ import Contact from '~/lib/ui/landing/Contact'
 import PageRenderedAt from '~/lib/utils/page-rendered-at.astro'
 import { getCollection } from 'astro:content'
 import FeaturedProjects from '~/lib/ui/landing/FeaturedProjects'
+import DumbRenderer, { renderMarkdownDumbly } from '~/lib/markdown/DumbRenderer.astro'
 
 export const prerender = false
 
@@ -22,7 +23,7 @@ const getSubtitleOptions = async () => {
     .split('---')
     .map((chunk) => chunk.trim().replace(/\.$/, ''))
     .filter(Boolean)
-  return subtitleChunks
+  return Promise.all(subtitleChunks.map(async (markdown) => renderMarkdownDumbly(markdown)))
 }
 
 const getNow = async () => {
@@ -64,20 +65,12 @@ const [subtitleOptions, now, projects, { heroText, pattern }] = await Promise.al
   <Container>
     <Hero title={heroText} pattern={pattern}>
       <Fragment slot="subtitle">
-        <Subtitle
-          client:idle
-          options={subtitleOptions.map(
-            (code, i) => code,
-            // <MdxRenderer key={i} code={code} hasCodeBlocks={false} />
-          )}
-        />
+        <Subtitle client:idle options={subtitleOptions} />
       </Fragment>
-
       {
         now ? (
           <div class="text-lg text-pretty" id="now">
-            {now}
-            {/* <MdxRenderer code={now} hasCodeBlocks={false} /> */}
+            <DumbRenderer markdown={now} />
           </div>
         ) : null
       }

@@ -1,5 +1,3 @@
-'use client'
-
 import { type IconComponent, ReactIcon, SolidJsIcon, TypescriptIcon } from '~/lib/ui/icons'
 import { random, randomItem } from '~/lib/utils/random'
 import { type PropsWithChildren, useEffect, useState } from 'react'

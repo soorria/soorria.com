@@ -1,0 +1,48 @@
+---
+import { ACTION_ERROR_CODES } from 'astro:actions'
+import { parseInline } from 'marked'
+
+export interface Props {
+  markdown: string
+}
+
+const { markdown } = Astro.props
+
+export async function renderMarkdownDumbly(markdown: string) {
+  const cleanedMarkdown = markdown.replaceAll('Sparkles', 's-sparkles')
+
+  const styleObjectPropRegex = /style=({{.*}})/g
+
+  const html = await parseInline(cleanedMarkdown, {
+    gfm: true,
+    walkTokens(token) {},
+  })
+
+  const cleanedHtml = html
+    .replaceAll('&gt;', '>')
+    .replaceAll('&lt;', '<')
+    .replaceAll('&quot;', '"')
+    .replaceAll('&#39;', "'")
+    .replaceAll(styleObjectPropRegex, (fullMatch, styleObjectProp: string) => {
+      try {
+        const styleObjectString = styleObjectProp?.slice(1, -1)
+        const matches = [...(styleObjectString?.matchAll(/([a-zA-Z0-9-]+):\s+'([^']+)'/g) ?? [])]
+        const fixedStyles = [...matches]
+          .map((match) => {
+            const [, key, value] = match
+            return `${key}: ${value}`
+          })
+          .join(';')
+        return `style="${fixedStyles}"`
+      } catch (e) {
+        return fullMatch
+      }
+    })
+
+  return cleanedHtml
+}
+
+const html = await renderMarkdownDumbly(markdown)
+---
+
+<Fragment set:html={html} />
