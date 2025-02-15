@@ -1,0 +1,62 @@
+---
+import Container from '../container.astro'
+import { heroBackdropClassname } from '~/lib/ui/landing/Hero'
+import { PostHeading } from './post-heading'
+import PostDescription from './post-description.astro'
+import { type Pattern, availablePatterns } from '../landing/hero-patterns'
+import { cx } from '~/lib/utils/styles'
+import MainLayout from '../main-layout.astro'
+
+export interface Props {
+  title: string
+  patterns?: [Pattern, ...Pattern[]]
+  hidePatternsWhenJs?: boolean
+}
+
+const { title, patterns, hidePatternsWhenJs = false } = Astro.props
+---
+
+<MainLayout>
+  <Container>
+    <article class="slide-in space-y-12 pt-8 pb-16">
+      {
+        patterns ? (
+          <div
+            class={cx('slide-in-direct isolate overflow-visible', heroBackdropClassname)}
+            aria-hidden
+          >
+            {patterns.map((pattern, i) => (
+              <div
+                class={cx(
+                  'hero-bg absolute inset-0 -top-8 -bottom-16 -z-10',
+                  hidePatternsWhenJs && 'no-js-block hidden',
+                )}
+                style={{ '--pattern': availablePatterns[pattern] ?? '' }}
+              />
+            ))}
+
+            <slot name="backdrop" />
+
+            <PostHeading>{title}</PostHeading>
+            {Astro.slots.has('description') && (
+              <PostDescription>
+                <slot name="description" />
+              </PostDescription>
+            )}
+          </div>
+        ) : (
+          <>
+            <PostHeading>{title}</PostHeading>
+            {Astro.slots.has('description') && (
+              <PostDescription>
+                <slot name="description" />
+              </PostDescription>
+            )}
+          </>
+        )
+      }
+
+      <slot />
+    </article>
+  </Container>
+</MainLayout>

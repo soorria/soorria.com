@@ -122,9 +122,8 @@ const ContactForm: React.FC = () => {
               id="message"
               name="message"
               autoComplete="off"
-              className={classes.input}
+              className={cx(classes.input, 'field-sizing-content min-h-36')}
               placeholder="be nice 😊"
-              rows={5}
             />
           </div>
 
