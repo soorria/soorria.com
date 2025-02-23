@@ -8,7 +8,7 @@ import type {
   ServerMessage,
   ServerSkillItem,
   SkillPosition,
-} from '~/lib/skills/schems'
+} from '~/lib/skills/schema'
 import cx from '~/utils/cx'
 import { RefreshIcon } from '../icons'
 import { useTrackFirstEvent } from '~/lib/analytics'

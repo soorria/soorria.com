@@ -1,4 +1,4 @@
-import type { ApiData, BaseData, FrontMatter } from './data'
+import type { ApiData, BaseData, FrontMatter } from '../../astro-tmp/src/lib/data/data'
 
 export interface Work extends BaseData {
   company: string

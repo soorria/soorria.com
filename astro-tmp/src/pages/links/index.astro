@@ -1,0 +1,89 @@
+---
+import { links } from '~/lib/constants/links'
+import { getSingletonJsonSafe } from '~/lib/data/supabase'
+import BaseLayout from '~/lib/ui/_base-layout.astro'
+import Container from '~/lib/ui/container.astro'
+import Hero from '~/lib/ui/landing/Hero'
+import MadeBy from '~/lib/ui/made-by'
+import Sparkles from '~/lib/ui/sparkles'
+import { cx } from '~/lib/utils/styles'
+
+export const prerender = false
+
+const classes = {
+  anchor: cx(
+    'group flex items-center justify-between rounded-lg bg-drac-base/75 py-6 px-8 text-drac-pink transition',
+    'hocus:bg-drac-base hocus:text-drac-purple hocus:shadow-xl',
+    'focus:outline-hidden focus:ring-3 focus:ring-drac-purple',
+  ),
+}
+
+const orderedLinks = [
+  links.twitter,
+  links.github,
+  links.discord,
+  links.email,
+  links.mal,
+  links.facebook,
+  links.linkedin,
+]
+const { heroText, linksHeroText, pattern, linksPattern } = await getSingletonJsonSafe<{
+  heroText: string
+  linksHeroText: string
+  pattern?: string
+  linksPattern?: string
+}>('index-options')
+---
+
+<BaseLayout>
+  <Container>
+    <!-- <Track event="Links Page" params={{}} /> -->
+
+    <script is:inline>
+      import { track } from '~/lib/analytics/utils'
+
+      track('Links Page')
+    </script>
+
+    <div class="h-8 sm:h-20"></div>
+    <Hero title={linksHeroText || heroText || "Hey, I'm Soorria"} pattern={linksPattern ?? pattern}>
+      <div>
+        <main
+          class="slide-in relative mx-auto mt-8 max-w-md space-y-8 text-lg sm:mt-24 sm:text-xl"
+          style={{ '--initial-step': '1' }}
+        >
+          {
+            orderedLinks.map(({ title, href, icon: Icon, iconAlt }) => (
+              <a href={href} target="_blank" rel="noopener noreferrer" class={classes.anchor}>
+                <Icon
+                  aria-label={iconAlt}
+                  className="group-hocus:-rotate-20 mr-3 h-7 w-7 transition-transform"
+                />
+                <span>{title}</span>
+              </a>
+            ))
+          }
+          <div class="text-4xl">
+            <Sparkles block>
+              <a
+                href={links.site.href + '?ref=links'}
+                class={cx(classes.anchor, 'text-lg shadow-2xl')}
+              >
+                <links.site.icon
+                  aria-label={links.site.iconAlt}
+                  className="group-hocus:-rotate-[360deg] mr-3 h-7 w-7 transition-transform duration-300"
+                />
+                <span>the rest of my website</span>
+              </a>
+            </Sparkles>
+          </div>
+          <div class="h-16"></div>
+        </main>
+      </div>
+    </Hero>
+
+    <footer class="pt-8 pb-10 text-lg">
+      <MadeBy asLink />
+    </footer>
+  </Container>
+</BaseLayout>

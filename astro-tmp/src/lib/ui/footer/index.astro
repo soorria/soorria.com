@@ -1,0 +1,15 @@
+---
+import MadeBy from '../made-by'
+import Container from '../container.astro'
+import { FooterLinks } from './footer-links'
+---
+
+<Container>
+  <footer class="border-drac-base-light flex flex-col space-y-8 border-t pt-8 pb-10">
+    <div class="mx-auto w-full max-w-sm">
+      <MadeBy />
+    </div>
+
+    <FooterLinks />
+  </footer>
+</Container>

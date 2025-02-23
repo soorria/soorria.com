@@ -1,0 +1,45 @@
+---
+title: useBoolean (React)
+shortDescription:
+  Toggle and set a boolean piece of state with a slightly better interface than
+  straight useState
+category: React Hook
+tags:
+  - typescript
+  - react
+createdAt: '2021-05-02'
+updatedAt: '2023-03-18'
+---
+
+Toggle a piece of boolean state, but unlike with straight `useState` you can
+pass the `setState` function no arguments to toggle the boolean.
+
+```typescript
+import type { Dispatch } from 'react'
+import { useReducer } from 'react'
+
+export const useBoolean = (
+  initialValue = false
+): [boolean, (nextValue?: boolean) => void] => {
+  return useReducer((currentValue: boolean, nextValue?: boolean) => {
+    return typeof nextValue !== 'undefined' ? nextValue : !currentValue
+  }, initialValue)
+}
+```
+
+## Usage
+
+```tsx {2,6-9} jsKeepLines
+const Example = () => {
+  const [on, toggle] = useBoolean()
+
+  return (
+    <>
+      <h1>Value {on ? 'true' : 'false'}</h1>
+      <button onClick={() => toggle(true)}>On</button>
+      <button onClick={() => toggle(false)}>Off</button>
+      <button onClick={() => toggle()}>Toggle</button>
+    </>
+  )
+}
+```

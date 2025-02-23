@@ -1,0 +1,130 @@
+---
+title: createManualPromise
+shortDescription:
+  Create a promise that you manually resolve or reject at any time!
+category: TypeScript
+tags:
+  - typescript
+createdAt: '2023-06-20'
+updatedAt: '2023-07-23'
+---
+
+Create a promise that you can resolve outside the Promise's executor function
+(i.e. the callback argument passed to `new Promise(){:js}`). This is mostly just
+useful for making your code 1 level less nested, or if you're allergic to
+`async` and `await` syntax.
+
+```typescript
+export type ManualPromise<T> = {
+  promise: Promise<T>
+  resolve: (value: T | PromiseLike<T>) => void
+  reject: (reason?: unknown) => void
+}
+
+export const createManualPromise = <T>(): ManualPromise<T> => {
+  let resolve: ManualPromise<T>['resolve'] | undefined
+  let reject: ManualPromise<T>['reject'] | undefined
+
+  const promise = new Promise<T>((res, rej) => {
+    resolve = res
+    reject = rej
+  })
+
+  return { promise, resolve: resolve!, reject: reject! }
+}
+```
+
+## Examples
+
+### Wait for a message from a worker thread
+
+```ts title="main.ts"
+export const getAnswerToTheUltimateQuestionOfLifeTheUniverseAndEverythingFromWorker =
+  (): Promise<any> => {
+    const { promise, resolve, reject } = createManualPromise<any>()
+    const worker = new Worker(
+      new URL('./deep-thought-worker.ts', import.meta.url)
+    )
+
+    worker.onmessage = event => {
+      resolve(event.data)
+      worker.terminate()
+    }
+
+    worker.onerror = error => {
+      reject(error)
+      worker.terminate()
+    }
+
+    worker.postMessage(null)
+
+    return promise
+  }
+```
+
+```ts title="deeper-thought-worker.ts"
+/**
+ * Function that calculates the Answer to the Ultimate Question of Life, the
+ * Universe, and Everything waaaaaaay faster than Deep Thought's 7.5 million
+ * years.
+ */
+const calculateAnswerToTheUltimateQuestionOfLifeTheUniverseAndEverything =
+  (): number => {
+    const start = Date.now()
+    const end = start + 5_000
+
+    while (Date.now() < end);
+
+    return 0x6 * 0x9 === 0x2a ? 0x2a : 0x2a
+  }
+
+self.onmessage = () => {
+  const answer =
+    calculateAnswerToTheUltimateQuestionOfLifeTheUniverseAndEverything()
+  self.postMessage(answer)
+}
+```
+
+### Waiting for a DOM event to happen
+
+```ts
+export const waitUntilClicked = (selector: string): Promise<void> => {
+  const { promise, resolve, reject } = createManualPromise<void>()
+
+  const element = document.querySelector(selector)
+  if (!element) {
+    reject(new Error(`Element not found for selector: ${selector}`))
+    return promise
+  }
+
+  element.addEventListener('click', () => {
+    resolve()
+  })
+
+  return promise
+}
+```
+
+### Simple `fetch{:js}` wrapper, but bad
+
+```ts
+// Post from https://jsonplaceholder.typicode.com/
+type Post = { userId: number; id: number; title: string; body: string }
+export const fetchPosts = (): Promise<Post[]> => {
+  const { promise, resolve, reject } = createManualPromise<Post[]>()
+
+  fetch('https://jsonplaceholder.typicode.com/')
+    .then(response => {
+      if (res.ok) {
+        return response.json()
+      }
+      return response
+        .text()
+        .then(text => Promise.reject(new Error(`Fetch posts error: ${text}`)))
+    })
+    .then(json => resolve(json as Post[]))
+    .catch(error => reject(error))
+
+  return promise
+}
+```

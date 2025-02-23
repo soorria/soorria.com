@@ -1,0 +1,86 @@
+---
+title: Eslint errors for bad imports
+shortDescription: Raise Eslint errors when importing from bad modules.
+category: Miscellaneous
+tags:
+  - eslint
+createdAt: '2024-09-03'
+# updatedAt: '2024-02-29'
+---
+
+Sometimes you have 2 packages / modules with the same imports, but VSCode keeps
+suggesting the wrong one. This eslint config raises an error if you import from
+specified packages, and if you want, you can limit the error to specific
+imports.
+
+This works with eslint v8 or v9, and you can use either the
+[built-in rule](https://eslint.org/docs/latest/rules/no-restricted-imports) or
+the
+[typescript plugin's version](https://typescript-eslint.io/rules/no-restricted-imports/)
+which lets you blanket allow / disallow type imports.
+
+```js
+module.exports = {
+  rules: {
+    /**
+     * This uses the built-in rule, but you can change this to
+     * '@typescript-eslint/no-restricted-imports' if you have the typescript
+     * plugin installed. Remember to also the `'no-restricted-imports': off`
+     * rule to prevent conflicts between the 2 rules.
+     */
+    'no-restricted-imports': [
+      'error',
+      {
+        paths: [
+          {
+            name: 'CHANGE THIS TO THE BAD PACKAGE NAME',
+            message:
+              "Import from 'CHANGE THIS TO THE PACKAGE YOU WANT IMPORTED' instead :)",
+            /**
+             * Optional, if you want the error to apply to specific imports
+             * instead of every import.
+             */
+            importNames: ['badImportA'],
+
+            /**
+             * Optional, allow all type imports from the module. Only applies
+             * if using the typescript plugin version
+             */
+            allowTypeImports: true,
+          },
+        ],
+      },
+    ],
+  },
+}
+```
+
+<Note variant="warning">
+
+Unfortunately, this **does not** prevent the invalid packages from showing up in
+autocomplete - it just prevent bad imports by erroring when eslint runs.
+
+</Note>
+
+## Example
+
+To error on imports from `'node:test'` when you're actually using
+[`vitest`](https://vitest.dev/)
+
+```js
+module.exports = {
+  rules: {
+    'no-restricted-imports': [
+      'error',
+      {
+        paths: [
+          {
+            name: 'node:test',
+            message: "Import from 'vitest' instead :)",
+          },
+        ],
+      },
+    ],
+  },
+}
+```

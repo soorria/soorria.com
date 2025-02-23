@@ -1,0 +1,89 @@
+---
+title: useLocalStorage (React)
+shortDescription:
+  Save state to localStorage with an interface almost identical to useState
+category: React Hook
+tags:
+  - typescript
+  - react
+createdAt: '2021-03-26'
+updatedAt: '2023-08-30'
+---
+
+Save to `localStorage` whenever state changes and read from it for the first
+render. More primitive (and minimal) ancestor of
+[`useSyncedLocalStorage`](/snippets/use-synced-local-storage).
+
+```typescript
+import type { Dispatch, SetStateAction } from 'react'
+import { useCallback, useEffect, useState } from 'react'
+
+const useLocalStorage = <T>(
+  key: string,
+  initialValue: T
+): [get: T, set: Dispatch<SetStateAction<T>>, clear: () => void] => {
+  const [state, setState] = useState<T>(() => {
+    const cached = localStorage.getItem(key)
+
+    if (!cached) return initialValue
+
+    try {
+      return JSON.parse(cached) as T
+    } catch (err) {
+      return initialValue
+    }
+  })
+
+  useEffect(() => {
+    localStorage.setItem(key, JSON.stringify(state))
+  }, [state, key])
+
+  const clearState = useCallback(() => {
+    setState(initialValue)
+  }, [initialValue])
+
+  return [state, setState, clearState]
+}
+```
+
+<Note variant="info">
+
+- We use `useCallback` for the `clearState` function to prevent unnecessary
+  re-renders if you use the `clearState` function inside a `useEffect` or
+  `useCallback` and list it in the dependency array.
+
+</Note>
+
+<Note variant='warning'>
+
+- This version of the hook with only work client-side and will throw an error
+  you server-render a component using the hook
+- You should only run the hook once per key at a time - the hook doesn't handle
+  changes when another instance of the hook updates the matching key in
+  `localStorage`. If you do want to handle that, check out
+  [`useSyncedLocalStorage`](/snippets/use-synced-local-storage)
+
+</Note>
+
+## Usage
+
+```tsx {2,6} jsKeepLines
+const Example = () => {
+  const [input, setInput] = useLocalStorage('example:input', '')
+
+  return (
+    <>
+      <input value={input} onChange={e => setInput(e.target.value)} />
+    </>
+  )
+}
+```
+
+## Demo
+
+Watch the value for the <code>{LOCALSTORAGE_KEY}</code> key in the
+`Application > Local Storage` section in your devtools as you type in the input.
+If you're on mobile, enter some text into the input, and reload the page - when
+you do, you'll see the same text that you entered pre-filled.
+
+<Demo component={Example} init="mount" />

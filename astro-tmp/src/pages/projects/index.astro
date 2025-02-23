@@ -1,0 +1,68 @@
+---
+import { getCollection } from 'astro:content'
+import { PUBLIC_URL } from '~/lib/constants/site'
+import { featuredProjects } from '~/lib/constants/projects'
+import ProjectsGrid from '~/lib/ui/projects/ProjectsGrid'
+import ProjectCard from '~/lib/ui/projects/ProjectCard'
+import PostLayout from '~/lib/ui/post-layout/post-layout.astro'
+
+const description = "Things I've made. Some are more useful and cooler than others."
+const title = 'Projects'
+const url = `${PUBLIC_URL}/projects`
+
+const metadata = {
+  title,
+  description,
+  alternates: {
+    canonical: url,
+  },
+  openGraph: {
+    title,
+
+    description,
+    type: 'website',
+    url,
+    // images: [getOgImageForData('projects')],
+  },
+}
+
+const aboveFold = [
+  ...featuredProjects,
+  'sizes',
+  'clinically-relevant',
+  'not-messenger',
+  'aqrm',
+  'wordle-score',
+  'slidy',
+  'fight-for-tribeland',
+]
+const projectOrder = [...aboveFold]
+const getProjectIndex = (slug: string): number => {
+  const idx = projectOrder.indexOf(slug)
+  return idx >= 0 ? idx : projectOrder.length + 10
+}
+
+const projects = (await getCollection('projects')).sort(
+  (a, b) => getProjectIndex(a.id) - getProjectIndex(b.id),
+)
+const numMainProjects = aboveFold.length
+---
+
+<PostLayout title="Projects">
+  <Fragment slot="description">{description}</Fragment>
+
+  <div>
+    <ProjectsGrid initialStep="2">
+      {projects.slice(0, numMainProjects).map((project) => <ProjectCard project={project} />)}
+    </ProjectsGrid>
+  </div>
+
+  <h2 class="mt-16 mb-8 text-4xl" style={{ '--step-num': (numMainProjects + 3).toString() }}>
+    Other Projects
+  </h2>
+  <div style={{ '--step-num': (numMainProjects + 4).toString() }}>
+    <ProjectsGrid initialStep={(numMainProjects + 3).toString()}>
+      {projects.slice(numMainProjects).map((project) => <ProjectCard project={project} />)}
+    </ProjectsGrid>
+  </div>
+</PostLayout>

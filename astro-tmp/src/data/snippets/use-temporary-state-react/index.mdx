@@ -1,0 +1,68 @@
+---
+title: useTemporaryState (React)
+ogImageTitleParts: ['useTemporaryState', '(React)']
+
+shortDescription: State that resets after a timeout.
+category: React Hook
+tags:
+  - typescript
+  - react
+createdAt: '2023-06-19'
+updatedAt: '2023-09-13'
+---
+
+Temporarily set a piece of state, and have it cleared after a timeout. Useful
+for things like a copy or download button, to temporarily show that the action
+has been triggered.
+
+```typescript
+import type { SetStateAction, Dispatch } from 'react'
+import { useState, useCallback, useRef, useEffect } from 'react'
+
+export const useTemporaryState = <State>(
+  initial: State | (() => State),
+  timeout = 2000
+): [State, Dispatch<SetStateAction<State>>] => {
+  const [state, _setState] = useState<State>(initial)
+  const timeoutRef = useRef<ReturnType<typeof setTimeout>>()
+  const initialValueRef = useRef(initial)
+
+  useEffect(() => {
+    initialValueRef.current = initial
+  }, [initial])
+
+  const setState: typeof _setState = useCallback(
+    async valueOrUpdater => {
+      _setState(valueOrUpdater)
+      if (timeoutRef.current) clearTimeout(timeoutRef.current)
+      timeoutRef.current = setTimeout(
+        () => _setState(initialValueRef.current),
+        timeout
+      )
+    },
+    [timeout]
+  )
+
+  return [state, setState]
+}
+```
+
+<Note variant='info'>
+
+- We use `useCallback{:.fn}`, so that if you follow hook rules and use the
+  `copy{:.fn}` function inside a `useEffect{:.fn}` or another
+  `useCallback{:.fn}`, you won't have code (re-)running unnecessarily.
+
+- We need the combination of `useRef{:.fn}` and `useEffect{:.fn}` to store the
+  initial value as it ensures the `setState{:.fn}` callback isn't re-created if
+  it changes.
+
+</Note>
+
+## Demo
+
+<Demo component={Example} />
+
+## Example
+
+- See [useCopy](/snippets/use-copy-react)

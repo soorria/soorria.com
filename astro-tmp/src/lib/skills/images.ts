@@ -1,0 +1,52 @@
+import javascriptImg from './logos/javascript.svg'
+import typescriptImg from './logos/typescript.svg'
+import kotlinImg from './logos/kotlin.svg'
+import pythonImg from './logos/python.svg'
+import htmlImg from './logos/html.svg'
+import cssImg from './logos/css.svg'
+import reactImg from './logos/react.svg'
+import nextImg from './logos/nextjs.svg'
+import remixImg from './logos/remix.svg'
+import expressImg from './logos/express.svg'
+import flaskImg from './logos/flask.svg'
+import fastapiImg from './logos/fastapi.svg'
+import postgresImg from './logos/postgres.svg'
+import mongoImg from './logos/mongodb.svg'
+import jestImg from './logos/jest.svg'
+import cypressImg from './logos/cypress.svg'
+import springImg from './logos/spring-boot.svg'
+import githubImg from './logos/github-actions.svg'
+import dockerImg from './logos/docker.svg'
+import awsImg from './logos/aws-lambda.svg'
+import terraformImg from './logos/terraform.svg'
+import vueImg from './logos/vue.svg'
+import nuxtImg from './logos/nuxt.svg'
+import solidImg from './logos/solidjs.svg'
+import type { ImageMetadata } from 'astro'
+
+export const skillLabelToImage = {
+  JavaScript: javascriptImg as ImageMetadata,
+  TypeScript: typescriptImg as ImageMetadata,
+  Kotlin: kotlinImg as ImageMetadata,
+  PostgreSQL: postgresImg as ImageMetadata,
+  MongoDB: mongoImg as ImageMetadata,
+  React: reactImg as ImageMetadata,
+  'Vue.js': vueImg as ImageMetadata,
+  SolidJS: solidImg as ImageMetadata,
+  Python: pythonImg as ImageMetadata,
+  HTML: htmlImg as ImageMetadata,
+  CSS: cssImg as ImageMetadata,
+  'Next.js': nextImg as ImageMetadata,
+  'Remix.run': remixImg as ImageMetadata,
+  'Express.js': expressImg as ImageMetadata,
+  Flask: flaskImg as ImageMetadata,
+  FastAPI: fastapiImg as ImageMetadata,
+  Jest: jestImg as ImageMetadata,
+  Cypress: cypressImg as ImageMetadata,
+  Spring: springImg as ImageMetadata,
+  'CI/CD': githubImg as ImageMetadata,
+  Docker: dockerImg as ImageMetadata,
+  Lambda: awsImg as ImageMetadata,
+  Terraform: terraformImg as ImageMetadata,
+  NuxtJS: nuxtImg as ImageMetadata,
+} satisfies Record<string, ImageMetadata>

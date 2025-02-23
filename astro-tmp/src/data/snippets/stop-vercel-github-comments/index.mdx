@@ -1,0 +1,67 @@
+---
+title: Stop Vercel GitHub Comments
+shortDescription:
+  Stop Vercel's bot from commenting on PRs and commits (and the associated
+  emails)
+category: Miscellaneous
+tags:
+  - Vercel
+createdAt: '2022-08-27'
+updatedAt: '2023-06-20'
+---
+
+This stops Vercel's GitHub Bot from commenting on your PRs and commits, and so
+also stops the emails you get when that happens. This **does not** stop Vercel
+creating deploys for PRs and commits.
+
+To use, add the following to your project's `vercel.json`, or create the file if
+you haven't already. Unlike some of the other Vercel
+[Project Configuration options](https://vercel.com/docs/project-configuration),
+this options must be added to the `vercel.json` even in a Next.js project.data.
+
+```json title="vercel.json" {2-4}
+{
+  "github": {
+    "silent": true
+  }
+}
+```
+
+See the documentation for this config option
+[here](https://vercel.com/docs/project-configuration#git-configuration/github-silent).
+
+## Examples
+
+Here are a few examples from some of my projects, with and without other options
+in the `vercel.json`:
+
+- [This website, a Next.js app](https://github.com/soorria/soorria.com/blob/main/vercel.json)
+- [A Remix app](https://github.com/soorria/utils/blob/main/vercel.json)
+- [A SolidJS SPA with Vite](https://github.com/soorria/pokelife/blob/master/vercel.json)
+
+## Easy Usage
+
+<Note variant="warning">
+  This only works correctly if you don't already have a `vercel.json` in your
+  folder.
+</Note>
+
+Copy the following snippet and run in your shell from the root of the git repo /
+app. It will:
+
+1. Create a `vercel.json` file with the above JSON.
+2. Commit and push it to your git repo.
+
+```bash
+cat > vercel.json <<EOF
+{
+  "github": {
+    "silent": true
+  }
+}
+EOF
+
+git add vercel.json
+git commit -m "stop vercel's github bot comment on commits"
+git push
+```

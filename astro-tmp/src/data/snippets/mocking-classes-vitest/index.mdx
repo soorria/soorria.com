@@ -1,0 +1,242 @@
+---
+title: Mocking classes from mocked modules in Vitest tests
+shortDescription: How to mock and expect on class methods from mocked modules.
+category: TypeScript
+tags:
+  - typescript
+  - vitest
+  - testing
+createdAt: '2024-02-13'
+updatedAt: '2024-06-02'
+---
+
+How to mock and expect on methods on classes from `vi.mock`ed modules.
+
+## Method 1: The kinda hacky, but flexible way
+
+This method is useful if you only want to mock specific methods on the class,
+and keep the others untouched, but has some limitations (see below the snippet).
+
+```ts nojs
+import { describe, it, vi } from 'vitest'
+import { ClassToMock } from './path/to/class/to/mock'
+
+/**
+ * This line mocks the module so the actual class method doesn't get called
+ */
+vi.mock('./path/to/class/to/mock', async importActual => {
+  return {
+    /**
+     * Require the actual module
+     *
+     * (optional, only if you want to keep the original methods too)
+     */
+    ...(await importActual()),
+  }
+})
+
+describe('ThingThatUsesClassToMock', () => {
+  it('should do the thing that I expect it to do :)', t => {
+    /**
+     * Spy on the method so you can `expect` on it later. You can also mock
+     * the implementation here if you want - it works the same as a
+     * normal mock.
+     */
+    const methodSpy = vi.spyOn(
+      /**
+       * Spy on the class' prototype since that's where the actual function is.
+       */
+      ClassToMock.prototype,
+      /**
+       * The name of the method to mock / spy on
+       */
+      'method'
+    )
+
+    /**
+     * If you're mocking a static method, you can use the class directly instead
+     * of its prototype.
+     */
+    const staticMethodSpy = vi.spyOn(ClassToMock, 'staticMethod')
+
+    /**
+     * do the thing!!
+     */
+
+    /**
+     * expect based on the spy just like you'd expect on a mock!
+     */
+    t.expect(methodSpy).toHaveBeenCalledOnce()
+    t.expect(staticMethodSpy).toHaveBeenCalledOnce()
+  })
+})
+```
+
+<Note variant="warning">
+
+This method will only work if the method is defined using the
+[Method Definition](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/Method_definitions)
+syntax, and not as a property.
+
+For example, this is valid:
+
+```ts nojs
+class ValidClassToMock {
+  // ✅
+  methodThatWorks() {}
+}
+```
+
+but theses aren't:
+
+```ts nojs
+class InvalidClassToMock {
+  // ❌
+  arrowFunctionThatDoesNotWork = () => {}
+  // ❌
+  functionKeywordThatDoesNotWork = function () {}
+}
+```
+
+This is because only the first method defines the class on the prototype of the
+class (and so the functions are shared between instances). The last two methods
+are created per-instance and are not defined on the class' prototype.
+
+</Note>
+
+## Method 2: The probably intended way
+
+This is probably the way that was intended to mock imported classes, but it's
+less flexible - you need to always mock the whole class. Additionally, mocking
+static methods is kinda wonky.
+
+```ts nojs
+import { describe, it, vi } from 'vitest'
+import { ClassToMock } from './path/to/class/to/mock'
+
+/**
+ * This mocks the module, and is where we'll mock the class' methods
+ */
+vi.mock('./path/to/class/to/mock', async importActual => {
+  return {
+    /**
+     * Require the actual module (optional)
+     */
+    ...(await importActual()),
+
+    /**
+     * The name here should match the name of the import.
+     * Use `default` if the class is a default export.
+     */
+    ClassToMock: vi.fn().mockReturnValue({
+      /**
+       * This is the mock for the method, and is what you get when you call
+       * `vi.mocked` below. Replace "method" with the name of the method
+       * you're mocking.
+       */
+      method: vi.fn(),
+    }),
+  }
+})
+
+describe('ThingThatUsesClassToMock', () => {
+  it('should do the thing that I expect it to do :)', t => {
+    /**
+     * We need to construct an instance of the class to get access to the mock
+     *
+     * You could store the mock globally, and reference that but I think that's
+     * kinda yuck
+     */
+    const classInstance = new ClassToMock()
+
+    /**
+     * This gives you access to the mock function created in the module
+     * mock above
+     */
+    const methodMock = vi.mocked(classInstance.method)
+
+    /**
+     * do the thing!!
+     */
+
+    /**
+     * expect based on the mock
+     */
+    t.expect(methodSpy).toHaveBeenCalledOnce()
+  })
+})
+```
+
+### Mocking static methods
+
+To mock static methods, you can use
+[method 1](#method-1-the-kinda-hacky-but-flexible-way) above, or you can forsake
+your gods and assign functions to the `vi.fn` mock constructor. For example:
+
+```ts nojs
+/**
+ * This mocks the module, and is where we'll mock the class' methods
+ */
+vi.mock('./path/to/class/to/mock', async importActual => {
+  /**
+   * Same as above, just extracted out to a variable
+   */
+  const mockClassConstructor = vi.fn().mockReturnValue({
+    method: vi.fn(),
+  })
+
+  return {
+    /**
+     * Here, we're assigning properties to the mock function we made above
+     */
+    ClassToMock: Object.assign(mockClassConstructor, {
+      /**
+       * This the mock for the static method. Replace "staticMethod" with the
+       *  name of the method you're mocking.
+       */
+      staticMethod: vi.fn(),
+    }),
+  }
+})
+
+/**
+ * ... then, in your test
+ */
+
+const staticMethodMock = vi.mock(ClassToMock.staticMethod)
+```
+
+### Using `vitest-mock-extended`
+
+You can use
+[`vitest-mock-extended`](https://github.com/eratio08/vitest-mock-extended)'s
+`mock` or `mockDeep` to mock all methods on the class at once:
+
+```ts nojs
+import { vi } from 'vitest'
+import { mock } from 'vitest-mock-extended'
+import { ClassToMock } from './path/to/class/to/mock'
+
+vi.mock('./path/to/class/to/mock', async importActual => {
+  return {
+    ClassToMock: vi.fn().mockReturnValue(
+      /**
+       * If your class has nested objects with function you want to mock,
+       * you can use `mockDeep` instead.
+       */
+      mock<ClassToMock>()
+    ),
+  }
+})
+
+/**
+ * ... other code the exact same
+ */
+```
+
+<Note variant="warning">
+
+`vitest-mock-extended` doesn't mock static methods so you'll need to handle it
+separately using any of the methods above.
+
+</Note>

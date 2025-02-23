@@ -1,0 +1,25 @@
+---
+title: Use Touch ID for sudo commands
+shortDescription: Use your finger instead of your password for sudo!
+category: Miscellaneous
+tags: [macos]
+createdAt: '2024-08-10'
+# updatedAt: '2024-08-10'
+---
+
+Turns out on MacOS you can use Touch ID to authenticate `sudo` commands! No clue
+about the security implications of this though. To enable, add a file at
+`/etc/pam.d/sudo_local` with the following content, and then restart your
+computer.
+
+```text title="/etc/pam.d/sudo_local"
+auth       sufficient     pam_tid.so
+```
+
+<Note variant="warning">
+
+In the `/etc/pam.d/` directory, there's another file called `sudo`, but you
+**should not** add the lines above to the it. Changes to that file may not
+survive OS updates.
+
+</Note>

@@ -1,0 +1,111 @@
+---
+import '@total-typescript/ts-reset'
+import NoJsStyles from '~/styles/NoJsStyles.astro'
+import '~/styles/global.css'
+
+import PlausibleScript from '../analytics/PlausibleScript.astro'
+import DevHelpers from '../dev/DevHelpers.astro'
+import { ClientRouter } from 'astro:transitions'
+---
+
+<!doctype html>
+<html
+  lang="en"
+  transition:animate="none"
+  transition:name="root"
+  class:list={[{ dev: import.meta.env.DEV }]}
+>
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <link
+      rel="preload"
+      href="/fonts/poppins-latin-700.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="preload"
+      href="/fonts/poppins-latin-400.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="preload"
+      href="/fonts/jetbrains-mono-latin-400.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin="anonymous"
+    />
+    <PlausibleScript />
+
+    <ClientRouter fallback="none" />
+
+    <script>
+      const animateOnLoadClassNames = ['slide-in', 'slide-in-direct', 'fade-in-direct']
+      const animatedElementsSelector = animateOnLoadClassNames.map((c) => `.${c}`).join(', ')
+
+      let abortController = new AbortController()
+
+      function removeAnimationsOnElement(rootElement: Element) {
+        const animatedElements = [...rootElement.querySelectorAll(animatedElementsSelector)]
+
+        if (rootElement.matches(animatedElementsSelector)) {
+          animatedElements.push(rootElement)
+        }
+
+        animatedElements.forEach((el) => {
+          el.addEventListener(
+            'animationend',
+            () => {
+              el.classList.remove(...animateOnLoadClassNames)
+            },
+            {
+              signal: abortController.signal,
+            },
+          )
+        })
+      }
+
+      function removeAnimations() {
+        document
+          .querySelectorAll('[data-astro-transition-persist]')
+          .forEach(removeAnimationsOnElement)
+      }
+
+      document.addEventListener('astro:after-swap', () => {
+        abortController.abort()
+        abortController = new AbortController()
+        removeAnimations()
+      })
+
+      removeAnimations()
+
+      // document.addEventListener('astro:before-swap', (event) => {
+      //   const newDocument = event.newDocument
+      //   const persistedElements = newDocument.querySelectorAll('[data-astro-transition-persist]')
+      //   persistedElements.forEach(el => {
+      //     console.log(el)
+      //     el.classList.add('bg-red-700')
+      //     el.querySelectorAll(animateOnLoadClasses.join(', ')).forEach(el => {
+      //       el.classList.remove(...animateOnLoadClasses)
+      //     })
+      //   });
+      // })
+
+      //
+    </script>
+
+    <slot name="head" />
+  </head>
+  <body
+    class="bg-drac-base text-drac-content relative flex h-full min-h-screen flex-col overflow-y-auto"
+  >
+    <slot />
+
+    <NoJsStyles />
+    {import.meta.env.DEV && <DevHelpers />}
+  </body>
+</html>

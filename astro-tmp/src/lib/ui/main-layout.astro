@@ -1,0 +1,15 @@
+---
+import BaseLayout from './_base-layout.astro'
+import Header from '../ui/header/index.astro'
+import Footer from '../ui/footer/index.astro'
+---
+
+<BaseLayout>
+  <Header />
+
+  <main role="main" id="main-content" class="bg-drac-base flex-1">
+    <slot />
+  </main>
+
+  <Footer />
+</BaseLayout>

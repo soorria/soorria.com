@@ -1,0 +1,48 @@
+---
+title: Enzyme Stuff
+shortDescription:
+  Miscellaneous snippets for working if you have to do tests with Enzyme
+category: react
+tags:
+  - javascript
+  - typescript
+  - testing
+  - enzyme
+createdAt: '2022-02-20'
+updatedAt: '2022-11-30'
+---
+
+## Input Change Event
+
+Simulate the `change` event on an `<input />`
+
+```jsx
+const wrapper = shallow(<ComponentThatRendersAnInput />)
+const inputWrapper = wrapper.find('input[type="email"]')
+
+// Change `target` to `currentTarget` if you're updating state based on that instead
+inputWrapper.simulate('change', {
+  target: { value: 'soorria.ss@gmail.com' },
+})
+```
+
+## Form Submit Event
+
+Simulate the `submit` event on a `<form />`.
+
+```jsx
+const noop = () => {}
+
+const wrapper = shallow(<ComponentThatRendersAForm />)
+const formWrapper = wrapper.find('form')
+
+formWrapper.simulate('submit', { preventDefault: noop })
+```
+
+<Note variant="warning">
+
+- Unfortunately this does not work properly if you're using `FormData` 😔
+- You can't test submitting a form by clicking a button / input with
+  `type="submit"` due to events not working the same in jsdom
+
+</Note>

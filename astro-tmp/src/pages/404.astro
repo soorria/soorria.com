@@ -1,0 +1,8 @@
+---
+import ErrorPage from "~/lib/ui/error-page.astro";
+import MainLayout from "~/lib/ui/main-layout.astro";
+---
+
+<MainLayout>
+  <ErrorPage error="You're lost" statusCode={404} tryAgain={false}  />
+</MainLayout>

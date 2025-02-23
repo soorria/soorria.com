@@ -1,0 +1,11 @@
+---
+export interface Props {
+  date?: Date
+}
+
+const { date = new Date() } = Astro.props
+---
+
+<div class="text-drac-pink absolute inset-x-0 bottom-0.5 text-center text-xs">
+  Rendered at {date.toLocaleTimeString()}, {date.toLocaleDateString()}
+</div>

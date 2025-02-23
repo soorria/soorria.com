@@ -1,0 +1,45 @@
+---
+title: Inspect
+shortDescription:
+  A useful function to print out the value of something with an optional message
+category: Miscellaneous
+tags:
+  - TypeScript
+createdAt: '2022-10-06'
+updatedAt: '2023-01-12'
+---
+
+A function that returns the first argument you give it after `console.log`-ing
+it, and also logs out any other arguments. Useful for seeing what's going on
+without needing to extract out a set of expressions in to a variable. Typed with
+generics so TypeScript doesn't complain ☺.
+
+```ts
+export const inspect = <T extends unknown>(obj: T, ...args: unknown[]): T => {
+  console.log(...args, obj)
+  return obj
+}
+```
+
+## Example
+
+```js
+inspect(
+  inspect(document.querySelector('container'), 'container')?.querySelector(
+    '[data-index="2"]'
+  ),
+  'item',
+  2
+)?.scrollIntoView({
+  behaviour: 'smooth',
+  block: 'nearest',
+  inline: 'center',
+})
+```
+
+would print the following to the console
+
+```
+container <div class="container">...</div>
+item 2 <li data-index="2">...</li>
+```
