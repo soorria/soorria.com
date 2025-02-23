@@ -1,0 +1,20 @@
+---
+export interface Props {
+  initialStep?: string
+}
+
+const { initialStep } = Astro.props
+---
+
+<div>
+  <div>
+    <div
+      class="slide-in prose md:prose-lg mx-auto mt-6 mb-12"
+      style={{
+        '--initial-step': initialStep ?? '0',
+      }}
+    >
+      <slot />
+    </div>
+  </div>
+</div>

@@ -1,0 +1,205 @@
+---
+import CustomLink from '~/lib/ui/custom-link'
+import MDXImage from '~/lib/ui/mdx/MDXImage'
+import PostLayout from '~/lib/ui/post-layout/post-layout.astro'
+import ProseWrapper from '~/lib/ui/post-layout/prose-wrapper.astro'
+import { artImages } from '~/lib/art/images'
+import { kebabCase } from 'change-case'
+import { getOgImage } from '~/utils/og'
+import { PUBLIC_URL } from '~/lib/constants/site'
+import { randomItem } from '~/lib/utils/random'
+import { cx } from '~/lib/utils/styles'
+import PageRenderedAt from '~/lib/utils/page-rendered-at.astro'
+import { LazyMagicSprinkles } from '~/lib/magic-sprinkles/magic-sprinkles.lazy'
+import { SlightBleedContentWrapper } from '~/lib/ui/mdx/SlightBleedContentWrapper'
+import { CODE_BLOCK_CLASSNAMES } from '~/lib/ui/mdx/utils'
+
+const url = `${PUBLIC_URL}/art`
+const title = 'Authentic Artistique Endevours'
+const description = 'Welcome to the world of the authentic artistique endevours of Soorria Saruva.'
+
+// const metadata = {
+//   title,
+//   description,
+//   alternates: {
+//     canonical: url,
+//   },
+//   openGraph: {
+//     url,
+//     title,
+//     type: 'website',
+//     description,
+//     images: [getOgImage({ title: 'Authentic Artistique Endevours', subtitle: 'soorria.com/art' })],
+//   },
+// }
+
+const realNftMeanings: string[] = [
+  'Not For Thinking',
+  'Nebulous Frivolous Token',
+  'Nonexistent Fantasy Treasure',
+  'Notoriously Fickle Trinket',
+  'Nonsensical Fad Trend',
+  'Nifty Fictitious Token',
+  'Never-ending Foolish Transmission',
+  'Noisy Futile Tchotchke',
+  'Novelty Fabricated Trophy',
+  'Notoriously Flawed Triviality',
+  'Nonfunctional Farce Transaction',
+]
+
+// const Abbr = ({ title, children, ...rest }: { title: string; children: ReactNode }) => {
+//   return (
+//     <>
+//       <abbr
+//         className="tooltip cursor-help before:text-sm before:font-normal"
+//         {...rest}
+//         aria-label={title}
+//       >
+//         {children}
+//         <sup aria-hidden className="text-drac-pink text-sm font-bold">
+//           ?
+//         </sup>
+//       </abbr>
+//       <span className="sr-only">{title}</span>
+//     </>
+//   )
+// }
+
+// const getArt = (): Array<
+//   {
+//     content: ReactNode
+//     quotes?: ReactNode[]
+//     fullInstallationPath?: string
+//   } & ({ title: string; slug?: string } | { title: Exclude<ReactNode, string>; slug: string })
+// > => [
+//   {
+//     title: (
+//       <>
+//         donald trump <Abbr title={randomItem(realNftMeanings)}>nft</Abbr> (real)
+//       </>
+//     ),
+//     slug: 'donald-trump-nft-real',
+//     content: (
+//       <MDXImage
+//         src={artImages.DonaldTrumpNft}
+//         alt="satirical portrayal of a Donald Trump NFT involving a stick figure shooting laser beams out of their eyes and wearing a cape"
+//         placeholder="blur"
+//       />
+//     ),
+//     quotes: [
+//       "Wow it's so epic thanks [...] best present ever",
+//       'You had a stroke [of genius] on a page??',
+//     ],
+//   },
+//   {
+//     title: 'unnamed waifu',
+//     content: (
+//       <MDXImage
+//         src={artImages.UnnamedWaifu}
+//         alt='a drawing of a waifu with a speech bubble saying "I love you"'
+//         placeholder="blur"
+//       />
+//     ),
+//     quotes: [
+//       // omg i love that anime too
+//       'omg i love that [...] too',
+//     ],
+//   },
+//   {
+//     title: 'magic sprinkles',
+//     content: (
+//       <SlightBleedContentWrapper>
+//         <ShowWhenVisible className="relative aspect-video overflow-hidden rounded-lg">
+//           <LazyMagicSprinkles />
+//         </ShowWhenVisible>
+//       </SlightBleedContentWrapper>
+//     ),
+//     fullInstallationPath: '/installations/magic-sprinkles',
+//   },
+//   {
+//     title: (
+//       <>
+//         david Lau <Abbr title={randomItem(realNftMeanings)}>nft</Abbr> (real)
+//       </>
+//     ),
+//     slug: 'david-lau-nft-real',
+//     content: (
+//       <MDXImage
+//         src={artImages.DavidLauNft}
+//         alt={`"realistic" depiction of David Lau looking like The Boy's Homelander and shooting laser beams from his eyes.`}
+//         placeholder="blur"
+//       />
+//     ),
+//   },
+//   {
+//     title: 'Speed Sudoku Champion Riki',
+//     content: (
+//       <MDXImage
+//         src={artImages.SpeedSudokuChampionRiki}
+//         alt="pencil-on-paper drawing of Riki Miyamura sitting and wearing a Champion jumper after winning a speed sudoku competition"
+//         placeholder="blur"
+//       />
+//     ),
+//   },
+// ]
+
+const art = []
+---
+
+<PostLayout title="Art" patterns={['doodle-pattern-2']} hidePatternsWhenJs>
+  <Fragment slot="description">
+    ...or more accurately &ldquo;art&rdquo;. Welcome to the world of the authentic artistique
+    endevours of Soorria Saruva.
+    <span class="mx-auto mt-3 block w-1/2 text-xs text-balance sm:hidden">
+      If you&apos;re on mobile, scrolling won&apos;t work while your finger is on the
+      &ldquo;sprinkles&rdquo; at the top here
+    </span>
+  </Fragment>
+
+  <LazyMagicSprinkles slot="backdrop" fade isInHero />
+
+  <ProseWrapper>
+    {
+      art.map((item) => {
+        const slug = typeof item.title === 'string' ? item.slug || paramCase(item.title) : item.slug
+        return (
+          <Fragment>
+            <h2 id={slug}>
+              {item.title}
+              <CustomLink
+                href={`#${slug}`}
+                className="heading-anchor"
+                aria-hidden="true"
+                tabIndex={-1}
+              />
+            </h2>
+
+            <div class="relative">
+              {item.content}
+              {item.fullInstallationPath && (
+                <div class="not-prose pointer-events-none absolute inset-x-0 bottom-4 text-center">
+                  <a
+                    href={item.fullInstallationPath}
+                    class={cx(CODE_BLOCK_CLASSNAMES.button, 'pointer-events-auto')}
+                  >
+                    see full installation
+                  </a>
+                </div>
+              )}
+            </div>
+
+            {item.quotes?.length ? (
+              <>
+                <h3>What people are saying</h3>
+                {item.quotes.map((quote, i) => (
+                  <blockquote>{quote}</blockquote>
+                ))}
+              </>
+            ) : null}
+          </Fragment>
+        )
+      })
+    }
+  </ProseWrapper>
+  <PageRenderedAt />
+</PostLayout>

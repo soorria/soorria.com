@@ -9,5 +9,67 @@
       "source": "/proxy/api/event",
       "destination": "https://plausible.mooth.tech/api/event"
     }
+  ],
+  "redirects": [
+    {
+      "source": "/stats",
+      "destination": "https://plausible.mooth.tech/mooth.tech",
+      "permanent": false
+    },
+    {
+      "source": "/src",
+      "destination": "https://github.com/soorria/soorria.com",
+      "permanent": false
+    },
+    {
+      "source": "/blogs/:path*",
+      "destination": "/blog/:path*",
+      "permanent": true
+    },
+    {
+      "source": "/posts/:path*",
+      "destination": "/blog/:path*",
+      "permanent": true
+    },
+    {
+      "source": "/post/:path*",
+      "destination": "/blog/:path*",
+      "permanent": true
+    },
+    {
+      "source": "/p/:path*",
+      "destination": "/blog/:path*",
+      "permanent": true
+    },
+    {
+      "source": "/s/:path*",
+      "destination": "/snippets/:path*",
+      "permanent": true
+    },
+    {
+      "source": "/snippet/:path*",
+      "destination": "/snippets/:path*",
+      "permanent": true
+    },
+    {
+      "source": "/cypress",
+      "destination": "/snippets/cypress",
+      "permanent": false
+    },
+    {
+      "source": "/enzyme",
+      "destination": "/snippets/enzyme",
+      "permanent": false
+    },
+    {
+      "source": "/diy-promise-all",
+      "destination": "/blog/promise-all",
+      "permanent": false
+    },
+    {
+      "source": "/art",
+      "destination": "/authentic-artistique-endevours",
+      "permanent": false
+    }
   ]
 }

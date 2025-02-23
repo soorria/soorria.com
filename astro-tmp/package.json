@@ -19,6 +19,7 @@
     "@types/react-dom": "^19.0.3",
     "astro": "^5.2.3",
     "astro-seo": "^0.8.4",
+    "change-case": "^5.4.4",
     "marked": "^15.0.7",
     "partysocket": "^1.0.3",
     "react": "^19.0.0",
