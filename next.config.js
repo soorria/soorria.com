@@ -188,7 +188,6 @@ const config = {
   reactStrictMode: true,
   // swcMinify: true,
   experimental: {
-    legacyBrowsers: false,
     esmExternals: 'loose',
     serverComponentsExternalPackages: [
       'esbuild',

@@ -70,12 +70,14 @@ const Abbr = ({ title, children, ...rest }: { title: string; children: ReactNode
 
 const getArt = (): Array<
   {
+    isoDate: string
     content: ReactNode
     quotes?: ReactNode[]
     fullInstallationPath?: string
   } & ({ title: string; slug?: string } | { title: Exclude<ReactNode, string>; slug: string })
 > => [
   {
+    isoDate: '2022-12-17',
     title: (
       <>
         donald trump <Abbr title={randomItem(realNftMeanings)}>nft</Abbr> (real)
@@ -95,6 +97,7 @@ const getArt = (): Array<
     ],
   },
   {
+    isoDate: '2022-09-02',
     title: 'unnamed waifu',
     content: (
       <MDXImage
@@ -109,6 +112,7 @@ const getArt = (): Array<
     ],
   },
   {
+    isoDate: '2023-08-12',
     title: 'magic sprinkles',
     content: (
       <SlightBleedContentWrapper>
@@ -120,6 +124,7 @@ const getArt = (): Array<
     fullInstallationPath: '/installations/magic-sprinkles',
   },
   {
+    isoDate: '2023-12-02',
     title: (
       <>
         david Lau <Abbr title={randomItem(realNftMeanings)}>nft</Abbr> (real)
@@ -135,11 +140,23 @@ const getArt = (): Array<
     ),
   },
   {
+    isoDate: '2023-12-13',
     title: 'Speed Sudoku Champion Riki',
     content: (
       <MDXImage
         src={artImages.SpeedSudokuChampionRiki}
         alt="pencil-on-paper drawing of Riki Miyamura sitting and wearing a Champion jumper after winning a speed sudoku competition"
+        placeholder="blur"
+      />
+    ),
+  },
+  {
+    isoDate: '2025-05-10',
+    title: 'Sandbox Bouldering t-shirt design',
+    content: (
+      <MDXImage
+        src={artImages.SandboxTshirt}
+        alt="t-shirt design featuring a cat in a sandbox"
         placeholder="blur"
       />
     ),
@@ -172,16 +189,24 @@ const ArtPage = () => {
               typeof item.title === 'string' ? item.slug || paramCase(item.title) : item.slug
             return (
               <Fragment key={slug}>
-                <h2 id={slug}>
-                  {item.title}
-                  <CustomLink
-                    href={`#${slug}`}
-                    className="heading-anchor"
-                    aria-hidden="true"
-                    tabIndex={-1}
-                  />
-                </h2>
+                <div>
+                  <h2 id={slug} className="!mb-0">
+                    {item.title}
+                    <CustomLink
+                      href={`#${slug}`}
+                      className="heading-anchor"
+                      aria-hidden="true"
+                      tabIndex={-1}
+                    />
+                  </h2>
 
+                  <p className="top-full text-sm">
+                    <em>masterfully</em> created on{' '}
+                    <time dateTime={item.isoDate}>
+                      {new Date(item.isoDate).toLocaleDateString()}
+                    </time>
+                  </p>
+                </div>
                 <div className="relative">
                   {item.content}
                   {item.fullInstallationPath && (
