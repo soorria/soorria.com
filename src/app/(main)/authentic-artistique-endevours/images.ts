@@ -3,6 +3,7 @@ import UnnamedWaifu from './unnamed waifu.png'
 import DavidLauNft from './david-lau-nft-real.png'
 import SpeedSudokuChampionRiki from './speed-sudoku-champion-riki.png'
 import SandboxTshirt from './sandbox-tshirt.jpg'
+import TheBruhfferfish from './the-bruhfferfish.jpg'
 
 export const artImages = {
   DonaldTrumpNft,
@@ -10,4 +11,5 @@ export const artImages = {
   DavidLauNft,
   SpeedSudokuChampionRiki,
   SandboxTshirt,
+  TheBruhfferfish,
 }

@@ -161,6 +161,17 @@ const getArt = (): Array<
       />
     ),
   },
+  {
+    isoDate: '2025-11-12',
+    title: <em>the bruhfferfish</em>,
+    content: (
+      <MDXImage
+        src={artImages.TheBruhfferfish}
+        alt="colorful pufferfish drawing with bruh written on its side"
+        placeholder="blur"
+      />
+    ),
+  }
 ]
 
 const ArtPage = () => {
