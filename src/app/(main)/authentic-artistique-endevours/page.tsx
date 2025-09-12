@@ -164,6 +164,7 @@ const getArt = (): Array<
   {
     isoDate: '2025-11-12',
     title: <em>the bruhfferfish</em>,
+    slug: 'the-bruhfferfish',
     content: (
       <MDXImage
         src={artImages.TheBruhfferfish}
