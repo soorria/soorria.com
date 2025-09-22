@@ -1,5 +1,5 @@
 import type { BlogPost, BlogPostFrontMatter } from '~/types/blog-post'
-import PostLayout, { PostBottomSection } from '~/components/posts/PostLayout'
+import PostLayout from '~/components/posts/PostLayout'
 import { getAllFilesFrontMatter, getFileForMdx } from '~/lib/data'
 import { getOgImageForData } from '~/utils/og'
 import { PUBLIC_URL } from '~/constants'
@@ -7,13 +7,13 @@ import { SpinningIconDivider } from '~/components/posts/SpinningIconDivider'
 import { BookIcon, ClockIconSolid, EditIcon, GlobeAuIcon, TextIcon } from '~/components/icons'
 import { formatDate } from '~/utils/date'
 import cx from '~/utils/cx'
-import PostGithubLinks from '~/components/posts/PostGithubLinks'
 import { categoryLowerCaseToIcon } from '~/components/categories'
 import type { Metadata } from 'next'
 import ProseWrapper from '~/components/posts/ProseWrapper'
 import MdxRenderer from '~/components/mdx/MdxRenderer'
 import { ignoreError } from '~/utils/misc'
 import { notFound } from 'next/navigation'
+import { LazyGiscus } from '~/components/posts/comments/Giscus'
 
 type PostPageProps = {
   params: { slug: string }
@@ -109,11 +109,9 @@ const PostPage = async (props: PostPageProps) => {
 
       <ProseWrapper>
         <MdxRenderer code={code} type="blog" slug={post.slug} />
-
-        <PostBottomSection>
-          <PostGithubLinks dataType={'blog'} slug={post.slug} />
-        </PostBottomSection>
       </ProseWrapper>
+
+      <LazyGiscus dataType="blog" slug={post.slug} />
     </PostLayout>
   )
 }

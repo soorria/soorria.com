@@ -39,6 +39,28 @@ const config = {
           },
         ],
       },
+      {
+        source: '/giscus.css',
+        headers: [
+          {
+            key: 'Cache-Control',
+            value: 'public, max-age=31536000, s-max-age=31536000, immutable',
+          },
+          // cors headers
+          {
+            key: 'Access-Control-Allow-Origin',
+            value: '*',
+          },
+          {
+            key: 'Access-Control-Allow-Methods',
+            value: 'GET, OPTIONS',
+          },
+          {
+            key: 'Access-Control-Allow-Headers',
+            value: '*',
+          },
+        ],
+      },
     ]
   },
   async redirects() {

@@ -5,13 +5,13 @@ import { categoryLowerCaseToIcon, defaultCategoryIcon } from '~/components/categ
 import { formatDate } from '~/utils/date'
 import { PUBLIC_URL } from '~/constants'
 import { SpinningIconDivider } from '~/components/posts/SpinningIconDivider'
-import PostGithubLinks from '~/components/posts/PostGithubLinks'
 import type { Metadata } from 'next'
 import { getOgImageForData } from '~/utils/og'
 import ProseWrapper from '~/components/posts/ProseWrapper'
 import MdxRenderer from '~/components/mdx/MdxRenderer'
 import { ignoreError } from '~/utils/misc'
 import { notFound } from 'next/navigation'
+import { LazyGiscus } from '~/components/posts/comments/Giscus'
 
 const SCROLL_VAR = '--scroll'
 type SnippetPageProps = {
@@ -74,6 +74,7 @@ const SnippetPage = async ({ params }: SnippetPageProps) => {
         scrollVar={SCROLL_VAR}
         icon={categoryLowerCaseToIcon[snippet.category.toLowerCase()] || defaultCategoryIcon}
       />
+
       <ProseWrapper>
         <MdxRenderer code={code} type="snippets" slug={snippet.slug} />
         <PostBottomSection>
@@ -85,9 +86,10 @@ const SnippetPage = async ({ params }: SnippetPageProps) => {
               </>
             )}
           </div>
-          <PostGithubLinks dataType={'snippets'} slug={snippet.slug} />
         </PostBottomSection>
       </ProseWrapper>
+
+      <LazyGiscus dataType="snippets" slug={snippet.slug} />
     </PostLayout>
   )
 }
