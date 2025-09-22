@@ -75,105 +75,109 @@ const getArt = (): Array<
     quotes?: ReactNode[]
     fullInstallationPath?: string
   } & ({ title: string; slug?: string } | { title: Exclude<ReactNode, string>; slug: string })
-> => [
-  {
-    isoDate: '2022-12-17',
-    title: (
-      <>
-        donald trump <Abbr title={randomItem(realNftMeanings)}>nft</Abbr> (real)
-      </>
-    ),
-    slug: 'donald-trump-nft-real',
-    content: (
-      <MDXImage
-        src={artImages.DonaldTrumpNft}
-        alt="satirical portrayal of a Donald Trump NFT involving a stick figure shooting laser beams out of their eyes and wearing a cape"
-        placeholder="blur"
-      />
-    ),
-    quotes: [
-      "Wow it's so epic thanks [...] best present ever",
-      'You had a stroke [of genius] on a page??',
-    ],
-  },
-  {
-    isoDate: '2022-09-02',
-    title: 'unnamed waifu',
-    content: (
-      <MDXImage
-        src={artImages.UnnamedWaifu}
-        alt='a drawing of a waifu with a speech bubble saying "I love you"'
-        placeholder="blur"
-      />
-    ),
-    quotes: [
-      // omg i love that anime too
-      'omg i love that [...] too',
-    ],
-  },
-  {
-    isoDate: '2023-08-12',
-    title: 'magic sprinkles',
-    content: (
-      <SlightBleedContentWrapper>
-        <ShowWhenVisible className="relative aspect-video overflow-hidden rounded-lg">
-          <LazyMagicSprinkles />
-        </ShowWhenVisible>
-      </SlightBleedContentWrapper>
-    ),
-    fullInstallationPath: '/installations/magic-sprinkles',
-  },
-  {
-    isoDate: '2023-12-02',
-    title: (
-      <>
-        david Lau <Abbr title={randomItem(realNftMeanings)}>nft</Abbr> (real)
-      </>
-    ),
-    slug: 'david-lau-nft-real',
-    content: (
-      <MDXImage
-        src={artImages.DavidLauNft}
-        alt={`"realistic" depiction of David Lau looking like The Boy's Homelander and shooting laser beams from his eyes.`}
-        placeholder="blur"
-      />
-    ),
-  },
-  {
-    isoDate: '2023-12-13',
-    title: 'Speed Sudoku Champion Riki',
-    content: (
-      <MDXImage
-        src={artImages.SpeedSudokuChampionRiki}
-        alt="pencil-on-paper drawing of Riki Miyamura sitting and wearing a Champion jumper after winning a speed sudoku competition"
-        placeholder="blur"
-      />
-    ),
-  },
-  {
-    isoDate: '2025-05-10',
-    title: 'Sandbox Bouldering t-shirt design',
-    content: (
-      <MDXImage
-        src={artImages.SandboxTshirt}
-        alt="t-shirt design featuring a cat in a sandbox"
-        placeholder="blur"
-      />
-    ),
-  },
-  {
-    isoDate: '2025-11-12',
-    title: <em>the bruhfferfish</em>,
-    slug: 'the-bruhfferfish',
-    content: (
-      <MDXImage
-        src={artImages.TheBruhfferfish}
-        alt="colorful pufferfish drawing with bruh written on its side"
-        placeholder="blur"
-      />
-    ),
-  }
-]
+> =>
+  [
+    {
+      isoDate: '2022-12-17',
+      title: (
+        <>
+          donald trump <Abbr title={randomItem(realNftMeanings)}>nft</Abbr> (real)
+        </>
+      ),
+      slug: 'donald-trump-nft-real',
+      content: (
+        <MDXImage
+          src={artImages.DonaldTrumpNft}
+          alt="satirical portrayal of a Donald Trump NFT involving a stick figure shooting laser beams out of their eyes and wearing a cape"
+          placeholder="blur"
+        />
+      ),
+      quotes: [
+        "Wow it's so epic thanks [...] best present ever",
+        'You had a stroke [of genius] on a page??',
+      ],
+    },
+    {
+      isoDate: '2022-09-02',
+      title: 'unnamed waifu',
+      content: (
+        <MDXImage
+          src={artImages.UnnamedWaifu}
+          alt='a drawing of a waifu with a speech bubble saying "I love you"'
+          placeholder="blur"
+        />
+      ),
+      quotes: [
+        // omg i love that anime too
+        'omg i love that [...] too',
+      ],
+    },
+    {
+      isoDate: '2023-08-12',
+      title: 'magic sprinkles',
+      content: (
+        <SlightBleedContentWrapper>
+          <ShowWhenVisible className="relative aspect-video overflow-hidden rounded-lg">
+            <LazyMagicSprinkles />
+          </ShowWhenVisible>
+        </SlightBleedContentWrapper>
+      ),
+      fullInstallationPath: '/installations/magic-sprinkles',
+    },
+    {
+      isoDate: '2023-12-02',
+      title: (
+        <>
+          david Lau <Abbr title={randomItem(realNftMeanings)}>nft</Abbr> (real)
+        </>
+      ),
+      slug: 'david-lau-nft-real',
+      content: (
+        <MDXImage
+          src={artImages.DavidLauNft}
+          alt={`"realistic" depiction of David Lau looking like The Boy's Homelander and shooting laser beams from his eyes.`}
+          placeholder="blur"
+        />
+      ),
+    },
+    {
+      isoDate: '2023-12-13',
+      title: 'Speed Sudoku Champion Riki',
+      content: (
+        <MDXImage
+          src={artImages.SpeedSudokuChampionRiki}
+          alt="pencil-on-paper drawing of Riki Miyamura sitting and wearing a Champion jumper after winning a speed sudoku competition"
+          placeholder="blur"
+        />
+      ),
+    },
+    {
+      isoDate: '2025-05-10',
+      title: 'Sandbox Bouldering t-shirt design',
+      content: (
+        <MDXImage
+          src={artImages.SandboxTshirt}
+          alt="t-shirt design featuring a cat in a sandbox"
+          placeholder="blur"
+        />
+      ),
+    },
+    {
+      isoDate: '2025-11-12',
+      title: <em>the bruhfferfish</em>,
+      slug: 'the-bruhfferfish',
+      content: (
+        <MDXImage
+          src={artImages.TheBruhfferfish}
+          alt="colorful pufferfish drawing with bruh written on its side"
+          placeholder="blur"
+        />
+      ),
+    },
+  ].sort(
+    // newest first
+    (a, b) => new Date(b.isoDate).getTime() - new Date(a.isoDate).getTime()
+  )
 
 const ArtPage = () => {
   const art = getArt()
