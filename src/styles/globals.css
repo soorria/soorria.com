@@ -63,10 +63,11 @@
     position: absolute;
     @apply transition-opacity;
     opacity: 0;
+  }
 
-    .group:hover & {
-      opacity: 1;
-    }
+  .group:hover &:before,
+  .group:hover &:after {
+    opacity: 1;
   }
 
   &:before {
