@@ -6,7 +6,7 @@ tags:
   - vue
 category: 'vue'
 shortDescription: |
-  List of miscellaneous Vue gotchas, niceties and oddities.
+  List of miscellaneous Vue gotchas, niceties and oddities that are too small for their own blog posts.
 
 # createdAt: ''
 # updatedAt: ''
@@ -48,7 +48,7 @@ also in the
 </template>
 ```
 
-## Changing routes in vue-router and nuxt
+## Route params merging in `vue-router` (and Nuxt)
 
 If you switch routes using the route's name (vs using the actual path), you only
 need to provide params that have changed!! For example, if you're on the
@@ -89,6 +89,8 @@ This only works for route `params`, but **NOT `query`**. The query is
 overwritten every time you navigate to a new page.
 
 </Note>
+
+## `<template>`s behave differently if they have no `v-*` attributes
 
 ## Probably don't use `proxyRefs`
 
@@ -150,5 +152,3 @@ export const useStuff = () => {
  */
 const { message } = useStuff()
 ```
-
-## `<template>`s behave differently if they have no `v-*` attributes
