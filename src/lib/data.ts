@@ -1,4 +1,4 @@
-import type { BaseData, DataType, FrontMatter, BaseApiData } from '~/types/data'
+import type { BaseData, DataType, FrontMatter, BaseApiData, BaseFrontMatter } from '~/types/data'
 import type { PathLike } from 'fs'
 import { promises as fs } from 'fs'
 import readingTime from 'reading-time'
@@ -53,6 +53,15 @@ const readFilesForSlug = async (
   return { mdx, components }
 }
 
+function resolveData<T extends BaseFrontMatter>(data: Record<string, unknown>, content: string): T {
+  const typedData = data as T
+
+  return {
+    ...typedData,
+    hasContent: content.trim().length !== 0,
+  }
+}
+
 export const getAllFilesFrontMatter = async <TFrontMatter>(
   type: DataType
 ): Promise<TFrontMatter[]> => {
@@ -64,9 +73,8 @@ export const getAllFilesFrontMatter = async <TFrontMatter>(
       const { data, content } = matter(source)
 
       return {
-        ...(data as TFrontMatter),
+        ...resolveData(data, content),
         slug: fileToSlug(slug),
-        hasContent: content.trim().length !== 0,
         ...getContentMetrics(content),
       } as TFrontMatter
     })
@@ -81,9 +89,8 @@ export const getFileFrontMatter = async <TFrontMatter>(
   const { data, content } = matter(source)
 
   return {
-    ...(data as TFrontMatter),
+    ...resolveData(data, content),
     slug,
-    hasContent: content.trim().length !== 0,
     ...getContentMetrics(content),
   } as TFrontMatter
 }
@@ -96,11 +103,10 @@ export const getFileWithContent = async <TApiData extends BaseApiData>(
   const { data, content } = matter(mdx)
 
   return {
-    ...(data as any),
+    ...resolveData(data, content),
     slug,
     code: content,
     components,
-    hasContent: content.trim().length !== 0,
     ...getContentMetrics(content),
   } as TApiData
 }
@@ -114,20 +120,20 @@ export const getFileForMdx = async <TData extends BaseData>(
 ): Promise<TData> => {
   const { mdx } = await readFilesForSlug(type, slug)
 
-  const { data, content } = matter(mdx)
+  const { data: _data, content } = matter(mdx)
+  const data = _data as FrontMatter<TData>
 
   if (hasLiveUrlProperty(data)) {
     data.live = addRefToUrl(data.live)
   }
 
   return {
-    ...(data as FrontMatter<TData>),
+    ...resolveData(data, content),
     slug,
     /**
      * Unrendered MDX
      */
     code: content,
-    hasContent: content.trim().length !== 0,
     ...getContentMetrics(content),
   } as TData
 }

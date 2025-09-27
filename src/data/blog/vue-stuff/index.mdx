@@ -6,29 +6,13 @@ tags:
   - vue
 category: 'vue'
 shortDescription: |
-  semi-unordered list of vue-related things
+  List of miscellaneous Vue gotchas, niceties and oddities.
 
 # createdAt: ''
 # updatedAt: ''
 ---
 
-semi-unordered list of vue-related things
-
-## Maintaining reactivity
-
-You should only access the value of a `ref`, `computed`, a prop, or a key in a
-reactive in your `<template>`, or inside a function.
-
 ## Only top-level `ref`s are unwrapped in your `<template>`
-
-## `computed`s are lazy
-
-`computed`s are lazy in 2 ways:
-
-1. The getter function will only be run if the `computed`'s value is accessed.
-2. The getter function will only automatically re-run if the `computed` is used
-   in a reactive scope, for example in your `<template>`, inside another
-   `computed`, or as a `watch` target.
 
 ## You can't use double quotes inside dynamic props
 
@@ -165,25 +149,6 @@ export const useStuff = () => {
  * `message` won't receive updates!!!
  */
 const { message } = useStuff()
-```
-
-### The exception
-
-For me, the main exception to this is if you're using
-[TanStack Query](https://tanstack.com/query/latest/docs/framework/vue/overview),
-since it returns an object where each value at the top level is a ref. I don't
-like destructuring the return value of a `useQuery` or `useMutation` (even in
-React), and I find it more ergonomic to write `query.data` instead of
-`query.data.value`. When I use `proxyRefs` for this, I generally try to use it
-directly at the `useQuery` call:
-
-```ts
-const stuff = proxyRefs(
-  useQuery({
-    queryKey: ['key', 'for', 'stuff'],
-    queryFn: () => getStuff(),
-  })
-)
 ```
 
 ## `<template>`s behave differently if they have no `v-*` attributes

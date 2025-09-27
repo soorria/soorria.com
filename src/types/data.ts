@@ -3,6 +3,7 @@ export type DataType = 'snippets' | 'blog' | 'projects' | 'work' | 'misc'
 export interface BaseData {
   slug: string
   title: string
+  rawTitle: string
   ogImageTitleParts?: string[]
   shortDescription: string
   code: string

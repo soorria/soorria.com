@@ -1,0 +1,116 @@
+---
+title: Losing Reactivity in Vue
+tags:
+  - javascript
+  - typescript
+  - vue
+category: vue
+shortDescription: |
+  One of the easiest and most common mistakes to make in Vue code.
+
+# createdAt: ''
+# updatedAt: ''
+---
+
+Vue has several flavours of reactive values where you can store, access, and
+update state:
+
+- `ref`s, `computed`s and `reactive`s
+- component `props` from the return value of `defineProps`
+- destructured component props when you have
+  [Reactive Props Destructure](https://vuejs.org/guide/components/props.html#reactive-props-destructure)
+  enabled
+
+Vue also has several tracking scopes - areas of code where Vue tracks reads of
+and subscribes to changes to reactive values:
+
+- the `<template>` for your SFC component
+- the first argument to `watch` (the _watch source_), when it's a function
+- the body of a `watchEffect` function
+- the body of a `computed` ref, or it's `get` function
+
+When a reactive value is used in a tracking scope, Vue will subscribe the
+tracking scope to the value and when the value changes, your code will re-run.
+This is the core of Vue's reactivity system and how it knows to update the UI,
+re-run `watch`es and re-compute `computed`s. See
+[here](https://youtu.be/cELFZQAMdhQ?t=114) for a deeper dive into this style for
+reactivity, though it is explained using a different frontend framework.
+
+## Making the mistake
+
+When you don't access a reactive value in a tracking scope, Vue doesn't see
+anything that it should re-run when the value changes.
+
+The most common example I see of this is accessing `props` at the top level of a
+`<script>` block:
+
+```vue title="smh my head, losing reactivity"
+<script>
+const props = defineProps<{
+  thingId: string
+}>()
+
+const thing = useThing({
+  /**
+   * 🚨 - the `thingId` inside `useThing` won't update when `props.thingId`
+   *      updates
+   */
+  thingId: props.thingId
+})
+</script>
+```
+
+Instead you pass down `thingId` as a computed ref or a getter. For this to work,
+composables should be set up to accept args as a
+[`MaybeRefOrGetter`](https://vuejs.org/api/utility-types.html#maybereforgetter),
+or even better, a `ReadonlyRefOrGetter` from `@vueuse/core`, and consume args
+using [`toValue`](https://vuejs.org/api/reactivity-utilities.html#tovalue).
+
+```vue title="yippee reactivity!!"
+<script>
+const props = defineProps<{
+  thingId: string
+}>()
+
+const thing = useThing({
+  /**
+   * ✅ -
+   */
+  thingId: () => props.thingId,
+  /**
+   * ... or as a `computed` ref.
+   * thingId: computed(() => props.thingId),
+   */
+})
+</script>
+```
+
+<Note variant="warning">
+
+In my opinion, this is one of the biggest ergonomic issues with frameworks that
+wrap state values (e.g.. `ref` or `reactive` in Vue, `createSignal` or getter
+functions in Solid.js). Forgetting to pass through a value correctly can cause
+you to spend hours debugging why your UI isn't updating - something I have
+unfortunately experience first hand.
+
+React doesn't suffer from this issue as state values are just the values
+themselves, though that can result in complex code to opt-out of rerenders.
+
+</Note>
+
+## Preventing this
+
+There are 2 main things you can do to prevent this issue:
+
+1. Use the
+   [vue/no-ref-object-reactivity-loss](https://eslint.vuejs.org/rules/no-ref-object-reactivity-loss)
+   ESLint rule. This can minimise this issue are author-time, and AI tools such
+   as Cursor and Claude Code and see editor diagnostics or run ESLint and fix
+   issues.
+
+2. Make sure custom composables / hooks are typed to accept
+   `ReadonlyRefOrGetter`s only. This can stop you passing in raw values at
+   typecheck-time, and again AI tools can fix these issues.
+
+AI tools can probably help review code to catch this style of issue, but
+unfortunately like humans they are fallible.
