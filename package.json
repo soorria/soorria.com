@@ -18,7 +18,8 @@
     "prepare": "is-ci-cli \"\" \"husky:install\"",
     "postinstall": "npm run codegen",
     "codegen": "tsx src/scripts/generate-mdx-data-components-file.ts",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "deploy:party": "partykit deploy"
   },
   "dependencies": {
     "@babel/core": "^7.22.9",
