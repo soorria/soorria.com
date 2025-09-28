@@ -22,6 +22,17 @@ import terraformImg from './logos/terraform.svg'
 import vueImg from './logos/vue.svg'
 import nuxtImg from './logos/nuxt.svg'
 import solidImg from './logos/solidjs.svg'
+import astroImg from './logos/astro.svg'
+import honoImg from './logos/hono.svg'
+import honoKawaiiImg from './logos/hono.png'
+import redisImg from './logos/redis.svg'
+import cloudflareImg from './logos/cloudflare.svg'
+import sentryImg from './logos/sentry.svg'
+import preactImg from './logos/preact.svg'
+import svelteImg from './logos/svelte.svg'
+import denoImg from './logos/deno.svg'
+import jqueryImg from './logos/jquery.svg'
+import tailwindImg from './logos/tailwind.svg'
 import type { StaticImageData } from 'next/image'
 
 export const skillLabelToImage = {
@@ -49,4 +60,15 @@ export const skillLabelToImage = {
   Lambda: awsImg as StaticImageData,
   Terraform: terraformImg as StaticImageData,
   NuxtJS: nuxtImg as StaticImageData,
-} satisfies Record<string, StaticImageData>
+  Astro: astroImg as StaticImageData,
+  Hono: honoImg as StaticImageData,
+  'Hono ': honoKawaiiImg as StaticImageData,
+  Redis: redisImg as StaticImageData,
+  Cloudflare: cloudflareImg as StaticImageData,
+  Sentry: sentryImg as StaticImageData,
+  Preact: preactImg as StaticImageData,
+  Svelte: svelteImg as StaticImageData,
+  Deno: denoImg as StaticImageData,
+  jQuery: jqueryImg as StaticImageData,
+  Tailwind: tailwindImg as StaticImageData,
+} as Record<string, StaticImageData>

@@ -325,6 +325,43 @@ export function LiveSkillsArea(props: {
           ? 'just you online :('
           : `${liveSkills.numConnections} people online`}
       </div>
+
+      {process.env.NODE_ENV === 'development' && (
+        <details>
+          <summary>All skills</summary>
+
+          <div
+            className="grid gap-8"
+            style={{
+              gridTemplateColumns: `repeat(auto-fit, minmax(${props.imageWidth * 1.2}px, 1fr))`,
+            }}
+          >
+            {Object.entries(skillLabelToImage).map(([label, image]) => {
+              return (
+                <button
+                  key={label}
+                  className={cx(
+                    'fade-in-direct relative group block w-fit select-none ease-linear'
+                  )}
+                  draggable={false}
+                >
+                  {/* eslint-disable-next-line */}
+                  <img
+                    src={image.src}
+                    alt=""
+                    className=""
+                    style={{ width: props.imageWidth, height: 'auto', maxHeight: props.imageWidth }}
+                    draggable={false}
+                  />
+                  <span className="pointer-events-none absolute -bottom-5 left-1/2 -translate-x-1/2 text-xs opacity-0 transition-opacity group-hocus-visible:opacity-100 md:-bottom-6 md:text-sm">
+                    {label}
+                  </span>
+                </button>
+              )
+            })}
+          </div>
+        </details>
+      )}
     </>
   )
 }

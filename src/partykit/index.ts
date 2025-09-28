@@ -205,7 +205,7 @@ export default class Server implements Party.Server {
       ignoreSelf = true
     } else if (clientMessage.type === 'add-more') {
       this.state.items.push(...Server.getRandomSkills())
-      this.state.items = this.state.items.slice(-32)
+      this.state.items = this.state.items.slice(-SKILLS_MAGIC_NUMBERS.maxIcons)
     } else {
       return
     }

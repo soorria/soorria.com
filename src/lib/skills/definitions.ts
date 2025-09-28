@@ -43,4 +43,6 @@ export const SKILLS_MAGIC_NUMBERS = {
   aspectRatio: 16 / 9,
 
   sendMessageTimeoutMs: 50,
+
+  maxIcons: 64,
 }
