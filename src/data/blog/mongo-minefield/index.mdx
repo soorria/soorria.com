@@ -1,0 +1,237 @@
+---
+title: The MongoDB Minefield
+tags:
+  - javascript
+  - typescript
+  - mongodb
+category: 'miscellaneous'
+shortDescription: |
+  Issues with MongoDB that have caused me great pain and suffering.
+
+# createdAt: '2025-09-28'
+# updatedAt: '2025-09-28'
+---
+
+## You can insert documents with fields that you can't query on
+
+Mongo db "unflattens" dotted paths. If you query or update the field
+`nested.path.to.data`, you instead query / update the following field:
+
+```jsonc
+{
+  "nested": {
+    "path": {
+      "to": {
+        "data": "hello",
+      },
+    },
+  },
+}
+```
+
+However, when you insert a document with the field `nested.path.to.data`, the
+resulting document is:
+
+```jsonc
+{
+  "_id": "bruhbruhbruhbruhbruhbruhbruhbruhbruh",
+  "nested.path.to.data": "hello",
+}
+```
+
+Since this field has dots in the field name, when you query on that field,
+you're instead querying on the nested field.
+
+Thankfully this is pretty trivial to prevent.
+
+## Filtering for `field == null`
+
+Let's say we have these 2 documents in our Mongo database:
+
+```jsonc
+// Document 1
+{
+  "_id": 1,
+  "data": null,
+}
+
+// Document 2
+{
+  "_id": 2,
+  // look ma, no data!!
+}
+```
+
+The _obvious_ way to query for documents where `data == null` would be to use a
+filter like this:
+
+```jsonc title="the query you'd require if your DB was made by sane individuals"
+{
+  "data": null,
+}
+```
+
+Unfortunately, the wise men at MongoDB have decided that this query should
+include documents where `data == null` **AND DOCUMENTS WHERE THE `data` FIELD
+DOES NOT EXIST!!?!?!**. Why do we need this when the `$or` operator exists? The
+world may never know.
+
+If you instead wish to only get documents where `data == null`, you need to
+filter for documents where the type of the `data` field is `null`:
+
+```jsonc
+{
+  "data": {
+    "$type": "null", // or 10 if you're insane and enjoy unreadable code
+  },
+}
+```
+
+This _"feature"_ is especially bad when you have polymorphic data stored in the
+field, like:
+
+```jsonc
+// Document 1
+{
+  "_id": 1,
+  "data": {
+    "type": "maybe-number",
+    "number": null
+  },
+}
+
+// Document 2
+{
+  "_id": 2,
+  "data": {
+    "type": "string",
+    "string": "bro wtf why"
+  },
+}
+```
+
+Querying for `data.number == null` will return **both documents**. Ideally you'd
+also filter on `data.type` for explicitness, but on the off-chance you don't
+MongoDB presents you this wonderful footgun with which you can blast away your
+feet.
+
+Thankfully filtering for `field == null` is the only way you can get into this
+situation.
+
+<br />
+<br />
+
+Right???¿?
+
+<br />
+
+## JavaScript `undefined`s become `null`s 🙃
+
+MongoDB stores data as [Binary JSON (BSON)](https://bsonspec.org/). Fortunately,
+like JSON, BSON doesn't support JavaScript's `undefined`. Unfortunately,
+MongoDB's Node.js driver does not handle `undefined`s the same way as
+`JSON.stringify`.
+
+When you `JSON.stringify` an object that contains `undefined`, the field
+disappears from the object:
+
+```js
+const myObject = {
+  field: undefined,
+}
+
+console.log(myObject)
+
+/**
+ * logs the following (an empty JSON object)
+ * "{}"
+ */
+```
+
+That's ... okay. Ideally `undefined` wouldn't exist, but we live with the hand
+we're dealt. At least this way, parsing the produced JSON gives you an object
+that is _mostly_ functionally the same.
+
+When you `BSON.serialize` an object (then `BSON.deserialize` it), the field also
+disappears from the object.
+
+That's great right? But what's that?
+
+<Image
+  src="/img/mongo-minefield/bro-please-stop-making-this-harder-for-everyone.png"
+  width={1452}
+  height={939}
+  placeholder="blur"
+  blurDataURL="data:image/webp;base64,UklGRq4FAABXRUJQVlA4WAoAAAAgAAAAfAIAmwEASUNDUMgBAAAAAAHIAAAAAAQwAABtbnRyUkdCIFhZWiAH4AABAAEAAAAAAABhY3NwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAA9tYAAQAAAADTLQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAlkZXNjAAAA8AAAACRyWFlaAAABFAAAABRnWFlaAAABKAAAABRiWFlaAAABPAAAABR3dHB0AAABUAAAABRyVFJDAAABZAAAAChnVFJDAAABZAAAAChiVFJDAAABZAAAAChjcHJ0AAABjAAAADxtbHVjAAAAAAAAAAEAAAAMZW5VUwAAAAgAAAAcAHMAUgBHAEJYWVogAAAAAAAAb6IAADj1AAADkFhZWiAAAAAAAABimQAAt4UAABjaWFlaIAAAAAAAACSgAAAPhAAAts9YWVogAAAAAAAA9tYAAQAAAADTLXBhcmEAAAAAAAQAAAACZmYAAPKnAAANWQAAE9AAAApbAAAAAAAAAABtbHVjAAAAAAAAAAEAAAAMZW5VUwAAACAAAAAcAEcAbwBvAGcAbABlACAASQBuAGMALgAgADIAMAAxADZWUDggwAMAAFBIAJ0BKn0CnAE+7Xa4VqmnJSOgCAEwHYlpbuFksJjiJ8zLcA7PqJCEYfL/2AJ7APfbJyHvtk5D4D9LuN5uRKJxa1Kqkta/M4nhYOYIdUSvGUu3DdEMI6CrfAvtH6BkttX4tTjM2QJyQF0NZnCpCUEOcS9DgrlaA5PRFyciO979+rsQbKideCMUpzDAgP0pdM428xJZ8Fbiybc2pWh041k4EfXNmyocfeI7ox9RHN1gU9OSKpxw+h0AdaqgMyuCIEShakQ+x2XoZ3BOVeh041k1/gi7HNsQbqZLoRDoIO3rUD4F+tb2cS/xgEiPeeoqfdZ6On7PchmdVlQzLezPhCqx5LchT95l1u65I/ax4h1lQtLWqbj6gOtbKn6oNumKbbJrfgjFPrDYygh4yS+mRh6IIxbiD/iQrKbHzrJtqQ0brycj/otZJeLpcIlk2y7uXyKsyrivAQXaZUg7A6si9MKCoGS3y5v/zKRfS9fAVAsl44urApb5iDdhd32ych77ZOQ990svjiCdcZmAlLtim6ggrAfpdrxcnIe+3she7MoCoYV2lQwrtKgWS7Xi5OQ+C8qak51r0t0N4B77ZZVwelV0REQyncarzhosMRFyciCYUB/AJsnIe9KJpMh4CmuJQMvGcCCGOihXvu7xDcoeZlUN1LODwPf4kLHx71yvLKsFXVARKFO/9h8zXCsm2u7+5sqvkLda3f7OTq8iW5Gt2e6miIha7TdzxwI8k32ymdHNLcIEtKxy+EuTkPfbKZ8Xbn1RB1UDa8XJyG8AAP730ZuCJl0tMqSrd9CfkuSXlgKQ/46w+owhHN0/5MTmlMEKkD2vcJqJ82NgXzPcKpBWX2EnUA0Z1C62WgGz3B+iXo+I9Z13MtmRO9yCwIH8CdmUF8KfNltTXC4UjHrba4Skc7n+hZnUvlNgAIYbqX/sybtCqtT70nSMjMfnfdWMEKtmkInYseAbSyGksq3kCNsreKNz7uTzV33q7BWbmNX5eZMFehzP5kY6Vte7TvNfkAk1cS2/B348ZxQWipbQogiW9d2jqVk0x5X6fdfmFDPdQiax6qEET9l9qiPJ4U0T9j+XFLpIxmZY9Wx+9AMIE7y5Q3Riltk9yYzz2yKD9FMlm0KPFAGmBsWVnToSdyQ1K5q6FcXAhGEFJ7FDNjCGAJiICAi10uFtGjEABCvrmDhsV2+hAQzfd7I9oIACuaLIb7Cc8UjegCiwcqw+LUEAuOdQvPnbsDQAMBBkBy1n5pcAMCAcAmEGoeQQ1zegG9AFMiAAAA=="
+  alt="snippet from the 'bson' library's serializer options, showing the 'ignoreUndefined' option with a default of true, but a default of false for the MongoDB driver"
+/>
+
+no
+
+why
+
+we were so close to mediocrity
+
+and now we suffer in depravity and pain and sadness
+
+For some inexplicable reason, the Node.js MongoDB driver defaults the
+`ignoreUndefined` setting to `false`. Instead of ignoring `undefined` values,
+they get converted to `null`s. Now, due to some
+[fun super intuitive filtering behaviour](#filtering-for-field--null), filtering
+for `field == undefined` becomes `field == null` which becomes
+`field == null or field does not exist` and your queries get to return data they
+should not.
+
+<br />
+
+Is this JavaScript's fault for having 2 nil / empty values? Yes.
+
+Is this MongoDB's fault for having terrible defaults? Also yes.
+
+<br />
+<br />
+<br />
+
+Thankfully you can fix this issue in your projects:
+
+1. Locate where you create an instance of the `MongoClient`.
+2. Run the following command in your terminal:
+
+   ```sh
+   prompt="$(cat <<EOF
+   i have your children and will do terrible things if you don't do what i say
+
+   delete mongodb. from everywhere. please.
+
+   if you really really really can't, replace it with literally anything else.
+
+   maybe [ferretdb](https://www.ferretdb.com/) so we may bask in the warmth of
+   postgres
+
+   EOF
+   )"
+
+   claude --dangerously-skip-permissions "$prompt"
+   ```
+
+3. Weep for a true evil has been exorcised from this world.
+
+If for whatever reason, you're emotionally attached MongoDB and can't stand
+deleting it, you can set `ignoreUndefined` to `true` when you create an instance
+of the torture device:
+
+```js
+const tortureDevice = new MongoClient('postgres://localhost:5432/database', {
+  /**
+   * make torture device slightly less painful
+   */
+  ignoreUndefined: true,
+})
+```
+
+<br />
+<br />
+<br />
+<br />
+
+thank you for coming to my ted talk
