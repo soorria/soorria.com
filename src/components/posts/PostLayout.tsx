@@ -52,7 +52,7 @@ export const PostBottomSection: React.FC<PropsWithChildren> = ({ children }) => 
   return <div className="mx-auto mt-24! max-w-xs space-y-8 text-center text-sm">{children}</div>
 }
 
-export const PostDescription = ({ children }: { children: ReactNode }) => {
+const PostDescription = ({ children }: { children: ReactNode }) => {
   return <p className="mb-12 mt-6 text-pretty text-center text-lg">{children}</p>
 }
 

@@ -245,7 +245,7 @@ export default function GiscusClientComponent({ dataType, slug }: GiscusProps) {
   )
 }
 
-export interface ISetConfigMessage {
+interface ISetConfigMessage {
   setConfig: {
     theme?: Theme
     repo?: `${string}/${string}`
@@ -263,7 +263,7 @@ export interface ISetConfigMessage {
   }
 }
 
-export interface GiscusMessage {
+interface GiscusMessage {
   giscus?: Partial<{
     resizeHeight: number
     signOut: boolean

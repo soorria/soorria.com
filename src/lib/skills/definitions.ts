@@ -1,4 +1,4 @@
-export type SkillDefinition = {
+type SkillDefinition = {
   label: keyof (typeof import('./images'))['skillLabelToImage']
 }
 

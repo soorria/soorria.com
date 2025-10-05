@@ -70,7 +70,7 @@ const codeBlockRehypePlugins: PluggableList = [
   rehypeRearrangePrettyCodeOutput,
 ]
 
-export type RenderOptions = {
+type RenderOptions = {
   hasCodeBlocks?: boolean
 }
 

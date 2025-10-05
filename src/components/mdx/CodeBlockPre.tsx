@@ -5,9 +5,7 @@ import type { HTMLAttributes, PropsWithChildren } from 'react'
 import { CODE_BLOCK_CLASSNAMES, getTruncationHeight } from './utils'
 
 export type CodeBlockPreExtraProps = { truncate?: boolean | number | string }
-export type CodeBlockPreProps = PropsWithChildren<
-  CodeBlockPreExtraProps & HTMLAttributes<HTMLPreElement>
->
+type CodeBlockPreProps = PropsWithChildren<CodeBlockPreExtraProps & HTMLAttributes<HTMLPreElement>>
 export const CodeBlockPre = forwardRef<HTMLPreElement, CodeBlockPreProps>(
   ({ className, truncate, children, ...rest }, ref) => {
     const [expanded, setExpanded] = useState(false)

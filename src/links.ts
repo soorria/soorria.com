@@ -114,5 +114,3 @@ export const contactLinks: Link[] = [
   linkedinLink,
   cardLink,
 ]
-
-export const allLinks: Link[] = [...contactLinks, discordLink, malLink, facebookLink, cardLink]

@@ -10,10 +10,10 @@ export const createdAtFieldComparator = <T extends HasCreatedAtField>(a: T, b: T
 export const sortByCreatedAtField = <T extends HasCreatedAtField>(arr: T[]): T[] =>
   arr.sort(createdAtFieldComparator)
 
-export const filterUnpublished = <T extends HasCreatedAtField>(arr: T[]): T[] =>
+const filterUnpublished = <T extends HasCreatedAtField>(arr: T[]): T[] =>
   arr.filter(el => process.env.NODE_ENV !== 'production' || !!el.createdAt)
 
-export const filterPrivate = <T extends { private?: boolean }>(arr: T[]): T[] =>
+const filterPrivate = <T extends { private?: boolean }>(arr: T[]): T[] =>
   arr.filter(el => process.env.NODE_ENV !== 'production' || !el.private)
 
 export const addRefToUrl = (url: string, ref = 'soorria.com'): string => {
@@ -22,7 +22,7 @@ export const addRefToUrl = (url: string, ref = 'soorria.com'): string => {
   return u.toString()
 }
 
-export const composeFilters = <T>(...filters: Array<(arr: T[]) => T[]>): ((arr: T[]) => T[]) => {
+const composeFilters = <T>(...filters: Array<(arr: T[]) => T[]>): ((arr: T[]) => T[]) => {
   return arr => {
     return filters.reduce((arr, filter) => filter(arr), arr)
   }
@@ -34,10 +34,3 @@ export const getAllTags = <T extends { category: string; tags: string[] }>(item:
   item.category,
   ...item.tags,
 ]
-
-export const itemMatchesTag = <T extends { category?: string; tags?: string[] }>(
-  tag: string,
-  { category, tags = [] }: T
-): boolean => {
-  return category?.toLowerCase() === tag || tags.map(t => t.toLowerCase()).includes(tag)
-}

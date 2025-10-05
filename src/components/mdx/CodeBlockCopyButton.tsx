@@ -6,7 +6,7 @@ import { useCopy } from '~/utils/use-copy'
 import { CODE_BLOCK_CLASSNAMES } from './utils'
 import { useTrackFirstEvent } from '~/lib/analytics'
 
-export const getCodeLinesFromPre = (pre: HTMLPreElement | undefined | null): string => {
+const getCodeLinesFromPre = (pre: HTMLPreElement | undefined | null): string => {
   if (!pre) return ''
 
   const firstCodeChild = Array.from(pre.children).find((el: Element) => el.tagName === 'CODE')

@@ -24,7 +24,7 @@ export const DEMO_CLASSNAMES = {
 } as const
 
 const CODE_LINE_HEIGHT = 28
-export const DEFAULT_TRUNCATE_HEIGHT = 10.5 * CODE_LINE_HEIGHT
+const DEFAULT_TRUNCATE_HEIGHT = 10.5 * CODE_LINE_HEIGHT
 
 export const getTruncationHeight = (
   truncate: string | number | boolean | undefined

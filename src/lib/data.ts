@@ -21,7 +21,7 @@ const isFile = (path: PathLike): Promise<boolean> =>
     .then(stat => stat.isFile())
     .catch(() => false)
 
-export const getFiles = async (type: DataType): Promise<string[]> => fs.readdir(getTypePath(type))
+const getFiles = async (type: DataType): Promise<string[]> => fs.readdir(getTypePath(type))
 
 const COMPONENTS_FILE = 'components.js' as const
 const files = [COMPONENTS_FILE, 'index.mdx'] as const

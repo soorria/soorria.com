@@ -4,7 +4,7 @@ import { CodeBlockPre, type CodeBlockPreExtraProps } from './CodeBlockPre'
 import { CodeBlockTitle, CODE_BLOCK_CLASSNAMES, LANGUAGE_NAME_MAP } from './utils'
 import { CodeBlockCopyButton } from './CodeBlockCopyButton'
 
-export type CustomCodeBlockProps = PropsWithChildren<
+type CustomCodeBlockProps = PropsWithChildren<
   {
     className: string
     'data-language'?: string

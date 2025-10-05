@@ -15,7 +15,7 @@ type OgParams = {
   debug?: boolean
 }
 
-export const getOgUrl = ({ title, bottomText, subtitle, titleParts, debug }: OgParams): string => {
+const getOgUrl = ({ title, bottomText, subtitle, titleParts, debug }: OgParams): string => {
   const params = [
     `title=${encodeURIComponent(title)}`,
     `subtitle=${subtitle ? encodeURIComponent(subtitle) : ''}`,
