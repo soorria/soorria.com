@@ -108,7 +108,7 @@
   },
   "license": "MIT",
   "lint-staged": {
-    "*.{ts,js,tsx}": [
+    "*.{ts,js,tsx,mts,mjs,cts,cjs}": [
       "prettier -w",
       "eslint --fix --cache"
     ],

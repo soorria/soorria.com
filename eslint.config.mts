@@ -1,17 +1,15 @@
-/* eslint-disable @typescript-eslint/no-require-imports */
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+import { defineConfig, globalIgnores } from 'eslint/config'
+import tsParser from '@typescript-eslint/parser'
+import globals from 'globals'
+import reactHooks from 'eslint-plugin-react-hooks'
+import { fixupConfigRules } from '@eslint/compat'
+import js from '@eslint/js'
+import { FlatCompat } from '@eslint/eslintrc'
+import { fileURLToPath } from 'url'
+import { dirname } from 'path'
 
-const { defineConfig, globalIgnores } = require('eslint/config')
-
-const tsParser = require('@typescript-eslint/parser')
-const globals = require('globals')
-const reactHooks = require('eslint-plugin-react-hooks')
-
-const { fixupConfigRules } = require('@eslint/compat')
-
-const js = require('@eslint/js')
-
-const { FlatCompat } = require('@eslint/eslintrc')
+const __filename = fileURLToPath(import.meta.url)
+const __dirname = dirname(__filename)
 
 const compat = new FlatCompat({
   baseDirectory: __dirname,
@@ -19,7 +17,7 @@ const compat = new FlatCompat({
   allConfig: js.configs.all,
 })
 
-module.exports = defineConfig([
+export default defineConfig([
   {
     languageOptions: {
       parser: tsParser,
@@ -101,6 +99,12 @@ module.exports = defineConfig([
       ],
 
       '@typescript-eslint/explicit-module-boundary-types': 'off',
+    },
+  },
+  {
+    files: ['next-env.d.ts'],
+    rules: {
+      '@typescript-eslint/triple-slash-reference': 'off',
     },
   },
   globalIgnores([

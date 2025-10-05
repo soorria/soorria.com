@@ -42,6 +42,8 @@
     ".next/types/**/*.ts",
     "next-env.d.ts",
     "src/types/react.d.ts",
-    "eslint.config.js"
+    "eslint.config.mts",
+    "postcss.config.js",
+    "prettier.config.mjs"
   ]
 }
