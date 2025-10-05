@@ -68,7 +68,7 @@ function useLiveSkills({ scale }: { scale: number }) {
 
   const moveItem = useCallback<OnItemPositionChangeHandler>(
     (id, newPosition) => {
-      track('Play with skills', { props: {} })
+      track('Play with skills')
 
       const unscaledPosition = scalePosition(newPosition, 1 / scale)
 

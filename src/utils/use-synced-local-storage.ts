@@ -63,7 +63,7 @@ export const useSyncedLocalStorage = <T extends NonNullJsonValue = NonNullJsonVa
   useEffect(() => {
     trackedKeys[key] = (trackedKeys[key] ?? 0) + 1
     return () => {
-      trackedKeys[key]--
+      trackedKeys[key] = (trackedKeys[key] ?? 1) - 1
     }
   }, [key])
 
