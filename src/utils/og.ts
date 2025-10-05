@@ -1,6 +1,11 @@
+import type { Metadata } from 'next'
 import type { DataType } from '~/types/data'
-import type { OpenGraphMedia } from 'next-seo/lib/types'
 import { PUBLIC_URL } from '~/constants'
+
+type OgImage = Extract<
+  Extract<NonNullable<Metadata['openGraph']>['images'], unknown[]>[number],
+  Record<string, unknown>
+>
 
 type OgParams = {
   title: string
@@ -32,11 +37,11 @@ export const getOgImageForData = (
   type: DataType,
   title?: string,
   titleParts?: string[]
-): OpenGraphMedia => {
+): OgImage => {
   return getOgImage({ title: title || type, subtitle: `soorria.com/${type} `, titleParts })
 }
 
-export const getOgImage = (params: OgParams): OpenGraphMedia => {
+export const getOgImage = (params: OgParams): OgImage => {
   return {
     url: getOgUrl(params),
     width: 1200,
