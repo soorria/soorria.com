@@ -16,7 +16,7 @@ import { notFound } from 'next/navigation'
 import { LazyGiscus } from '~/components/posts/comments/Giscus'
 
 type PostPageProps = {
-  params: { slug: string }
+  params: Promise<{ slug: string }>
 }
 
 export const dynamic = 'force-static'
@@ -27,7 +27,8 @@ export const generateStaticParams = async () => {
   return posts.map(({ slug }) => ({ slug }))
 }
 
-export const generateMetadata = async ({ params }: PostPageProps): Promise<Metadata> => {
+export const generateMetadata = async (props: PostPageProps): Promise<Metadata> => {
+  const params = await props.params
   const post = await ignoreError(getFileForMdx<BlogPost>('blog', params.slug))
   if (!post) return {}
 
@@ -64,7 +65,7 @@ export const generateMetadata = async ({ params }: PostPageProps): Promise<Metad
 
 const SCROLL_VAR = '--scroll'
 const PostPage = async (props: PostPageProps) => {
-  const data = await ignoreError(getFileForMdx<BlogPost>('blog', props.params.slug))
+  const data = await ignoreError(getFileForMdx<BlogPost>('blog', (await props.params).slug))
 
   if (!data) {
     return notFound()

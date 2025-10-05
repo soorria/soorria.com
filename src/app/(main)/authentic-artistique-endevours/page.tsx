@@ -10,7 +10,7 @@ import { PUBLIC_URL } from '~/constants'
 import { randomItem } from '~/utils/random'
 import { PageRenderedAt } from '~/components/PageRenderedAt'
 import { SlightBleedContentWrapper } from '~/components/mdx/SlightBleedContentWrapper'
-import { LazyMagicSprinkles } from '~/app/(no-layout)/installations/magic-sprinkles/magic-sprinkles.lazy'
+import { LazyClientMagicSprinkles as LazyMagicSprinkles } from '~/app/(no-layout)/installations/magic-sprinkles/magic-sprinkles.lazy-client'
 import Link from 'next/link'
 import { CODE_BLOCK_CLASSNAMES } from '~/components/mdx/utils'
 import cx from '~/utils/cx'
@@ -24,9 +24,11 @@ const description = 'Welcome to the world of the authentic artistique endevours 
 export const metadata = {
   title,
   description,
+
   alternates: {
     canonical: url,
   },
+
   openGraph: {
     url,
     title,

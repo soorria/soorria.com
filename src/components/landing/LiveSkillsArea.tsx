@@ -157,7 +157,7 @@ function SkillItem({
   imageWidth: number
   position: SkillPosition
   onPositionChange?: OnItemPositionChangeHandler
-  containerRef: RefObject<HTMLElement>
+  containerRef: RefObject<HTMLElement | null>
 }) {
   const element = useRef<HTMLButtonElement>(null)
   const [moving, setMoving] = useState<{
@@ -291,7 +291,7 @@ function SkillItem({
 export function LiveSkillsArea(props: {
   scale: number
   imageWidth: number
-  rootRef: RefObject<HTMLElement>
+  rootRef: RefObject<HTMLElement | null>
 }) {
   const liveSkills = useLiveSkills({
     scale: props.scale,

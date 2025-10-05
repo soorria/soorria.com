@@ -25,9 +25,7 @@ const orderedLinks = [
   links.linkedin,
 ]
 
-type LinksPageProps = {}
-
-const LinksPage = async (_props: LinksPageProps) => {
+const LinksPage = async () => {
   const { heroText, linksHeroText, pattern, linksPattern } = await getSingletonJsonSafe<{
     heroText: string
     linksHeroText: string

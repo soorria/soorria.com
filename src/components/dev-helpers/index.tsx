@@ -1,7 +1,7 @@
 import { TailwindIndicator } from './TailwindIndicator'
 import { OgImagePreview } from './og-preview'
 
-const DevHelpers = () => {
+export const DevHelpers = () => {
   if (process.env.NODE_ENV === 'production') return null
 
   return (
@@ -11,5 +11,3 @@ const DevHelpers = () => {
     </div>
   )
 }
-
-export default DevHelpers

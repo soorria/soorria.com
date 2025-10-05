@@ -11,7 +11,7 @@ export const useCopy = ({ copiedTimeout = 2000 }: UseCopyProps = {}): [
   copied: boolean,
 ] => {
   const [copied, setCopied] = useState(false)
-  const timeoutRef = useRef<NodeJS.Timeout>()
+  const timeoutRef = useRef<NodeJS.Timeout>(undefined)
 
   const copy: CopyFn = useCallback(
     async text => {

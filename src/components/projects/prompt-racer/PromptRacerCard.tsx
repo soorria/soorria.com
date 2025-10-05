@@ -22,30 +22,6 @@ const promptRacerColors = {
 }
 
 const PromptRacerCard: React.FC<PokelifeCardProps> = ({ project }) => {
-  const [shouldAnimate, setShouldAnimate] = useState(false)
-  const root = useRef<HTMLDivElement>(null)
-
-  useEffect(() => {
-    if (!root.current) return
-
-    const obs = new IntersectionObserver(
-      entries => {
-        if (entries[0]) {
-          setShouldAnimate(entries[0].isIntersecting)
-        }
-      },
-      {
-        threshold: [0],
-      }
-    )
-
-    obs.observe(root.current)
-
-    return () => {
-      obs.disconnect()
-    }
-  }, [])
-
   // const comingSoonTag = (
   //   <span className="inline-block -translate-y-px rounded-sm bg-green-500/50 px-1 pb-px text-xs text-green-200">
   //     coming soon
@@ -54,7 +30,7 @@ const PromptRacerCard: React.FC<PokelifeCardProps> = ({ project }) => {
 
   return (
     <div className="sm:col-span-2" id={`${project.slug}`}>
-      <div ref={root} className={cx('bg-[#272933]', COMMON_CLASSNAMES.specialCardRoot)}>
+      <div className={cx('bg-[#272933]', COMMON_CLASSNAMES.specialCardRoot)}>
         <div className="absolute inset-0 grid grid-cols-3 overflow-hidden rounded-xl p-1">
           <div className="col-span-2 col-start-2 text-right">
             <Image

@@ -14,9 +14,11 @@ const url = `${PUBLIC_URL}/snippets`
 export const metadata = {
   title,
   description,
+
   alternates: {
     canonical: url,
   },
+
   openGraph: {
     title,
     description,

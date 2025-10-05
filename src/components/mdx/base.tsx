@@ -6,6 +6,7 @@ import dynamic from 'next/dynamic'
 import { OnlyIsTs, TsJsToggle } from '../TsJsToggle'
 import type { MDXRemoteProps } from 'next-mdx-remote'
 import { SlightBleedContentWrapper } from './SlightBleedContentWrapper'
+import { SolidClientDemo } from './lazy-client-wrappers'
 
 const Sparkles = dynamic(() => import('./Sparkles'))
 
@@ -27,7 +28,7 @@ export const baseComponents = {
   Note: dynamic(() => import('./Note')),
   ReactDemo,
   Demo: ReactDemo,
-  SolidDemo: dynamic(() => import('./SolidDemo'), { ssr: false }),
+  SolidDemo: SolidClientDemo,
   Sparkles,
   sparkles: Sparkles,
   's-sparkles': Sparkles,

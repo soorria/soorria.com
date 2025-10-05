@@ -13,7 +13,7 @@ const getDurationMs = (n: number) => 700 + n * 200
 
 const Subtitle: React.FC<SubtitleProps> = ({ options = [] }) => {
   const [rotations, setRotations] = useState(0)
-  const rotationTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>()
+  const rotationTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(undefined)
   const rotationDuration = rotations > 0 ? getDurationMs(rotations) : 0
   const [index, setIndex] = useState(0)
   const previousIndexes = useRef<number[]>([])

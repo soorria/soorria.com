@@ -9,7 +9,7 @@ import MdxRenderer from '~/components/mdx/MdxRenderer'
 import { ignoreError } from '~/utils/misc'
 
 type ProjectPageProps = {
-  params: { slug: string }
+  params: Promise<{ slug: string }>
 }
 
 export const dynamic = 'force-static'
@@ -17,7 +17,7 @@ export const dynamic = 'force-static'
 export const generateStaticParams = async () => []
 
 export const generateMetadata = async (props: ProjectPageProps) => {
-  const project = await ignoreError(getFileForMdx<Project>('projects', props.params.slug))
+  const project = await ignoreError(getFileForMdx<Project>('projects', (await props.params).slug))
   if (!project) return {}
 
   const url = `${PUBLIC_URL}/projects/${project.slug}`
@@ -50,7 +50,7 @@ export const generateMetadata = async (props: ProjectPageProps) => {
 }
 
 const ProjectPage = async (props: ProjectPageProps) => {
-  const data = await ignoreError(getFileForMdx<Project>('projects', props.params.slug))
+  const data = await ignoreError(getFileForMdx<Project>('projects', (await props.params).slug))
 
   if (!data?.code) {
     return notFound()

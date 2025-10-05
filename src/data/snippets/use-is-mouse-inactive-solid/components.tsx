@@ -59,7 +59,6 @@ export const createExample: import('~/components/mdx/SolidDemo').CreateSolidDemo
 
     return {
       component: () => {
-        // eslint-disable-next-line react-hooks/rules-of-hooks
         const isMouseInactive = useIsMouseInactive({
           timeout: TIMEOUT_SECONDS * 1000,
           root: window,

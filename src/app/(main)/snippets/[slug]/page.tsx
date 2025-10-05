@@ -15,7 +15,7 @@ import { LazyGiscus } from '~/components/posts/comments/Giscus'
 
 const SCROLL_VAR = '--scroll'
 type SnippetPageProps = {
-  params: { slug: string }
+  params: Promise<{ slug: string }>
 }
 
 export const dynamic = 'force-static'
@@ -26,7 +26,8 @@ export const generateStaticParams = async () => {
   return snippets.map(({ slug }) => ({ slug }))
 }
 
-export const generateMetadata = async ({ params }: SnippetPageProps): Promise<Metadata> => {
+export const generateMetadata = async (props: SnippetPageProps): Promise<Metadata> => {
+  const params = await props.params
   const snippet = await ignoreError(getFileForMdx<Snippet>('snippets', params.slug))
   if (!snippet) return {}
 
@@ -61,7 +62,8 @@ export const generateMetadata = async ({ params }: SnippetPageProps): Promise<Me
   }
 }
 
-const SnippetPage = async ({ params }: SnippetPageProps) => {
+const SnippetPage = async (props: SnippetPageProps) => {
+  const params = await props.params
   const data = await ignoreError(getFileForMdx<Snippet>('snippets', params.slug))
 
   if (!data) notFound()

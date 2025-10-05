@@ -107,9 +107,7 @@ const LINKS: LinkType[][] = [
 
 const linkClass = 'transition-colors text-drac-pink hocus:text-drac-purple focus-ring rounded-sm'
 
-interface FooterProps {}
-
-const Footer: React.FC<FooterProps> = () => {
+const Footer: React.FC = () => {
   return (
     <Container>
       <footer className="flex flex-col space-y-8 border-t border-drac-base-light pb-10 pt-8">

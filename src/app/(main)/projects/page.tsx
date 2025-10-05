@@ -13,9 +13,11 @@ const url = `${PUBLIC_URL}/projects`
 export const metadata = {
   title,
   description,
+
   alternates: {
     canonical: url,
   },
+
   openGraph: {
     title,
 

@@ -6,13 +6,18 @@ import '~/styles/globals.css'
 import NoJsStyles from '~/styles/NoJsStyles'
 import '~/styles/prose.css'
 import dynamic from 'next/dynamic'
+import type { Viewport } from 'next'
 
-const DevHelpers = dynamic(() => import('~/components/dev-helpers'), { ssr: false })
+const DevHelpers =
+  process.env.NODE_ENV === 'development'
+    ? dynamic(() => import('~/components/dev-helpers').then(mod => mod.DevHelpers), { ssr: true })
+    : () => null
 
 const title = 'Soorria Saruva - Full Stack Software Engineer'
 const description = 'Full Stack Software Engineer'
 export const metadata = {
   metadataBase: new URL('https://soorria.com'),
+
   title: {
     default: title,
     template: '%s • Soorria Saruva',
@@ -20,21 +25,26 @@ export const metadata = {
     // template: '%s - Soorria Saruva',
     // template: '%s / Soorria Saruva',
   },
+
   description,
+
   verification: {
     google: 'Cl0BjsWegjV0EoEmhPMVdyI9qWoAdOwh5S-h37tEaao',
   },
+
   icons: {
     icon: [
       { type: 'image/png', url: '/favicon-32x32.png', sizes: '32x32' },
       { type: 'image/png', url: '/favicon-16x16.png', sizes: '16x16' },
     ],
   },
-  themeColor: '#282a36',
+
   manifest: '/site.webmanifest',
+
   other: {
     'msapplication-TileColor': '#282a36',
   },
+
   openGraph: {
     type: 'website',
     locale: 'en_AU',
@@ -49,11 +59,13 @@ export const metadata = {
       },
     ],
   },
+
   twitter: {
     creator: '@soorriously',
     site: '@soorriously',
     card: 'summary_large_image',
   },
+
   alternates: {
     canonical: 'https://soorria.com',
   },
@@ -98,3 +110,7 @@ const RootLayout = ({ children }: { children: ReactNode }) => {
 }
 
 export default RootLayout
+
+export const viewport: Viewport = {
+  themeColor: '#282a36',
+}

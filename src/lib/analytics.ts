@@ -4,7 +4,7 @@ import { useCallback, useRef } from 'react'
 export type AnalyticsCustomEvents = {
   'Easter Egg': { which: string }
   'Links Page': { link?: string }
-  'Play with skills': {}
+  'Play with skills': never
   'Clicked code block copy button': {
     id: string
   }

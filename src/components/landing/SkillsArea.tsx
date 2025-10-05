@@ -12,7 +12,7 @@ const LazyLiveSkillsArea = dynamic(
   }
 )
 
-function useElementWidth(element: RefObject<HTMLElement>) {
+function useElementWidth(element: RefObject<HTMLElement | null>) {
   const [width, setWidth] = useState(0)
 
   useLayoutEffect(() => {

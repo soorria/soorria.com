@@ -5,7 +5,7 @@ import cx from '~/utils/cx'
 import { COMMON_CLASSNAMES } from '../utils'
 import type React from 'react'
 import ShowWhenVisible from '~/components/ShowWhenVisible'
-import { LazyMagicSprinkles } from '~/app/(no-layout)/installations/magic-sprinkles/magic-sprinkles.lazy'
+import { LazyClientMagicSprinkles as LazyMagicSprinkles } from '~/app/(no-layout)/installations/magic-sprinkles/magic-sprinkles.lazy-client'
 import Sparkles from '~/components/mdx/Sparkles'
 
 interface MagicSprinklesCardProps {

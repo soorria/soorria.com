@@ -11,9 +11,11 @@ const url = `${PUBLIC_URL}/all-posts`
 export const metadata = {
   title,
   description,
+
   alternates: {
     canonical: url,
   },
+
   openGraph: {
     title,
     description,

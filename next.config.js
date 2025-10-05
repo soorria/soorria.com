@@ -197,16 +197,9 @@ const config = {
     domains: process.env.NODE_ENV === 'development' ? ['localhost'] : undefined,
   },
   reactStrictMode: true,
-  // swcMinify: true,
+  serverExternalPackages: ['esbuild', '@mdx-js/esbuild', 'shiki', '@babel/core'],
   experimental: {
     esmExternals: 'loose',
-    serverComponentsExternalPackages: [
-      'esbuild',
-      '@mdx-js/esbuild',
-      'shiki',
-      'mdx-bundler',
-      '@babel/core',
-    ],
   },
   eslint: {
     ignoreDuringBuilds: true,

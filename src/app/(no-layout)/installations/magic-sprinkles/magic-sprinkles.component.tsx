@@ -5,7 +5,11 @@ import cx from '~/utils/cx'
 import { createNonRepeatRandomItem } from '~/utils/random'
 import { useHydrated } from '~/utils/use-hydrated'
 
-type MagicSprinklesProps = { fade?: boolean; isInHero?: boolean; ignoreMouseOutside?: boolean }
+export type MagicSprinklesProps = {
+  fade?: boolean
+  isInHero?: boolean
+  ignoreMouseOutside?: boolean
+}
 export const MagicSprinkles = (props: MagicSprinklesProps) => {
   const hydrated = useHydrated()
 

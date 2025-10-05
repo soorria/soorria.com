@@ -15,6 +15,7 @@ export const metadata = {
   title,
   description: shortDescription,
   alternates: { canonical: url },
+
   openGraph: {
     url,
     title,

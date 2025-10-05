@@ -41,6 +41,7 @@
     "src/**/*.tsx",
     ".next/types/**/*.ts",
     "next-env.d.ts",
-    "src/types/react.d..ts"
+    "src/types/react.d.ts",
+    "eslint.config.js"
   ]
 }

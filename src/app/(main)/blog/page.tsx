@@ -14,9 +14,11 @@ const url = `${PUBLIC_URL}/blog`
 export const metadata = {
   title,
   description,
+
   alternates: {
     canonical: url,
   },
+
   openGraph: {
     title,
     description,
