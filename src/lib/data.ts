@@ -28,6 +28,7 @@ const isFile = (path: PathLike): Promise<boolean> =>
 const getFiles = async (type: DataType): Promise<string[]> => fs.readdir(getTypePath(type))
 
 const COMPONENTS_FILE = 'components.js' as const
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const files = [COMPONENTS_FILE, 'index.mdx'] as const
 
 const wordsFormatter = Intl.NumberFormat('en', { notation: 'compact' } as Intl.NumberFormatOptions)

@@ -57,7 +57,7 @@ const ContactForm: React.FC = () => {
       } else {
         setStatus(FormStatus.ERROR)
       }
-    } catch (err) {
+    } catch {
       setStatus(FormStatus.ERROR)
     }
   }

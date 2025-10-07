@@ -80,7 +80,7 @@ export const useSyncedLocalStorage = <T extends NonNullJsonValue = NonNullJsonVa
 
     try {
       setState(JSON.parse(cached) as T)
-    } catch (err) {
+    } catch {
       setState(initialValueRef.current)
     }
   }, [key, initialValueRef])

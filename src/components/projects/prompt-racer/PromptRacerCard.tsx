@@ -6,7 +6,6 @@ import { CodeIcon, ExternalIcon, InfoIcon } from '~/components/icons'
 import cx from '~/utils/cx'
 import { COMMON_CLASSNAMES } from '../utils'
 import type React from 'react'
-import { useEffect, useRef, useState } from 'react'
 import Image from 'next/image'
 import promptRacerImg from './prompt-racer.webp'
 

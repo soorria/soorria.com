@@ -99,7 +99,7 @@ export const createGetBySlugHandler =
             slug
           ),
         })
-      } catch (err) {
+      } catch {
         res.status(404).end()
       }
     }

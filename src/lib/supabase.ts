@@ -42,7 +42,7 @@ export const getSingletonTextSafe = async (slug: string): Promise<string | null>
   try {
     const singleton = await getSingleton(slug)
     return singleton.content
-  } catch (err) {
+  } catch {
     return null
   }
 }
@@ -55,7 +55,7 @@ export const getSingletonJsonSafe = async <T extends Record<string, unknown>>(
     const str = singleton.content
     const parsed = JSON.parse(str) as unknown
     return (typeof parsed === 'object' ? (parsed as Record<string, unknown>) : {}) as Partial<T>
-  } catch (err) {
+  } catch {
     return {}
   }
 }

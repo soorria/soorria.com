@@ -12,7 +12,7 @@ export const useLocalStorage = <T>(
 
     try {
       return JSON.parse(cached) as T
-    } catch (err) {
+    } catch {
       return initialValue
     }
   })
