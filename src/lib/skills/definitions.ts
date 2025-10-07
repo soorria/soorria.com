@@ -27,7 +27,18 @@ export const SKILLS = [
   { label: 'Lambda' },
   { label: 'Terraform' },
   { label: 'NuxtJS' },
-] satisfies SkillDefinition[]
+  { label: 'Astro' },
+  { label: 'Hono' },
+  { label: 'Hono ' },
+  { label: 'Redis' },
+  { label: 'Cloudflare' },
+  { label: 'Sentry' },
+  { label: 'Preact' },
+  { label: 'Svelte' },
+  { label: 'Deno' },
+  { label: 'jQuery' },
+  { label: 'Tailwind' },
+] as const
 
 export const getRandomSkillIndexes = (n = 8): number[] => {
   return SKILLS.map((_, i) => i)

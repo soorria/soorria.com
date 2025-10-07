@@ -34,8 +34,9 @@ import denoImg from './logos/deno.svg'
 import jqueryImg from './logos/jquery.svg'
 import tailwindImg from './logos/tailwind.svg'
 import type { StaticImageData } from 'next/image'
+import type { SKILLS } from './definitions'
 
-export const skillLabelToImage = {
+export const skillLabelToImage: Record<(typeof SKILLS)[number]['label'], StaticImageData> = {
   JavaScript: javascriptImg as StaticImageData,
   TypeScript: typescriptImg as StaticImageData,
   Kotlin: kotlinImg as StaticImageData,
@@ -71,4 +72,4 @@ export const skillLabelToImage = {
   Deno: denoImg as StaticImageData,
   jQuery: jqueryImg as StaticImageData,
   Tailwind: tailwindImg as StaticImageData,
-} as Record<string, StaticImageData>
+}
