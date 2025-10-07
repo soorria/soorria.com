@@ -6,43 +6,88 @@ tags:
   - mongodb
 category: 'miscellaneous'
 shortDescription: |
-  Issues with MongoDB that have caused me great pain and suffering.
+  MongoDB is technically a database.
 
 # createdAt: '2025-09-28'
 # updatedAt: '2025-09-28'
 ---
 
-## You can insert documents with fields that you can't query on
+<Note variant="info" title="">
+
+The opinions expressed in this post do not reflect those of my employer :)
+
+</Note>
+
+I've used MongoDB ~too much~ a good amount over the last few years at work, and
+in a few [side](https://msg.mooth.tech) [projects](https://jjs.soorria.com)
+before. The more I use it, the more disappointed I am in how the database works,
+and its ergonomics.
+
+Below is a series of complaints I have about the MongoDB database and the
+MongoDB Atlas platform.
+
+## You can insert documents with fields that you can't (easily) query on
 
 Mongo db "unflattens" dotted paths. If you query or update the field
-`nested.path.to.data`, you instead query / update the following field:
+`path.to.data`, you instead query / update the following field:
 
 ```jsonc
 {
-  "nested": {
-    "path": {
-      "to": {
-        "data": "hello",
-      },
+  "path": {
+    "to": {
+      "data": "hello",
     },
   },
 }
 ```
 
-However, when you insert a document with the field `nested.path.to.data`, the
-resulting document is:
+However, when you insert a document with the field `path.to.data` (e.g. using
+`insertOne` or `insertMany`), the resulting document is:
 
 ```jsonc
 {
   "_id": "bruhbruhbruhbruhbruhbruhbruhbruhbruh",
-  "nested.path.to.data": "hello",
+  "path.to.data": "hello",
 }
 ```
 
 Since this field has dots in the field name, when you query on that field,
 you're instead querying on the nested field.
 
-Thankfully this is pretty trivial to prevent.
+Technically, this point is a lie and you _can_ filter documents with dotted
+fields using something disgusting like this:
+
+```js
+{
+  "$expr": {
+    "$eq": [
+      {
+        "$getField": "path.to.data"
+      },
+      "hello"
+    ]
+  }
+}
+```
+
+## You need to use aggregation pipelines for some update operations
+
+## Atlas Search queries don't use MQL
+
+- You need to use
+
+## MongoDB Atlas' UI is garbage
+
+- Alerts from Search Indexes aren't properly handled so deep-links don't work
+- Alerts don't really take into account
+- unfathomable amounts of layout shift when loading a collection
+  - extra disappointing because the Compass desktop app works fine
+  - while writing this post, they have a new preview UI that uses the same UI as
+    the desktop app
+
+## Paid support is required
+
+## The query planner often gets confused by similar indexesz
 
 ## Filtering for `field == null`
 
@@ -183,12 +228,12 @@ for `field == undefined` becomes `field == null` which becomes
 should not.
 
 <br />
+<br />
 
 Is this JavaScript's fault for having 2 nil / empty values? Yes.
 
-Is this MongoDB's fault for having terrible defaults? Also yes.
+Is this also MongoDB's fault for having terrible defaults? Also yes.
 
-<br />
 <br />
 <br />
 
@@ -214,14 +259,14 @@ Thankfully you can fix this issue in your projects:
    claude --dangerously-skip-permissions "$prompt"
    ```
 
-3. Weep for a true evil has been exorcised from this world.
+3. Weep for true evil has been exorcised from this world.
 
-If for whatever reason, you're emotionally attached MongoDB and can't stand
-deleting it, you can set `ignoreUndefined` to `true` when you create an instance
-of the torture device:
+If for whatever reason, you're emotionally attached to MongoDB and can't stand
+deleting it, you can set `ignoreUndefined: true` when you create an instance of
+the torture device:
 
 ```js
-const tortureDevice = new MongoClient('postgres://localhost:5432/database', {
+const pearOfAnguish = new MongoClient('postgres://localhost:5432/database', {
   /**
    * make torture device slightly less painful
    */

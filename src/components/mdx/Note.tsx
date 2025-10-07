@@ -21,7 +21,7 @@ const VARIANT_TITLE: Partial<Record<Variant, ReactNode>> = {
 }
 
 const Note: React.FC<NoteProps> = ({ children, variant = 'info', title: titleProp, id }) => {
-  const title = titleProp || VARIANT_TITLE[variant]
+  const title = titleProp ?? VARIANT_TITLE[variant]
   return (
     <div className="-mx-0.5" id={id}>
       <div

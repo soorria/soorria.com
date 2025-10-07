@@ -23,7 +23,6 @@ export const SpinningIconDividerClient: React.FC<{ icon: ReactNode; scrollVar: S
       style={{ gridTemplateColumns: '1fr auto 1fr' }}
     >
       {line}
-
       {icon}
       {line}
     </div>
