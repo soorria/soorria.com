@@ -16,11 +16,15 @@ type OgParams = {
 }
 
 const getOgUrl = ({ title, bottomText, subtitle, titleParts, debug }: OgParams): string => {
-  const params = [
-    `title=${encodeURIComponent(title)}`,
-    `subtitle=${subtitle ? encodeURIComponent(subtitle) : ''}`,
-    `bottomText=${bottomText ? encodeURIComponent(bottomText) : ''}`,
-  ]
+  const params = [`title=${encodeURIComponent(title)}`]
+
+  if (subtitle) {
+    params.push(`subtitle=${encodeURIComponent(subtitle)}`)
+  }
+
+  if (bottomText) {
+    params.push(`bottomText=${encodeURIComponent(bottomText)}`)
+  }
 
   if (titleParts) {
     params.push(...titleParts.map(part => `titleParts=${encodeURIComponent(part)}`))
@@ -33,18 +37,14 @@ const getOgUrl = ({ title, bottomText, subtitle, titleParts, debug }: OgParams):
   return `${PUBLIC_URL}/api/og?${params.join('&')}`
 }
 
-export const getOgImageForData = (
-  type: DataType,
-  title?: string,
-  titleParts?: string[]
-): OgImage => {
+export const getOgImageForData = (type: DataType, title?: string, titleParts?: string[]) => {
   return getOgImage({ title: title || type, subtitle: `soorria.com/${type} `, titleParts })
 }
 
-export const getOgImage = (params: OgParams): OgImage => {
+export const getOgImage = (params: OgParams) => {
   return {
     url: getOgUrl(params),
     width: 1200,
     height: 630,
-  }
+  } satisfies OgImage
 }

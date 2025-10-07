@@ -7,6 +7,10 @@ import path from 'path'
 import { addRefToUrl, blogPostFilter, sortByCreatedAtField } from '../utils/content'
 import type { SnippetFrontMatter } from '~/types/snippet'
 import type { BlogPostFrontMatter } from '~/types/blog-post'
+import { Feed } from 'feed'
+import { PUBLIC_URL } from '~/constants'
+import { getOgImageForData } from '~/utils/og'
+import { htmlEscape } from '~/utils/html-escape'
 
 const DATA_ROOT = path.join(process.cwd(), 'src/data')
 
@@ -177,4 +181,53 @@ export const sortPostsForRender = (posts: AllPostsItem[]) => {
   }
 
   return result
+}
+
+export async function createFeed() {
+  const feed = new Feed({
+    title: 'Soorria Saruva',
+    description: 'Full Stack Software Engineer',
+    copyright: 'All rights reserved Soorria Saruva',
+
+    id: 'https://soorria.com',
+    link: 'https://soorria.com',
+    image: 'https://soorria.com/og.png',
+    language: 'en',
+
+    feedLinks: {
+      rss: 'https://soorria.com/rss.xml',
+      atom: 'https://soorria.com/atom.xml',
+    },
+
+    author: {
+      name: 'Soorria Saruva',
+      avatar: 'https://soorria.com/logo.png',
+      email: 'soorria.ss@gmail.com',
+      link: 'https://soorria.com',
+    },
+
+    generator: 'hopes and dreams',
+  })
+
+  const posts = await getAllPosts()
+
+  for (const post of posts) {
+    if (!post.createdAt) continue
+
+    feed.addItem({
+      id: `${post.type}/${post.slug}`,
+      link: `${PUBLIC_URL}/${post.type}/${post.slug}`,
+      title: post.title,
+      description: post.shortDescription,
+      image: {
+        url: htmlEscape(getOgImageForData(post.type, post.title, post.ogImageTitleParts).url),
+        type: 'image/png',
+        length: 21300,
+      },
+      published: new Date(post.createdAt),
+      date: new Date(post.updatedAt || post.createdAt),
+    })
+  }
+
+  return feed
 }

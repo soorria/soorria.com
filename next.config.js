@@ -166,6 +166,14 @@ const config = {
             },
           ],
         },
+        {
+          source: '/rss.xml',
+          destination: '/rss',
+        },
+        {
+          source: '/atom.xml',
+          destination: '/atom',
+        },
       ],
       afterFiles: [],
       fallback: [
