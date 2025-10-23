@@ -176,6 +176,17 @@ const getArt = (): Array<
         />
       ),
     },
+    {
+      isoDate: '2025-10-23',
+      title: 'Glistening Saint',
+      content: (
+        <MDXImage
+          src={artImages.GlisteningSaint}
+          alt="gif of a saint with emoji prayer hands coming together to form a heart"
+          placeholder="blur"
+        />
+      ),
+    },
   ].sort(
     // newest first
     (a, b) => new Date(b.isoDate).getTime() - new Date(a.isoDate).getTime()
