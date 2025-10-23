@@ -8,7 +8,7 @@ import { useHydrated } from '~/utils/use-hydrated'
 export type MagicSprinklesProps = {
   fade?: boolean
   isInHero?: boolean
-  ignoreMouseOutside?: boolean
+  ignoreMobileTouch?: boolean
 }
 export const MagicSprinkles = (props: MagicSprinklesProps) => {
   const hydrated = useHydrated()
@@ -36,9 +36,9 @@ const Canvas = (props: MagicSprinklesProps) => {
     if (!ctx || !canvas || !container) return
 
     return renderer(ctx, canvas, container, {
-      ignoreMouseOutside: props.ignoreMouseOutside ?? true,
+      ignoreMobileTouch: false,
     })
-  }, [props.ignoreMouseOutside])
+  }, [props.ignoreMobileTouch])
 
   return (
     <div
@@ -83,7 +83,7 @@ const renderer = (
   ctx: CanvasRenderingContext2D,
   canvas: HTMLCanvasElement,
   container: HTMLDivElement,
-  _options: Pick<MagicSprinklesProps, 'ignoreMouseOutside'>
+  options: Pick<MagicSprinklesProps, 'ignoreMobileTouch'>
 ): (() => void) | void => {
   const { devicePixelRatio: ratio = 1 } = window
   const query = Object.fromEntries(new URLSearchParams(window.location.search))
@@ -299,8 +299,11 @@ const renderer = (
         touch.clientY <= containerRect.bottom
 
       if (!isOverContainer) return
-      e.preventDefault()
-      ;(document.activeElement as HTMLElement)?.blur()
+
+      if (options.ignoreMobileTouch && e.touches?.length) {
+        e.preventDefault()
+        ;(document.activeElement as HTMLElement)?.blur()
+      }
     } else if (e.type === 'touchend') {
       mouse = { x: -Infinity, y: -Infinity }
     }
