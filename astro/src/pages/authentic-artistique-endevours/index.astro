@@ -1,0 +1,111 @@
+---
+import MainLayout from '~/layouts/MainLayout.astro'
+import PostLayout from '~/components/posts/PostLayout'
+import ProseWrapper from '~/components/posts/ProseWrapper'
+import CustomLink from '~/components/CustomLink'
+import { getOgImage } from '~/utils/og'
+import { PUBLIC_URL } from '~/constants'
+
+const url = `${PUBLIC_URL}/art`
+const title = 'Authentic Artistique Endevours'
+const description = 'Welcome to the world of the authentic artistique endevours of Soorria Saruva.'
+
+// Art pieces with their metadata
+const art = [
+  {
+    slug: 'glistening-saint',
+    title: 'Glistening Saint',
+    isoDate: '2025-10-23',
+    alt: 'gif of a saint with emoji prayer hands coming together to form a heart',
+  },
+  {
+    slug: 'the-bruhfferfish',
+    title: 'the bruhfferfish',
+    isoDate: '2025-09-12',
+    alt: 'colorful pufferfish drawing with bruh written on its side',
+  },
+  {
+    slug: 'sandbox-bouldering-t-shirt-design',
+    title: 'Sandbox Bouldering t-shirt design',
+    isoDate: '2025-05-10',
+    alt: 't-shirt design featuring a cat in a sandbox',
+  },
+  {
+    slug: 'speed-sudoku-champion-riki',
+    title: 'Speed Sudoku Champion Riki',
+    isoDate: '2023-12-13',
+    alt: 'pencil-on-paper drawing of Riki Miyamura sitting and wearing a Champion jumper after winning a speed sudoku competition',
+  },
+  {
+    slug: 'david-lau-nft-real',
+    title: 'david Lau nft (real)',
+    isoDate: '2023-12-02',
+    alt: "realistic depiction of David Lau looking like The Boy's Homelander and shooting laser beams from his eyes",
+  },
+  {
+    slug: 'magic-sprinkles',
+    title: 'magic sprinkles',
+    isoDate: '2023-08-12',
+    alt: 'interactive magic sprinkles animation',
+    isInteractive: true,
+  },
+  {
+    slug: 'unnamed-waifu',
+    title: 'unnamed waifu',
+    isoDate: '2022-09-02',
+    alt: 'a drawing of a waifu with a speech bubble saying "I love you"',
+  },
+  {
+    slug: 'donald-trump-nft-real',
+    title: 'donald trump nft (real)',
+    isoDate: '2022-12-17',
+    alt: 'satirical portrayal of a Donald Trump NFT involving a stick figure shooting laser beams out of their eyes and wearing a cape',
+  },
+].sort((a, b) => new Date(b.isoDate).getTime() - new Date(a.isoDate).getTime())
+---
+
+<MainLayout
+  title={title}
+  description={description}
+  ogImage={getOgImage({ title: 'Authentic Artistique Endevours', subtitle: 'soorria.com/art' })}
+>
+  <PostLayout
+    title="Art"
+    description={`...or more accurately "art". Welcome to the world of the authentic artistique endevours of Soorria Saruva.`}
+  >
+    <ProseWrapper>
+      {art.map(item => (
+        <div class="mb-12">
+          <h2 id={item.slug} class="!mb-0">
+            {item.title}
+            <CustomLink
+              href={`#${item.slug}`}
+              className="heading-anchor"
+              aria-hidden="true"
+              tabIndex={-1}
+            />
+          </h2>
+          <p class="text-sm">
+            <em>masterfully</em> created on{' '}
+            <time datetime={item.isoDate}>
+              {new Date(item.isoDate).toLocaleDateString()}
+            </time>
+          </p>
+          {item.isInteractive ? (
+            <div class="rounded-lg border border-drac-purple/30 bg-drac-purple/10 p-8 text-center">
+              <p class="text-drac-purple">Interactive installation</p>
+              <a href="/installations/magic-sprinkles" class="text-drac-pink hover:text-drac-purple">
+                View full installation
+              </a>
+            </div>
+          ) : (
+            <div class="rounded-lg border border-drac-base-light p-4 text-center text-drac-content/60">
+              <p>Image coming soon</p>
+              <p class="text-sm italic">{item.alt}</p>
+            </div>
+          )}
+        </div>
+      ))}
+    </ProseWrapper>
+  </PostLayout>
+</MainLayout>
