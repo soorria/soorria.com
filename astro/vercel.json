@@ -1,5 +1,11 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
+  "rewrites": [
+    { "source": "/((?!api|_astro|fonts|favicon|logo|og|robots|sitemap).*)", "has": [{ "type": "host", "value": "links.soorria.com" }], "destination": "/links" },
+    { "source": "/((?!api|_astro|fonts|favicon|logo|og|robots|sitemap).*)", "has": [{ "type": "host", "value": "card.soorria.com" }], "destination": "/links" },
+    { "source": "/((?!api|_astro|fonts|favicon|logo|og|robots|sitemap).*)", "has": [{ "type": "host", "value": "cardd.soorria.com" }], "destination": "/links" },
+    { "source": "/((?!api|_astro|fonts|favicon|logo|og|robots|sitemap).*)", "has": [{ "type": "host", "value": "carrd.soorria.com" }], "destination": "/links" }
+  ],
   "redirects": [
     { "source": "/blogs/:path*", "destination": "/blog/:path*", "permanent": true },
     { "source": "/posts/:path*", "destination": "/blog/:path*", "permanent": true },
