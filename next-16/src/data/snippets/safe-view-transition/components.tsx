@@ -4,12 +4,15 @@ import { useRef, useEffect, useState, type ElementRef } from 'react'
 
 // This block of code stops of the transition from happening if the user
 // doesn't want it
-const motionSafeMediaQuery = window.matchMedia(
-  '(prefers-reduced-motion: no-preference)'
-)
-let motionSafe = motionSafeMediaQuery.matches
-motionSafeMediaQuery.onchange = () => {
+let motionSafe = true
+if (typeof window !== 'undefined') {
+  const motionSafeMediaQuery = window.matchMedia(
+    '(prefers-reduced-motion: no-preference)'
+  )
   motionSafe = motionSafeMediaQuery.matches
+  motionSafeMediaQuery.onchange = () => {
+    motionSafe = motionSafeMediaQuery.matches
+  }
 }
 
 export type ViewTransitionCallback = () => void | Promise<void>

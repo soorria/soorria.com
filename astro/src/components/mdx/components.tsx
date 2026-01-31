@@ -2,6 +2,7 @@ import CustomLink from '../CustomLink'
 import Note from './Note'
 import { SlightBleedContentWrapper } from './SlightBleedContentWrapper'
 import ReactDemo from './ReactDemo'
+import SolidDemoComponent, { type CreateSolidDemo } from './SolidDemo'
 import type { ComponentType, ReactNode } from 'react'
 
 // Sandbox component for embedded iframes
@@ -78,6 +79,11 @@ const createStub = (name: string) => ({ children }: { children?: ReactNode }) =>
   </div>
 )
 
+// SolidDemo wrapper that accepts the create prop
+const SolidDemo = ({ create }: { create: CreateSolidDemo }) => (
+  <SolidDemoComponent create={create} />
+)
+
 // MDX components to be passed to Content
 export const mdxComponents = {
   a: CustomLink,
@@ -85,7 +91,7 @@ export const mdxComponents = {
   Sandbox,
   Demo,
   ReactDemo: Demo,
-  SolidDemo: Demo,
+  SolidDemo,
   Sparkles,
   sparkles: Sparkles,
   's-sparkles': Sparkles,

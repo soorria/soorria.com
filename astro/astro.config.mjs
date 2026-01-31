@@ -1,7 +1,9 @@
 // @ts-check
 import { defineConfig } from 'astro/config'
 import react from '@astrojs/react'
+import solid from '@astrojs/solid-js'
 import mdx from '@astrojs/mdx'
+import sitemap from '@astrojs/sitemap'
 import vercel from '@astrojs/vercel'
 import tailwindcss from '@tailwindcss/vite'
 import remarkGfm from 'remark-gfm'
@@ -17,7 +19,14 @@ export default defineConfig({
   output: 'static',
   adapter: vercel(),
   integrations: [
-    react(),
+    react({
+      include: ['**/components/**', '**/pages/**', '**/layouts/**'],
+      exclude: ['**/content/snippets/*-solid*/**'],
+    }),
+    solid({
+      include: ['**/content/snippets/*-solid*/**'],
+    }),
+    sitemap(),
     mdx({
       remarkPlugins: [remarkGfm],
       rehypePlugins: [

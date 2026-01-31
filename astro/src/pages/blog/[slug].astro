@@ -3,6 +3,7 @@ import { getCollection, render } from 'astro:content'
 import MainLayout from '~/layouts/MainLayout.astro'
 import PostLayout from '~/components/posts/PostLayout'
 import ProseWrapper from '~/components/posts/ProseWrapper'
+import Giscus from '~/components/posts/Giscus'
 import { BookIcon, ClockIconSolid, EditIcon, TextIcon } from '~/components/icons'
 import { formatDate } from '~/utils/date'
 import { getOgImageForData } from '~/utils/og'
@@ -55,5 +56,10 @@ const pageTitle = `${post.data.title} | Blog`
     <ProseWrapper>
       <Content components={mdxComponents} />
     </ProseWrapper>
+
+    <div class="mt-16">
+      <h2 class="mb-4 text-xl font-bold">Comments</h2>
+      <Giscus client:only="react" dataType="blog" slug={post.id} />
+    </div>
   </PostLayout>
 </MainLayout>

@@ -1,10 +1,13 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "rewrites": [
-    { "source": "/((?!api|_astro|fonts|favicon|logo|og|robots|sitemap).*)", "has": [{ "type": "host", "value": "links.soorria.com" }], "destination": "/links" },
-    { "source": "/((?!api|_astro|fonts|favicon|logo|og|robots|sitemap).*)", "has": [{ "type": "host", "value": "card.soorria.com" }], "destination": "/links" },
-    { "source": "/((?!api|_astro|fonts|favicon|logo|og|robots|sitemap).*)", "has": [{ "type": "host", "value": "cardd.soorria.com" }], "destination": "/links" },
-    { "source": "/((?!api|_astro|fonts|favicon|logo|og|robots|sitemap).*)", "has": [{ "type": "host", "value": "carrd.soorria.com" }], "destination": "/links" }
+    { "source": "/", "destination": "/api/curl-card", "has": [{ "type": "header", "key": "user-agent", "value": "curl/(.*)" }], "missing": [{ "type": "query", "key": "card", "value": "nah" }] },
+    { "source": "/js/potato.js", "destination": "https://plausible.mooth.tech/js/script.js" },
+    { "source": "/api/event", "destination": "https://plausible.mooth.tech/api/event" },
+    { "source": "/((?!api|_astro|fonts|favicon|logo|og|robots|sitemap|js).*)", "has": [{ "type": "host", "value": "links.soorria.com" }], "destination": "/links" },
+    { "source": "/((?!api|_astro|fonts|favicon|logo|og|robots|sitemap|js).*)", "has": [{ "type": "host", "value": "card.soorria.com" }], "destination": "/links" },
+    { "source": "/((?!api|_astro|fonts|favicon|logo|og|robots|sitemap|js).*)", "has": [{ "type": "host", "value": "cardd.soorria.com" }], "destination": "/links" },
+    { "source": "/((?!api|_astro|fonts|favicon|logo|og|robots|sitemap|js).*)", "has": [{ "type": "host", "value": "carrd.soorria.com" }], "destination": "/links" }
   ],
   "redirects": [
     { "source": "/blogs/:path*", "destination": "/blog/:path*", "permanent": true },

@@ -3,6 +3,7 @@ import { getCollection, render } from 'astro:content'
 import MainLayout from '~/layouts/MainLayout.astro'
 import PostLayout from '~/components/posts/PostLayout'
 import ProseWrapper from '~/components/posts/ProseWrapper'
+import Giscus from '~/components/posts/Giscus'
 import { ClockIconSolid, EditIcon } from '~/components/icons'
 import { formatDate } from '~/utils/date'
 import { getOgImageForData } from '~/utils/og'
@@ -13,11 +14,8 @@ export async function getStaticPaths() {
   // Snippets with custom components or JSX props that need special handling
   // TODO: Migrate these components properly
   // Snippets with issues that need special handling
-  const snippetsWithCustomComponents = [
-    'create-previous-memo', // SolidJS demo
-    'safe-view-transition', // Uses window at module level
-    'use-copy-react', // Uses JSX in Collapse summary prop (Astro MDX interop issue)
-    'use-is-mouse-inactive-solid', // SolidJS demo
+  const snippetsWithCustomComponents: string[] = [
+    // All snippets now supported!
   ]
 
   const snippets = await getCollection('snippets')
@@ -59,5 +57,10 @@ const pageTitle = `${snippet.data.title} | Snippets`
     <ProseWrapper>
       <Content components={mdxComponents} />
     </ProseWrapper>
+
+    <div class="mt-16">
+      <h2 class="mb-4 text-xl font-bold">Comments</h2>
+      <Giscus client:only="react" dataType="snippets" slug={snippet.id} />
+    </div>
   </PostLayout>
 </MainLayout>
