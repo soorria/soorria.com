@@ -5,8 +5,11 @@
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
     "isolatedModules": true,
-    "jsx": "preserve",
-    "lib": ["dom", "es2022"],
+    "jsx": "react-jsx",
+    "lib": [
+      "dom",
+      "es2022"
+    ],
     "module": "esnext",
     "moduleResolution": "bundler",
     "noEmit": true,
@@ -19,9 +22,15 @@
     "target": "esnext",
     "baseUrl": ".",
     "paths": {
-      "~/*": ["src/*"],
-      "~data/*": ["src/data/*"],
-      "$styles": ["src/mdx/styles.ts"]
+      "~/*": [
+        "src/*"
+      ],
+      "~data/*": [
+        "src/data/*"
+      ],
+      "$styles": [
+        "src/mdx/styles.ts"
+      ]
     },
     "incremental": true,
     "importsNotUsedAsValues": "remove",
@@ -34,7 +43,9 @@
     ],
     "verbatimModuleSyntax": true
   },
-  "exclude": ["node_modules"],
+  "exclude": [
+    "node_modules"
+  ],
   "include": [
     "src/**/*.ts",
     "src/**/*.js",
@@ -44,6 +55,7 @@
     "src/types/react.d.ts",
     "eslint.config.mts",
     "postcss.config.js",
-    "prettier.config.mjs"
+    "prettier.config.mjs",
+    ".next/dev/types/**/*.ts"
   ]
 }

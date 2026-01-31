@@ -4,9 +4,9 @@
   "private": true,
   "scripts": {
     "predev": "npm run codegen",
-    "dev": "next dev",
+    "dev": "next dev --webpack",
     "dev:party": "partykit dev",
-    "build": "next build",
+    "build": "next build --webpack",
     "start": "next start",
     "lint": "eslint --fix src",
     "format": "run-s format:*",
@@ -121,7 +121,7 @@
       "dom-expressions@<0.39.5": ">=0.39.5",
       "brace-expansion@>=1.0.0 <=1.1.11": ">=1.1.12",
       "devalue@<5.3.2": ">=5.3.2",
-      "js-yaml@<3.14.2": ">=3.14.2",
+      "js-yaml@<3.14.2": "^3.14.2",
       "js-yaml@>=4.0.0 <4.1.1": ">=4.1.1",
       "valibot@>=0.31.0 <1.2.0": ">=1.2.0",
       "next@>=15.5.0-canary.0 <15.5.7": ">=15.5.7"

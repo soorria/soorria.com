@@ -207,7 +207,7 @@ const config = {
   reactStrictMode: true,
   serverExternalPackages: ['esbuild', '@mdx-js/esbuild', 'shiki', '@babel/core'],
   experimental: {
-    esmExternals: 'loose',
+    // esmExternals: 'loose',
   },
   eslint: {
     ignoreDuringBuilds: true,
