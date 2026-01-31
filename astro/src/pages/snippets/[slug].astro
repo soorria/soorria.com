@@ -15,13 +15,9 @@ export async function getStaticPaths() {
   // Snippets with issues that need special handling
   const snippetsWithCustomComponents = [
     'create-previous-memo', // SolidJS demo
-    'safe-view-transition', // Uses window at module level, missing import
+    'safe-view-transition', // Uses window at module level
     'use-copy-react', // Uses JSX in Collapse summary prop
     'use-is-mouse-inactive-solid', // SolidJS demo
-    // Snippets missing explicit import from './components' in MDX
-    'use-fullscreen', // Missing import for Example
-    'use-local-storage', // Missing import for Example
-    'use-temporary-state-react', // Missing import for Example
   ]
 
   const snippets = await getCollection('snippets')

@@ -13,7 +13,7 @@ import { mdxComponents } from '~/components/mdx/components'
 export async function getStaticPaths() {
   // Posts with custom components that need special handling
   // TODO: Migrate these components properly
-  const postsWithCustomComponents = ['event-delegation', 'promise-all']
+  const postsWithCustomComponents: string[] = []
 
   const posts = await getCollection('blog')
   return posts
