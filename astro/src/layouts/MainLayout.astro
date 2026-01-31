@@ -1,0 +1,27 @@
+---
+import Layout from './Layout.astro'
+import Header from '~/components/Header'
+import Footer from '~/components/Footer'
+
+interface Props {
+  title?: string
+  description?: string
+  ogImage?: string
+}
+
+const { title, description, ogImage } = Astro.props
+---
+
+<Layout title={title} description={description} ogImage={ogImage}>
+  <a
+    href="#main-content"
+    class="sr-only left-0 top-0 block bg-drac-base-light p-4 text-drac-content focus:not-sr-only focus:fixed focus:z-50"
+  >
+    Skip to main content
+  </a>
+  <Header client:load />
+  <main role="main" id="main-content" class="grow">
+    <slot />
+  </main>
+  <Footer />
+</Layout>

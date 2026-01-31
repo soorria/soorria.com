@@ -1,0 +1,175 @@
+@reference "./globals.css";
+
+.prose {
+  @apply max-w-none;
+}
+
+.prose code:not([data-language]) {
+  @apply rounded-sm bg-drac-base-light p-1 leading-none text-drac-pink;
+}
+
+.prose a:hover code {
+  @apply text-drac-purple;
+}
+
+.prose a:has(code) {
+  @apply -mb-1.5 -mt-1 pb-1.5 pt-1;
+}
+
+.prose img,
+.prose iframe {
+  @apply rounded-sm md:rounded-xl;
+}
+
+.prose iframe {
+  @apply w-full border-0 ring-2 ring-drac-purple;
+  height: 512px;
+}
+
+.prose .collapse-child div.shiki {
+  @apply mx-0;
+}
+
+.prose .collapse-child .code-block-title {
+  @apply ml-4;
+}
+
+/*
+ * Code Snippets
+ */
+.prose pre[data-language] {
+  @apply rounded-none bg-transparent;
+  @apply px-0 pt-0;
+  @apply -mx-2 pb-3 md:-mx-6;
+}
+
+.prose pre[data-language] .line {
+  display: block;
+}
+
+.prose code {
+  @apply rounded-sm bg-drac-base-light px-1.5 py-1 leading-none text-drac-pink;
+}
+
+pre[data-language] code {
+  @apply float-left min-w-full rounded-none bg-transparent p-0;
+}
+
+pre[data-language] .line {
+  @apply relative block px-2 md:px-6;
+  @apply rounded-none bg-transparent text-base text-drac-content;
+  line-height: 1.75;
+  min-height: 1.75rem;
+  @apply motion-safe:transition;
+}
+
+.prose code::before,
+.prose code::after {
+  content: none;
+}
+
+pre[data-language]:has(.line--highlighted) .line {
+  opacity: 0.5;
+}
+pre[data-language]:has(.line--highlighted):hover .line {
+  opacity: 1;
+}
+pre[data-language] .line--highlighted {
+  opacity: 1 !important;
+}
+pre[data-language] .line--highlighted {
+  background-color: var(--base-dark) !important;
+}
+pre[data-language]:hover .line--highlighted {
+  box-shadow: inset 0.25rem 0 0 0 var(--purple) !important;
+}
+
+/* Visually differentiates twoslash code samples  */
+pre.twoslash {
+  border-color: #719af4;
+  overflow-y: visible;
+}
+
+/** When you mouse over the pre, show the underlines */
+pre.twoslash data-lsp {
+  @apply border-b border-dotted border-drac-base-light;
+}
+
+/** The tooltip-like which provides the LSP response */
+pre.twoslash data-lsp:hover::before {
+  content: attr(lsp);
+  position: absolute;
+  transform: translate(0, 1.75rem);
+
+  @apply whitespace-pre-wrap rounded-sm bg-drac-base-light px-1 py-2 text-left font-mono text-sm text-drac-content;
+  z-index: 100;
+}
+
+pre code {
+  white-space: pre;
+  -webkit-overflow-scrolling: touch;
+  font-variant-ligatures: discretionary-ligatures;
+  display: grid;
+}
+
+/**
+ * List bullets
+ */
+.prose ul > li::before {
+  @apply bg-drac-pink/75;
+}
+
+.prose ol > li::before {
+  @apply bg-drac-pink/75;
+}
+
+.prose kbd {
+  @apply inline-flex items-center rounded-sm bg-drac-base-light px-1.5 py-1 font-mono leading-none text-drac-pink;
+}
+
+.prose kbd > kbd {
+  padding: 1px 2px 0px;
+  @apply inline-block rounded-sm border border-drac-pink leading-none;
+}
+
+/**
+ * <DemoWrapper> in `src/components/mdx/Demo.tsx`
+ */
+.prose .demo-wrapper > *:first-child {
+  margin-top: 0;
+}
+
+/* Chrome */
+.prose pre::-webkit-scrollbar-thumb {
+  @apply bg-drac-purple;
+}
+
+/**
+ * <Note> in `src/components/mdx/Demo.tsx`
+ */
+
+.prose
+  .note
+  :where(h1, h2, h3, h4, h5, h6, blockquote, strong, b, i, em):not(:where([class~='not-prose'] *)) {
+  color: inherit;
+}
+
+.prose .note > *:first-child {
+  margin-top: 0;
+}
+
+.prose .note > *:last-child {
+  margin-bottom: 0;
+}
+
+/**
+ * <TsJsSwitcher> in `src/components/mdx/TsJsSwitcher.tsx`
+ */
+
+.ts-js-switcher:not(.show-js) pre:is([data-language='js'], [data-language='jsx']) {
+  display: none;
+}
+
+.ts-js-switcher.show-js pre:is([data-language='ts'], [data-language='tsx']) {
+  display: none;
+}
