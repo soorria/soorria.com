@@ -12,16 +12,16 @@ import { mdxComponents } from '~/components/mdx/components'
 export async function getStaticPaths() {
   // Snippets with custom components or JSX props that need special handling
   // TODO: Migrate these components properly
+  // Snippets with issues that need special handling
   const snippetsWithCustomComponents = [
-    'create-previous-memo',
-    'file-download',
-    'safe-view-transition',
+    'create-previous-memo', // SolidJS demo
+    'safe-view-transition', // Uses window at module level, missing import
     'use-copy-react', // Uses JSX in Collapse summary prop
-    'use-css-var-react',
-    'use-fullscreen',
-    'use-is-mouse-inactive-solid',
-    'use-local-storage',
-    'use-temporary-state-react',
+    'use-is-mouse-inactive-solid', // SolidJS demo
+    // Snippets missing explicit import from './components' in MDX
+    'use-fullscreen', // Missing import for Example
+    'use-local-storage', // Missing import for Example
+    'use-temporary-state-react', // Missing import for Example
   ]
 
   const snippets = await getCollection('snippets')

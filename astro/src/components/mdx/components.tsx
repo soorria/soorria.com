@@ -1,7 +1,8 @@
 import CustomLink from '../CustomLink'
 import Note from './Note'
 import { SlightBleedContentWrapper } from './SlightBleedContentWrapper'
-import type { ReactNode } from 'react'
+import ReactDemo from './ReactDemo'
+import type { ComponentType, ReactNode } from 'react'
 
 // Sandbox component for embedded iframes
 const Sandbox = (props: Record<string, unknown>) => (
@@ -15,12 +16,25 @@ const Sandbox = (props: Record<string, unknown>) => (
   </SlightBleedContentWrapper>
 )
 
-// Simple placeholder for demos until full implementation
-const Demo = ({ children }: { children?: ReactNode }) => (
-  <div className="rounded-lg border border-drac-base-light p-4">
-    {children}
-  </div>
-)
+// Demo component that wraps a component in ReactDemo
+const Demo = ({
+  component: Component,
+  init = 'mount',
+  children
+}: {
+  component?: ComponentType
+  init?: 'lazy' | 'mount' | 'always'
+  children?: ReactNode
+}) => {
+  if (Component) {
+    return <ReactDemo content={<Component />} init={init} />
+  }
+  return (
+    <div className="rounded-lg border border-drac-base-light p-4">
+      {children}
+    </div>
+  )
+}
 
 // Sparkles effect component
 const Sparkles = ({ children }: { children?: ReactNode }) => (
