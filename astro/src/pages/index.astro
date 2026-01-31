@@ -1,0 +1,86 @@
+---
+// Test page to verify Astro setup
+// This will be replaced with the actual homepage in a later phase
+
+import { getCollection } from 'astro:content'
+
+// Test that content collections work
+const blogPosts = await getCollection('blog')
+const snippets = await getCollection('snippets')
+const projects = await getCollection('projects')
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Astro Migration Test | soorria.com</title>
+    <style>
+      body {
+        font-family: system-ui, sans-serif;
+        max-width: 800px;
+        margin: 2rem auto;
+        padding: 0 1rem;
+        background: #1a1a2e;
+        color: #f8f8f2;
+      }
+      h1 {
+        color: #ff79c6;
+      }
+      h2 {
+        color: #bd93f9;
+      }
+      .success {
+        color: #50fa7b;
+      }
+      ul {
+        list-style: none;
+        padding: 0;
+      }
+      li {
+        padding: 0.5rem 0;
+        border-bottom: 1px solid #44475a;
+      }
+      a {
+        color: #8be9fd;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Astro Migration Test</h1>
+    <p class="success">Astro is working!</p>
+
+    <h2>Content Collections Status</h2>
+    <ul>
+      <li>Blog posts loaded: <strong class="success">{blogPosts.length}</strong></li>
+      <li>Snippets loaded: <strong class="success">{snippets.length}</strong></li>
+      <li>Projects loaded: <strong class="success">{projects.length}</strong></li>
+    </ul>
+
+    <h2>Recent Blog Posts</h2>
+    <ul>
+      {
+        blogPosts.slice(0, 5).map((post) => (
+          <li>
+            <strong>{post.data.title}</strong>
+            <br />
+            <small>{post.data.shortDescription}</small>
+          </li>
+        ))
+      }
+    </ul>
+
+    <h2>Next Steps</h2>
+    <ul>
+      <li>Phase 2: Layouts & Base Components</li>
+      <li>Phase 3: Static Pages</li>
+      <li>Phase 4: Content Collections & Dynamic Routes</li>
+      <li>Phase 5: Homepage & Interactive Features</li>
+      <li>Phase 6: API Routes & Feeds</li>
+      <li>Phase 7: Middleware & Advanced Routing</li>
+      <li>Phase 8: Vercel Configuration & Deployment</li>
+      <li>Phase 9: Flatten Structure & Cleanup</li>
+    </ul>
+  </body>
+</html>
