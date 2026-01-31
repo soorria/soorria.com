@@ -44,7 +44,7 @@ const Sparkles = ({ children }: { children?: ReactNode }) => (
 )
 
 // Collapsible content component
-const Collapse = ({ children, summary }: { children?: ReactNode; summary?: string }) => (
+const Collapse = ({ children, summary }: { children?: ReactNode; summary?: ReactNode }) => (
   <details className="my-4">
     <summary className="cursor-pointer font-bold">{summary || 'Details'}</summary>
     <div className="mt-2">{children}</div>
