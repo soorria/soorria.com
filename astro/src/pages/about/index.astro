@@ -5,6 +5,7 @@ import PostLayout from '~/components/posts/PostLayout'
 import ProseWrapper from '~/components/posts/ProseWrapper'
 import { getOgImage } from '~/utils/og'
 import { PUBLIC_URL } from '~/constants'
+import { mdxComponents } from '~/components/mdx/components'
 
 const title = 'About Me'
 const url = `${PUBLIC_URL}/about`
@@ -24,7 +25,7 @@ const { Content } = await render(entry)
 >
   <PostLayout title={title}>
     <ProseWrapper>
-      <Content />
+      <Content components={mdxComponents} />
     </ProseWrapper>
   </PostLayout>
 </MainLayout>

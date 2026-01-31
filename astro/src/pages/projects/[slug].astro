@@ -1,0 +1,64 @@
+---
+import { getCollection, render } from 'astro:content'
+import MainLayout from '~/layouts/MainLayout.astro'
+import PostLayout from '~/components/posts/PostLayout'
+import ProseWrapper from '~/components/posts/ProseWrapper'
+import { getOgImageForData } from '~/utils/og'
+import { PUBLIC_URL } from '~/constants'
+import { mdxComponents } from '~/components/mdx/components'
+
+export async function getStaticPaths() {
+  const projects = await getCollection('projects')
+  return projects.map(project => ({
+    params: { slug: project.id },
+    props: { project },
+  }))
+}
+
+const { project } = Astro.props
+const { Content } = await render(project)
+
+const url = `${PUBLIC_URL}/projects/${project.id}`
+const pageTitle = `${project.data.title} | Projects`
+---
+
+<MainLayout
+  title={pageTitle}
+  description={project.data.shortDescription}
+  ogImage={getOgImageForData('projects', project.data.title)}
+>
+  <PostLayout title={project.data.title}>
+    <div class="mb-8 flex flex-wrap justify-center gap-2 text-sm text-drac-content/80">
+      {project.data.stack.map(tech => (
+        <span class="rounded bg-drac-base-light px-2 py-1">{tech}</span>
+      ))}
+    </div>
+
+    <div class="mb-8 flex justify-center gap-4">
+      {project.data.live && (
+        <a
+          href={project.data.live}
+          class="inline-flex items-center gap-2 rounded bg-drac-pink px-4 py-2 text-drac-base transition hover:bg-drac-purple"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          View Live
+        </a>
+      )}
+      {project.data.source && (
+        <a
+          href={project.data.source}
+          class="inline-flex items-center gap-2 rounded border border-drac-pink px-4 py-2 text-drac-pink transition hover:bg-drac-pink hover:text-drac-base"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Source Code
+        </a>
+      )}
+    </div>
+
+    <ProseWrapper>
+      <Content components={mdxComponents} />
+    </ProseWrapper>
+  </PostLayout>
+</MainLayout>

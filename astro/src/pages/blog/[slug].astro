@@ -1,0 +1,59 @@
+---
+import { getCollection, render } from 'astro:content'
+import MainLayout from '~/layouts/MainLayout.astro'
+import PostLayout from '~/components/posts/PostLayout'
+import ProseWrapper from '~/components/posts/ProseWrapper'
+import { BookIcon, ClockIconSolid, EditIcon, TextIcon } from '~/components/icons'
+import { formatDate } from '~/utils/date'
+import { getOgImageForData } from '~/utils/og'
+import { PUBLIC_URL } from '~/constants'
+import cx from '~/utils/cx'
+import { mdxComponents } from '~/components/mdx/components'
+
+export async function getStaticPaths() {
+  // Posts with custom components that need special handling
+  // TODO: Migrate these components properly
+  const postsWithCustomComponents = ['event-delegation', 'promise-all']
+
+  const posts = await getCollection('blog')
+  return posts
+    .filter(post => !postsWithCustomComponents.includes(post.id))
+    .map(post => ({
+      params: { slug: post.id },
+      props: { post },
+    }))
+}
+
+const { post } = Astro.props
+const { Content } = await render(post)
+
+const url = `${PUBLIC_URL}/blog/${post.id}`
+const pageTitle = `${post.data.title} | Blog`
+---
+
+<MainLayout
+  title={pageTitle}
+  description={post.data.shortDescription}
+  ogImage={getOgImageForData('blog', post.data.title)}
+>
+  <PostLayout title={post.data.title}>
+    <div class="grid grid-cols-2 items-center justify-items-center gap-4 text-sm tabular-nums sm:grid-cols-4">
+      <div class={cx(
+        'tooltip flex items-center space-x-2',
+        post.data.updatedAt ? '' : 'pointer-events-none opacity-0'
+      )} aria-label="Updated at">
+        <EditIcon className="inline-block h-3 w-3" />
+        <span>{formatDate(post.data.updatedAt)}</span>
+      </div>
+
+      <div class="tooltip flex items-center space-x-2" aria-label="Created at">
+        <ClockIconSolid className="inline-block h-4 w-4" />
+        <span>{formatDate(post.data.createdAt, 'DRAFT')}</span>
+      </div>
+    </div>
+
+    <ProseWrapper>
+      <Content components={mdxComponents} />
+    </ProseWrapper>
+  </PostLayout>
+</MainLayout>
