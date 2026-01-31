@@ -1,5 +1,3 @@
-@reference "./globals.css";
-
 .prose {
   @apply max-w-none;
 }

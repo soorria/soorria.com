@@ -40,8 +40,17 @@ const projectsCollection = defineCollection({
   }),
 })
 
+const miscCollection = defineCollection({
+  loader: glob({ pattern: '*/index.mdx', base: './src/content/misc' }),
+  schema: z.object({
+    title: z.string(),
+    updatedAt: z.string().optional(),
+  }),
+})
+
 export const collections = {
   blog: blogCollection,
   snippets: snippetsCollection,
   projects: projectsCollection,
+  misc: miscCollection,
 }
