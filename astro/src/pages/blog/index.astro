@@ -1,0 +1,53 @@
+---
+import { getCollection } from 'astro:content'
+import MainLayout from '~/layouts/MainLayout.astro'
+import PostLayout from '~/components/posts/PostLayout'
+import BlogPostCard from '~/components/posts/BlogPostCard'
+import { getOgImageForData } from '~/utils/og'
+import { PUBLIC_URL } from '~/constants'
+import { getContentMetrics } from '~/lib/reading-time'
+
+const description =
+  'Attempts at writing about things that I think are interesting, useful, or just cool'
+const title = 'Blog'
+const url = `${PUBLIC_URL}/blog`
+
+// Get all blog posts and filter/sort
+const allPosts = await getCollection('blog')
+const posts = allPosts
+  .filter(post => !post.data.private)
+  .sort((a, b) => {
+    const dateA = a.data.createdAt ? new Date(a.data.createdAt).getTime() : 0
+    const dateB = b.data.createdAt ? new Date(b.data.createdAt).getTime() : 0
+    return dateB - dateA
+  })
+  .map(post => {
+    const metrics = getContentMetrics(post.body || '')
+    return {
+      slug: post.id,
+      title: post.data.title,
+      shortDescription: post.data.shortDescription,
+      createdAt: post.data.createdAt,
+      updatedAt: post.data.updatedAt,
+      readingTime: metrics.readingTime,
+      words: metrics.words,
+    }
+  })
+---
+
+<MainLayout
+  title={title}
+  description={description}
+  ogImage={getOgImageForData('blog')}
+>
+  <PostLayout title="Blog" description={description}>
+    <div>
+      <div class="slide-in grid grid-cols-1 gap-8" style="--initial-step: 2">
+        {posts.map(post => (
+          <BlogPostCard post={post} client:load />
+        ))}
+      </div>
+    </div>
+    <div class="my-12 text-center">{posts.length} ramblings total</div>
+  </PostLayout>
+</MainLayout>

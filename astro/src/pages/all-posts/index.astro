@@ -1,0 +1,68 @@
+---
+import { getCollection } from 'astro:content'
+import MainLayout from '~/layouts/MainLayout.astro'
+import PostLayout from '~/components/posts/PostLayout'
+import AllPostsGrid from '~/components/posts/AllPostsGrid'
+import { getOgImageForData } from '~/utils/og'
+import { PUBLIC_URL } from '~/constants'
+import { getContentMetrics } from '~/lib/reading-time'
+
+const description = "All the stuff I've written on this site"
+const title = 'All Posts'
+const url = `${PUBLIC_URL}/all-posts`
+
+// Get all blog posts and snippets
+const [blogPosts, snippets] = await Promise.all([
+  getCollection('blog'),
+  getCollection('snippets'),
+])
+
+// Combine and sort by date (newest first)
+const allPosts = [
+  ...blogPosts.map(post => {
+    const metrics = getContentMetrics(post.body || '')
+    return {
+      type: 'blog' as const,
+      slug: post.id,
+      title: post.data.title,
+      shortDescription: post.data.shortDescription,
+      createdAt: post.data.createdAt,
+      updatedAt: post.data.updatedAt,
+      tags: post.data.tags || [],
+      readingTime: metrics.readingTime,
+      words: metrics.words,
+    }
+  }),
+  ...snippets.map(snippet => ({
+    type: 'snippets' as const,
+    slug: snippet.id,
+    title: snippet.data.title,
+    shortDescription: snippet.data.shortDescription,
+    createdAt: snippet.data.createdAt,
+    updatedAt: snippet.data.updatedAt,
+    tags: snippet.data.tags || [],
+    category: snippet.data.category || 'misc',
+  })),
+].sort((a, b) => {
+  const dateA = new Date(a.createdAt || 0)
+  const dateB = new Date(b.createdAt || 0)
+  return dateB.getTime() - dateA.getTime()
+})
+---
+
+<MainLayout
+  title={title}
+  description={description}
+  ogImage={getOgImageForData('snippets')}
+>
+  <PostLayout title="All Posts" description={description}>
+    <AllPostsGrid
+      posts={allPosts}
+      style={{ '--initial-step': '2' }}
+    />
+
+    <div class="my-12 text-center" style={`--step-num: ${allPosts.length + 3}`}>
+      {allPosts.length} posts total
+    </div>
+  </PostLayout>
+</MainLayout>

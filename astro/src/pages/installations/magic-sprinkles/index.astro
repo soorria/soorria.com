@@ -1,0 +1,33 @@
+---
+import Layout from '~/layouts/Layout.astro'
+import MagicSprinklesPage from './_page.client'
+import MadeBy from '~/components/MadeBy'
+import { getOgImage } from '~/utils/og'
+
+const url = '/installations/magic-sprinkles'
+const title = 'Magic Sprinkles'
+const description = 'A fun and addictive little interactive animation'
+
+const ogImage = getOgImage({
+  title: 'magic sprinkles',
+  subtitle: description,
+  bottomText: 'soorria.com/art',
+})
+---
+
+<Layout
+  title={title}
+  description={description}
+  ogImage={ogImage}
+>
+  <MagicSprinklesPage client:only="react">
+    <div
+      class="slide-in-direct pointer-events-none fixed inset-x-0 bottom-4 flex justify-center text-sm"
+      style="--initial-step: 5"
+    >
+      <div class="group pointer-events-auto rounded-sm px-4 py-2 opacity-50 transition hover:bg-drac-base-dark/75 hover:opacity-100">
+        <MadeBy asLink ping="hover" client:load />
+      </div>
+    </div>
+  </MagicSprinklesPage>
+</Layout>

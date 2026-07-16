@@ -1,0 +1,126 @@
+---
+import Container from '~/components/Container'
+import Hero from '~/components/landing/Hero'
+import MadeBy from '~/components/MadeBy'
+import Sparkles from '~/components/Sparkles'
+import { links } from '~/links'
+import cx from '~/utils/cx'
+import '~/styles/globals.css'
+import { PUBLIC_URL } from '~/constants'
+
+const title = 'Links | Soorria Saruva'
+const description = 'All my links in one place'
+const url = `${PUBLIC_URL}/links`
+const ogImage = `${PUBLIC_URL}/api/og?title=Links&subtitle=soorria.com`
+
+const orderedLinks = [
+  links.twitter,
+  links.github,
+  links.discord,
+  links.email,
+  links.mal,
+  links.facebook,
+  links.linkedin,
+]
+
+const anchorClass = cx(
+  'group flex items-center justify-between rounded-lg bg-drac-base/75 py-6 px-8 text-drac-pink transition',
+  'hocus:bg-drac-base hocus:text-drac-purple hocus:shadow-xl',
+  'focus:outline-hidden focus:ring-3 focus:ring-drac-purple'
+)
+---
+
+<!doctype html>
+<html lang="en" class="dark scroll-smooth">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#282a36" />
+
+    <!-- Favicons -->
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+    <link rel="icon" href="/favicon.ico" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/site.webmanifest" />
+    <meta name="msapplication-TileColor" content="#282a36" />
+
+    <link rel="canonical" href={url} />
+
+    <!-- Google verification -->
+    <meta name="google-site-verification" content="Cl0BjsWegjV0EoEmhPMVdyI9qWoAdOwh5S-h37tEaao" />
+
+    <title>{title}</title>
+    <meta name="description" content={description} />
+
+    <!-- OpenGraph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="en_AU" />
+    <meta property="og:url" content={url} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:site" content="@soorriously" />
+    <meta name="twitter:creator" content="@soorriously" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImage} />
+    <meta name="twitter:image:width" content="1200" />
+    <meta name="twitter:image:height" content="630" />
+
+    <!-- Plausible Analytics -->
+    <script defer data-domain="soorria.com" src="/js/potato.js"></script>
+  </head>
+  <body class="bg-drac-base text-drac-content">
+    <Container>
+      <div class="h-8 sm:h-20"></div>
+      <Hero title="Hey, I'm Soorria">
+        <div>
+          <main
+            class="slide-in relative mx-auto mt-8 max-w-md space-y-8 text-lg sm:mt-24 sm:text-xl"
+            style="--initial-step: 1"
+          >
+            {orderedLinks.map(({ title, href, icon: Icon, iconAlt }) => (
+              <a
+                href={href}
+                target="_blank"
+                rel="noopener noreferrer"
+                class={anchorClass}
+              >
+                <Icon
+                  aria-label={iconAlt}
+                  className="mr-3 h-7 w-7 transition-transform group-hocus:-rotate-20"
+                />
+                <span>{title}</span>
+              </a>
+            ))}
+            <div class="text-4xl">
+              <Sparkles client:load block>
+                <a
+                  href={links.site.href + '?ref=links'}
+                  class={cx(anchorClass, 'text-lg shadow-2xl')}
+                >
+                  <links.site.icon
+                    aria-label={links.site.iconAlt}
+                    className="mr-3 h-7 w-7 transition-transform duration-300 group-hocus:-rotate-[360deg]"
+                  />
+                  <span>the rest of my website</span>
+                </a>
+              </Sparkles>
+            </div>
+            <div class="h-16"></div>
+          </main>
+        </div>
+      </Hero>
+
+      <footer class="pb-10 pt-8 text-lg">
+        <MadeBy asLink />
+      </footer>
+    </Container>
+  </body>
+</html>

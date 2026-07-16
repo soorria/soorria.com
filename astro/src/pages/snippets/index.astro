@@ -1,0 +1,41 @@
+---
+import { getCollection } from 'astro:content'
+import MainLayout from '~/layouts/MainLayout.astro'
+import PostLayout from '~/components/posts/PostLayout'
+import SnippetGrid from '~/components/posts/SnippetGrid'
+import { getOgImageForData } from '~/utils/og'
+import { PUBLIC_URL } from '~/constants'
+
+const description =
+  'Little bits of code that I find useful and you might too! Mostly written in TypeScript & JavaScript and often for React, Vue and SolidJS.'
+const title = 'Snippets'
+const url = `${PUBLIC_URL}/snippets`
+
+// Get all snippets and sort by createdAt
+const allSnippets = await getCollection('snippets')
+const snippets = allSnippets
+  .sort((a, b) => {
+    const dateA = new Date(a.data.createdAt).getTime()
+    const dateB = new Date(b.data.createdAt).getTime()
+    return dateB - dateA
+  })
+  .map(snippet => ({
+    slug: snippet.id,
+    title: snippet.data.title,
+    shortDescription: snippet.data.shortDescription,
+    createdAt: snippet.data.createdAt,
+    updatedAt: snippet.data.updatedAt,
+    category: snippet.data.category,
+    tags: snippet.data.tags || [],
+  }))
+---
+
+<MainLayout
+  title={title}
+  description={description}
+  ogImage={getOgImageForData('snippets')}
+>
+  <PostLayout title="Snippets" description={description}>
+    <SnippetGrid snippets={snippets} client:load />
+  </PostLayout>
+</MainLayout>

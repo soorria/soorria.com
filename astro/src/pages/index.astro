@@ -1,0 +1,68 @@
+---
+import { getCollection } from 'astro:content'
+import MainLayout from '~/layouts/MainLayout.astro'
+import Container from '~/components/Container'
+import DynamicHero from '~/components/landing/DynamicHero'
+import FeaturedProjects from '~/components/landing/FeaturedProjects'
+import Contact from '~/components/landing/Contact'
+import { featuredProjects } from '~/constants'
+import { getOgImage } from '~/utils/og'
+import { getSingletonTextSafe, getSingletonJsonSafe } from '~/lib/supabase'
+
+export const prerender = false
+
+const allProjects = await getCollection('projects')
+
+// Get featured projects in order and map to expected format
+const projects = featuredProjects
+  .map(slug => allProjects.find(p => p.id === slug))
+  .filter((p): p is NonNullable<typeof p> => p != null)
+  .map(project => ({
+    slug: project.id,
+    title: project.data.title,
+    shortDescription: project.data.shortDescription,
+    stack: project.data.stack,
+    source: project.data.source,
+    live: project.data.live,
+    wip: project.data.wip,
+    hasContent: true,
+  }))
+
+// Fetch dynamic content from Supabase
+const [subtitleText, nowText, indexOptions] = await Promise.all([
+  getSingletonTextSafe('subtitle'),
+  getSingletonTextSafe('now'),
+  getSingletonJsonSafe<{ heroText: string; pattern?: string }>('index-options'),
+])
+
+// Parse subtitle options
+const subtitleOptions = (subtitleText ?? '')
+  .split('---')
+  .map(chunk => chunk.trim().replace(/\.$/, ''))
+  .filter(Boolean)
+
+const heroText = indexOptions.heroText || 'Soorria Saruva'
+const pattern = indexOptions.pattern
+
+// Use deterministic random for builds, but allow variation per request in SSR
+const random = Math.floor(Date.now() / 86400000) % 100
+---
+
+<MainLayout
+  title="Soorria Saruva"
+  description="Software engineer and web developer based in Sydney, Australia"
+  ogImage={getOgImage({ title: 'Soorria Saruva', subtitle: 'soorria.com' })}
+>
+  <Container>
+    <DynamicHero
+      client:load
+      title={heroText}
+      pattern={pattern}
+      subtitleOptions={subtitleOptions}
+      nowHtml={nowText}
+    />
+    <FeaturedProjects projects={projects} random={random} />
+    <Contact client:load random={random} />
+    <div class="py-10"></div>
+  </Container>
+</MainLayout>

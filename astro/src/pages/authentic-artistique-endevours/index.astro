@@ -1,0 +1,194 @@
+---
+import MainLayout from '~/layouts/MainLayout.astro'
+import PostLayout from '~/components/posts/PostLayout'
+import ProseWrapper from '~/components/posts/ProseWrapper'
+import CustomLink from '~/components/CustomLink'
+import { getOgImage } from '~/utils/og'
+import { PUBLIC_URL } from '~/constants'
+import { MagicSprinkles } from '~/pages/installations/magic-sprinkles/_magic-sprinkles.component'
+
+// Import art images
+import donaldTrumpNft from './art-images/donald trump nft (real).png'
+import unnamedWaifu from './art-images/unnamed waifu.png'
+import davidLauNft from './art-images/david-lau-nft-real.png'
+import speedSudokuChampionRiki from './art-images/speed-sudoku-champion-riki.png'
+import sandboxTshirt from './art-images/sandbox-tshirt.jpg'
+import theBruhfferfish from './art-images/the-bruhfferfish.jpg'
+import glisteningSaint from './art-images/glistening-saint.gif'
+
+const url = `${PUBLIC_URL}/art`
+const title = 'Authentic Artistique Endevours'
+const description = 'Welcome to the world of the authentic artistique endevours of Soorria Saruva.'
+
+const realNftMeanings: string[] = [
+  'Not For Thinking',
+  'Nebulous Frivolous Token',
+  'Nonexistent Fantasy Treasure',
+  'Notoriously Fickle Trinket',
+  'Nonsensical Fad Trend',
+  'Nifty Fictitious Token',
+  'Never-ending Foolish Transmission',
+  'Noisy Futile Tchotchke',
+  'Novelty Fabricated Trophy',
+  'Notoriously Flawed Triviality',
+  'Nonfunctional Farce Transaction',
+]
+
+// Pick a random meaning based on day
+const randomMeaning = realNftMeanings[Math.floor(Date.now() / 86400000) % realNftMeanings.length]
+
+// Art pieces with their metadata
+const art = [
+  {
+    slug: 'glistening-saint',
+    title: 'Glistening Saint',
+    isoDate: '2025-10-23',
+    alt: 'gif of a saint with emoji prayer hands coming together to form a heart',
+    image: glisteningSaint,
+  },
+  {
+    slug: 'the-bruhfferfish',
+    title: 'the bruhfferfish',
+    titleItalic: true,
+    isoDate: '2025-09-12',
+    alt: 'colorful pufferfish drawing with bruh written on its side',
+    image: theBruhfferfish,
+  },
+  {
+    slug: 'sandbox-bouldering-t-shirt-design',
+    title: 'Sandbox Bouldering t-shirt design',
+    isoDate: '2025-05-10',
+    alt: 't-shirt design featuring a cat in a sandbox',
+    image: sandboxTshirt,
+  },
+  {
+    slug: 'speed-sudoku-champion-riki',
+    title: 'Speed Sudoku Champion Riki',
+    isoDate: '2023-12-13',
+    alt: 'pencil-on-paper drawing of Riki Miyamura sitting and wearing a Champion jumper after winning a speed sudoku competition',
+    image: speedSudokuChampionRiki,
+  },
+  {
+    slug: 'david-lau-nft-real',
+    title: 'david Lau nft (real)',
+    hasNftAbbr: true,
+    isoDate: '2023-12-02',
+    alt: "realistic depiction of David Lau looking like The Boy's Homelander and shooting laser beams from his eyes",
+    image: davidLauNft,
+  },
+  {
+    slug: 'magic-sprinkles',
+    title: 'magic sprinkles',
+    isoDate: '2023-08-12',
+    alt: 'interactive magic sprinkles animation',
+    isInteractive: true,
+  },
+  {
+    slug: 'unnamed-waifu',
+    title: 'unnamed waifu',
+    isoDate: '2022-09-02',
+    alt: 'a drawing of a waifu with a speech bubble saying "I love you"',
+    image: unnamedWaifu,
+    quotes: ['omg i love that [...] too'],
+  },
+  {
+    slug: 'donald-trump-nft-real',
+    title: 'donald trump nft (real)',
+    hasNftAbbr: true,
+    isoDate: '2022-12-17',
+    alt: 'satirical portrayal of a Donald Trump NFT involving a stick figure shooting laser beams out of their eyes and wearing a cape',
+    image: donaldTrumpNft,
+    quotes: [
+      "Wow it's so epic thanks [...] best present ever",
+      'You had a stroke [of genius] on a page??',
+    ],
+  },
+].sort((a, b) => new Date(b.isoDate).getTime() - new Date(a.isoDate).getTime())
+---
+
+<MainLayout
+  title={title}
+  description={description}
+  ogImage={getOgImage({ title: 'Authentic Artistique Endevours', subtitle: 'soorria.com/art' })}
+>
+  <PostLayout
+    title="Art"
+    description={`...or more accurately "art". Welcome to the world of the authentic artistique endevours of Soorria Saruva.`}
+  >
+    <ProseWrapper>
+      {art.map(item => (
+        <div class="mb-12">
+          <h2 id={item.slug} class="!mb-0">
+            {item.titleItalic ? <em>{item.title}</em> : (
+              item.hasNftAbbr ? (
+                <Fragment>
+                  {item.title.replace(' nft ', ' ')}
+                  {' '}
+                  <abbr
+                    class="tooltip cursor-help before:text-sm before:font-normal"
+                    aria-label={randomMeaning}
+                  >
+                    nft
+                    <sup aria-hidden class="text-sm font-bold text-drac-pink">?</sup>
+                  </abbr>
+                  <span class="sr-only">{randomMeaning}</span>
+                  {' '}
+                  (real)
+                </Fragment>
+              ) : item.title
+            )}
+            <CustomLink
+              href={`#${item.slug}`}
+              className="heading-anchor"
+              aria-hidden="true"
+              tabIndex={-1}
+            />
+          </h2>
+          <p class="text-sm">
+            <em>masterfully</em> created on{' '}
+            <time datetime={item.isoDate}>
+              {new Date(item.isoDate).toLocaleDateString()}
+            </time>
+          </p>
+          {item.isInteractive ? (
+            <div class="relative overflow-hidden rounded-lg aspect-video">
+              <MagicSprinkles client:only="react" />
+              <div class="not-prose pointer-events-none absolute inset-x-0 bottom-4 text-center">
+                <a
+                  href="/installations/magic-sprinkles"
+                  class="pointer-events-auto inline-flex items-center gap-2 rounded-lg bg-drac-base/90 px-4 py-2 text-sm font-medium text-white backdrop-blur-sm transition-colors hover:bg-drac-base"
+                >
+                  see full installation
+                </a>
+              </div>
+            </div>
+          ) : item.image ? (
+            <div class="overflow-hidden rounded-lg">
+              <img
+                src={item.image.src}
+                width={item.image.width}
+                height={item.image.height}
+                alt={item.alt}
+                class="w-full h-auto"
+                loading="lazy"
+              />
+            </div>
+          ) : (
+            <div class="rounded-lg border border-drac-base-light p-4 text-center text-drac-content/60">
+              <p>Image coming soon</p>
+              <p class="text-sm italic">{item.alt}</p>
+            </div>
+          )}
+          {item.quotes?.length ? (
+            <>
+              <h3>What people are saying</h3>
+              {item.quotes.map((quote) => (
+                <blockquote>{quote}</blockquote>
+              ))}
+            </>
+          ) : null}
+        </div>
+      ))}
+    </ProseWrapper>
+  </PostLayout>
+</MainLayout>

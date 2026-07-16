@@ -1,0 +1,84 @@
+---
+import { getCollection } from 'astro:content'
+import MainLayout from '~/layouts/MainLayout.astro'
+import PostLayout from '~/components/posts/PostLayout'
+import ProjectCard from '~/components/projects/ProjectCard'
+import ProjectsGrid from '~/components/projects/ProjectsGrid'
+import { getOgImageForData } from '~/utils/og'
+import { featuredProjects, PUBLIC_URL } from '~/constants'
+
+const description = "Things I've made. Some are more useful and cooler than others."
+const title = 'Projects'
+const url = `${PUBLIC_URL}/projects`
+
+// Get all projects
+const allProjects = await getCollection('projects')
+
+// Define project ordering
+const aboveFold = [
+  ...featuredProjects,
+  'sizes',
+  'clinically-relevant',
+  'not-messenger',
+  'aqrm',
+  'wordle-score',
+  'slidy',
+  'fight-for-tribeland',
+]
+const projectOrder = [...aboveFold]
+const getProjectIndex = (slug: string): number => {
+  const idx = projectOrder.indexOf(slug)
+  return idx >= 0 ? idx : projectOrder.length + 10
+}
+
+const projects = allProjects
+  .sort((a, b) => getProjectIndex(a.id) - getProjectIndex(b.id))
+  .map(project => ({
+    slug: project.id,
+    title: project.data.title,
+    shortDescription: project.data.shortDescription,
+    stack: project.data.stack,
+    source: project.data.source,
+    live: project.data.live,
+    wip: project.data.wip,
+    hasContent: true, // All projects in collection have content
+  }))
+
+const numMainProjects = aboveFold.length
+const mainProjects = projects.slice(0, numMainProjects)
+const otherProjects = projects.slice(numMainProjects)
+---
+
+<MainLayout
+  title={title}
+  description={description}
+  ogImage={getOgImageForData('projects')}
+>
+  <PostLayout title="Projects" description={description}>
+    <div>
+      <ProjectsGrid initialStep="2">
+        {mainProjects.map(project => (
+          <ProjectCard project={project} client:load />
+        ))}
+      </ProjectsGrid>
+    </div>
+
+    {otherProjects.length > 0 && (
+      <>
+        <h2
+          class="mb-8 mt-16 text-4xl"
+          style={`--step-num: ${numMainProjects + 3}`}
+        >
+          Other Projects
+        </h2>
+        <div style={`--step-num: ${numMainProjects + 4}`}>
+          <ProjectsGrid initialStep={(numMainProjects + 3).toString()}>
+            {otherProjects.map(project => (
+              <ProjectCard project={project} client:load />
+            ))}
+          </ProjectsGrid>
+        </div>
+      </>
+    )}
+  </PostLayout>
+</MainLayout>

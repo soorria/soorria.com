@@ -1,0 +1,31 @@
+---
+import { getEntry, render } from 'astro:content'
+import MainLayout from '~/layouts/MainLayout.astro'
+import PostLayout from '~/components/posts/PostLayout'
+import ProseWrapper from '~/components/posts/ProseWrapper'
+import { getOgImage } from '~/utils/og'
+import { PUBLIC_URL } from '~/constants'
+import { mdxComponents } from '~/components/mdx/components'
+
+const title = 'About Me'
+const url = `${PUBLIC_URL}/about`
+const shortDescription = 'Who I am and what I do'
+
+const entry = await getEntry('misc', 'about')
+if (!entry) {
+  return Astro.redirect('/404')
+}
+const { Content } = await render(entry)
+---
+
+<MainLayout
+  title={title}
+  description={shortDescription}
+  ogImage={getOgImage({ title: 'About Me', subtitle: 'soorria.com' })}
+>
+  <PostLayout title={title}>
+    <ProseWrapper>
+      <Content components={mdxComponents} />
+    </ProseWrapper>
+  </PostLayout>
+</MainLayout>
