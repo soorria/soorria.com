@@ -9,6 +9,7 @@ import { formatDate } from '~/utils/date'
 import { getOgImageForData } from '~/utils/og'
 import { PUBLIC_URL } from '~/constants'
 import { mdxComponents } from '~/components/mdx/components'
+import { CodeBlockEnhancer } from '~/components/mdx/CodeBlockEnhancer'
 
 export async function getStaticPaths() {
   // Snippets with custom components or JSX props that need special handling
@@ -57,6 +58,8 @@ const pageTitle = `${snippet.data.title} | Snippets`
     <ProseWrapper>
       <Content components={mdxComponents} />
     </ProseWrapper>
+
+    <CodeBlockEnhancer client:only="react" />
 
     <div class="mt-16">
       <h2 class="mb-4 text-xl font-bold">Comments</h2>

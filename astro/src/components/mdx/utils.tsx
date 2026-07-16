@@ -22,3 +22,33 @@ export const DEMO_CLASSNAMES = {
   footer: 'absolute inset-x-0 bottom-0 h-20 bg-drac-purple/50 p-4 md:px-6',
   spacing: 'h-24',
 } as const
+
+const CODE_LINE_HEIGHT = 28
+const DEFAULT_TRUNCATE_HEIGHT = 10.5 * CODE_LINE_HEIGHT
+
+export const getTruncationHeight = (
+  truncate: string | number | boolean | undefined
+): string | number | undefined => {
+  if (typeof truncate === 'number') return (truncate + 0.5) * CODE_LINE_HEIGHT
+  if (!truncate) return undefined
+  if (truncate === true || truncate === 'true') return DEFAULT_TRUNCATE_HEIGHT
+  const asNumber = parseInt(truncate as string)
+  if (Number.isSafeInteger(asNumber)) return (asNumber + 0.5) * CODE_LINE_HEIGHT
+  return truncate as string
+}
+
+export const LANGUAGE_NAME_MAP: Record<string, string> = {
+  js: 'javascript',
+  jsx: 'jsx',
+  ts: 'typescript',
+  tsx: 'tsx',
+  md: 'markdown',
+}
+
+export const CodeBlockTitle: React.FC<{ children: React.ReactNode }> = props => (
+  <div className="code-block-title -mb-[1.7rem] rounded-sm rounded-b-none font-display text-sm font-bold text-drac-base">
+    <span className="inline-block rounded-sm rounded-b-none bg-drac-purple px-3 py-0.5">
+      {props.children}
+    </span>
+  </div>
+)

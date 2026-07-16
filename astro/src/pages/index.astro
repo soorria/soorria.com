@@ -2,11 +2,14 @@
 import { getCollection } from 'astro:content'
 import MainLayout from '~/layouts/MainLayout.astro'
 import Container from '~/components/Container'
-import Hero from '~/components/landing/Hero'
+import DynamicHero from '~/components/landing/DynamicHero'
 import FeaturedProjects from '~/components/landing/FeaturedProjects'
 import Contact from '~/components/landing/Contact'
 import { featuredProjects } from '~/constants'
 import { getOgImage } from '~/utils/og'
+import { getSingletonTextSafe, getSingletonJsonSafe } from '~/lib/supabase'
+
+export const prerender = false
 
 const allProjects = await getCollection('projects')
 
@@ -25,7 +28,23 @@ const projects = featuredProjects
     hasContent: true,
   }))
 
-// Use deterministic random for SSG
+// Fetch dynamic content from Supabase
+const [subtitleText, nowText, indexOptions] = await Promise.all([
+  getSingletonTextSafe('subtitle'),
+  getSingletonTextSafe('now'),
+  getSingletonJsonSafe<{ heroText: string; pattern?: string }>('index-options'),
+])
+
+// Parse subtitle options
+const subtitleOptions = (subtitleText ?? '')
+  .split('---')
+  .map(chunk => chunk.trim().replace(/\.$/, ''))
+  .filter(Boolean)
+
+const heroText = indexOptions.heroText || 'Soorria Saruva'
+const pattern = indexOptions.pattern
+
+// Use deterministic random for builds, but allow variation per request in SSR
 const random = Math.floor(Date.now() / 86400000) % 100
 ---
 
@@ -35,7 +54,13 @@ const random = Math.floor(Date.now() / 86400000) % 100
   ogImage={getOgImage({ title: 'Soorria Saruva', subtitle: 'soorria.com' })}
 >
   <Container>
-    <Hero title="Soorria Saruva" subtitle="Software Engineer & Web Developer" />
+    <DynamicHero
+      client:load
+      title={heroText}
+      pattern={pattern}
+      subtitleOptions={subtitleOptions}
+      nowHtml={nowText}
+    />
     <FeaturedProjects projects={projects} random={random} />
     <Contact client:load random={random} />
     <div class="py-10"></div>

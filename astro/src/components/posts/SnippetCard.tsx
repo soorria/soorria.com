@@ -10,6 +10,7 @@ interface SnippetFrontMatter {
   createdAt: string
   updatedAt?: string
   category: string
+  tags?: string[]
 }
 
 const SnippetCard: React.FC<{ snippet: SnippetFrontMatter }> = ({

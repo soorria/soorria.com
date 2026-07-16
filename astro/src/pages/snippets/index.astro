@@ -2,7 +2,7 @@
 import { getCollection } from 'astro:content'
 import MainLayout from '~/layouts/MainLayout.astro'
 import PostLayout from '~/components/posts/PostLayout'
-import SnippetCard from '~/components/posts/SnippetCard'
+import SnippetGrid from '~/components/posts/SnippetGrid'
 import { getOgImageForData } from '~/utils/og'
 import { PUBLIC_URL } from '~/constants'
 
@@ -26,6 +26,7 @@ const snippets = allSnippets
     createdAt: snippet.data.createdAt,
     updatedAt: snippet.data.updatedAt,
     category: snippet.data.category,
+    tags: snippet.data.tags || [],
   }))
 ---
 
@@ -35,18 +36,6 @@ const snippets = allSnippets
   ogImage={getOgImageForData('snippets')}
 >
   <PostLayout title="Snippets" description={description}>
-    <div>
-      <div
-        style="grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); --initial-step: 3"
-        class="slide-in grid auto-cols-min grid-cols-1 content-start gap-x-6 gap-y-8 sm:grid-cols-2! sm:gap-x-8 lg:gap-12"
-      >
-        {snippets.map((snippet, i) => (
-          <div class="grid" style={`--step-num: ${i + 1}`}>
-            <SnippetCard snippet={snippet} client:load />
-          </div>
-        ))}
-      </div>
-    </div>
-    <div class="my-12 text-center">{snippets.length} snippets total</div>
+    <SnippetGrid snippets={snippets} client:load />
   </PostLayout>
 </MainLayout>

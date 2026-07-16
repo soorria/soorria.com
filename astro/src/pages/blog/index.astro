@@ -5,6 +5,7 @@ import PostLayout from '~/components/posts/PostLayout'
 import BlogPostCard from '~/components/posts/BlogPostCard'
 import { getOgImageForData } from '~/utils/og'
 import { PUBLIC_URL } from '~/constants'
+import { getContentMetrics } from '~/lib/reading-time'
 
 const description =
   'Attempts at writing about things that I think are interesting, useful, or just cool'
@@ -20,13 +21,18 @@ const posts = allPosts
     const dateB = b.data.createdAt ? new Date(b.data.createdAt).getTime() : 0
     return dateB - dateA
   })
-  .map(post => ({
-    slug: post.id,
-    title: post.data.title,
-    shortDescription: post.data.shortDescription,
-    createdAt: post.data.createdAt,
-    updatedAt: post.data.updatedAt,
-  }))
+  .map(post => {
+    const metrics = getContentMetrics(post.body || '')
+    return {
+      slug: post.id,
+      title: post.data.title,
+      shortDescription: post.data.shortDescription,
+      createdAt: post.data.createdAt,
+      updatedAt: post.data.updatedAt,
+      readingTime: metrics.readingTime,
+      words: metrics.words,
+    }
+  })
 ---
 
 <MainLayout

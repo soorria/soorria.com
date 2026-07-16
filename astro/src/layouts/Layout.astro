@@ -1,19 +1,33 @@
 ---
 import '~/styles/globals.css'
+import NoJsStyles from '~/styles/NoJsStyles.astro'
+import { PUBLIC_URL } from '~/constants'
+
+type OgImageProp = string | { url: string; width?: number; height?: number }
 
 interface Props {
   title?: string
   description?: string
-  ogImage?: string
+  ogImage?: OgImageProp
+  noindex?: boolean
 }
 
 const {
   title = 'Soorria Saruva',
   description = 'Full Stack Software Engineer',
-  ogImage = '/og.png',
+  ogImage: ogImageProp = '/og.png',
+  noindex = false,
 } = Astro.props
 
+// Handle both string and object formats for ogImage
+const ogImageUrl = typeof ogImageProp === 'string'
+  ? (ogImageProp.startsWith('/') ? `${PUBLIC_URL}${ogImageProp}` : ogImageProp)
+  : ogImageProp.url
+const ogImageWidth = typeof ogImageProp === 'object' ? ogImageProp.width ?? 1200 : 1200
+const ogImageHeight = typeof ogImageProp === 'object' ? ogImageProp.height ?? 630 : 630
+
 const canonicalURL = new URL(Astro.url.pathname, Astro.site)
+const fullTitle = title === 'Soorria Saruva' ? title : `${title} • Soorria Saruva`
 ---
 
 <!doctype html>
@@ -21,36 +35,57 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site)
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="theme-color" content="#282a36" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+    <!-- Favicons -->
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
     <link rel="icon" href="/favicon.ico" />
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/site.webmanifest" />
+    <meta name="msapplication-TileColor" content="#282a36" />
+
     <link rel="canonical" href={canonicalURL} />
 
-    <title>{title}</title>
+    <!-- Google verification -->
+    <meta name="google-site-verification" content="Cl0BjsWegjV0EoEmhPMVdyI9qWoAdOwh5S-h37tEaao" />
+
+    <title>{fullTitle}</title>
     <meta name="description" content={description} />
+    {noindex && <meta name="robots" content="noindex" />}
 
+    <!-- OpenGraph -->
     <meta property="og:type" content="website" />
+    <meta property="og:locale" content="en_AU" />
     <meta property="og:url" content={canonicalURL} />
-    <meta property="og:title" content={title} />
+    <meta property="og:title" content={fullTitle} />
     <meta property="og:description" content={description} />
-    <meta property="og:image" content={ogImage} />
+    <meta property="og:image" content={ogImageUrl} />
+    <meta property="og:image:width" content={ogImageWidth.toString()} />
+    <meta property="og:image:height" content={ogImageHeight.toString()} />
 
+    <!-- Twitter -->
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content={title} />
+    <meta name="twitter:site" content="@soorriously" />
+    <meta name="twitter:creator" content="@soorriously" />
+    <meta name="twitter:title" content={fullTitle} />
     <meta name="twitter:description" content={description} />
-    <meta name="twitter:image" content={ogImage} />
+    <meta name="twitter:image" content={ogImageUrl} />
+    <meta name="twitter:image:width" content={ogImageWidth.toString()} />
+    <meta name="twitter:image:height" content={ogImageHeight.toString()} />
 
     <!-- Font preloads -->
     <link
       rel="preload"
-      href="/fonts/poppins-latin-400.woff2"
+      href="/fonts/poppins-latin-700.woff2"
       as="font"
       type="font/woff2"
       crossorigin
     />
     <link
       rel="preload"
-      href="/fonts/poppins-latin-700.woff2"
+      href="/fonts/poppins-latin-400.woff2"
       as="font"
       type="font/woff2"
       crossorigin
@@ -65,9 +100,12 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site)
 
     <!-- Plausible Analytics -->
     <script defer data-domain="soorria.com" src="/js/potato.js"></script>
+
+    <!-- NoJS Styles -->
+    <NoJsStyles />
   </head>
   <body
-    class="flex min-h-screen flex-col bg-drac-base text-drac-content antialiased"
+    class="relative flex h-full min-h-screen flex-col overflow-y-auto bg-drac-base text-drac-content"
   >
     <slot />
   </body>

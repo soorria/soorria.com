@@ -6,13 +6,14 @@ import Footer from '~/components/Footer'
 interface Props {
   title?: string
   description?: string
-  ogImage?: string
+  ogImage?: string | { url: string; width?: number; height?: number }
+  noindex?: boolean
 }
 
-const { title, description, ogImage } = Astro.props
+const { title, description, ogImage, noindex } = Astro.props
 ---
 
-<Layout title={title} description={description} ogImage={ogImage}>
+<Layout title={title} description={description} ogImage={ogImage} noindex={noindex}>
   <a
     href="#main-content"
     class="sr-only left-0 top-0 block bg-drac-base-light p-4 text-drac-content focus:not-sr-only focus:fixed focus:z-50"

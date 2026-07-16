@@ -1,3 +1,4 @@
+import { lazy, Suspense } from 'react'
 import { CodeIcon, ExternalIcon, InfoIcon } from '../icons'
 
 interface ProjectFrontMatter {
@@ -15,11 +16,32 @@ export interface ProjectCardProps {
   project: ProjectFrontMatter
 }
 
+export type ProjectCardComponent = React.ComponentType<ProjectCardProps>
+
+// Lazy load special cards
+const JupyterJsCard = lazy(() => import('./jupyter-js/JupyterJsCard'))
+const ClinicallyRelevantCard = lazy(() => import('./clinically-relevant/ClinicallyRelevantCard'))
+const NotMessengerCard = lazy(() => import('./not-messenger/NotMessengerCard'))
+const SizesCard = lazy(() => import('./sizes/SizesCard'))
+const PokelifeCard = lazy(() => import('./pokelife/PokelifeCard'))
+const MagicSprinklesCard = lazy(() => import('./magic-sprinkles/MagicSprinklesCard'))
+const PromptRacerCard = lazy(() => import('./prompt-racer/PromptRacerCard'))
+
+const projectCardMap: Record<string, ProjectCardComponent> = {
+  'jupyter-js': JupyterJsCard,
+  'clinically-relevant': ClinicallyRelevantCard,
+  'not-messenger': NotMessengerCard,
+  sizes: SizesCard,
+  pokelife: PokelifeCard,
+  'magic-sprinkles': MagicSprinklesCard,
+  'prompt-racer': PromptRacerCard,
+}
+
 const classes = {
   link: 'inline-flex items-center space-x-1 text-drac-pink underline hocus:text-drac-purple focus-ring rounded-sm -mx-1 px-1',
 }
 
-const ProjectCard: React.FC<ProjectCardProps> = ({ project }) => {
+const DefaultProjectCard: React.FC<ProjectCardProps> = ({ project }) => {
   return (
     <div className="flex flex-col space-y-3" id={project.slug}>
       <div className="font-display text-xl font-bold text-drac-pink">
@@ -82,6 +104,19 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project }) => {
       </div>
     </div>
   )
+}
+
+const ProjectCard: ProjectCardComponent = ({ project }) => {
+  if (project.slug in projectCardMap) {
+    const SpecialCard = projectCardMap[project.slug]!
+    return (
+      <Suspense fallback={<DefaultProjectCard project={project} />}>
+        <SpecialCard project={project} />
+      </Suspense>
+    )
+  }
+
+  return <DefaultProjectCard project={project} />
 }
 
 export default ProjectCard

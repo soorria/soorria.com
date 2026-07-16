@@ -4,6 +4,7 @@ import { contactLinks } from '~/links'
 import cx from '~/utils/cx'
 import { type FormEventHandler, useState } from 'react'
 import LandingSection from './LandingSection'
+import { useTrackFirstEvent } from '~/lib/analytics'
 
 interface ContactProps {
   random?: number
@@ -82,7 +83,7 @@ const ContactForm: React.FC = () => {
               id={IDS.errorEl}
               className="rounded-sm border-2 border-drac-red/70 bg-drac-red/30 p-4"
             >
-              Looks like something went wrong with my form, or you&apos;re offline. You can try
+              Looks like something went wrong with my form, or you&apos;re offline ☹ You can try
               again later, or just shoot me an email.
             </div>
           ) : null}
@@ -124,7 +125,7 @@ const ContactForm: React.FC = () => {
               name="message"
               autoComplete="off"
               className={classes.input}
-              placeholder="be nice"
+              placeholder="be nice 😊"
               rows={5}
             />
           </div>
@@ -165,6 +166,7 @@ const ContactForm: React.FC = () => {
 
 const Contact: React.FC<ContactProps> = ({ random = 0 }) => {
   const [showForm, setShowForm] = useState(false)
+  const trackFirstEvent = useTrackFirstEvent()
 
   return (
     <LandingSection title={titles[random % titles.length]} id="contact">
@@ -176,6 +178,9 @@ const Contact: React.FC<ContactProps> = ({ random = 0 }) => {
               type="button"
               tabIndex={-1}
               onClick={() => {
+                if (!showForm) {
+                  trackFirstEvent('Easter Egg', { props: { which: 'contact-form' } })
+                }
                 setShowForm(p => !p)
               }}
               className={cx(

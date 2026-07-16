@@ -9,7 +9,7 @@ interface BlogPostFrontMatter {
   createdAt?: string
   updatedAt?: string
   readingTime?: string
-  words?: number
+  words?: string | number
 }
 
 const BlogPostCard: React.FC<{ post: BlogPostFrontMatter }> = ({
