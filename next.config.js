@@ -203,14 +203,17 @@ const config = {
   },
   images: {
     domains: process.env.NODE_ENV === 'development' ? ['localhost'] : undefined,
+    localPatterns: [
+      {
+        pathname: '/api/og',
+        search: '',
+      },
+    ],
   },
   reactStrictMode: true,
   serverExternalPackages: ['esbuild', '@mdx-js/esbuild', 'shiki', '@babel/core'],
   experimental: {
     // esmExternals: 'loose',
-  },
-  eslint: {
-    ignoreDuringBuilds: true,
   },
   typescript: {
     ignoreBuildErrors: true,
