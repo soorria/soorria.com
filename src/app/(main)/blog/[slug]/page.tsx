@@ -14,6 +14,7 @@ import MdxRenderer from '~/components/mdx/MdxRenderer'
 import { ignoreError } from '~/utils/misc'
 import { notFound } from 'next/navigation'
 import { LazyGiscus } from '~/components/posts/comments/Giscus'
+import { blogPostFilter } from '~/utils/content'
 
 type PostPageProps = {
   params: Promise<{ slug: string }>
@@ -24,7 +25,7 @@ export const dynamic = 'force-static'
 export const generateStaticParams = async () => {
   const posts = await getAllFilesFrontMatter<BlogPostFrontMatter>('blog')
 
-  return posts.map(({ slug }) => ({ slug }))
+  return blogPostFilter(posts).map(({ slug }) => ({ slug }))
 }
 
 export const generateMetadata = async (props: PostPageProps): Promise<Metadata> => {

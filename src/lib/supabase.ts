@@ -7,12 +7,14 @@ type Singleton = {
 
 const API_KEY = process.env.SUPABASE_ANON_KEY
 const BASE_URL = process.env.SUPABASE_URL
+const FETCH_TIMEOUT_MS = 5_000
 
 async function fetchSingleton(slug: string): Promise<Singleton | null> {
   const url = new URL(`/rest/v1/singletons`, BASE_URL)
   url.searchParams.set('select', '*')
   url.searchParams.set('slug', `eq.${slug}`)
   const response = await fetch(url.toString(), {
+    signal: AbortSignal.timeout(FETCH_TIMEOUT_MS),
     headers: {
       apiKey: API_KEY,
       Authorization: `Bearer ${API_KEY}`,

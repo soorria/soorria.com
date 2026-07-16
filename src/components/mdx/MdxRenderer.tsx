@@ -25,6 +25,8 @@ const MdxRenderer = async (props: MdxRendererProps) => {
       components={allComponents}
       options={{
         scope: { ...componentsForData },
+        blockJS: false,
+        blockDangerousJS: true,
         mdxOptions: {
           ...getMdxOptions({ hasCodeBlocks: props.hasCodeBlocks ?? true }),
         },
