@@ -6,7 +6,7 @@ tags:
   - typescript
   - react
 createdAt: '2024-09-08'
-updatedAt: '2024-09-09'
+updatedAt: '2026-07-16'
 ---
 
 Easily create typed React Contexts and associated hooks without needing to
@@ -67,7 +67,7 @@ export function createTypedContext<
 import { useState } from 'react'
 
 export const [SecretNumberProvider, useSecretNumber] = createTypedContext(
-  ({ secretNumber }: { secretNumber }) => {
+  ({ secretNumber }: { secretNumber: number }) => {
     const [multiplier, setMultiplier] = useState(1)
 
     return {
