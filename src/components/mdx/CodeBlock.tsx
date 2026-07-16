@@ -11,6 +11,7 @@ type CustomCodeBlockProps = PropsWithChildren<
     'data-theme'?: string
     'data-title'?: ReactNode
     'data-wrapper'?: boolean
+    id?: string
   } & CodeBlockPreExtraProps
 >
 
@@ -20,6 +21,7 @@ const CodeBlock = (props: CustomCodeBlockProps) => {
     'data-wrapper': noWrapper,
     'data-theme': theme,
     'data-title': title,
+    id,
   } = props
 
   if (!theme || noWrapper) {
@@ -31,7 +33,7 @@ const CodeBlock = (props: CustomCodeBlockProps) => {
   return (
     <>
       {title && <CodeBlockTitle>{title}</CodeBlockTitle>}
-      <div className={cx('code-block', CODE_BLOCK_CLASSNAMES.root)}>
+      <div id={id} className={cx('code-block', CODE_BLOCK_CLASSNAMES.root)}>
         <div className={CODE_BLOCK_CLASSNAMES.header}>
           <div className={CODE_BLOCK_CLASSNAMES.languageTitle}>{language}</div>
           <div className="flex-1" />

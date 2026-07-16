@@ -1,0 +1,214 @@
+---
+title: Immer
+shortDescription: What it is, and whether you should use it
+category: React
+tags:
+  - react
+  - javascript
+# createdAt: '2026-07-16'
+---
+
+[Immer](https://immerjs.github.io/immer/) is a _very_ popular JavaScript
+library, often used with React to make developer's lives easier. Apparently it's
+so good it's
+[won a couple awards](https://github.com/immerjs/immer#:~:text=Winner%20of%20the%20%22Breakthrough%20of%20the%20year%22%20React%20open%20source%20award%20and%20%22Most%20impactful%20contribution%22%20JavaScript%20open%20source%20award%20in%202019)!
+
+But _what is immer_, and more importantly, _why do people use it_?
+
+## The problem
+
+React, and some [other](https://preactjs.com/)
+[frameworks](https://www.solidjs.com/) assume that state is **immutable**, that
+once it has a piece of data it will stay the same for the rest of eternity.
+Unfortunately, a pesky group of people called _"users"_ expects that UIs update
+when you click buttons and submit forms and yell at LLMs to stop being so stupid
+and do what I told you to.
+
+So for the blessing of <Sparkles>_interactivity_</Sparkles>, the React gods
+require that when we update state, the new value doesn't equal the old value.
+More specifically, React checks that
+[`Object.is(old, new)`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/is)
+returns `false`. This works out alright for simple values like numbers, strings
+and booleans. However, this gets annoying when we use arrays and objects, since
+`Object.is` just checks if the values are the same by reference, instead of by
+value.
+
+### How it looks
+
+If you want to add an item to the end of an array, the obvious thing to do in
+JavaScript is `push` to it, then tell React it's changed:
+
+```js
+snacks.push('Grapes')
+setSnacks(snacks)
+```
+
+When you push to an array, it's still the same array, we're just **mutating** it
+and the updated array **still has the same reference as the old one**! (like how
+you're still the same person if you eat some grapes) Now when React compares the
+new and old state values, it ends up running something like
+`Object.is(snacks, snacks)`. This will return `true`, and your UI won't update.
+
+For React to update you're UI, you might do something like this:
+
+```js
+snacks.push('Oreos')
+const updatedSnacks = [...snacks] // or snacks.slice()
+snacks.setSnacks(updatedSnacks)
+```
+
+or if you want to add the item, and make a copy at the same time:
+
+```js
+const updatedSnacks = [...snacks, 'Jelly Beans']
+snacks.setSnacks(updatedSnacks)
+```
+
+This isn't too bad since the values are so simple, but...
+
+### It gets worse
+
+If you want to update a more complex object, the naïve approach would look like
+this:
+
+```js id="transfer-naive"
+const transfer = {
+  from: 'alice',
+  to: 'bob',
+  snack: snackToTransfer,
+  count: 1,
+}
+
+const fromPerson = data.people.find(person => person.id === transfer.from)
+const fromSnack = fromPerson.snacks.find(snack => snack.id === transfer.snack)
+fromSnack.count -= transfer.count
+
+const toPerson = data.people.find(person => person.id === transfer.to)
+const toSnack = toPerson.snacks.find(snack => snack.id === transfer.snack)
+toSnack.count += transfer.count
+
+data.transfers.push(transfer)
+
+setData(data)
+```
+
+But an update without mutation would be this monstrosity (_after_ a light
+refactor):
+
+```js
+const transfer = {
+  from: 'alice',
+  to: 'bob',
+  snack: snackToTransfer,
+  count: 1,
+}
+
+function updatePersonSnacks(person, transfer, direction) {
+  const directionMultiplier = direction === 'from' ? -1 : 1
+
+  return {
+    ...person,
+    snacks: person.snacks.map(snack => {
+      if (snack.id !== transfer.snack) {
+        return snack
+      }
+
+      return {
+        ...snack,
+        count: snack.count + directionMultiplier * transfer.count,
+      }
+    }),
+  }
+}
+
+const updatedData = {
+  ...data,
+  people: data.people.map(person => {
+    if (person.id === transfer.from) {
+      return updatePersonSnacks(person, transfer, 'from')
+    } else if (person.id === transfer.to) {
+      return updatePersonSnacks(person, transfer, 'to')
+    } else {
+      return person
+    }
+  }),
+
+  transfers: [...data.transfers, transfer],
+}
+
+setData(updatedData)
+```
+
+This is clearly more verbose, complex and yuck. But it's also the kind of
+complexity Immer is designed to solve.
+
+## How immer helps
+
+Immer provides a (in my opinion) confusingly-named `produce` function that lets
+you write code _almost identical_ to the naïve approaches above. Re-working the
+[naive version of the complex example above](#transfer-naive) to work with
+Immer, all we really need to do is add a few lines, and rename a variable. It's
+so easy you might hand-writing the code!!
+
+```js {9,21}
+const transfer = {
+  from: 'alice',
+  to: 'bob',
+  snack: snackToTransfer,
+  count: 1,
+}
+
+const updatedData = produce(data, draft => {
+  const fromPerson = draft.people.find(person => person.id === transfer.from)
+  const fromSnack = fromPerson.snacks.find(snack => snack.id === transfer.snack)
+  fromSnack.count -= transfer.count
+
+  const toPerson = draft.people.find(person => person.id === transfer.to)
+  const toSnack = toPerson.snacks.find(snack => snack.id === transfer.snack)
+  toSnack.count += transfer.count
+
+  draft.transfers.push(transfer)
+})
+
+setData(updatedData)
+```
+
+Immer takes our naïve mutations, and produces a copy of our data with the
+required changes to get React to update our UIs. It's made possible by the
+`draft` object (you can call it whatever you want), which we mutate rather than
+the actual data. This allows Immer to keep track of the changes we make, powered
+by the dark magic of
+[proxies](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Proxy).
+
+If you're extra lazy there's a
+[use-immer](https://www.npmjs.com/package/use-immer) library that ships a
+`useImmer` hook, the love-child of React's `setState` and Immer's `produce`.
+Using `useImmer` you can write a whole 1 fewer line.
+
+## Should you use it?
+
+Immer makes update state significantly simpler and easier to read. It's still
+useful if you're not using React's state management system.
+[Redux Toolkit](https://github.com/reduxjs/redux-toolkit), builds on top of the
+definitely-extremely-verbose [Redux](https://redux.js.org/) using libraries like
+Immer to make developers' lives easier.
+
+There are a series of [pitfalls](https://immerjs.github.io/immer/pitfalls) to
+keep in mind and as usual, Immer's also not the only library to do this kind of
+thing. I found another one called [mutative](https://mutative.js.org/) that
+claims to be up to 10x faster and so could be a better fit for your use case.
+
+Immer's approach also isn't really needed if your state isn't overly complex,
+and can instead add unnecessary overhead, and complex state might be a sign you
+need to refactor. It'll become even less necessary as we read code less, and
+delegate more of that responsibility to LLMs.
+
+You and your local LLM should think about whether Immer is the right tool for
+your project.
+
+---
+
+<small>
+  why's it always "what is immer" and "why is immer" but never "how is immer"
+  😭😭😭
+</small>

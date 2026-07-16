@@ -7,6 +7,7 @@ import { format as prettierFormat, type Options as PrettierOptions } from 'prett
 import type { Transformer } from 'unified'
 import type { Code } from 'mdast'
 import fs from 'fs'
+import { extractIdFromMeta, stripIdFromMeta } from './code-block-meta'
 
 const isTypescriptCodeBlock = (lang: string) => ['ts', 'tsx', 'typescript'].includes(lang)
 const getJavascriptType = (lang: string) => (lang === 'tsx' ? 'jsx' : 'js')
@@ -33,11 +34,13 @@ export const remarkTypeScriptTransform = (): Transformer => {
   const promises: Promise<void>[] = []
 
   const visitor = (node: Code, index: number, parent: Parent) => {
+    node.lang ||= 'text'
+
     const { lang, value, meta, data, type } = node
-    if (!lang) {
-      node.lang = 'text'
-      return
-    }
+    // For plain (non-TsJsSwitcher) blocks, leave id in meta — rehypePreserveCodeBlockIds
+    // picks it up after mdast → hast. hProperties don't survive rehype-pretty-code.
+    const id = extractIdFromMeta(meta)
+
     if (!isTypescriptCodeBlock(lang) || meta?.match(/\bnojs\b/)) {
       node.meta = meta?.replace(/\bnojs\b/, '')
       return
@@ -66,6 +69,13 @@ export const remarkTypeScriptTransform = (): Transformer => {
       }
     }
 
+    // Id goes on the TsJsSwitcher wrapper (not the inner <pre>s), so strip it
+    // from both metas before pretty-code runs.
+    if (id) {
+      if (node.meta) node.meta = stripIdFromMeta(node.meta)
+      if (jsMeta) jsMeta = stripIdFromMeta(jsMeta)
+    }
+
     const jsNode: Code = {
       type,
       meta: jsMeta?.trim(),
@@ -81,16 +91,26 @@ export const remarkTypeScriptTransform = (): Transformer => {
       })
     )
 
+    const attributes: Array<{ type: 'mdxJsxAttribute'; name: string; value: string }> = [
+      {
+        type: 'mdxJsxAttribute',
+        name: 'data-jsx',
+        value: (node.lang === 'jsx').toString(),
+      },
+    ]
+
+    if (id) {
+      attributes.push({
+        type: 'mdxJsxAttribute',
+        name: 'id',
+        value: id,
+      })
+    }
+
     const wrapper = {
       type: 'mdxJsxFlowElement',
       name: 'TsJsSwitcher',
-      attributes: [
-        {
-          type: 'mdxJsxAttribute',
-          name: 'data-jsx',
-          value: (node.lang === 'jsx').toString(),
-        },
-      ],
+      attributes,
       children: [node, jsNode],
     }
 

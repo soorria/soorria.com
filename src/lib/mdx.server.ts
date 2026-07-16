@@ -7,7 +7,7 @@ import { nodeTypes } from '@mdx-js/mdx'
 import { remarkTypeScriptTransform } from './remark.server'
 import rehypePrettyCode, { type Options } from 'rehype-pretty-code'
 import type { PluggableList } from 'unified'
-import { rehypeRearrangePrettyCodeOutput } from './rehype.server'
+import { rehypePreserveCodeBlockIds, rehypeRearrangePrettyCodeOutput } from './rehype.server'
 import type { serialize } from 'next-mdx-remote/serialize'
 
 type SerializeOptions = NonNullable<Parameters<typeof serialize>[1]>
@@ -15,6 +15,8 @@ type SerializeOptions = NonNullable<Parameters<typeof serialize>[1]>
 const codeBlockRemarkPlugins: PluggableList = [remarkTypeScriptTransform]
 
 const codeBlockRehypePlugins: PluggableList = [
+  // Must run before pretty-code — stashes id on pre.data so it survives the rebuild
+  rehypePreserveCodeBlockIds,
   [
     rehypePrettyCode,
     {

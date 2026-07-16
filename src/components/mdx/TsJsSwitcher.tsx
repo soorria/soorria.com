@@ -9,11 +9,13 @@ import { CodeBlockCopyButton } from './CodeBlockCopyButton'
 const TsJsSwitcher = ({
   'data-title': title,
   'data-jsx': isJsx,
+  id,
   children,
 }: PropsWithChildren<{
   'data-title'?: string
   'data-caption'?: string
   'data-jsx'?: 'true' | 'false'
+  id?: string
 }>) => {
   const [isTs] = useIsTs()
 
@@ -27,6 +29,7 @@ const TsJsSwitcher = ({
       {title && <CodeBlockTitle>{title}</CodeBlockTitle>}
       <div
         className={cx('code-block ts-js-switcher', isTs || 'show-js', CODE_BLOCK_CLASSNAMES.root)}
+        id={id}
       >
         <div className={CODE_BLOCK_CLASSNAMES.header}>
           <div className={CODE_BLOCK_CLASSNAMES.languageTitle}>
