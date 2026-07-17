@@ -1,0 +1,117 @@
+---
+import { availablePatterns } from '../../src/components/landing/hero-patterns'
+
+interface Props {
+  title: string
+  pattern?: string
+  subtitles: string[]
+  nowHtml?: string
+}
+
+const { title, pattern = 'circuit', subtitles, nowHtml = '' } = Astro.props
+const patternValue = availablePatterns[pattern] ?? availablePatterns.circuit
+---
+
+<div class="fade-in-direct">
+  <section
+    id="hero"
+    class="hero-bg slide-in nmpt-36 nmpx-4 md:nmpx-8 lg:nmpx-20 xl:nmpx-52 2xl:nmpx-72 relative overflow-hidden pb-8"
+    style={`--pattern: ${patternValue}`}
+  >
+    <div
+      class="font-display relative z-10 mx-auto my-4 cursor-default py-16 text-center text-6xl leading-tight font-bold outline-hidden sm:my-8 sm:text-[4rem] md:text-[5rem] lg:text-8xl"
+    >
+      <div class="slide-in relative" style="--step-delay: 100ms">
+        <div
+          class="pointer-events-none absolute inset-0 hidden select-none sm:block contrast-more:sm:hidden"
+        >
+          <p
+            aria-hidden="true"
+            role="presentation"
+            class="text-drac-pink -translate-x-4 -translate-y-4 sm:-translate-x-8 sm:-translate-y-8"
+          >
+            {title}
+          </p>
+        </div>
+        <div class="relative">
+          <h1
+            class="from-drac-pink to-drac-purple contrast-more:sm:text-drac-pink sm:text-drac-content relative inset-0 cursor-text bg-linear-to-tr bg-clip-text text-transparent contrast-more:scale-110"
+          >
+            {title}
+          </h1>
+        </div>
+        <div
+          class="pointer-events-none absolute inset-0 z-20 hidden select-none sm:block contrast-more:sm:hidden"
+        >
+          <p
+            aria-hidden="true"
+            role="presentation"
+            class="text-drac-purple translate-x-4 translate-y-4 sm:translate-x-8 sm:translate-y-8"
+          >
+            {title}
+          </p>
+        </div>
+      </div>
+    </div>
+
+    {
+      subtitles[0] && (
+        <h2 class="mb-8 text-2xl sm:my-8 sm:text-2xl md:text-3xl" id="hero-subtitle">
+          <span class="[&>p]:inline [&>p]:text-pretty" data-subtitle set:html={subtitles[0]} />
+          <button
+            type="button"
+            class="focus-ring group text-drac-highlight hocus:text-drac-purple relative ml-2 inline-flex translate-y-1 items-center rounded-sm transition"
+            aria-label="refresh subtitle about me"
+            title="refresh subtitle about me"
+          >
+            <svg
+              class="h-em w-em scale-x-100 transform transition-transform ease-out"
+              data-subtitle-icon
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2"
+              role="presentation"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M4 4v5h.582m15.356 2A8.001 8.001 0 0 0 4.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 0 1-15.357-2m15.357 2H15"
+              />
+            </svg>
+          </button>
+        </h2>
+      )
+    }
+
+    {nowHtml && <div class="text-lg text-pretty" id="now" set:html={nowHtml} />}
+  </section>
+</div>
+
+<script type="application/json" id="home-subtitles" set:html={JSON.stringify(subtitles)} />
+<script>
+  const subtitleData = document.querySelector('#home-subtitles')?.textContent
+  const subtitleOptions: string[] = subtitleData ? JSON.parse(subtitleData) : []
+  const subtitle = document.querySelector<HTMLElement>('[data-subtitle]')
+  const button = document.querySelector<HTMLButtonElement>(
+    '[aria-label="refresh subtitle about me"]'
+  )
+  const icon = document.querySelector<SVGElement>('[data-subtitle-icon]')
+  let index = 0
+  let rotations = 0
+
+  button?.addEventListener('click', () => {
+    if (!subtitle || subtitleOptions.length < 2) return
+
+    index =
+      (index + 1 + Math.floor(Math.random() * (subtitleOptions.length - 1))) %
+      subtitleOptions.length
+    subtitle.innerHTML = subtitleOptions[index] ?? ''
+    rotations += 1
+
+    if (icon) {
+      icon.style.rotate = `-${rotations}turn`
+      icon.style.transitionDuration = `${700 + rotations * 200}ms`
+    }
+  })
+</script>

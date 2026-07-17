@@ -11,14 +11,17 @@ import { getSingletonJsonSafe, getSingletonTextSafe } from '../../src/lib/supaba
 import { renderRuntimeMarkdown } from '../../src/lib/runtime-markdown'
 import type { ProjectFrontMatter } from '../../src/types/project'
 import Container from '../components/Container.astro'
+import HomeHero from '../components/HomeHero.astro'
 import MainLayout from '../layouts/MainLayout.astro'
 
 Astro.response.headers.set('Cache-Control', 's-maxage=10, stale-while-revalidate')
-const subtitleText = (await getSingletonTextSafe('subtitle')) ?? ''
+const subtitleText =
+  (await getSingletonTextSafe('subtitle')) ??
+  "I'm a full stack software engineer passionate about creating performant and fun software that enables users to do more with less\n---\nI build delightful, accessible experiences for the web"
 const subtitles = await Promise.all(
   subtitleText
     .split('---')
-    .map(value => value.trim())
+    .map(value => value.trim().replace(/\.$/, ''))
     .filter(Boolean)
     .map(renderRuntimeMarkdown)
 )
@@ -32,19 +35,12 @@ const projects = await Promise.all(
 
 <MainLayout>
   <Container>
-    <section class="hero-bg slide-in relative overflow-hidden pt-12 pb-16">
-      <h1
-        class="from-drac-pink to-drac-purple bg-linear-to-tr bg-clip-text py-12 text-center text-6xl text-transparent sm:text-8xl"
-      >
-        {options.heroText || "Hey, I'm Soorria"}
-      </h1>
-      {subtitles[0] && <div class="text-center text-2xl text-pretty" set:html={subtitles[0]} />}
-      {
-        nowHtml && (
-          <div class="mx-auto mt-10 max-w-2xl text-lg text-pretty" id="now" set:html={nowHtml} />
-        )
-      }
-    </section>
+    <HomeHero
+      title={options.heroText || "Hey, I'm Soorria"}
+      pattern={options.pattern}
+      subtitles={subtitles}
+      nowHtml={nowHtml}
+    />
     <FeaturedProjects client:load projects={projects} random={0} />
     <Skills client:only="react" random={1} skillIndexes={getRandomSkillIndexes(8)} />
     <Contact client:load random={2} />
