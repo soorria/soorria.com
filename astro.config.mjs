@@ -35,6 +35,9 @@ export default defineConfig({
   },
   integrations: [react(), mdx()],
   vite: {
+    server: {
+      allowedHosts: ['.soorria.com'],
+    },
     plugins: [tailwindcss()],
     resolve: {
       alias: {

@@ -12,6 +12,7 @@ export default function middleware(request: Request) {
   }
 
   const excluded =
+    pathname === '/links' ||
     pathname.includes('.') ||
     pathname.startsWith('/api') ||
     pathname.startsWith('/proxy') ||

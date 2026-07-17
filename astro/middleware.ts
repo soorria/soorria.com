@@ -14,6 +14,7 @@ export const onRequest = defineMiddleware((context, next) => {
   }
 
   const excluded =
+    pathname === '/links' ||
     pathname.includes('.') ||
     pathname.startsWith('/api') ||
     pathname.startsWith('/proxy') ||
