@@ -26,6 +26,7 @@ export default defineConfig({
   },
   adapter: vercel({
     includeFiles: ['./src/data'],
+    imageService: true,
   }),
   markdown: {
     processor: unified({
