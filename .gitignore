@@ -7,6 +7,12 @@
 
 # testing
 /coverage
+/playwright-report/
+/test-results/
+
+# astro
+/.astro/
+/dist-astro/
 
 # next.js
 /.next/
