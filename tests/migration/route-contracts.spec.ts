@@ -157,6 +157,18 @@ test('the art page retains request-time NFT variability', async ({ request }) =>
   expect(titles.size).toBeGreaterThan(1)
 })
 
+test('every art image loads successfully', async ({ page }) => {
+  await page.goto('/authentic-artistique-endevours')
+  const images = page.locator('main img')
+  await expect(images).toHaveCount(7)
+
+  for (let index = 0; index < (await images.count()); index += 1) {
+    const image = images.nth(index)
+    await image.scrollIntoViewIfNeeded()
+    await expect.poll(() => image.evaluate(element => element.naturalWidth)).toBeGreaterThan(0)
+  }
+})
+
 test('core pages have no broken internal links', async ({ page, request, baseURL }) => {
   const hrefs = new Set<string>()
   for (const route of ['/', '/blog', '/snippets', '/projects', '/about']) {

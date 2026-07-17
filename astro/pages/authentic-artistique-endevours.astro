@@ -1,5 +1,6 @@
 ---
 export const prerender = false
+import type { ImageMetadata } from 'astro'
 import { Image } from 'astro:assets'
 import DavidLau from '../../src/assets/art/david-lau-nft-real.png'
 import DonaldTrump from '../../src/assets/art/donald trump nft (real).png'
@@ -28,12 +29,20 @@ const nftMeanings = [
   'Nonfunctional Farce Transaction',
 ]
 const randomNftMeaning = () => nftMeanings[Math.floor(Math.random() * nftMeanings.length)]
-const art = [
+const art: Array<{
+  title: string
+  date: string
+  src: ImageMetadata
+  alt: string
+  nftMeaning?: string
+  unoptimized?: boolean
+}> = [
   {
     title: 'Glistening Saint',
     date: '2025-10-23',
     src: GlisteningSaint,
     alt: 'gif of a saint with emoji prayer hands coming together to form a heart',
+    unoptimized: true,
   },
   {
     title: 'the bruhfferfish',
@@ -115,7 +124,18 @@ const art = [
                 <em>masterfully</em> created on{' '}
                 <time datetime={item.date}>{new Date(item.date).toLocaleDateString()}</time>
               </p>
-              <Image src={item.src} alt={item.alt} />
+              {item.unoptimized ? (
+                <img
+                  src={item.src.src}
+                  width={item.src.width}
+                  height={item.src.height}
+                  alt={item.alt}
+                  loading="lazy"
+                  decoding="async"
+                />
+              ) : (
+                <Image src={item.src} alt={item.alt} />
+              )}
             </>
           </section>
         ))
