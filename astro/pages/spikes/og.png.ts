@@ -46,7 +46,7 @@ export const GET: APIRoute = async ({ url }) => {
     .render()
     .asPng()
 
-  return new Response(png, {
+  return new Response(new Uint8Array(png), {
     headers: {
       'Cache-Control': 'public, max-age=60',
       'Content-Type': 'image/png',

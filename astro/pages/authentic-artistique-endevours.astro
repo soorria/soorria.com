@@ -1,18 +1,33 @@
 ---
 export const prerender = false
 import { Image } from 'astro:assets'
-import DavidLau from '../../src/app/(main)/authentic-artistique-endevours/david-lau-nft-real.png'
-import DonaldTrump from '../../src/app/(main)/authentic-artistique-endevours/donald trump nft (real).png'
-import GlisteningSaint from '../../src/app/(main)/authentic-artistique-endevours/glistening-saint.gif'
-import SandboxTshirt from '../../src/app/(main)/authentic-artistique-endevours/sandbox-tshirt.jpg'
-import SpeedSudoku from '../../src/app/(main)/authentic-artistique-endevours/speed-sudoku-champion-riki.png'
-import Bruhfferfish from '../../src/app/(main)/authentic-artistique-endevours/the-bruhfferfish.jpg'
-import Waifu from '../../src/app/(main)/authentic-artistique-endevours/unnamed waifu.png'
+import DavidLau from '../../src/assets/art/david-lau-nft-real.png'
+import DonaldTrump from '../../src/assets/art/donald trump nft (real).png'
+import GlisteningSaint from '../../src/assets/art/glistening-saint.gif'
+import SandboxTshirt from '../../src/assets/art/sandbox-tshirt.jpg'
+import SpeedSudoku from '../../src/assets/art/speed-sudoku-champion-riki.png'
+import Bruhfferfish from '../../src/assets/art/the-bruhfferfish.jpg'
+import Waifu from '../../src/assets/art/unnamed waifu.png'
+import { MagicSprinkles } from '../../src/components/installations/MagicSprinkles'
 import { getOgImage } from '../../src/utils/og'
 import MainLayout from '../layouts/MainLayout.astro'
 import PostLayout from '../layouts/PostLayout.astro'
 
 Astro.response.headers.set('Cache-Control', 's-maxage=10, stale-while-revalidate')
+const nftMeanings = [
+  'Not For Thinking',
+  'Nebulous Frivolous Token',
+  'Nonexistent Fantasy Treasure',
+  'Notoriously Fickle Trinket',
+  'Nonsensical Fad Trend',
+  'Nifty Fictitious Token',
+  'Never-ending Foolish Transmission',
+  'Noisy Futile Tchotchke',
+  'Novelty Fabricated Trophy',
+  'Notoriously Flawed Triviality',
+  'Nonfunctional Farce Transaction',
+]
+const randomNftMeaning = () => nftMeanings[Math.floor(Math.random() * nftMeanings.length)]
 const art = [
   {
     title: 'Glistening Saint',
@@ -39,7 +54,8 @@ const art = [
     alt: 'pencil drawing of Riki after winning speed sudoku',
   },
   {
-    title: `david Lau nft (real)`,
+    title: 'david Lau nft (real)',
+    nftMeaning: randomNftMeaning(),
     date: '2023-12-02',
     src: DavidLau,
     alt: 'satirical depiction of David Lau shooting laser beams',
@@ -52,6 +68,7 @@ const art = [
   },
   {
     title: 'donald trump nft (real)',
+    nftMeaning: randomNftMeaning(),
     date: '2022-12-17',
     src: DonaldTrump,
     alt: 'satirical portrayal of a Donald Trump NFT',
@@ -75,7 +92,25 @@ const art = [
         art.map(item => (
           <section>
             <>
-              <h2>{item.title}</h2>
+              <h2>
+                {item.nftMeaning ? (
+                  <>
+                    {item.title.replace('nft', '')}
+                    <abbr
+                      class="tooltip cursor-help"
+                      title={item.nftMeaning}
+                      aria-label={item.nftMeaning}
+                    >
+                      nft
+                      <sup aria-hidden="true" class="text-drac-pink text-sm font-bold">
+                        ?
+                      </sup>
+                    </abbr>
+                  </>
+                ) : (
+                  item.title
+                )}
+              </h2>
               <p>
                 <em>masterfully</em> created on{' '}
                 <time datetime={item.date}>{new Date(item.date).toLocaleDateString()}</time>
@@ -85,6 +120,18 @@ const art = [
           </section>
         ))
       }
+      <section>
+        <h2>magic sprinkles</h2>
+        <div class="not-prose relative aspect-video overflow-hidden rounded-lg">
+          <MagicSprinkles client:only="react" />
+          <a
+            class="bg-drac-base absolute inset-x-0 bottom-4 mx-auto block w-fit rounded px-4 py-2"
+            href="/installations/magic-sprinkles"
+          >
+            see full installation
+          </a>
+        </div>
+      </section>
     </div>
   </PostLayout>
   <div class="text-drac-pink pb-2 text-center text-xs">

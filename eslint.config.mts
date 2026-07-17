@@ -56,8 +56,7 @@ export default defineConfig([
         'plugin:@typescript-eslint/recommended',
         'plugin:react/recommended',
         // 'plugin:react-hooks/recommended',
-        'plugin:jsx-a11y/recommended',
-        'plugin:@next/next/recommended'
+        'plugin:jsx-a11y/recommended'
       )
     ),
 
@@ -101,17 +100,10 @@ export default defineConfig([
       '@typescript-eslint/explicit-module-boundary-types': 'off',
     },
   },
-  {
-    files: ['next-env.d.ts'],
-    rules: {
-      '@typescript-eslint/triple-slash-reference': 'off',
-    },
-  },
   globalIgnores([
     '**/.eslintrc.js',
     '**/tailwind.config.js',
     '**/postcss.config.mjs',
-    '**/next.config.js',
     '**/node_modules',
     '_data/**/*.js',
   ]),

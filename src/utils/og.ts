@@ -1,11 +1,11 @@
-import type { Metadata } from 'next'
 import type { DataType } from '~/types/data'
 import { PUBLIC_URL } from '~/constants'
 
-type OgImage = Extract<
-  Extract<NonNullable<Metadata['openGraph']>['images'], unknown[]>[number],
-  Record<string, unknown>
->
+type OgImage = {
+  url: string
+  width: number
+  height: number
+}
 
 type OgParams = {
   title: string

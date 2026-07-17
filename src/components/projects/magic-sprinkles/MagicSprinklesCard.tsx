@@ -1,11 +1,11 @@
 import type { ProjectFrontMatter } from '~/types/project'
-import NextLink from 'next/link'
+import NextLink from '../../CompatLink'
 import { CodeIcon, ExternalIcon, InfoIcon } from '~/components/icons'
 import cx from '~/utils/cx'
 import { COMMON_CLASSNAMES } from '../utils'
 import type React from 'react'
 import ShowWhenVisible from '~/components/ShowWhenVisible'
-import { LazyClientMagicSprinkles as LazyMagicSprinkles } from '~/app/(no-layout)/installations/magic-sprinkles/magic-sprinkles.lazy-client'
+import { MagicSprinkles as LazyMagicSprinkles } from '~/components/installations/MagicSprinkles'
 import Sparkles from '~/components/mdx/Sparkles'
 
 interface MagicSprinklesCardProps {
@@ -23,7 +23,7 @@ const MagicSprinklesCard: React.FC<MagicSprinklesCardProps> = ({ project }) => {
           className="rainbow-gradient absolute inset-0"
           style={{ animation: 'bg-slide 5s linear infinite' }}
         ></div>
-        <div className="absolute inset-1 bg-drac-base"></div>
+        <div className="bg-drac-base absolute inset-1"></div>
         <div className="absolute -inset-x-6 -inset-y-4 grid -translate-x-0.5">
           <ShowWhenVisible className="transition-transform group-hover:scale-[0.952]">
             <LazyMagicSprinkles />
@@ -34,9 +34,9 @@ const MagicSprinklesCard: React.FC<MagicSprinklesCardProps> = ({ project }) => {
             </p>
           </noscript>
         </div>
-        <div className="absolute inset-1 bg-linear-to-r from-drac-base via-drac-base to-transparent md:via-25%" />
+        <div className="from-drac-base via-drac-base absolute inset-1 bg-linear-to-r to-transparent md:via-25%" />
         <div className="relative inset-1 z-10 flex h-full flex-col space-y-4 bg-transparent p-6">
-          <header className="pl-1 font-display text-3xl font-bold">
+          <header className="font-display pl-1 text-3xl font-bold">
             <Sparkles>{project.title}</Sparkles>
           </header>
           <div className="max-w-[25rem] flex-1">
@@ -55,7 +55,7 @@ const MagicSprinklesCard: React.FC<MagicSprinklesCardProps> = ({ project }) => {
                   <sup>*</sup>(note: if you paid for this, you were scammed)
                 </small>
               </li>
-              <li className="text-pretty text-xs sm:hidden">
+              <li className="text-xs text-pretty sm:hidden">
                 If you&apos;re on mobile, scrolling won&apos;t work while your finger is on this
                 card.
               </li>

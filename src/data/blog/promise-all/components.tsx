@@ -8,7 +8,7 @@ const getPost = async (id: number) => {
   const response = await fetch(
     `https://jsonplaceholder.typicode.com/posts/${id}`
   )
-  const post = await response.json()
+  const post: unknown = await response.json()
   return post as Post
 }
 

@@ -1,6 +1,6 @@
 import type { ProjectCardComponent } from '../ProjectCard'
 import { CodeIcon, ExternalIcon, InfoIcon } from '~/components/icons'
-import NextLink from 'next/link'
+import NextLink from '../../CompatLink'
 import { COMMON_CLASSNAMES } from '../utils'
 import cx from '~/utils/cx'
 
@@ -12,7 +12,7 @@ const NotMessengerCard: ProjectCardComponent = ({ project }) => {
     <div id={project.slug}>
       <div className={cx('bg-gray-700', COMMON_CLASSNAMES.specialCardRoot)}>
         <div className="flex h-full flex-col space-y-4 p-8">
-          <header className="flex items-center font-display text-3xl font-bold text-green-400">
+          <header className="font-display flex items-center text-3xl font-bold text-green-400">
             Not Messenger
           </header>
           <div className="flex-1">

@@ -1,7 +1,7 @@
 const UtilsTag: React.FC = () => {
   return (
     <a
-      className="focus-ring inline-block rounded-sm bg-drac-purple px-1 text-sm font-bold tracking-wider text-drac-base hocus:underline"
+      className="focus-ring bg-drac-purple text-drac-base hocus:underline inline-block rounded-sm px-1 text-sm font-bold tracking-wider"
       href="https://utils.soorria.com"
       target="_blank"
       rel="noreferrer noopener"

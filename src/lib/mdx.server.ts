@@ -8,9 +8,6 @@ import { remarkTypeScriptTransform } from './remark.server'
 import rehypePrettyCode, { type Options } from 'rehype-pretty-code'
 import type { PluggableList } from 'unified'
 import { rehypePreserveCodeBlockIds, rehypeRearrangePrettyCodeOutput } from './rehype.server'
-import type { serialize } from 'next-mdx-remote/serialize'
-
-type SerializeOptions = NonNullable<Parameters<typeof serialize>[1]>
 
 const codeBlockRemarkPlugins: PluggableList = [remarkTypeScriptTransform]
 
@@ -95,5 +92,5 @@ export const getMdxOptions = ({ hasCodeBlocks = true }: RenderOptions = {}) => {
   return {
     remarkPlugins,
     rehypePlugins,
-  } as SerializeOptions['mdxOptions']
+  }
 }

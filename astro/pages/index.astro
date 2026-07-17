@@ -2,6 +2,7 @@
 export const prerender = false
 
 import Contact from '../../src/components/landing/Contact'
+import FeaturedProjects from '../../src/components/landing/FeaturedProjects'
 import Skills from '../../src/components/landing/Skills'
 import { featuredProjects } from '../../src/constants'
 import { getFileFrontMatter } from '../../src/lib/data'
@@ -44,24 +45,7 @@ const projects = await Promise.all(
         )
       }
     </section>
-    <section class="py-16" id="projects">
-      <h2 class="text-drac-pink mb-10 text-4xl">What I've Built</h2>
-      <div class="grid gap-10 sm:grid-cols-2">
-        {
-          projects.map(project => (
-            <article>
-              <>
-                <h3 class="text-drac-pink text-2xl">{project.title}</h3>
-                <p>{project.shortDescription}</p>
-              </>
-            </article>
-          ))
-        }
-      </div>
-      <p class="mt-8 text-center">
-        <a class="text-drac-pink underline" href="/projects">See All Projects</a>
-      </p>
-    </section>
+    <FeaturedProjects client:load projects={projects} random={0} />
     <Skills client:only="react" random={1} skillIndexes={getRandomSkillIndexes(8)} />
     <Contact client:load random={2} />
     <div class="text-drac-pink py-10 text-center text-xs">
