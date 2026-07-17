@@ -267,13 +267,13 @@ function SkillItem({
     <button
       ref={element}
       className={cx(
-        'fade-in-direct group absolute block w-fit select-none ease-linear',
+        'fade-in-direct group absolute block w-fit ease-linear select-none',
         moving ? 'cursor-grabbing' : 'cursor-grab transition-transform'
       )}
       style={{ transform: `translate(calc(${position.x}px - 50%), calc(${position.y}px - 50%))` }}
       draggable={false}
     >
-      {/* eslint-disable-next-line */}
+      {}
       <img
         src={skillLabelToImage[skill.label as keyof typeof skillLabelToImage]?.src}
         alt={`${skill.label} logo`}
@@ -281,7 +281,7 @@ function SkillItem({
         style={{ width: imageWidth, height: 'auto', maxHeight: imageWidth }}
         draggable={false}
       />
-      <span className="pointer-events-none absolute -bottom-5 left-1/2 -translate-x-1/2 text-xs opacity-0 transition-opacity group-hocus-visible:opacity-100 md:-bottom-6 md:text-sm">
+      <span className="group-hocus-visible:opacity-100 pointer-events-none absolute -bottom-5 left-1/2 -translate-x-1/2 text-xs opacity-0 transition-opacity md:-bottom-6 md:text-sm">
         {skill.label}
       </span>
     </button>
@@ -315,12 +315,12 @@ export function LiveSkillsArea(props: {
         onClick={() => {
           liveSkills.addMore()
         }}
-        className="focus-ring absolute bottom-1 left-0 flex items-center rounded-sm bg-drac-base px-2 py-1 text-drac-content opacity-50 transition hover:opacity-100 hocus:text-drac-purple"
+        className="focus-ring bg-drac-base text-drac-content hocus:text-drac-purple absolute bottom-1 left-0 flex items-center rounded-sm px-2 py-1 opacity-50 transition hover:opacity-100"
       >
-        <RefreshIcon className="mr-1 inline-block h-em w-em" /> See more skills
+        <RefreshIcon className="h-em w-em mr-1 inline-block" /> See more skills
       </button>
 
-      <div className="absolute bottom-1 right-0 rounded-sm bg-drac-base px-1 text-xs opacity-50 transition-opacity hover:opacity-100 md:text-sm">
+      <div className="bg-drac-base absolute right-0 bottom-1 rounded-sm px-1 text-xs opacity-50 transition-opacity hover:opacity-100 md:text-sm">
         {liveSkills.numConnections === 1
           ? 'just you online :('
           : `${liveSkills.numConnections} people online`}
@@ -341,11 +341,11 @@ export function LiveSkillsArea(props: {
                 <button
                   key={label}
                   className={cx(
-                    'fade-in-direct relative group block w-fit select-none ease-linear'
+                    'fade-in-direct group relative block w-fit ease-linear select-none'
                   )}
                   draggable={false}
                 >
-                  {/* eslint-disable-next-line */}
+                  {}
                   <img
                     src={image.src}
                     alt=""
@@ -353,7 +353,7 @@ export function LiveSkillsArea(props: {
                     style={{ width: props.imageWidth, height: 'auto', maxHeight: props.imageWidth }}
                     draggable={false}
                   />
-                  <span className="pointer-events-none absolute -bottom-5 left-1/2 -translate-x-1/2 text-xs opacity-0 transition-opacity group-hocus-visible:opacity-100 md:-bottom-6 md:text-sm">
+                  <span className="group-hocus-visible:opacity-100 pointer-events-none absolute -bottom-5 left-1/2 -translate-x-1/2 text-xs opacity-0 transition-opacity md:-bottom-6 md:text-sm">
                     {label}
                   </span>
                 </button>

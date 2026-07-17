@@ -17,7 +17,7 @@ export default defineConfig({
     // The Vercel adapter does not implement `astro preview`; use Astro's dev
     // server locally and validate runtime parity on a Vercel Preview.
     command: 'ASTRO_DEV_BACKGROUND=0 pnpm dev:astro --host 127.0.0.1 --port 4321',
-    url: 'http://127.0.0.1:4321/spikes/mdx',
+    url: 'http://127.0.0.1:4321/blog/event-delegation',
     reuseExistingServer: !process.env.CI,
     timeout: 120_000,
   },

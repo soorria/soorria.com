@@ -27,7 +27,7 @@ function StaticSkillsArea({ skillIndexes }: { skillIndexes: number[] }) {
             className="relative grid w-full place-items-center"
             draggable={false}
           >
-            {/* eslint-disable-next-line */}
+            {}
             <img
               src={skillLabelToImage[skill.label]?.src}
               alt={`${skill.label} logo`}

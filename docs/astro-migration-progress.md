@@ -78,3 +78,28 @@ Work is isolated in `/Users/mooth/repos/soorria.com-astro` on `codex/astro-migra
 2. Replace the spike OG route with the compatible `/api/og` query contract.
 3. Implement the first server-rendered Supabase route after the static content pipeline is stable.
 4. Add Vercel Routing Middleware and validate the Plausible proxy, host rewrites, and curl/HTTPie behavior with `vercel dev` or a Preview deployment.
+
+## 2026-07-18: migration completed
+
+### Completed
+
+- Migrated all 14 blog posts, 35 snippets, 16 project records, and two miscellaneous MDX entries to Astro's compile-time content pipeline.
+- Recreated the complete public route tree, feeds, sitemap, robots policy, legacy redirects, OG endpoint, curl card, host rewrites, cache headers, and Plausible proxy contract.
+- Preserved the React and Solid demos through serializable IDs, the bespoke project cards, Magic Sprinkles, the analytics opt-out control, Giscus, and the PartySocket-powered skills area.
+- Preserved request-time Supabase content and safe fallbacks on the home and links pages, plus the art page's 10-second cache policy, render timestamp, and random NFT tooltip meanings.
+- Removed the Next route tree, Next configuration, snippet APIs, MDX code generator, and all Next-specific runtime and lint dependencies.
+- Changed the default development and production commands to Astro and changed the existing Vercel project's framework preset from Next.js to Astro.
+- Removed the temporary public spike routes; the feasibility coverage now runs against real production routes.
+
+### Verification
+
+- `pnpm lint`
+- `pnpm type-check`
+- `pnpm check:astro` — zero errors
+- `pnpm build`
+- `pnpm test:migration` — 110 passed, covering every blog/snippet route and the retained public contracts
+- `pnpm test:interactions` — 9 passed, covering React/Solid hydration, MDX transforms, runtime Markdown, comments, and OG rendering
+
+### Remaining cutover gate
+
+- Validate the updated branch on its Vercel Preview, including Routing Middleware host/user-agent behavior and the Plausible proxy. The project framework preset has been updated to Astro so the next branch deployment uses the migrated build.
