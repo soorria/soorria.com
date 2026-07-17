@@ -18,18 +18,18 @@ But _what is immer_, and more importantly, _why do people use it_?
 
 ## The problem
 
-React, and some [other](https://preactjs.com/)
+React and some [other](https://preactjs.com/)
 [frameworks](https://www.solidjs.com/) assume that state is **immutable**, that
 once it has a piece of data it will stay the same for the rest of eternity.
-Unfortunately, a pesky group of people called _"users"_ expects that UIs update
-when you click buttons and submit forms and yell at LLMs to stop being so stupid
-and do what I told you to.
+Unfortunately, a pesky group of people called _"users"_ expect that UIs update
+when you click buttons and submit forms and yell at LLMs to stop being so
+stupid.
 
 So for the blessing of <Sparkles>_interactivity_</Sparkles>, the React gods
-require that when we update state, the new value doesn't equal the old value.
+require that when we update state, the new value is different to the old value.
 More specifically, React checks that
 [`Object.is(old, new)`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/is)
-returns `false`. This works out alright for simple values like numbers, strings
+equals `false`. This works out alright for simple values like numbers, strings
 and booleans. However, this gets annoying when we use arrays and objects, since
 `Object.is` just checks if the values are the same by reference, instead of by
 value.
@@ -48,7 +48,7 @@ When you push to an array, it's still the same array, we're just **mutating** it
 and the updated array **still has the same reference as the old one**! (like how
 you're still the same person if you eat some grapes) Now when React compares the
 new and old state values, it ends up running something like
-`Object.is(snacks, snacks)`. This will return `true`, and your UI won't update.
+`Object.is(snacks, snacks)`. This will equal `true`, and your UI won't update.
 
 For React to update you're UI, you might do something like this:
 
