@@ -1,0 +1,55 @@
+---
+export const prerender = false
+import { getSingletonJsonSafe } from '../../src/lib/supabase'
+import { links } from '../../src/links'
+import Container from '../components/Container.astro'
+import BaseLayout from '../layouts/BaseLayout.astro'
+
+Astro.response.headers.set('Cache-Control', 's-maxage=10, stale-while-revalidate')
+const options = await getSingletonJsonSafe<{ heroText: string; linksHeroText: string }>(
+  'index-options'
+)
+const ordered = [
+  links.twitter,
+  links.github,
+  links.discord,
+  links.email,
+  links.mal,
+  links.facebook,
+  links.linkedin,
+]
+---
+
+<BaseLayout title="Links" canonical="https://soorria.com/links">
+  <Container>
+    <h1 class="py-20 text-center text-6xl">
+      {options.linksHeroText || options.heroText || "Hey, I'm Soorria"}
+    </h1>
+    <main class="slide-in relative mx-auto max-w-md space-y-8 text-lg sm:text-xl">
+      {
+        ordered.map(({ title, href, icon: Icon, iconAlt }) => (
+          <a
+            href={href}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="group bg-drac-base-light text-drac-pink flex items-center justify-between rounded-lg px-8 py-6"
+          >
+            <>
+              <Icon aria-label={iconAlt} className="mr-3 h-7 w-7" />
+              <span>{title}</span>
+            </>
+          </a>
+        ))
+      }
+      <a
+        href="/?ref=links"
+        class="group bg-drac-base-light text-drac-pink flex items-center justify-between rounded-lg px-8 py-6"
+        ><links.site.icon className="h-7 w-7" /><span>the rest of my website</span></a
+      >
+    </main>
+    <footer class="py-12 text-center">Made with ♥ by Soorria</footer>
+  </Container>
+  <script is:inline>
+    window.plausible?.('Links Page')
+  </script>
+</BaseLayout>

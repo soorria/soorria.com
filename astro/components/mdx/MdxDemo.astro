@@ -2,11 +2,24 @@
 import { MdxDemoIsland } from './MdxDemoIsland'
 
 interface Props {
-  id: 'event-delegation'
+  id:
+    | 'event-delegation'
+    | 'promise-all-naive'
+    | 'promise-all-waiting'
+    | 'promise-all-in-order'
+    | 'safe-view-transition'
+    | 'use-temporary-state-react'
+    | 'file-download'
+    | 'use-local-storage'
+    | 'use-css-var-react'
+    | 'use-fullscreen'
+    | 'create-previous-memo'
+    | 'use-is-mouse-inactive-solid'
+  kind?: 'react' | 'solid'
   init?: 'lazy' | 'mount' | 'always'
 }
 
-const { id } = Astro.props
+const { id, kind = 'react', init } = Astro.props
 ---
 
-<MdxDemoIsland client:load kind="react" id={id} />
+<MdxDemoIsland client:load kind={kind} id={id} init={init} />

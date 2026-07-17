@@ -1,0 +1,71 @@
+---
+export const prerender = false
+
+import Contact from '../../src/components/landing/Contact'
+import Skills from '../../src/components/landing/Skills'
+import { featuredProjects } from '../../src/constants'
+import { getFileFrontMatter } from '../../src/lib/data'
+import { getRandomSkillIndexes } from '../../src/lib/skills/definitions'
+import { getSingletonJsonSafe, getSingletonTextSafe } from '../../src/lib/supabase'
+import { renderRuntimeMarkdown } from '../../src/lib/runtime-markdown'
+import type { ProjectFrontMatter } from '../../src/types/project'
+import Container from '../components/Container.astro'
+import MainLayout from '../layouts/MainLayout.astro'
+
+Astro.response.headers.set('Cache-Control', 's-maxage=10, stale-while-revalidate')
+const subtitleText = (await getSingletonTextSafe('subtitle')) ?? ''
+const subtitles = await Promise.all(
+  subtitleText
+    .split('---')
+    .map(value => value.trim())
+    .filter(Boolean)
+    .map(renderRuntimeMarkdown)
+)
+const now = await getSingletonTextSafe('now')
+const nowHtml = now ? await renderRuntimeMarkdown(now) : ''
+const options = await getSingletonJsonSafe<{ heroText: string; pattern?: string }>('index-options')
+const projects = await Promise.all(
+  featuredProjects.map(slug => getFileFrontMatter<ProjectFrontMatter>('projects', slug))
+)
+---
+
+<MainLayout>
+  <Container>
+    <section class="hero-bg slide-in relative overflow-hidden pt-12 pb-16">
+      <h1
+        class="from-drac-pink to-drac-purple bg-linear-to-tr bg-clip-text py-12 text-center text-6xl text-transparent sm:text-8xl"
+      >
+        {options.heroText || "Hey, I'm Soorria"}
+      </h1>
+      {subtitles[0] && <div class="text-center text-2xl text-pretty" set:html={subtitles[0]} />}
+      {
+        nowHtml && (
+          <div class="mx-auto mt-10 max-w-2xl text-lg text-pretty" id="now" set:html={nowHtml} />
+        )
+      }
+    </section>
+    <section class="py-16" id="projects">
+      <h2 class="text-drac-pink mb-10 text-4xl">What I've Built</h2>
+      <div class="grid gap-10 sm:grid-cols-2">
+        {
+          projects.map(project => (
+            <article>
+              <>
+                <h3 class="text-drac-pink text-2xl">{project.title}</h3>
+                <p>{project.shortDescription}</p>
+              </>
+            </article>
+          ))
+        }
+      </div>
+      <p class="mt-8 text-center">
+        <a class="text-drac-pink underline" href="/projects">See All Projects</a>
+      </p>
+    </section>
+    <Skills client:only="react" random={1} skillIndexes={getRandomSkillIndexes(8)} />
+    <Contact client:load random={2} />
+    <div class="text-drac-pink py-10 text-center text-xs">
+      Rendered at {new Date().toLocaleString()}
+    </div>
+  </Container>
+</MainLayout>

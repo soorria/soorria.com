@@ -13,22 +13,22 @@ import { formatDate } from '../../../src/utils/date'
 import { getOgImageForData } from '../../../src/utils/og'
 import CodeBlock from '../../components/mdx/CodeBlock.astro'
 import CustomLink from '../../components/mdx/CustomLink.astro'
+import Collapse from '../../components/mdx/Collapse.astro'
+import Image from '../../components/mdx/Image.astro'
 import MdxDemo from '../../components/mdx/MdxDemo.astro'
 import Note from '../../components/mdx/Note.astro'
+import OnlyIsTs from '../../components/mdx/OnlyIsTs.astro'
 import Sandbox from '../../components/mdx/Sandbox.astro'
 import Sparkles from '../../components/mdx/Sparkles.astro'
 import TsJsSwitcher from '../../components/mdx/TsJsSwitcher.astro'
-import {
-  getMigratedBlogSlugs,
-  loadMigratedBlogContent,
-  type MigratedBlogSlug,
-} from '../../lib/content'
+import TsJsToggle from '../../components/mdx/TsJsToggle.astro'
+import { getContentSlugs, loadContent } from '../../lib/content'
 import MainLayout from '../../layouts/MainLayout.astro'
 import PostLayout from '../../layouts/PostLayout.astro'
 
 export async function getStaticPaths() {
   return await Promise.all(
-    getMigratedBlogSlugs().map(async slug => ({
+    getContentSlugs('blog').map(async slug => ({
       params: { slug },
       props: { post: await getFileFrontMatter<BlogPostFrontMatter>('blog', slug) },
     }))
@@ -40,7 +40,7 @@ interface Props {
 }
 
 const { post } = Astro.props
-const { default: Content } = await loadMigratedBlogContent(post.slug as MigratedBlogSlug)
+const { default: Content } = await loadContent('blog', post.slug)
 const canonical = `https://soorria.com/posts/${post.slug}`
 const metaTitle = `${post.title} | Blog`
 const ogImage = getOgImageForData('blog', post.title, post.ogImageTitleParts).url
@@ -51,6 +51,10 @@ const mdxComponents = {
   a: CustomLink,
   pre: CodeBlock,
   Note,
+  Image,
+  Collapse,
+  TsJsToggle,
+  OnlyIsTs,
   Sandbox,
   Sparkles,
   sparkles: Sparkles,

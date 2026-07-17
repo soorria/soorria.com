@@ -1,0 +1,39 @@
+---
+import { loadContent } from '../../lib/content'
+import CodeBlock from './CodeBlock.astro'
+import Collapse from './Collapse.astro'
+import CustomLink from './CustomLink.astro'
+import Image from './Image.astro'
+import MdxDemo from './MdxDemo.astro'
+import Note from './Note.astro'
+import OnlyIsTs from './OnlyIsTs.astro'
+import Sandbox from './Sandbox.astro'
+import Sparkles from './Sparkles.astro'
+import TsJsSwitcher from './TsJsSwitcher.astro'
+import TsJsToggle from './TsJsToggle.astro'
+
+interface Props {
+  type: 'blog' | 'snippets' | 'projects' | 'misc'
+  slug: string
+}
+
+const { type, slug } = Astro.props
+const { default: Content } = await loadContent(type, slug)
+const components = {
+  a: CustomLink,
+  pre: CodeBlock,
+  Collapse,
+  Image,
+  MdxDemo,
+  Note,
+  OnlyIsTs,
+  Sandbox,
+  Sparkles,
+  sparkles: Sparkles,
+  's-sparkles': Sparkles,
+  TsJsSwitcher,
+  TsJsToggle,
+}
+---
+
+<Content components={components} />

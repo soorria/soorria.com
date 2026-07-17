@@ -1,15 +1,19 @@
 'use client'
-import { useEffect, useLayoutEffect, useRef, useState, type ReactNode, type RefObject } from 'react'
+import {
+  lazy,
+  Suspense,
+  useEffect,
+  useLayoutEffect,
+  useRef,
+  useState,
+  type ReactNode,
+  type RefObject,
+} from 'react'
 import { SKILLS_MAGIC_NUMBERS } from '~/lib/skills/definitions'
 import cx from '~/utils/cx'
 import ShowWhenVisible from '../ShowWhenVisible'
-import dynamic from 'next/dynamic'
-
-const LazyLiveSkillsArea = dynamic(
-  () => import('./LiveSkillsArea').then(mod => mod.LiveSkillsArea),
-  {
-    ssr: false,
-  }
+const LazyLiveSkillsArea = lazy(() =>
+  import('./LiveSkillsArea').then(mod => ({ default: mod.LiveSkillsArea }))
 )
 
 function useElementWidth(element: RefObject<HTMLElement | null>) {
@@ -55,7 +59,7 @@ export function SkillsArea(props: { staticFallback?: ReactNode }) {
 
   return (
     <>
-      <p className="relative z-10 mb-4 bg-drac-base/50 text-lg">
+      <p className="bg-drac-base/50 relative z-10 mb-4 text-lg">
         Here are some of the technical skills I&apos;ve learned during my degree, work, and just out
         of curiosity.{' '}
         <span className={ready ? 'opacity-100' : 'opacity-0'}>
@@ -66,7 +70,11 @@ export function SkillsArea(props: { staticFallback?: ReactNode }) {
 
       <div ref={rootRef} className="relative mb-8 aspect-video overflow-y-visible">
         <ShowWhenVisible>
-          {ready && <LazyLiveSkillsArea scale={scale} imageWidth={imageWidth} rootRef={rootRef} />}
+          {ready && (
+            <Suspense fallback={null}>
+              <LazyLiveSkillsArea scale={scale} imageWidth={imageWidth} rootRef={rootRef} />
+            </Suspense>
+          )}
         </ShowWhenVisible>
 
         <div

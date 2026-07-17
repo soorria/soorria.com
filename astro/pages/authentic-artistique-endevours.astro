@@ -1,0 +1,93 @@
+---
+export const prerender = false
+import { Image } from 'astro:assets'
+import DavidLau from '../../src/app/(main)/authentic-artistique-endevours/david-lau-nft-real.png'
+import DonaldTrump from '../../src/app/(main)/authentic-artistique-endevours/donald trump nft (real).png'
+import GlisteningSaint from '../../src/app/(main)/authentic-artistique-endevours/glistening-saint.gif'
+import SandboxTshirt from '../../src/app/(main)/authentic-artistique-endevours/sandbox-tshirt.jpg'
+import SpeedSudoku from '../../src/app/(main)/authentic-artistique-endevours/speed-sudoku-champion-riki.png'
+import Bruhfferfish from '../../src/app/(main)/authentic-artistique-endevours/the-bruhfferfish.jpg'
+import Waifu from '../../src/app/(main)/authentic-artistique-endevours/unnamed waifu.png'
+import { getOgImage } from '../../src/utils/og'
+import MainLayout from '../layouts/MainLayout.astro'
+import PostLayout from '../layouts/PostLayout.astro'
+
+Astro.response.headers.set('Cache-Control', 's-maxage=10, stale-while-revalidate')
+const art = [
+  {
+    title: 'Glistening Saint',
+    date: '2025-10-23',
+    src: GlisteningSaint,
+    alt: 'gif of a saint with emoji prayer hands coming together to form a heart',
+  },
+  {
+    title: 'the bruhfferfish',
+    date: '2025-09-12',
+    src: Bruhfferfish,
+    alt: 'colorful pufferfish drawing with bruh written on its side',
+  },
+  {
+    title: 'Sandbox Bouldering t-shirt design',
+    date: '2025-05-10',
+    src: SandboxTshirt,
+    alt: 't-shirt design featuring a cat in a sandbox',
+  },
+  {
+    title: 'Speed Sudoku Champion Riki',
+    date: '2023-12-13',
+    src: SpeedSudoku,
+    alt: 'pencil drawing of Riki after winning speed sudoku',
+  },
+  {
+    title: `david Lau nft (real)`,
+    date: '2023-12-02',
+    src: DavidLau,
+    alt: 'satirical depiction of David Lau shooting laser beams',
+  },
+  {
+    title: 'unnamed waifu',
+    date: '2022-09-02',
+    src: Waifu,
+    alt: 'drawing of a waifu saying I love you',
+  },
+  {
+    title: 'donald trump nft (real)',
+    date: '2022-12-17',
+    src: DonaldTrump,
+    alt: 'satirical portrayal of a Donald Trump NFT',
+  },
+]
+---
+
+<MainLayout
+  title="Authentic Artistique Endevours"
+  description="Welcome to the world of the authentic artistique endevours of Soorria Saruva."
+  canonical="https://soorria.com/art"
+  ogTitle="Authentic Artistique Endevours"
+  ogImage={getOgImage({ title: 'Authentic Artistique Endevours', subtitle: 'soorria.com/art' }).url}
+>
+  <PostLayout
+    title="Art"
+    description={'...or more accurately "art". Welcome to the world of the authentic artistique endevours of Soorria Saruva.'}
+  >
+    <div class="prose mx-auto">
+      {
+        art.map(item => (
+          <section>
+            <>
+              <h2>{item.title}</h2>
+              <p>
+                <em>masterfully</em> created on{' '}
+                <time datetime={item.date}>{new Date(item.date).toLocaleDateString()}</time>
+              </p>
+              <Image src={item.src} alt={item.alt} />
+            </>
+          </section>
+        ))
+      }
+    </div>
+  </PostLayout>
+  <div class="text-drac-pink pb-2 text-center text-xs">
+    Rendered at {new Date().toLocaleString()}
+  </div>
+</MainLayout>

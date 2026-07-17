@@ -1,0 +1,23 @@
+---
+const { src: source, alt = '', download, class: className, ...rest } = Astro.props
+const src = typeof source === 'string' ? source : (source?.src ?? source?.default?.src)
+const filename = typeof src === 'string' ? src.split('/').pop() : undefined
+---
+
+<div class="relative -mx-2 md:-mx-6">
+  <img {...rest} src={src} alt={alt} class={className} />
+  {
+    download && filename && (
+      <div class="not-prose absolute top-4 right-4 cursor-pointer">
+        <a
+          download={filename}
+          class="bg-drac-purple font-display text-drac-base block rounded-sm px-2 text-center text-sm font-bold tracking-wider"
+          href={src}
+          aria-label={`Download ${filename}`}
+        >
+          download
+        </a>
+      </div>
+    )
+  }
+</div>
