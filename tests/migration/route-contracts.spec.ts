@@ -147,7 +147,9 @@ test('metadata and the self-hosted analytics contract are present', async ({ pag
 test('the art page retains request-time NFT variability', async ({ request }) => {
   const titles = new Set<string>()
   for (let index = 0; index < 6; index += 1) {
-    const response = await request.get('/authentic-artistique-endevours')
+    const response = await request.get(
+      `/authentic-artistique-endevours?variation=${Date.now()}-${index}`
+    )
     const match = (await response.text()).match(/<abbr[^>]+title="([^"]+)"/)
     expect(match?.[1]).toBeTruthy()
     titles.add(match![1])
