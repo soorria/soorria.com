@@ -14,7 +14,7 @@ const { withPlausibleProxy } = require('next-plausible')
 
 const withPlausibleConfig = withPlausibleProxy({
   scriptName: 'potato',
-  customDomain: 'https://plausible.mooth.tech',
+  customDomain: 'https://plausible.soorria.com',
 })
 
 /** @type {import('next').NextConfig} */
@@ -67,7 +67,7 @@ const config = {
     return [
       {
         source: '/stats',
-        destination: 'https://plausible.mooth.tech/mooth.tech',
+        destination: 'https://plausible.soorria.com/mooth.tech',
         permanent: false,
       },
       {
