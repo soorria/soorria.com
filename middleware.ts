@@ -1,4 +1,5 @@
 import { next, rewrite } from '@vercel/functions'
+import { getFullMessage } from './src/lib/curl-card'
 
 const linksSubdomains = new Set(['links', 'card', 'cardd', 'carrd'])
 export default function middleware(request: Request) {
@@ -8,7 +9,13 @@ export default function middleware(request: Request) {
   const userAgent = request.headers.get('user-agent') || ''
 
   if (pathname === '/' && !url.searchParams.has('card') && /^(curl|HTTPie)\//i.test(userAgent)) {
-    return rewrite(new URL('/api/curl-card', url))
+    return new Response(getFullMessage(), {
+      headers: {
+        'Cache-Control': 'private, no-store',
+        'Content-Type': 'text/plain; charset=utf-8',
+        Vary: 'User-Agent',
+      },
+    })
   }
 
   const excluded =

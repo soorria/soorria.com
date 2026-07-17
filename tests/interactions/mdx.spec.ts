@@ -39,6 +39,11 @@ test('renders request-time Markdown without evaluating HTML or MDX', async () =>
   expect(html).not.toContain('<script>')
   expect(html).toContain('window.pwned = true')
   expect(html).toContain('{globalThis.location}')
+
+  const trustedCmsStyle = await renderRuntimeMarkdown(
+    "Building the <span style={{ color: 'var(--purple)' }}>AI workforce</span>"
+  )
+  expect(trustedCmsStyle).toContain('<span style="color:var(--purple)">AI workforce</span>')
 })
 
 test('renders a PNG with Satori, Resvg, and a local font', async ({ request }) => {
