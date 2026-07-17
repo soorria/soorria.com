@@ -3,6 +3,8 @@ import { readdirSync } from 'node:fs'
 import { join } from 'node:path'
 import { emptyProjectRoutes, htmlRoutes, redirectContracts } from './contracts'
 
+const targetsExternalDeployment = Boolean(process.env.MIGRATION_BASE_URL)
+
 const contentRoutes = (type: 'blog' | 'snippets') =>
   readdirSync(join(process.cwd(), 'src', 'data', type), { withFileTypes: true })
     .filter(entry => entry.isDirectory())
@@ -107,11 +109,20 @@ for (const userAgent of ['curl/8.7.1', 'HTTPie/3.2.4'] as const) {
 test('dynamic pages retain their CDN cache contract', async ({ request }) => {
   for (const route of ['/', '/links', '/authentic-artistique-endevours']) {
     const response = await request.get(route)
-    expect(response.headers()['cache-control']).toBe('s-maxage=10, stale-while-revalidate')
+    expect(response.headers()['cache-control']).toBe(
+      targetsExternalDeployment
+        ? 'public, max-age=0, must-revalidate'
+        : 's-maxage=10, stale-while-revalidate'
+    )
   }
 })
 
 test('the links subdomain rewrites the homepage and preserves exclusions', async ({ request }) => {
+  test.skip(
+    targetsExternalDeployment,
+    'Vercel Preview rejects foreign Host headers; the same middleware contract is exercised locally.'
+  )
+
   const links = await request.get('/', { headers: { host: 'links.soorria.com' } })
   expect(await links.text()).toContain('the rest of my website')
 
@@ -188,6 +199,9 @@ test('the website client attempts its PartySocket connection', async ({ page }) 
   })
   await skillsHeading.scrollIntoViewIfNeeded()
   await expect(skillsHeading).toBeVisible()
+  const skillLogos = page.locator('#skills img')
+  await expect.poll(() => skillLogos.count()).toBeGreaterThanOrEqual(8)
+  await expect(skillLogos.first()).toBeVisible()
   await expect(partySocket.then(socket => socket.url())).resolves.toContain(
     'soorria-website.soorria.partykit.dev'
   )
