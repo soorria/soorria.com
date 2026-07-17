@@ -1,4 +1,3 @@
-import { links } from '../links'
 import stringWidth from 'string-width'
 import kleur from 'kleur'
 
@@ -9,32 +8,32 @@ const LINKS: Array<{ text: string; title: string; color?: (title: string) => str
     color: kleur.magenta().inverse,
   },
   {
-    text: links.github.href,
+    text: 'https://github.com/soorria',
     title: 'GitHub',
     color: kleur.green().inverse,
   },
   {
-    text: links.email.href.replace('mailto:', ''),
+    text: 'soorria.ss@gmail.com',
     title: 'Email',
     color: kleur.red().inverse,
   },
   {
-    text: links.messenger.href,
+    text: 'https://www.messenger.com/t/soorriously',
     title: 'Messenger',
     color: kleur.blue().inverse,
   },
   {
-    text: links.twitter.href,
+    text: 'https://twitter.com/soorriously',
     title: 'Twitter',
     color: kleur.cyan().inverse,
   },
   {
-    text: links.linkedin.href,
+    text: 'https://www.linkedin.com/in/soorria/',
     title: 'LinkedIn',
     color: kleur.blue().inverse,
   },
   {
-    text: links.card.href,
+    text: 'https://links.soorria.com',
     title: 'All Links',
     color: kleur.magenta().inverse,
   },
