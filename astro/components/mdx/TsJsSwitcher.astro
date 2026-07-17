@@ -1,0 +1,96 @@
+---
+const { 'data-title': title, 'data-jsx': isJsx, id } = Astro.props
+const names = isJsx === 'true' ? { ts: 'tsx', js: 'jsx' } : { ts: 'typescript', js: 'javascript' }
+const buttonClass =
+  'cursor-pointer rounded-sm bg-drac-purple px-2 text-center font-display text-sm font-bold tracking-wider text-drac-base transition focus:outline-hidden focus:ring-2 focus:ring-drac-pink focus:ring-offset-2 focus:ring-offset-current'
+---
+
+{
+  title && (
+    <div class="code-block-title font-display text-drac-base -mb-[1.7rem] rounded-sm rounded-b-none text-sm font-bold">
+      <span class="bg-drac-purple inline-block rounded-sm rounded-b-none px-3 py-0.5">{title}</span>
+    </div>
+  )
+}
+<div
+  id={id}
+  class="code-block ts-js-switcher bg-drac-base ring-drac-purple relative -mx-2 my-7 overflow-hidden rounded-sm p-2 pb-0! ring-2 md:-mx-6 md:px-6 md:py-4"
+  data-ts-js-switcher
+>
+  <div class="font-display mb-4 flex items-center space-x-2 text-sm font-bold tracking-wide">
+    <div class="text-drac-purple text-sm uppercase sm:text-sm">
+      <span data-language-label>{names.ts}</span>
+    </div>
+    <div class="flex-1"></div>
+    <button type="button" class={buttonClass} data-switch-language>
+      <span class="hidden sm:inline">switch</span> to <span data-switch-target>js</span>
+    </button>
+    <button type="button" class={buttonClass} data-copy-switcher>
+      <span data-copy-switcher-label>copy</span>
+    </button>
+  </div>
+  <slot />
+</div>
+
+<script>
+  const storageKey = 'soorria.com:isTs'
+
+  for (const root of document.querySelectorAll<HTMLElement>('[data-ts-js-switcher]')) {
+    if (root.dataset.ready === 'true') continue
+    root.dataset.ready = 'true'
+    const languageLabel = root.querySelector<HTMLElement>('[data-language-label]')
+    const switchTarget = root.querySelector<HTMLElement>('[data-switch-target]')
+    const tsPre = root.querySelector<HTMLPreElement>(
+      "pre[data-language='ts'], pre[data-language='tsx']"
+    )
+    const jsPre = root.querySelector<HTMLPreElement>(
+      "pre[data-language='js'], pre[data-language='jsx']"
+    )
+
+    const render = (isTs: boolean) => {
+      root.classList.toggle('show-js', !isTs)
+      if (languageLabel)
+        languageLabel.textContent = isTs
+          ? (tsPre?.dataset.language ?? 'typescript')
+          : (jsPre?.dataset.language ?? 'javascript')
+      if (switchTarget) switchTarget.textContent = isTs ? 'js' : 'ts'
+    }
+    const stored = localStorage.getItem(storageKey)
+    let isTs = stored === null ? true : stored !== 'false'
+    render(isTs)
+
+    root.querySelector('[data-switch-language]')?.addEventListener('click', () => {
+      isTs = !isTs
+      localStorage.setItem(storageKey, String(isTs))
+      for (const switcher of document.querySelectorAll<HTMLElement>('[data-ts-js-switcher]')) {
+        switcher.classList.toggle('show-js', !isTs)
+        const label = switcher.querySelector<HTMLElement>('[data-language-label]')
+        const target = switcher.querySelector<HTMLElement>('[data-switch-target]')
+        const activePre = switcher.querySelector<HTMLPreElement>(
+          isTs
+            ? "pre[data-language='ts'], pre[data-language='tsx']"
+            : "pre[data-language='js'], pre[data-language='jsx']"
+        )
+        if (label)
+          label.textContent = activePre?.dataset.language ?? (isTs ? 'typescript' : 'javascript')
+        if (target) target.textContent = isTs ? 'js' : 'ts'
+      }
+    })
+
+    root.querySelector('[data-copy-switcher]')?.addEventListener('click', async () => {
+      const activePre = root.querySelector<HTMLPreElement>('pre:not(.hidden)')
+      if (!activePre) return
+      const code = activePre.querySelector('code')
+      const text = code
+        ? Array.from(code.children)
+            .map(line => (line as HTMLElement).innerText || '')
+            .join('\n')
+        : activePre.innerText
+      await navigator.clipboard.writeText(text)
+      const label = root.querySelector<HTMLElement>('[data-copy-switcher-label]')
+      if (!label) return
+      label.textContent = 'copied'
+      window.setTimeout(() => (label.textContent = 'copy'), 1500)
+    })
+  }
+</script>

@@ -1,0 +1,17 @@
+---
+const { href, class: className, ...rest } = Astro.props
+const isExternal = typeof href === 'string' && href.startsWith('http')
+---
+
+<a
+  {...rest}
+  href={href}
+  class:list={[
+    'text-drac-pink hocus:text-drac-purple focus-ring -mx-1 -mb-0.5 rounded-sm px-1 pb-0.5 break-words underline',
+    className,
+  ]}
+  rel={isExternal ? 'noopener noreferrer' : undefined}
+  target={isExternal ? '_blank' : undefined}
+>
+  <slot />
+</a>

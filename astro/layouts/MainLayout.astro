@@ -1,0 +1,13 @@
+---
+import Footer from '../components/Footer.astro'
+import Header from '../components/Header.astro'
+import BaseLayout from './BaseLayout.astro'
+---
+
+<BaseLayout {...Astro.props}>
+  <Header />
+  <main role="main" id="main-content" class="bg-drac-base flex-1">
+    <slot />
+  </main>
+  <Footer />
+</BaseLayout>

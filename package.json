@@ -16,6 +16,7 @@
     "lint": "eslint --fix src",
     "format": "run-s format:*",
     "format:code": "prettier -w src ./**/*.js",
+    "format:astro": "prettier -w astro",
     "format:mdx": "prettier --config './src/data/.prettierrc' -w src/data/**/*.mdx",
     "type-check": "tsc --noEmit",
     "husky:install": "husky install",
@@ -130,6 +131,12 @@
     "src/**/*.{ts,js,tsx,mts,mjs,cts,cjs}": [
       "prettier -w",
       "eslint --fix --cache"
+    ],
+    "astro/**/*.{astro,ts,tsx}": [
+      "prettier -w"
+    ],
+    "tests/**/*.ts": [
+      "prettier -w"
     ],
     "src/data/**/*.mdx": [
       "prettier --config './src/data/.prettierrc' --parser mdx -w"
