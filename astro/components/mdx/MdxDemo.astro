@@ -1,0 +1,12 @@
+---
+import { MdxDemoIsland } from './MdxDemoIsland'
+
+interface Props {
+  id: 'event-delegation'
+  init?: 'lazy' | 'mount' | 'always'
+}
+
+const { id } = Astro.props
+---
+
+<MdxDemoIsland client:load kind="react" id={id} />

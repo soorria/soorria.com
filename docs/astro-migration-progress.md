@@ -41,3 +41,40 @@ Work is isolated in `/Users/mooth/repos/soorria.com-astro` on `codex/astro-migra
 3. Add compile-time MDX lookup and migrate one complete content route before expanding to all posts and snippets.
 4. Replace the spike OG route with the compatible `/api/og` contract.
 5. Implement the first server-rendered Supabase route after the layout is stable.
+
+## 2026-07-18: first real Astro content route
+
+### Completed
+
+- Added Astro-native base, main, and post layouts with the existing global/prose styles, font preloads, metadata defaults, no-JS overrides, Plausible script contract, header, footer, and container shell.
+- Added a typed compile-time content module registry and migrated `/blog/event-delegation` as the first real static content route.
+- Preserved the route's current `/posts/event-delegation` canonical URL, article metadata, reading metrics, date display, heading anchors, syntax highlighting, and sandbox embed.
+- Added Astro MDX components for links, notes, code blocks, generated TypeScript/JavaScript switchers, sandboxes, sparkles, and serializable-ID demo islands.
+- Updated the shared MDX source to use `<MdxDemo id="event-delegation">` and registered that ID in both the Astro and still-runnable Next renderers.
+- Kept Giscus behind `client:only="react"`; its current component reads `location` during render and therefore cannot participate in Astro's prerender SSR pass.
+- Added four browser tests for the real route, covering shell/metadata/content, demo hydration, TS/JS switching, and the comments client-only boundary.
+- Added Astro/test formatting to the repository formatter and commit hook while retaining `astro check` as the Astro lint/type gate.
+
+### Findings that affect implementation
+
+- `client:visible` still server-renders a React island during prerender. Browser-global components such as the current Giscus implementation require `client:only="react"` until they are made SSR-safe.
+- The custom TypeScript remark transform injects `TsJsSwitcher` even when the source MDX does not name it. Every Astro MDX component map must provide that generated component.
+- The existing Plausible `/potato` script proxy is not available under `astro dev`; verify it with `vercel dev` or a Vercel Preview when routing middleware is introduced.
+- Prettier 3 requires the Astro and Tailwind plugins to be named in the shared config; installing them alone does not make `.astro` parser inference reliable.
+
+### Verification
+
+- `pnpm type-check`
+- `pnpm check:astro` — zero errors (existing repository hints remain)
+- `pnpm build:astro`
+- `pnpm test:astro-spikes` — 9 passed
+- `pnpm test:migration` — 54 passed
+- `pnpm peers check`
+- Manual desktop browser check of layout, metadata, demo hydration, TS/JS switching, Giscus loading, and console errors.
+
+### Next implementation slice
+
+1. Expand the compile-time registry and MDX component coverage across the remaining blog posts and snippets.
+2. Replace the spike OG route with the compatible `/api/og` query contract.
+3. Implement the first server-rendered Supabase route after the static content pipeline is stable.
+4. Add Vercel Routing Middleware and validate the Plausible proxy, host rewrites, and curl/HTTPie behavior with `vercel dev` or a Preview deployment.
