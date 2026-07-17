@@ -1,5 +1,5 @@
 import type { ProjectFrontMatter } from '~/types/project'
-import Link from 'next/link'
+import Link from '../CompatLink'
 import ProjectCard from '~/components/projects/ProjectCard'
 import LandingSection from './LandingSection'
 import ProjectsGrid from '../projects/ProjectsGrid'
@@ -30,7 +30,7 @@ const FeaturedProjects: React.FC<FeaturedProjectsProps> = ({ projects, random = 
         <Link
           href="/projects"
           passHref
-          className="focus-ring rounded-sm px-3 py-2 text-drac-pink transition-colors hocus:bg-drac-base-light hocus:text-drac-purple"
+          className="focus-ring text-drac-pink hocus:bg-drac-base-light hocus:text-drac-purple rounded-sm px-3 py-2 transition-colors"
         >
           <span>See All Projects</span>
         </Link>

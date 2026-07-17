@@ -1,7 +1,7 @@
 'use client'
 
 import type { ProjectFrontMatter } from '~/types/project'
-import NextLink from 'next/link'
+import NextLink from '../../CompatLink'
 import { CodeIcon, ExternalIcon, InfoIcon } from '~/components/icons'
 import cx from '~/utils/cx'
 import { COMMON_CLASSNAMES } from '../utils'
@@ -19,7 +19,7 @@ const SettingButton: React.FC<ButtonHTMLAttributes<HTMLButtonElement>> = props =
   return (
     <button
       {...props}
-      className="focus-ring -mx-1 cursor-pointer break-words break-all rounded-sm px-1 underline disabled:cursor-not-allowed disabled:opacity-50"
+      className="focus-ring -mx-1 cursor-pointer rounded-sm px-1 break-words break-all underline disabled:cursor-not-allowed disabled:opacity-50"
     />
   )
 }
@@ -96,7 +96,7 @@ const PokelifeCard: React.FC<PokelifeCardProps> = ({ project }) => {
           </noscript>
         </div>
         <div className="absolute -inset-4 bg-linear-to-r from-[#272933] via-[#272933] to-[#27293377] sm:to-transparent" />
-        <div className="relative z-10 flex h-full flex-col space-y-4 rounded-xl p-8 ring-4 ring-inset ring-drac-pink">
+        <div className="ring-drac-pink relative z-10 flex h-full flex-col space-y-4 rounded-xl p-8 ring-4 ring-inset">
           <header className="font-display text-3xl font-bold">Pokélife</header>
           <div className="max-w-[25rem] flex-1">
             <ul className="list-disc space-y-4 pl-6">

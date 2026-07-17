@@ -118,7 +118,7 @@ export default class Server implements Party.Server {
 
   private static deserializeClientMessage(serializedMessage: string): ClientMessage | null {
     try {
-      const unsafeParsedJSON = JSON.parse(serializedMessage)
+      const unsafeParsedJSON: unknown = JSON.parse(serializedMessage)
       return parse(ClientMessageSchema, unsafeParsedJSON)
     } catch (e) {
       console.log('Failed to parse message from client', e)

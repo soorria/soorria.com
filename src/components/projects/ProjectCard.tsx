@@ -1,7 +1,13 @@
 import type { ProjectFrontMatter } from '~/types/project'
-import Link from 'next/link'
-import dynamic from 'next/dynamic'
+import Link from '../CompatLink'
 import { CodeIcon, ExternalIcon, InfoIcon } from '../icons'
+import ClinicallyRelevantCard from './clinically-relevant/ClinicallyRelevantCard'
+import JupyterJsCard from './jupyter-js/JupyterJsCard'
+import MagicSprinklesCard from './magic-sprinkles/MagicSprinklesCard'
+import NotMessengerCard from './not-messenger/NotMessengerCard'
+import PokelifeCard from './pokelife/PokelifeCard'
+import PromptRacerCard from './prompt-racer/PromptRacerCard'
+import SizesCard from './sizes/SizesCard'
 
 export interface ProjectCardProps {
   project: ProjectFrontMatter
@@ -10,13 +16,13 @@ export interface ProjectCardProps {
 export type ProjectCardComponent = React.ComponentType<ProjectCardProps>
 
 const projectCardMap: Record<string, ProjectCardComponent> = {
-  'jupyter-js': dynamic(() => import('./jupyter-js/JupyterJsCard')),
-  'clinically-relevant': dynamic(() => import('./clinically-relevant/ClinicallyRelevantCard')),
-  'not-messenger': dynamic(() => import('./not-messenger/NotMessengerCard')),
-  sizes: dynamic(() => import('./sizes/SizesCard')),
-  pokelife: dynamic(() => import('./pokelife/PokelifeCard')),
-  'magic-sprinkles': dynamic(() => import('./magic-sprinkles/MagicSprinklesCard')),
-  'prompt-racer': dynamic(() => import('./prompt-racer/PromptRacerCard')),
+  'jupyter-js': JupyterJsCard,
+  'clinically-relevant': ClinicallyRelevantCard,
+  'not-messenger': NotMessengerCard,
+  sizes: SizesCard,
+  pokelife: PokelifeCard,
+  'magic-sprinkles': MagicSprinklesCard,
+  'prompt-racer': PromptRacerCard,
 }
 
 const classes = {
@@ -31,7 +37,7 @@ const ProjectCard: ProjectCardComponent = ({ project }) => {
 
   return (
     <div className="flex flex-col space-y-3" id={project.slug}>
-      <div className="font-display text-xl font-bold text-drac-pink">
+      <div className="font-display text-drac-pink text-xl font-bold">
         {project.title}
         {project.wip && (
           <span className="ml-2 font-sans text-sm font-normal italic">
@@ -41,7 +47,7 @@ const ProjectCard: ProjectCardComponent = ({ project }) => {
       </div>
       <div className="flex-1">{project.shortDescription}</div>
       <div>
-        <div className="flex flex-wrap gap-2 text-xs text-drac-content/80">
+        <div className="text-drac-content/80 flex flex-wrap gap-2 text-xs">
           {project.stack.map(tech => (
             <span key={tech}>{tech}</span>
           ))}

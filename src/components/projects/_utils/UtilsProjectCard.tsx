@@ -1,6 +1,6 @@
 import cx from '~/utils/cx'
-import NextLink from 'next/link'
-import Image, { type ImageProps } from 'next/image'
+import NextLink from '../../CompatLink'
+import Image, { type CompatImageSource } from '../../CompatImage'
 import type { ProjectCardProps } from '../ProjectCard'
 import { COMMON_CLASSNAMES } from '../utils'
 import UtilsTag from './UtilsTag'
@@ -13,7 +13,7 @@ const cardLinkClassName =
 type UtilsProjectCardProps = PropsWithChildren<
   ProjectCardProps &
     (
-      | { fullWidth: true; bgImage?: ImageProps['src']; bgAlt: string }
+      | { fullWidth: true; bgImage?: CompatImageSource; bgAlt: string }
       | { fullWidth?: false; bgImage: never; bgAlt: never }
     )
 >
@@ -43,11 +43,11 @@ const UtilsProjectCard: React.FC<UtilsProjectCardProps> = ({
                 />
               </div>
             </div>
-            <div className="absolute inset-0 bg-linear-to-r from-var-bg via-var-bg to-transparent"></div>
+            <div className="from-var-bg via-var-bg absolute inset-0 bg-linear-to-r to-transparent"></div>
           </>
         ) : null}
         <div className="relative flex h-full flex-col space-y-4 p-8">
-          <header className="flex items-center space-x-2 font-display text-3xl font-bold text-var-col">
+          <header className="font-display text-var-col flex items-center space-x-2 text-3xl font-bold">
             <span>{project.title}</span> <UtilsTag />
           </header>
           <div className="flex max-w-[25rem]">

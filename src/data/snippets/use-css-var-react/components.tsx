@@ -72,7 +72,6 @@ export const Example = () => {
           placeItems: 'center',
         }}
       >
-        {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
           style={{
             margin: '0',

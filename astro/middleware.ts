@@ -1,14 +1,16 @@
-import { next, rewrite } from '@vercel/functions'
+import { defineMiddleware } from 'astro:middleware'
 
 const linksSubdomains = new Set(['links', 'card', 'cardd', 'carrd'])
-export default function middleware(request: Request) {
-  const url = new URL(request.url)
+
+export const onRequest = defineMiddleware((context, next) => {
+  if (context.isPrerendered) return next()
+
+  const url = new URL(context.request.url)
   const pathname = url.pathname
-  const host = request.headers.get('host') || ''
-  const userAgent = request.headers.get('user-agent') || ''
+  const userAgent = context.request.headers.get('user-agent') || ''
 
   if (pathname === '/' && !url.searchParams.has('card') && /^(curl|HTTPie)\//i.test(userAgent)) {
-    return rewrite(new URL('/api/curl-card', url))
+    return context.rewrite('/api/curl-card')
   }
 
   const excluded =
@@ -16,15 +18,16 @@ export default function middleware(request: Request) {
     pathname.startsWith('/api') ||
     pathname.startsWith('/proxy') ||
     pathname.startsWith('/secrets')
-  const hostname = host.split(':')[0] ?? ''
+  const hostname = (context.request.headers.get('host') || '').split(':')[0] ?? ''
   const suffix = '.soorria.com'
+
   if (
     !excluded &&
     hostname.endsWith(suffix) &&
     linksSubdomains.has(hostname.slice(0, -suffix.length))
   ) {
-    return rewrite(new URL('/links', url))
+    return context.rewrite('/links')
   }
 
   return next()
-}
+})

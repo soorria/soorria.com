@@ -1,12 +1,12 @@
 'use client'
 
 import type { ProjectFrontMatter } from '~/types/project'
-import NextLink from 'next/link'
+import NextLink from '../../CompatLink'
 import { CodeIcon, ExternalIcon, InfoIcon } from '~/components/icons'
 import cx from '~/utils/cx'
 import { COMMON_CLASSNAMES } from '../utils'
 import type React from 'react'
-import Image from 'next/image'
+import Image from '../../CompatImage'
 import promptRacerImg from './prompt-racer.webp'
 
 interface PokelifeCardProps {
@@ -46,7 +46,7 @@ const PromptRacerCard: React.FC<PokelifeCardProps> = ({ project }) => {
         </div>
         <div className="absolute -inset-4 bg-linear-to-r from-[#272933] via-[#272933] to-[#27293300] sm:to-transparent" />
         <div
-          className="relative z-10 flex h-full flex-col space-y-4 rounded-xl p-8 ring-4 ring-inset ring-drac-pink"
+          className="ring-drac-pink relative z-10 flex h-full flex-col space-y-4 rounded-xl p-8 ring-4 ring-inset"
           style={{
             '--tw-ring-color': promptRacerColors.primary,
           }}

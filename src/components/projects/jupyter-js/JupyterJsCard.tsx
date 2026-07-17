@@ -1,6 +1,6 @@
 import type { ProjectFrontMatter } from '~/types/project'
-import NextLink from 'next/link'
-import Image from 'next/image'
+import NextLink from '../../CompatLink'
+import Image from '../../CompatImage'
 import { CodeIcon, ExternalIcon, InfoIcon } from '~/components/icons'
 import { COMMON_CLASSNAMES } from '../utils'
 import bgImg from './jupyter-js-card.png'

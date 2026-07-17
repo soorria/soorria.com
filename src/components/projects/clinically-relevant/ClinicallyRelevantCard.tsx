@@ -1,7 +1,7 @@
 'use client'
 
 import type { ProjectCardComponent } from '../ProjectCard'
-import NextLink from 'next/link'
+import NextLink from '../../CompatLink'
 import { ExternalIcon, InfoIcon } from '~/components/icons'
 import { useReducer } from 'react'
 import { useTrackFirstEvent } from '~/lib/analytics'
@@ -52,7 +52,7 @@ const ClinicallyRelevantCard: ProjectCardComponent = ({ project }) => {
     <div id={project.slug}>
       <div className={cx(COMMON_CLASSNAMES.specialCardRoot, themeClasses[theme])}>
         <div className="flex h-full flex-col space-y-4 p-8">
-          <header className="flex items-center font-display text-3xl font-bold">
+          <header className="font-display flex items-center text-3xl font-bold">
             <ClinicallyRelevantLogo className="mr-2 inline-block h-6 w-6" />
             Clinically Relevant
           </header>

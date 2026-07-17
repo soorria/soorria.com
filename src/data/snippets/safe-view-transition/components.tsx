@@ -114,8 +114,7 @@ export const VanillaExample = () => {
           animation-duration: ${slow ? '10s' : '0.25s'};
         }
       `}</style>
-      {/* eslint-disable-next-line react/no-unknown-property */}
-      <style jsx>{`
+      <style>{`
         .svt-container {
           height: 140px;
           display: flex;
