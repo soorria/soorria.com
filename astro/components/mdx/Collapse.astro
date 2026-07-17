@@ -1,0 +1,20 @@
+---
+import { TriangleIcon } from '../../../src/components/icons'
+const { summary, summaryComponent = 'h2', id } = Astro.props
+const Summary = summaryComponent
+---
+
+<details
+  class="bg-drac-base-dark list-none rounded-sm p-4 transition-shadow open:space-y-8"
+  id={id}
+>
+  <summary
+    class="not-prose focus-ring -m-4 flex cursor-pointer list-none appearance-none items-center space-x-4 rounded-sm p-4 in-open:mb-0 [&::-webkit-details-marker]:hidden"
+  >
+    <TriangleIcon
+      className="h-3 w-3 rotate-90 fill-white text-white transition-transform in-open:rotate-180"
+    />
+    <Summary class="font-display ml-1 inline-block font-bold">{summary}</Summary>
+  </summary>
+  <div class="collapse-child [&>.code-block]:-mx-0!"><slot /></div>
+</details>

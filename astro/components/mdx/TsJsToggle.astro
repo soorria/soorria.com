@@ -1,0 +1,24 @@
+---
+const { responsive = true } = Astro.props
+---
+
+<button
+  type="button"
+  class="bg-drac-purple font-display text-drac-base cursor-pointer rounded-sm px-2 text-center text-sm font-bold tracking-wider"
+  data-global-ts-js-toggle
+  data-responsive={responsive}
+>
+  <span class:list={{ 'hidden sm:inline': responsive }}>switch</span> to <span data-target>js</span>
+</button>
+
+<script>
+  for (const button of document.querySelectorAll<HTMLButtonElement>('[data-global-ts-js-toggle]')) {
+    if (button.dataset.ready) continue
+    button.dataset.ready = 'true'
+    button.addEventListener('click', () => {
+      const next = localStorage.getItem('soorria.com:isTs') === 'false'
+      localStorage.setItem('soorria.com:isTs', String(next))
+      location.reload()
+    })
+  }
+</script>

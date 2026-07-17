@@ -1,0 +1,76 @@
+---
+import { CodeIcon, ExternalIcon } from '../../../src/components/icons'
+import { featuredProjects } from '../../../src/constants'
+import { getAllFilesFrontMatter } from '../../../src/lib/data'
+import type { ProjectFrontMatter } from '../../../src/types/project'
+import { getOgImageForData } from '../../../src/utils/og'
+import MainLayout from '../../layouts/MainLayout.astro'
+import PostLayout from '../../layouts/PostLayout.astro'
+
+const description = "Things I've made. Some are more useful and cooler than others."
+const aboveFold = [
+  ...featuredProjects,
+  'sizes',
+  'clinically-relevant',
+  'not-messenger',
+  'aqrm',
+  'wordle-score',
+  'slidy',
+  'fight-for-tribeland',
+]
+const order = (slug: string) => {
+  const index = aboveFold.indexOf(slug)
+  return index < 0 ? 100 : index
+}
+const projects = (await getAllFilesFrontMatter<ProjectFrontMatter>('projects')).sort(
+  (a, b) => order(a.slug) - order(b.slug)
+)
+const linkClass =
+  'inline-flex items-center space-x-1 text-drac-pink underline hocus:text-drac-purple focus-ring rounded-sm -mx-1 px-1'
+---
+
+<MainLayout
+  title="Projects"
+  description={description}
+  canonical="https://soorria.com/projects"
+  ogTitle="Projects"
+  ogImage={getOgImageForData('projects').url}
+>
+  <PostLayout title="Projects" description={description}>
+    <div class="slide-in grid grid-flow-row-dense grid-cols-1 gap-12 sm:grid-cols-2">
+      {
+        projects.map(project => (
+          <div class="flex flex-col space-y-3" id={project.slug}>
+            <div class="font-display text-drac-pink text-xl font-bold">
+              {project.title}
+              {project.wip && <span class="ml-2 font-sans text-sm font-normal italic">(WIP)</span>}
+            </div>
+            <div class="flex-1">{project.shortDescription}</div>
+            <div class="text-drac-content/80 flex flex-wrap gap-2 text-xs">
+              {project.stack.map(tech => (
+                <span>{tech}</span>
+              ))}
+            </div>
+            <div class="flex gap-4 text-sm">
+              {project.live && (
+                <a href={project.live} class={linkClass} target="_blank" rel="noopener noreferrer">
+                  <ExternalIcon className="h-4 w-4" /> <span>See Live</span>
+                </a>
+              )}
+              {project.source && (
+                <a
+                  href={project.source}
+                  class={linkClass}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <CodeIcon className="h-4 w-4" /> <span>Source</span>
+                </a>
+              )}
+            </div>
+          </div>
+        ))
+      }
+    </div>
+  </PostLayout>
+</MainLayout>

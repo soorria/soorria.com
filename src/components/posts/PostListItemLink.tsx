@@ -1,4 +1,3 @@
-import Link from 'next/link'
 import type { PropsWithChildren } from 'react'
 
 type PostListItemLinkProps = PropsWithChildren<{
@@ -7,13 +6,12 @@ type PostListItemLinkProps = PropsWithChildren<{
 
 const PostListItemLink: React.FC<PostListItemLinkProps> = ({ href, children }) => {
   return (
-    <Link
+    <a
       href={href}
-      passHref
-      className="group relative overflow-hidden rounded-xl bg-drac-base-light p-4 ring-drac-pink transition-shadow focus:outline-hidden focus:ring-3 hocus:shadow-2xl md:px-8 md:py-6 md:focus:ring-4"
+      className="group bg-drac-base-light ring-drac-pink hocus:shadow-2xl relative overflow-hidden rounded-xl p-4 transition-shadow focus:ring-3 focus:outline-hidden md:px-8 md:py-6 md:focus:ring-4"
     >
       {children}
-    </Link>
+    </a>
   )
 }
 

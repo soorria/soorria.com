@@ -1,0 +1,42 @@
+---
+import { categoryLowerCaseToIcon, defaultCategoryIcon } from '../../src/components/categories'
+
+interface Props {
+  category?: string
+}
+
+const { category } = Astro.props
+const Icon = (category && categoryLowerCaseToIcon[category.toLowerCase()]) || defaultCategoryIcon
+---
+
+<div
+  class="text-drac-highlight grid gap-4 px-4 text-center"
+  role="presentation"
+  aria-hidden="true"
+  style="grid-template-columns: 1fr auto 1fr"
+>
+  <div class="flex items-center opacity-50"><div class="h-px flex-1 bg-current"></div></div>
+  <Icon
+    className="inline-block h-6 w-6 transition-transform ease-linear"
+    style={{ transform: 'rotate(calc(var(--scroll) * 2 * 360deg))' }}
+  />
+  <div class="flex items-center opacity-50"><div class="h-px flex-1 bg-current"></div></div>
+</div>
+
+<script>
+  let percent = '0'
+  const update = () => {
+    const html = document.documentElement
+    percent = (
+      (html.scrollTop || document.body.scrollTop) /
+      Math.max(1, html.scrollHeight - html.clientHeight)
+    ).toFixed(2)
+  }
+  const paint = () => {
+    document.body.style.setProperty('--scroll', percent)
+    requestAnimationFrame(paint)
+  }
+  update()
+  paint()
+  addEventListener('scroll', update, { passive: true })
+</script>

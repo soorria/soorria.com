@@ -1,0 +1,16 @@
+---
+import { MagicSprinkles } from '../../../src/app/(no-layout)/installations/magic-sprinkles/magic-sprinkles.component'
+import BaseLayout from '../../layouts/BaseLayout.astro'
+---
+
+<BaseLayout
+  title="Magic Sprinkles"
+  description="A fun and addictive little interactive animation"
+  canonical="https://soorria.com/installations/magic-sprinkles"
+>
+  <main class="relative min-h-[100lvh] overflow-hidden">
+    <MagicSprinkles client:only="react" /><h1 class="relative z-10 pt-16 text-center text-7xl">
+      magic sprinkles
+    </h1><p class="fixed inset-x-0 bottom-4 text-center">Made with ♥ by Soorria</p>
+  </main>
+</BaseLayout>

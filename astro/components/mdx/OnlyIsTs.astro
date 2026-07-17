@@ -1,0 +1,11 @@
+---
+const { isTs = false } = Astro.props
+---
+
+<div data-only-language={isTs ? 'ts' : 'js'}><slot /></div>
+<script>
+  const isTs = localStorage.getItem('soorria.com:isTs') !== 'false'
+  for (const element of document.querySelectorAll<HTMLElement>('[data-only-language]')) {
+    element.hidden = element.dataset.onlyLanguage !== (isTs ? 'ts' : 'js')
+  }
+</script>

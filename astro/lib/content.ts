@@ -1,10 +1,21 @@
-const migratedBlogModules = {
-  'event-delegation': () => import('../../src/data/blog/event-delegation/index.mdx'),
-} as const
+type ContentType = 'blog' | 'snippets' | 'projects' | 'misc'
+type ContentModule = { default: unknown; frontmatter?: Record<string, unknown> }
 
-export type MigratedBlogSlug = keyof typeof migratedBlogModules
+const contentModules = import.meta.glob<ContentModule>(
+  '../../src/data/{blog,snippets,projects,misc}/*/index.mdx'
+)
 
-export const getMigratedBlogSlugs = (): MigratedBlogSlug[] =>
-  Object.keys(migratedBlogModules) as MigratedBlogSlug[]
+const moduleKey = (type: ContentType, slug: string) => `../../src/data/${type}/${slug}/index.mdx`
 
-export const loadMigratedBlogContent = (slug: MigratedBlogSlug) => migratedBlogModules[slug]()
+export const getContentSlugs = (type: ContentType): string[] => {
+  const prefix = `../../src/data/${type}/`
+  return Object.keys(contentModules)
+    .filter(path => path.startsWith(prefix))
+    .map(path => path.slice(prefix.length, -'/index.mdx'.length))
+}
+
+export const loadContent = async (type: ContentType, slug: string) => {
+  const loader = contentModules[moduleKey(type, slug)]
+  if (!loader) throw new Error(`No MDX content module for ${type}/${slug}`)
+  return loader()
+}

@@ -10,7 +10,6 @@ export const Track = <EventName extends keyof AnalyticsCustomEvents>(props: {
   const track = useTrackEvent()
 
   useEffect(() => {
-    // @ts-expect-error annoying type error
     track(props.event, { props: props.params })
   }, [track, props.event])
 

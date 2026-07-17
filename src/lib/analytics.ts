@@ -1,4 +1,3 @@
-import { usePlausible } from 'next-plausible'
 import { useCallback, useRef } from 'react'
 
 export type AnalyticsCustomEvents = {
@@ -10,21 +9,18 @@ export type AnalyticsCustomEvents = {
   }
 }
 
-type PlausibleTrackEvent = ReturnType<typeof usePlausible<AnalyticsCustomEvents>>
+type PlausibleTrackEvent = <EventName extends keyof AnalyticsCustomEvents>(
+  event: EventName,
+  options?: { props?: AnalyticsCustomEvents[EventName] }
+) => void
 
-export const useTrackEvent: () => PlausibleTrackEvent =
-  process.env.NODE_ENV === 'development'
-    ? () => {
-        const track = usePlausible<AnalyticsCustomEvents>()
-        return useCallback(
-          (...args) => {
-            console.log('tracked', ...args)
-            track(...args)
-          },
-          [track]
-        ) as PlausibleTrackEvent
-      }
-    : () => usePlausible<AnalyticsCustomEvents>()
+export const useTrackEvent = (): PlausibleTrackEvent =>
+  useCallback((event, options) => {
+    if (process.env.NODE_ENV !== 'production') console.log('tracked', event, options)
+    const plausible = (window as typeof window & { plausible?: (...args: unknown[]) => void })
+      .plausible
+    plausible?.(event, options)
+  }, []) as PlausibleTrackEvent
 
 export const useTrackFirstEvent = (): ReturnType<typeof useTrackEvent> => {
   const isFirst = useRef(true)

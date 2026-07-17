@@ -1,6 +1,5 @@
 import { type AnchorHTMLAttributes } from 'react'
 import cx from '~/utils/cx'
-import Link from 'next/link'
 
 const defaultClassName =
   'text-drac-pink underline hocus:text-drac-purple focus-ring rounded-sm -mx-1 px-1 -mb-0.5 pb-0.5 break-words'
@@ -11,10 +10,9 @@ const CustomLink: React.FC<{ href: string } & AnchorHTMLAttributes<HTMLAnchorEle
   className: _className,
   ...rest
 }) => {
-  const usePlainLink = href.startsWith('#') || !href.startsWith('/')
   const isExternal = href.startsWith('http')
   const className = cx(defaultClassName, _className)
-  return usePlainLink ? (
+  return (
     <a
       href={href}
       className={className}
@@ -28,10 +26,6 @@ const CustomLink: React.FC<{ href: string } & AnchorHTMLAttributes<HTMLAnchorEle
     >
       {children}
     </a>
-  ) : (
-    <Link href={href} passHref className={className} {...rest}>
-      {children}
-    </Link>
   )
 }
 

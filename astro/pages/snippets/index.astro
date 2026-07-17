@@ -1,0 +1,29 @@
+---
+import SnippetCard from '../../../src/components/posts/SnippetCard'
+import { getAllFilesFrontMatter } from '../../../src/lib/data'
+import type { SnippetFrontMatter } from '../../../src/types/snippet'
+import { sortByCreatedAtField } from '../../../src/utils/content'
+import { getOgImageForData } from '../../../src/utils/og'
+import MainLayout from '../../layouts/MainLayout.astro'
+import PostLayout from '../../layouts/PostLayout.astro'
+
+const description =
+  'Little bits of code that I find useful and you might too! Mostly written in TypeScript & JavaScript and often for React, Vue and SolidJS.'
+const snippets = sortByCreatedAtField(await getAllFilesFrontMatter<SnippetFrontMatter>('snippets'))
+---
+
+<MainLayout
+  title="Snippets"
+  description={description}
+  canonical="https://soorria.com/snippets"
+  ogTitle="Snippets"
+  ogImage={getOgImageForData('snippets').url}
+>
+  <PostLayout title="Snippets" description={description}>
+    <div
+      class="slide-in grid auto-cols-min grid-flow-dense grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-2 sm:gap-x-8 lg:gap-12"
+    >
+      {snippets.map(snippet => <SnippetCard snippet={snippet} />)}
+    </div>
+  </PostLayout>
+</MainLayout>
