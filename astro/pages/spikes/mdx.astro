@@ -1,0 +1,28 @@
+---
+import Article from '../../../src/data/blog/react-vs-the-dom/index.mdx'
+import { MdxDemoIsland } from '../../components/mdx/MdxDemoIsland'
+
+import '../../../src/styles/globals.css'
+import '../../../src/styles/prose.css'
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>Astro migration MDX spike</title>
+  </head>
+  <body class="bg-drac-base text-drac-content">
+    <main class="prose mx-auto max-w-3xl py-12">
+      <h1>Existing article</h1>
+      <Article />
+
+      <h2>Serializable React demo registry</h2>
+      <MdxDemoIsland client:visible kind="react" id="event-delegation" />
+
+      <h2>Serializable Solid demo registry</h2>
+      <MdxDemoIsland client:visible kind="solid" id="create-previous-memo" />
+    </main>
+  </body>
+</html>

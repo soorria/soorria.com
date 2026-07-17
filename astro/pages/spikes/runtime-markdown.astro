@@ -1,0 +1,22 @@
+---
+import { renderRuntimeMarkdown } from '../../../src/lib/runtime-markdown'
+
+export const prerender = false
+
+const source =
+  Astro.url.searchParams.get('source') ??
+  'Building **performant** and _fun_ software. [Say hello](https://soorria.com/#contact).'
+const html = await renderRuntimeMarkdown(source)
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>Astro migration runtime Markdown spike</title>
+  </head>
+  <body>
+    <main data-runtime-markdown set:html={html} />
+  </body>
+</html>
