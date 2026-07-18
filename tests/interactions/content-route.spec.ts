@@ -100,6 +100,38 @@ test.describe('migrated blog content route', () => {
       .toBe('none')
   })
 
+  test('does not insert a blank line between a code-block header and its code', async ({
+    page,
+  }) => {
+    await page.goto('/blog/immer')
+
+    const pre = page.locator('.code-block pre').first()
+    const code = pre.locator('code')
+    const offset = await code.evaluate(
+      (element, preElement) => {
+        return element.getBoundingClientRect().top - preElement!.getBoundingClientRect().top
+      },
+      await pre.elementHandle()
+    )
+
+    expect(offset).toBe(0)
+  })
+
+  test('keeps camel-case snippet titles within a phone viewport', async ({ page }) => {
+    await page.setViewportSize({ width: 390, height: 844 })
+    await page.goto('/snippets/create-typed-context-react')
+
+    await expect(page.locator('h1 wbr')).toHaveCount(2)
+    const pageWidths = await page.evaluate(() => ({
+      client: document.documentElement.clientWidth,
+      scroll: document.documentElement.scrollWidth,
+    }))
+    expect(pageWidths.scroll).toBe(pageWidths.client)
+
+    const pre = page.locator('.code-block pre').first()
+    expect(await pre.evaluate(element => element.scrollWidth > element.clientWidth)).toBe(true)
+  })
+
   test('keeps browser-only comments out of the prerender pass', async ({ page }) => {
     const commentsIsland = page.locator('astro-island[client="only"]')
     await expect(commentsIsland).toHaveCount(1)
