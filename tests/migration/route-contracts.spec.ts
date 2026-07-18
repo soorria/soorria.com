@@ -169,6 +169,26 @@ test('every art image loads successfully', async ({ page }) => {
   }
 })
 
+test('art entries remain in reverse chronological order', async ({ page }) => {
+  await page.goto('/authentic-artistique-endevours')
+  await expect
+    .poll(() =>
+      page
+        .locator('main time')
+        .evaluateAll(times => times.map(time => time.getAttribute('datetime')))
+    )
+    .toEqual([
+      '2025-10-23',
+      '2025-09-12',
+      '2025-05-10',
+      '2023-12-13',
+      '2023-12-02',
+      '2023-08-12',
+      '2022-12-17',
+      '2022-09-02',
+    ])
+})
+
 test('core pages have no broken internal links', async ({ page, request, baseURL }) => {
   const hrefs = new Set<string>()
   for (const route of ['/', '/blog', '/snippets', '/projects', '/about']) {
