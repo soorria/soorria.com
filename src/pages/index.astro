@@ -1,0 +1,51 @@
+---
+export const prerender = false
+
+import Contact from '~/components/landing/Contact'
+import FeaturedProjects from '~/components/landing/FeaturedProjects'
+import Skills from '~/components/landing/Skills'
+import { featuredProjects } from '~/constants'
+import { getFileFrontMatter } from '~/lib/data'
+import { getRandomSkillIndexes } from '~/lib/skills/definitions'
+import { getSingletonJsonSafe, getSingletonTextSafe } from '~/lib/supabase'
+import { renderRuntimeMarkdown } from '~/lib/runtime-markdown'
+import type { ProjectFrontMatter } from '~/types/project'
+import Container from '../components/Container.astro'
+import HomeHero from '../components/HomeHero.astro'
+import MainLayout from '../layouts/MainLayout.astro'
+
+Astro.response.headers.set('Cache-Control', 's-maxage=10, stale-while-revalidate')
+const subtitleText =
+  (await getSingletonTextSafe('subtitle')) ??
+  "I'm a full stack software engineer passionate about creating performant and fun software that enables users to do more with less\n---\nI build delightful, accessible experiences for the web"
+const subtitles = await Promise.all(
+  subtitleText
+    .split('---')
+    .map(value => value.trim().replace(/\.$/, ''))
+    .filter(Boolean)
+    .map(renderRuntimeMarkdown)
+)
+const now = await getSingletonTextSafe('now')
+const nowHtml = now ? await renderRuntimeMarkdown(now) : ''
+const options = await getSingletonJsonSafe<{ heroText: string; pattern?: string }>('index-options')
+const projects = await Promise.all(
+  featuredProjects.map(slug => getFileFrontMatter<ProjectFrontMatter>('projects', slug))
+)
+---
+
+<MainLayout>
+  <Container>
+    <HomeHero
+      title={options.heroText || "Hey, I'm Soorria"}
+      pattern={options.pattern}
+      subtitles={subtitles}
+      nowHtml={nowHtml}
+    />
+    <FeaturedProjects client:load projects={projects} random={0} />
+    <Skills client:only="react" random={1} skillIndexes={getRandomSkillIndexes(8)} />
+    <Contact client:load random={2} />
+    <div class="text-drac-pink py-10 text-center text-xs">
+      Rendered at {new Date().toLocaleString()}
+    </div>
+  </Container>
+</MainLayout>

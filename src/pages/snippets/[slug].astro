@@ -1,0 +1,55 @@
+---
+import Giscus from '~/components/posts/comments/Giscus.client'
+import { getFileFrontMatter } from '~/lib/data'
+import type { SnippetFrontMatter } from '~/types/snippet'
+import { formatDate } from '~/utils/date'
+import { getOgImageForData } from '~/utils/og'
+import SpinningDivider from '../../components/SpinningDivider.astro'
+import ContentRenderer from '../../components/mdx/ContentRenderer.astro'
+import { getContentSlugs } from '../../lib/content'
+import MainLayout from '../../layouts/MainLayout.astro'
+import PostLayout from '../../layouts/PostLayout.astro'
+
+export async function getStaticPaths() {
+  return await Promise.all(
+    getContentSlugs('snippets').map(async slug => ({
+      params: { slug },
+      props: { snippet: await getFileFrontMatter<SnippetFrontMatter>('snippets', slug) },
+    }))
+  )
+}
+
+interface Props {
+  snippet: SnippetFrontMatter
+}
+
+const { snippet } = Astro.props
+const canonical = `https://soorria.com/snippets/${snippet.slug}`
+const metaTitle = `${snippet.title} | Snippets`
+const ogImage = getOgImageForData('snippets', snippet.title, snippet.ogImageTitleParts).url
+---
+
+<MainLayout
+  title={metaTitle}
+  description={snippet.shortDescription}
+  canonical={canonical}
+  ogTitle={metaTitle}
+  ogType="article"
+  ogImage={ogImage}
+  publishedTime={new Date(snippet.createdAt).toISOString()}
+  modifiedTime={new Date(snippet.updatedAt || snippet.createdAt).toISOString()}
+  tags={[snippet.category, ...snippet.tags]}
+>
+  <PostLayout title={snippet.title}>
+    <SpinningDivider category={snippet.category} />
+    <div class="slide-in prose md:prose-lg mx-auto mt-6 mb-12">
+      <ContentRenderer type="snippets" slug={snippet.slug} />
+      <div class="mx-auto mt-24! max-w-xs space-y-8 text-center text-sm">
+        Created {formatDate(snippet.createdAt)}{
+          snippet.updatedAt && <> • Updated {formatDate(snippet.updatedAt)}</>
+        }
+      </div>
+    </div>
+    <Giscus client:only="react" dataType="snippets" slug={snippet.slug} />
+  </PostLayout>
+</MainLayout>

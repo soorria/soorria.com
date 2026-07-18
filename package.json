@@ -10,7 +10,7 @@
     "build": "astro build",
     "build:astro": "astro build",
     "start": "astro dev",
-    "lint": "eslint --fix src middleware.ts astro/**/*.ts astro/**/*.tsx",
+    "lint": "eslint --fix src middleware.ts",
     "format": "run-s format:*",
     "format:code": "prettier -w src ./**/*.js",
     "format:astro": "prettier -w astro",
@@ -123,7 +123,7 @@
       "prettier -w",
       "eslint --fix --cache"
     ],
-    "astro/**/*.{astro,ts,tsx}": [
+    "src/**/*.astro": [
       "prettier -w"
     ],
     "tests/**/*.ts": [

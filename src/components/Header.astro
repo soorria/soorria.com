@@ -1,0 +1,78 @@
+---
+import Logo from '~/components/logo'
+import Container from './Container.astro'
+
+const links = [
+  { title: 'projects', href: '/projects' },
+  { title: 'snippets', href: '/snippets' },
+  { title: 'blog', href: '/blog' },
+  { title: 'art', href: '/authentic-artistique-endevours', art: true },
+]
+---
+
+<Container class="relative z-10">
+  <a
+    href="#main-content"
+    class="focus-ring bg-drac-base font-display text-drac-pink hocus:shadow-xl fixed -top-16 left-1/2 z-50 mx-auto block w-max -translate-x-1/2 transform rounded-sm px-4 py-2 text-center font-bold transition-transform focus:translate-y-20 focus:ring-2"
+  >
+    Skip to Main Content
+  </a>
+  <header class="slide-in-direct flex items-center justify-between py-8">
+    <a
+      href="/"
+      class="focus-ring group z-10 -m-2 flex items-center rounded-sm p-2"
+      data-spinny-home-link
+    >
+      <span
+        class="h-8 w-8 transform transition-transform duration-700 ease-in-out md:h-10 md:w-10"
+        data-spinny-logo
+      >
+        <Logo />
+      </span>
+      <span class="logo-link-text font-display text-2xl font-bold lowercase sm:ml-4 sm:text-3xl">
+        <span class="sr-only sm:not-sr-only">Soorria</span>
+        <span class="sr-only md:not-sr-only"> Saruva</span>
+      </span>
+    </a>
+    <nav class="font-display flex space-x-1 sm:space-x-3 sm:text-lg">
+      {
+        links.map(link => (
+          <a
+            href={link.href}
+            class="focus-ring group border-drac-content hocus:bg-drac-base-light hocus:text-drac-pink relative overflow-hidden rounded-sm px-2 py-1 leading-none transition sm:px-3 sm:py-2"
+          >
+            {link.art ? <span class="header-art-link-text">{link.title}</span> : link.title}
+          </a>
+        ))
+      }
+    </nav>
+  </header>
+</Container>
+
+<script>
+  const START_ROTATION = 720
+  const MAX_ROTATION = 1440
+
+  for (const link of document.querySelectorAll<HTMLElement>('[data-spinny-home-link]')) {
+    const logo = link.querySelector<HTMLElement>('[data-spinny-logo]')
+    if (!logo) continue
+
+    let resetTimeout: ReturnType<typeof setTimeout> | undefined
+    const spin = () => {
+      logo.style.rotate = `${Math.floor(Math.random() * MAX_ROTATION)}deg`
+      clearTimeout(resetTimeout)
+      resetTimeout = setTimeout(() => {
+        logo.style.rotate = `${START_ROTATION}deg`
+      }, 10_000)
+    }
+
+    logo.style.rotate = `${START_ROTATION}deg`
+    spin()
+    link.addEventListener('click', event => {
+      if (location.pathname === '/') {
+        event.preventDefault()
+        spin()
+      }
+    })
+  }
+</script>

@@ -11,7 +11,6 @@ const mdxOptions = getMdxOptions()
 
 export default defineConfig({
   site: 'https://soorria.com',
-  srcDir: './astro',
   outDir: './dist-astro',
   output: 'static',
   redirects: {
