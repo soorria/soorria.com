@@ -41,6 +41,7 @@
   @apply rounded-none bg-transparent;
   @apply px-0 pt-0;
   @apply -mx-2 pb-3 md:-mx-6;
+  line-height: 0;
 }
 
 .prose pre[data-language] .line {

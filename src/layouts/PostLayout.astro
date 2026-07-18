@@ -7,6 +7,9 @@ interface Props {
 }
 
 const { title, description } = Astro.props
+const titleWords = title
+  .split(' ')
+  .map(word => word.replace(/[a-z][A-Z]/g, match => `${match[0]} ${match[1]}`).split(' '))
 ---
 
 <Container>
@@ -16,7 +19,21 @@ const { title, description } = Astro.props
         class="text-drac-pink text-safe-pretty mt-0 mb-20 text-center text-5xl leading-tight! [--heading-padding:1rem] sm:mt-8 sm:text-6xl md:text-7xl lg:mb-16 lg:text-8xl lg:[--heading-padding:8rem]"
         style="overflow-wrap: break-word; --width: calc(100vw - var(--heading-padding)); width: var(--width); position: relative; left: 50%; right: 50%; margin-left: calc(var(--width) / -2); margin-right: calc(var(--width) / -2); text-align: center;"
       >
-        <span class="inline-block max-w-(--breakpoint-xl)">{title}</span>
+        <span class="inline-block max-w-(--breakpoint-xl)">
+          {
+            titleWords.map((chunks, wordIndex) => (
+              <>
+                {wordIndex > 0 && ' '}
+                {chunks.map((chunk, chunkIndex) => (
+                  <>
+                    {chunkIndex > 0 && <wbr />}
+                    {chunk}
+                  </>
+                ))}
+              </>
+            ))
+          }
+        </span>
       </h1>
       {description && <p class="mt-6 mb-12 text-center text-lg text-pretty">{description}</p>}
     </div>
