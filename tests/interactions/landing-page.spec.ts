@@ -28,4 +28,15 @@ test.describe('migrated landing page', () => {
     await expect.poll(() => subtitle.innerHTML()).not.toBe(before)
     await expect(page.locator('[data-subtitle-icon]')).toHaveAttribute('style', /rotate: -1turn/)
   })
+
+  test('animates Sparkles components rendered from runtime MDX', async ({ page }) => {
+    await page.locator('[data-subtitle]').evaluate(element => {
+      element.innerHTML =
+        '<span class="relative inline-block" data-runtime-sparkles><span class="relative">sparkly</span></span>'
+    })
+
+    await expect(page.locator('[data-runtime-sparkles] .animation-sparkle')).toBeAttached({
+      timeout: 2_000,
+    })
+  })
 })

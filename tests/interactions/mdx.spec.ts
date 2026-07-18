@@ -31,7 +31,7 @@ test('hydrates a Solid demo selected by a serializable ID', async ({ page }) => 
   await expect(page.getByText('Current:').locator('..')).toContainText('1')
 })
 
-test('renders request-time Markdown without evaluating HTML or MDX', async () => {
+test('renders trusted request-time MDX while blocking dangerous expressions', async () => {
   const source = '**Fresh** copy <script>window.pwned = true</script> {globalThis.location}'
   const html = await renderRuntimeMarkdown(source)
 
@@ -44,6 +44,10 @@ test('renders request-time Markdown without evaluating HTML or MDX', async () =>
     "Building the <span style={{ color: 'var(--purple)' }}>AI workforce</span>"
   )
   expect(trustedCmsStyle).toContain('<span style="color:var(--purple)">AI workforce</span>')
+
+  const sparkles = await renderRuntimeMarkdown('Building <Sparkles>delightful things</Sparkles>')
+  expect(sparkles).toContain('data-runtime-sparkles')
+  expect(sparkles).toContain('delightful things')
 })
 
 test('renders a PNG with Satori, Resvg, and a local font', async ({ request }) => {
