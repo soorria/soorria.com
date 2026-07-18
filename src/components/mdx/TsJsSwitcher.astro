@@ -84,10 +84,11 @@ const buttonClass =
     root
       .querySelector<HTMLButtonElement>('[data-copy-switcher]')
       ?.addEventListener('click', async event => {
+        const button = event.currentTarget
         const activePre = root.querySelector<HTMLPreElement>('pre:not(.hidden)')
         if (!activePre) return
         await navigator.clipboard.writeText(getCodeText(activePre))
-        showCopiedState(event.currentTarget)
+        showCopiedState(button)
       })
   }
 </script>

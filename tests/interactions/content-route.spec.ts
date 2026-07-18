@@ -49,7 +49,9 @@ test.describe('migrated blog content route', () => {
     await page.evaluate(() => {
       Object.defineProperty(navigator, 'clipboard', {
         configurable: true,
-        value: { writeText: async () => {} },
+        value: {
+          writeText: () => new Promise<void>(resolve => window.setTimeout(resolve, 50)),
+        },
       })
     })
 
@@ -74,7 +76,9 @@ test.describe('migrated blog content route', () => {
     await page.evaluate(() => {
       Object.defineProperty(navigator, 'clipboard', {
         configurable: true,
-        value: { writeText: async () => {} },
+        value: {
+          writeText: () => new Promise<void>(resolve => window.setTimeout(resolve, 50)),
+        },
       })
     })
 
