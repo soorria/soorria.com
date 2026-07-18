@@ -29,60 +29,84 @@ const nftMeanings = [
   'Nonfunctional Farce Transaction',
 ]
 const randomNftMeaning = () => nftMeanings[Math.floor(Math.random() * nftMeanings.length)]
-const art: Array<{
+type ArtEntryBase = {
   title: string
   date: string
-  src: ImageMetadata
-  alt: string
   nftMeaning?: string
-  unoptimized?: boolean
-}> = [
+  nftSuffix?: string
+}
+type ArtEntry = ArtEntryBase &
+  (
+    | {
+        kind: 'image'
+        src: ImageMetadata
+        alt: string
+        unoptimized?: boolean
+      }
+    | { kind: 'installation' }
+  )
+
+const art: ArtEntry[] = [
   {
-    title: 'Glistening Saint',
-    date: '2025-10-23',
-    src: GlisteningSaint,
-    alt: 'gif of a saint with emoji prayer hands coming together to form a heart',
-    unoptimized: true,
+    kind: 'installation',
+    title: 'magic sprinkles',
+    date: '2023-08-12',
   },
   {
-    title: 'the bruhfferfish',
-    date: '2025-09-12',
-    src: Bruhfferfish,
-    alt: 'colorful pufferfish drawing with bruh written on its side',
-  },
-  {
-    title: 'Sandbox Bouldering t-shirt design',
-    date: '2025-05-10',
-    src: SandboxTshirt,
-    alt: 't-shirt design featuring a cat in a sandbox',
-  },
-  {
-    title: 'Speed Sudoku Champion Riki',
-    date: '2023-12-13',
-    src: SpeedSudoku,
-    alt: 'pencil drawing of Riki after winning speed sudoku',
-  },
-  {
-    title: 'david Lau nft (real)',
+    kind: 'image',
+    title: 'donald trump',
     nftMeaning: randomNftMeaning(),
-    date: '2023-12-02',
-    src: DavidLau,
-    alt: 'satirical depiction of David Lau shooting laser beams',
+    nftSuffix: ' (real)',
+    date: '2022-12-17',
+    src: DonaldTrump,
+    alt: 'satirical portrayal of a Donald Trump NFT',
   },
   {
+    kind: 'image',
     title: 'unnamed waifu',
     date: '2022-09-02',
     src: Waifu,
     alt: 'drawing of a waifu saying I love you',
   },
   {
-    title: 'donald trump nft (real)',
+    kind: 'image',
+    title: 'david Lau',
     nftMeaning: randomNftMeaning(),
-    date: '2022-12-17',
-    src: DonaldTrump,
-    alt: 'satirical portrayal of a Donald Trump NFT',
+    nftSuffix: ' (real)',
+    date: '2023-12-02',
+    src: DavidLau,
+    alt: 'satirical depiction of David Lau shooting laser beams',
   },
-]
+  {
+    kind: 'image',
+    title: 'Speed Sudoku Champion Riki',
+    date: '2023-12-13',
+    src: SpeedSudoku,
+    alt: 'pencil drawing of Riki after winning speed sudoku',
+  },
+  {
+    kind: 'image',
+    title: 'Sandbox Bouldering t-shirt design',
+    date: '2025-05-10',
+    src: SandboxTshirt,
+    alt: 't-shirt design featuring a cat in a sandbox',
+  },
+  {
+    kind: 'image',
+    title: 'the bruhfferfish',
+    date: '2025-09-12',
+    src: Bruhfferfish,
+    alt: 'colorful pufferfish drawing with bruh written on its side',
+  },
+  {
+    kind: 'image',
+    title: 'Glistening Saint',
+    date: '2025-10-23',
+    src: GlisteningSaint,
+    alt: 'gif of a saint with emoji prayer hands coming together to form a heart',
+    unoptimized: true,
+  },
+].sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
 ---
 
 <MainLayout
@@ -104,7 +128,7 @@ const art: Array<{
               <h2>
                 {item.nftMeaning ? (
                   <>
-                    {item.title.replace('nft', '')}
+                    {item.title}{' '}
                     <abbr
                       class="tooltip cursor-help"
                       title={item.nftMeaning}
@@ -115,6 +139,7 @@ const art: Array<{
                         ?
                       </sup>
                     </abbr>
+                    {item.nftSuffix}
                   </>
                 ) : (
                   item.title
@@ -124,7 +149,17 @@ const art: Array<{
                 <em>masterfully</em> created on{' '}
                 <time datetime={item.date}>{new Date(item.date).toLocaleDateString()}</time>
               </p>
-              {item.unoptimized ? (
+              {item.kind === 'installation' ? (
+                <div class="not-prose relative aspect-video overflow-hidden rounded-lg">
+                  <MagicSprinkles client:only="react" />
+                  <a
+                    class="bg-drac-base absolute inset-x-0 bottom-4 mx-auto block w-fit rounded px-4 py-2"
+                    href="/installations/magic-sprinkles"
+                  >
+                    see full installation
+                  </a>
+                </div>
+              ) : item.unoptimized ? (
                 <img
                   src={item.src.src}
                   width={item.src.width}
@@ -140,18 +175,6 @@ const art: Array<{
           </section>
         ))
       }
-      <section>
-        <h2>magic sprinkles</h2>
-        <div class="not-prose relative aspect-video overflow-hidden rounded-lg">
-          <MagicSprinkles client:only="react" />
-          <a
-            class="bg-drac-base absolute inset-x-0 bottom-4 mx-auto block w-fit rounded px-4 py-2"
-            href="/installations/magic-sprinkles"
-          >
-            see full installation
-          </a>
-        </div>
-      </section>
     </div>
   </PostLayout>
   <div class="text-drac-pink pb-2 text-center text-xs">
