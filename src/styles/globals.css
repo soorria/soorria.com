@@ -1,5 +1,13 @@
 @import 'tailwindcss';
 
+[data-copy-state='copied'] [data-copy-label] {
+  transform: translateY(-100%);
+}
+
+[data-copy-state='copied'] [data-copied-label] {
+  transform: translateY(0);
+}
+
 @config '../../tailwind.config.js';
 
 @utility logo-link-text {

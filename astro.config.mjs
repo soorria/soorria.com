@@ -28,6 +28,9 @@ export default defineConfig({
     imageService: true,
   }),
   markdown: {
+    // rehype-pretty-code supplies the Dracula highlighting used by the original site.
+    // Running Astro's Shiki pass first strips the metadata our code-block chrome needs.
+    syntaxHighlight: false,
     processor: unified({
       remarkPlugins: mdxOptions.remarkPlugins,
       rehypePlugins: mdxOptions.rehypePlugins,

@@ -45,6 +45,57 @@ test.describe('migrated blog content route', () => {
     await expect(switcher.locator("pre[data-language='js']")).toBeVisible()
   })
 
+  test('slides the switcher copy button from copy to copied', async ({ page }) => {
+    await page.evaluate(() => {
+      Object.defineProperty(navigator, 'clipboard', {
+        configurable: true,
+        value: { writeText: async () => {} },
+      })
+    })
+
+    const button = page.locator('[data-copy-switcher]').first()
+    const copyLabel = button.locator('[data-copy-label]')
+    const copiedLabel = button.locator('[data-copied-label]')
+
+    await expect(copyLabel).toHaveText('copy')
+    await expect(copiedLabel).toHaveText('copied')
+    await button.click()
+    await expect(button).toHaveAttribute('data-copy-state', 'copied')
+    await expect
+      .poll(() => copyLabel.evaluate(element => getComputedStyle(element).transform))
+      .not.toBe('none')
+    await expect
+      .poll(() => copiedLabel.evaluate(element => getComputedStyle(element).transform))
+      .toBe('none')
+  })
+
+  test('slides a standard code-block copy button from copy to copied', async ({ page }) => {
+    await page.goto('/blog/immer')
+    await page.evaluate(() => {
+      Object.defineProperty(navigator, 'clipboard', {
+        configurable: true,
+        value: { writeText: async () => {} },
+      })
+    })
+
+    const codeBlock = page.locator('.code-block').first()
+    await expect(codeBlock).toHaveClass(/ring-drac-purple/)
+    await expect(codeBlock).toHaveClass(/bg-drac-base/)
+
+    const button = codeBlock.locator('[data-copy-code]')
+    const copyLabel = button.locator('[data-copy-label]')
+    const copiedLabel = button.locator('[data-copied-label]')
+
+    await button.click()
+    await expect(button).toHaveAttribute('data-copy-state', 'copied')
+    await expect
+      .poll(() => copyLabel.evaluate(element => getComputedStyle(element).transform))
+      .not.toBe('none')
+    await expect
+      .poll(() => copiedLabel.evaluate(element => getComputedStyle(element).transform))
+      .toBe('none')
+  })
+
   test('keeps browser-only comments out of the prerender pass', async ({ page }) => {
     const commentsIsland = page.locator('astro-island[client="only"]')
     await expect(commentsIsland).toHaveCount(1)

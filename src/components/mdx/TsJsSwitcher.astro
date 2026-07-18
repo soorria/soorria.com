@@ -1,4 +1,6 @@
 ---
+import CopyButtonLabels from './CopyButtonLabels.astro'
+
 const { 'data-title': title, 'data-jsx': isJsx, id } = Astro.props
 const names = isJsx === 'true' ? { ts: 'tsx', js: 'jsx' } : { ts: 'typescript', js: 'javascript' }
 const buttonClass =
@@ -26,13 +28,15 @@ const buttonClass =
       <span class="hidden sm:inline">switch</span> to <span data-switch-target>js</span>
     </button>
     <button type="button" class={buttonClass} data-copy-switcher>
-      <span data-copy-switcher-label>copy</span>
+      <CopyButtonLabels />
     </button>
   </div>
   <slot />
 </div>
 
 <script>
+  import { getCodeText, showCopiedState } from '../../lib/code-copy'
+
   const storageKey = 'soorria.com:isTs'
 
   for (const root of document.querySelectorAll<HTMLElement>('[data-ts-js-switcher]')) {
@@ -77,20 +81,13 @@ const buttonClass =
       }
     })
 
-    root.querySelector('[data-copy-switcher]')?.addEventListener('click', async () => {
-      const activePre = root.querySelector<HTMLPreElement>('pre:not(.hidden)')
-      if (!activePre) return
-      const code = activePre.querySelector('code')
-      const text = code
-        ? Array.from(code.children)
-            .map(line => (line as HTMLElement).innerText || '')
-            .join('\n')
-        : activePre.innerText
-      await navigator.clipboard.writeText(text)
-      const label = root.querySelector<HTMLElement>('[data-copy-switcher-label]')
-      if (!label) return
-      label.textContent = 'copied'
-      window.setTimeout(() => (label.textContent = 'copy'), 1500)
-    })
+    root
+      .querySelector<HTMLButtonElement>('[data-copy-switcher]')
+      ?.addEventListener('click', async event => {
+        const activePre = root.querySelector<HTMLPreElement>('pre:not(.hidden)')
+        if (!activePre) return
+        await navigator.clipboard.writeText(getCodeText(activePre))
+        showCopiedState(event.currentTarget)
+      })
   }
 </script>
