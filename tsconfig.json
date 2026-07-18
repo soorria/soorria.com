@@ -34,8 +34,6 @@
     "src/**/*.ts",
     "src/**/*.js",
     "src/**/*.tsx",
-    "astro/**/*.ts",
-    "astro/**/*.tsx",
     "middleware.ts",
     "src/types/react.d.ts",
     "eslint.config.mts",
