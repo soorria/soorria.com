@@ -97,8 +97,67 @@ const patternValue = availablePatterns[pattern] ?? availablePatterns.circuit
     '[aria-label="refresh subtitle about me"]'
   )
   const icon = document.querySelector<SVGElement>('[data-subtitle-icon]')
+  const hero = document.querySelector<HTMLElement>('#hero')
   let index = 0
   let rotations = 0
+
+  const randomBetween = (min: number, max: number) =>
+    Math.floor(Math.random() * (max - min + 1)) + min
+  const sparkleColors = ['cyan', 'green', 'orange', 'pink', 'purple', 'red', 'yellow']
+
+  const initialiseSparkles = (root: HTMLElement) => {
+    if (root.dataset.sparklesReady === 'true') return
+    root.dataset.sparklesReady = 'true'
+
+    const addSparkle = () => {
+      if (!root.isConnected) return
+      if (document.visibilityState === 'visible') {
+        const size = randomBetween(40, 100) / 100
+        const sparkle = document.createElementNS('http://www.w3.org/2000/svg', 'svg')
+        sparkle.setAttribute('viewBox', '0 0 160 160')
+        sparkle.setAttribute('aria-hidden', 'true')
+        sparkle.classList.add('animation-sparkle', 'pointer-events-none', 'absolute')
+        Object.assign(sparkle.style, {
+          color: `var(--${sparkleColors[randomBetween(0, sparkleColors.length - 1)]})`,
+          top: `calc(${randomBetween(0, 100)}% - ${size / 2}em)`,
+          left: `calc(${randomBetween(0, 100)}% - ${size / 2}em)`,
+          width: `${size}em`,
+          height: `${size}em`,
+          zIndex: Math.random() > 0.3 ? '15' : '5',
+        })
+        const path = document.createElementNS('http://www.w3.org/2000/svg', 'path')
+        path.setAttribute(
+          'd',
+          'M80 0C80 0 84.2846 41.2925 101.496 58.504C118.707 75.7154 160 80 160 80C160 80 118.707 84.2846 101.496 101.496C84.2846 118.707 80 160 80 160C80 160 75.7154 118.707 58.504 101.496C41.2925 84.2846 0 80 0 80C0 80 41.2925 75.7154 58.504 58.504C75.7154 41.2925 80 0 80 0Z'
+        )
+        path.setAttribute('fill', 'currentColor')
+        sparkle.append(path)
+        root.append(sparkle)
+        window.setTimeout(() => sparkle.remove(), 1_000)
+      }
+      window.setTimeout(addSparkle, randomBetween(50, 500))
+    }
+
+    window.setTimeout(addSparkle, randomBetween(50, 500))
+  }
+
+  const scanForSparkles = (root: ParentNode) => {
+    if (root instanceof HTMLElement && root.matches('[data-runtime-sparkles]')) {
+      initialiseSparkles(root)
+    }
+    root.querySelectorAll<HTMLElement>('[data-runtime-sparkles]').forEach(initialiseSparkles)
+  }
+
+  if (hero) {
+    scanForSparkles(hero)
+    new MutationObserver(records => {
+      records.forEach(record =>
+        record.addedNodes.forEach(node => {
+          if (node instanceof HTMLElement) scanForSparkles(node)
+        })
+      )
+    }).observe(hero, { childList: true, subtree: true })
+  }
 
   button?.addEventListener('click', () => {
     if (!subtitle || subtitleOptions.length < 2) return
