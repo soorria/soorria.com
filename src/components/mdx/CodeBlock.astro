@@ -1,4 +1,6 @@
 ---
+import CopyButtonLabels from './CopyButtonLabels.astro'
+
 const {
   class: className,
   'data-language': languageFromMdx,
@@ -54,17 +56,7 @@ const preClass = [className, 'my-0!']
             class="bg-drac-purple font-display text-drac-base focus:ring-drac-pink cursor-pointer rounded-sm px-2 text-center text-sm font-bold tracking-wider transition focus:ring-2 focus:ring-offset-2 focus:ring-offset-current focus:outline-hidden"
             data-copy-code
           >
-            <span class="inline-grid overflow-hidden">
-              <span class="col-start-1 row-start-1 transition-transform" data-copy-label>
-                copy
-              </span>
-              <span
-                class="col-start-1 row-start-1 translate-y-full transition-transform"
-                data-copied-label
-              >
-                copied
-              </span>
-            </span>
+            <CopyButtonLabels />
           </button>
         </div>
         <pre {...rest} class:list={preClass} data-language={languageFromMdx} data-theme={theme}>
@@ -76,6 +68,8 @@ const preClass = [className, 'my-0!']
 }
 
 <script>
+  import { getCodeText, showCopiedState } from '../../lib/code-copy'
+
   for (const button of document.querySelectorAll<HTMLButtonElement>('[data-copy-code]')) {
     if (button.dataset.ready === 'true') continue
     button.dataset.ready = 'true'
@@ -84,20 +78,8 @@ const preClass = [className, 'my-0!']
       const pre = root?.querySelector<HTMLPreElement>('pre:not(.hidden)')
       if (!pre) return
 
-      const code = pre.querySelector('code')
-      const text = code
-        ? Array.from(code.children)
-            .map(line => (line as HTMLElement).innerText || '')
-            .join('\n')
-        : pre.innerText
-      await navigator.clipboard.writeText(text)
-
-      button.querySelector('[data-copy-label]')?.classList.add('-translate-y-full')
-      button.querySelector('[data-copied-label]')?.classList.remove('translate-y-full')
-      window.setTimeout(() => {
-        button.querySelector('[data-copy-label]')?.classList.remove('-translate-y-full')
-        button.querySelector('[data-copied-label]')?.classList.add('translate-y-full')
-      }, 1500)
+      await navigator.clipboard.writeText(getCodeText(pre))
+      showCopiedState(button)
     })
   }
 </script>
