@@ -100,6 +100,25 @@ Work is isolated in `/Users/mooth/repos/soorria.com-astro` on `codex/astro-migra
 - `pnpm test:migration` — 110 passed, covering every blog/snippet route and the retained public contracts
 - `pnpm test:interactions` — 9 passed, covering React/Solid hydration, MDX transforms, runtime Markdown, comments, and OG rendering
 
-### Remaining cutover gate
+## 2026-08-18: Vercel Preview parity audit
 
-- Validate the updated branch on its Vercel Preview, including Routing Middleware host/user-agent behavior and the Plausible proxy. The project framework preset has been updated to Astro so the next branch deployment uses the migrated build.
+### Completed
+
+- Validated PR #14 against its Vercel Preview and compared representative desktop
+  and mobile pages with `soorria.com`.
+- Passed 111 deployed route, metadata, redirect, feed, image, no-JavaScript, and
+  interaction checks. The foreign-host-header case is intentionally skipped on
+  Vercel Preview because preview deployments reject a custom `Host` header; the
+  same middleware contract remains covered locally.
+- Confirmed all seven art images load on the preview.
+- Confirmed the public image in `/blog/partyify-anyone` loads and decodes at
+  1027×581. The corresponding production Next.js optimizer request returned HTTP
+  400, so the Astro result fixes a known class of baseline image defect.
+- Verified the Plausible proxy markup, request-time art variability, PartySocket
+  connection, and the curl/HTTPie response contracts on the preview.
+
+### Current state
+
+The migration implementation and preview cutover gates are complete. The two
+Playwright suites remain as regression coverage and share the root
+`playwright.config.ts`; `MIGRATION_BASE_URL` targets an external deployment.
