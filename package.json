@@ -22,7 +22,7 @@
     "check:astro": "astro check",
     "test:migration": "playwright test tests/migration",
     "test:migration:update": "playwright test tests/migration --update-snapshots",
-    "test:interactions": "playwright test --config playwright.interactions.config.ts",
+    "test:interactions": "playwright test tests/interactions",
     "deploy:party": "partykit deploy"
   },
   "dependencies": {

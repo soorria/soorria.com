@@ -3,8 +3,8 @@ import { defineConfig, devices } from '@playwright/test'
 const externalBaseUrl = process.env.MIGRATION_BASE_URL
 
 export default defineConfig({
-  testDir: './tests/migration',
-  // Keep route contracts serial so failures remain easy to attribute.
+  testDir: './tests',
+  // Keep browser tests serial so failures and dynamic-route requests remain easy to attribute.
   fullyParallel: false,
   forbidOnly: Boolean(process.env.CI),
   retries: process.env.CI ? 2 : 0,

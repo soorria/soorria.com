@@ -1,5 +1,9 @@
 # Astro migration plan
 
+> **Status:** Implemented and preview-verified. This is the retained decision and
+> execution record for the migration, not an active implementation checklist. See
+> [astro-migration-progress.md](./astro-migration-progress.md) for the final outcome.
+
 ## Agreed decisions
 
 - Keep hosting on the existing Vercel project and domain.

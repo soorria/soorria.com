@@ -1,11 +1,15 @@
 # Astro migration baseline
 
-This document records observations made while establishing the executable Next.js baseline. It is not a request to preserve known defects.
+This document records observations made while establishing the now-retired Next.js
+baseline. It is retained as migration history, not as current operating guidance or
+a request to preserve known defects.
 
 ## Harness
 
-- `playwright.config.ts` starts the current Next.js app by default.
-- Set `MIGRATION_BASE_URL` to run the same contracts against an immutable deployment or the future Astro preview.
+- `playwright.config.ts` now starts the Astro app and serves both contract and
+  interaction suites.
+- Set `MIGRATION_BASE_URL` to run the contracts against a deployed URL without
+  starting a local server.
 - `tests/migration/contracts.ts` is the initial route, redirect, and empty-project contract inventory.
 - `tests/migration/route-contracts.spec.ts` covers HTML routes, feeds, redirects, sitemap/robots, OG images, empty project 404s, and curl/HTTPie behaviour.
 
@@ -13,12 +17,20 @@ This document records observations made while establishing the executable Next.j
 
 On 2026-07-18, the local Next.js baseline returned HTTP 500 for `/blog/promise-all` because `next/image` rejected `/img/promise-all/promise-all.png`. The configured `images.localPatterns` only permits `/api/og`, so public MDX image paths do not match.
 
-The Astro migration should make image handling explicit and return HTTP 200 for published posts; it should not reproduce this defect. A working interactive post (`/blog/event-delegation`) is used as the initial smoke route while complete content validation is added during the MDX migration.
+The Astro implementation makes public MDX image handling explicit and does not
+reproduce this defect. Preview verification also confirmed that the image on
+`/blog/partyify-anyone` decodes at 1027×581; its production Next.js optimizer URL
+returned HTTP 400 during the 2026-08-18 parity audit.
 
 ## Baseline runner concurrency
 
-The current Next development server intermittently returned a truncated JSON/RSC response from `/` when Playwright forced several cold route compilations in parallel. The initial contract file therefore runs serially. Astro preview testing can add a separate load/concurrency check once route parity is established.
+The old Next development server intermittently returned a truncated JSON/RSC
+response from `/` when Playwright forced several cold route compilations in
+parallel. The suites remain serial so dynamic-route requests and failures are easy
+to attribute; this is no longer a Next.js runtime workaround.
 
 ## Astro/Vercel local preview
 
-The Vercel adapter does not implement `astro preview`. Local Astro interaction tests use `astro dev`; deployable output is verified with `astro build`, and serverless/runtime parity must be tested on a Vercel Preview (or with `vercel dev`) before cutover.
+The Vercel adapter does not implement `astro preview`. Local browser tests use
+`astro dev`, deployable output is verified with `astro build`, and serverless/runtime
+behaviour is checked against a Vercel Preview by setting `MIGRATION_BASE_URL`.
